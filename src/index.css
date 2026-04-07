@@ -1,0 +1,14 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f5ede3;
+  background-image:
+    radial-gradient(ellipse at top, #eedcca 0%, #e8d0b8 100%);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: #2c1a0e;
+}
