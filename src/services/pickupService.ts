@@ -2,6 +2,12 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 
+function getTodayKST(): string {
+  const now = new Date()
+  const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000)
+  return kst.toISOString().slice(0, 10)
+}
+
 export type DrawEntry = {
   name: string
   class: string
@@ -15,13 +21,13 @@ export type PickupResult = {
 }
 
 export async function getTodayPickup(): Promise<PickupResult | null> {
-  const today = new Date().toISOString().slice(0, 10)
+  const today = getTodayKST()
   const snap = await getDoc(doc(db, 'winners', today))
   return snap.exists() ? (snap.data() as PickupResult) : null
 }
 
 export async function savePickupResult(result: PickupResult): Promise<boolean> {
-  const today = new Date().toISOString().slice(0, 10)
+  const today = getTodayKST()
   const ref = doc(db, 'winners', today)
   try {
     await setDoc(ref, result)
