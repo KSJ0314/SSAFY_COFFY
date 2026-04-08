@@ -15,7 +15,7 @@ export type DrawEntry = {
 }
 
 export type PickupResult = {
-  winner: Order
+  winners: Order[]
   draws: DrawEntry[]
   drawnAt: string
 }
@@ -48,12 +48,14 @@ export function drawPickup(orders: Order[]): PickupResult {
     randomValue: Math.random(),
   }))
 
-  const winnerDraw = draws.reduce((max, d) => d.randomValue > max.randomValue ? d : max)
-  const winner = unique.find(o => o.name === winnerDraw.name && o.class === winnerDraw.class)!
+  const sorted = draws.sort((a, b) => b.randomValue - a.randomValue)
+  const winnerCount = Math.max(1, Math.ceil(orders.length * 0.15))
+  const topDraws = sorted.slice(0, winnerCount)
+  const winners = topDraws.map(d => unique.find(o => o.name === d.name && o.class === d.class)!)
 
   return {
-    winner,
-    draws: draws.sort((a, b) => b.randomValue - a.randomValue),
+    winners,
+    draws: sorted,
     drawnAt: new Date().toISOString(),
   }
 }

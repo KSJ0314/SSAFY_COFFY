@@ -752,6 +752,13 @@ tfoot td {
   gap: 10px;
 }
 
+.pickup-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+}
+
 .pickup-title {
   font-size: 0.8rem;
   font-weight: 700;
@@ -787,6 +794,24 @@ tfoot td {
   padding: 8px 0;
 }
 
+.pickup-winners {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.pickup-winner-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+}
+
 .pickup-crown {
   font-size: 1.6rem;
 }
@@ -803,13 +828,12 @@ tfoot td {
 }
 
 .pickup-detail-btn {
-  margin-top: 6px;
   background: rgba(255,255,255,0.15);
   border: 1px solid rgba(255,255,255,0.3);
   border-radius: 20px;
   color: #fff8f0;
-  padding: 5px 14px;
-  font-size: 0.78rem;
+  padding: 2px 8px;
+  font-size: 0.68rem;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -885,20 +909,67 @@ tfoot td {
 .modal {
   background: #fdf6ec;
   border-radius: 16px;
-  padding: 28px;
+  padding: 4px;
   width: 480px;
   max-width: 90vw;
   max-height: 80vh;
-  overflow-y: auto;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 16px;
+}
+
+.modal-body {
+  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
+  padding: 24px 20px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  scrollbar-width: thin;
+  scrollbar-color: #d4b896 transparent;
+}
+
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modal-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modal-body::-webkit-scrollbar-thumb {
+  background: #d4b896;
+  border-radius: 4px;
+}
+
+.modal-body::-webkit-scrollbar-thumb:hover {
+  background: #a0622a;
 }
 
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.modal-title-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.github-link {
+  display: flex;
+  align-items: center;
+  color: #a0622a;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+}
+
+.github-link:hover {
+  opacity: 1;
 }
 
 .modal-header h2 {
@@ -982,13 +1053,6 @@ tfoot td {
   color: #6b3f1a;
 }
 
-.draw-crown {
-  font-size: 1rem;
-  width: 1rem;
-  text-align: center;
-  flex-shrink: 0;
-}
-
 .draw-bar-wrap {
   flex: 1;
   background: #f0e4d4;
@@ -1013,11 +1077,6 @@ tfoot td {
   color: #8c5c30;
   width: 40px;
   text-align: center;
-  flex-shrink: 0;
-}
-
-.draw-crown {
-  font-size: 1rem;
   flex-shrink: 0;
 }
 

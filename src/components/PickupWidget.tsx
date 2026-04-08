@@ -48,16 +48,25 @@ export default function PickupWidget() {
   return (
     <>
       <div className="pickup-widget">
-        <div className="pickup-title">오늘의 픽업</div>
-
-        {result ? (
-          <div className="pickup-winner-card">
-            <div className="pickup-crown">👑</div>
-            <div className="pickup-winner-name">{result.winner.name}</div>
-            <div className="pickup-winner-class">{result.winner.class}</div>
+        <div className="pickup-title-row">
+          <div className="pickup-title">오늘의 픽업 👑</div>
+          {result && (
             <button className="pickup-detail-btn" onClick={() => setShowModal(true)}>
               자세히 보기
             </button>
+          )}
+        </div>
+
+        {result ? (
+          <div className="pickup-winner-card">
+            <div className="pickup-winners">
+              {result.winners.map((w, i) => (
+                <div key={i} className="pickup-winner-row">
+                  <span className="pickup-winner-name">{w.name}</span>
+                  <span className="pickup-winner-class">{w.class}반</span>
+                </div>
+              ))}
+            </div>
           </div>
         ) : (
           <div className="pickup-waiting">
