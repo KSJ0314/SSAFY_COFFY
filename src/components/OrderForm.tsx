@@ -57,15 +57,15 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     e.preventDefault()
     if (!name || !cls || !currentMenu || !menuBasePrice) return
 
-    const allOptions = selectedOptions
+    const menuName = isCustomMenu ? currentMenu : currentMenu.slice(4)
 
-    const optionText = allOptions.length > 0 ? `\n옵션: ${allOptions.join(', ')}` : ''
+    const optionText = selectedOptions.length > 0 ? `\n옵션: ${selectedOptions.join(', ')}` : ''
     const confirmed = window.confirm(
-      `주문을 확인해주세요!\n\n이름: ${name} (${cls})\n메뉴: ${currentMenu}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n\n주문하시겠습니까?`
+      `주문을 확인해주세요!\n\n이름: ${name} (${cls})\n메뉴: [${tempOption}] ${menuName}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n\n주문하시겠습니까?`
     )
     if (!confirmed) return
 
-    onSubmit({ name, class: cls, menu: currentMenu, options: allOptions, price: totalPrice })
+    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: selectedOptions, price: totalPrice })
 
     setName('')
     setCls('')
@@ -188,6 +188,11 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             placeholder="메뉴를 먼저 선택하세요"
             value={priceOverride}
             onChange={e => setPriceOverride(e.target.value === '' ? '' : Number(e.target.value))}
+            onWheel={e => {
+              e.preventDefault()
+              const delta = e.deltaY < 0 ? 100 : -100
+              setPriceOverride(prev => Math.max(0, (prev === '' ? 0 : prev) + delta))
+            }}
             disabled={disabled || (!selectedMenu && !isCustomMenu)}
           />
         </div>
@@ -197,15 +202,8 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
       {currentMenu && (
         <div className="order-summary">
           <div className="summary-menu">
-            {isCustomMenu ? (
-              <><TempBadge temp={tempOption} /><span>{currentMenu}</span></>
-            ) : currentMenu.startsWith('ICE ') ? (
-              <><TempBadge temp="ICE" /><span>{currentMenu.slice(4)}</span></>
-            ) : currentMenu.startsWith('HOT ') ? (
-              <><TempBadge temp="HOT" /><span>{currentMenu.slice(4)}</span></>
-            ) : (
-              <span>{currentMenu}</span>
-            )}
+            <TempBadge temp={tempOption} />
+            <span>{isCustomMenu ? currentMenu : currentMenu.slice(4)}</span>
           </div>
           {selectedOptions.length > 0 && (
             <span className="summary-options">· {selectedOptions.join(', ')}</span>

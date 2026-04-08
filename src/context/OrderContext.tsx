@@ -5,6 +5,7 @@ export type Order = {
   name: string
   class: string
   menu: string
+  temp: 'ICE' | 'HOT'
   options: string[]
   price: number
 }

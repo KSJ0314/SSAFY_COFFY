@@ -2,7 +2,7 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import html2canvas from 'html2canvas'
 import { useOrders } from '../context/OrderContext'
-import TempBadge, { parseMenuName } from '../components/TempBadge'
+import TempBadge from '../components/TempBadge'
 
 export default function OrderListPage() {
   const { orders } = useOrders()
@@ -64,10 +64,7 @@ export default function OrderListPage() {
                   <td>{o.name}</td>
                   <td>{o.class}</td>
                   <td>
-                    {(() => {
-                      const { temp, name } = parseMenuName(o.menu)
-                      return <span className="menu-cell">{temp && <TempBadge temp={temp} size="sm" />}{name}</span>
-                    })()}
+                    <span className="menu-cell"><TempBadge temp={o.temp} size="sm" />{o.menu}</span>
                   </td>
                   <td>{o.options.length > 0 ? o.options.join(', ') : '-'}</td>
                   <td>{o.price.toLocaleString()}원</td>
@@ -102,10 +99,7 @@ export default function OrderListPage() {
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>
-                      {(() => {
-                        const { temp, name } = parseMenuName(o.menu)
-                        return <span className="menu-cell">{temp && <TempBadge temp={temp} size="sm" />}{name}</span>
-                      })()}
+                      <span className="menu-cell"><TempBadge temp={o.temp} size="sm" />{o.menu}</span>
                     </td>
                     <td>{o.options.length > 0 ? o.options.join(', ') : '-'}</td>
                     <td>{o.price.toLocaleString()}원</td>

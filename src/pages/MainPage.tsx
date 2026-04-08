@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import NoticeBoard from '../components/NoticeBoard'
 import OrderForm from '../components/OrderForm'
 import PickupWidget from '../components/PickupWidget'
+import PatchNotesModal from '../components/PatchNotesModal'
 import { useOrders } from '../context/OrderContext'
 
 function isClosed(): boolean {
@@ -13,6 +14,7 @@ function isClosed(): boolean {
 export default function MainPage() {
   const { addOrder, orders } = useOrders()
   const [closed, setClosed] = useState(isClosed())
+  const [showPatchNotes, setShowPatchNotes] = useState(false)
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -24,6 +26,9 @@ export default function MainPage() {
     <div className="main-layout">
       {/* 왼쪽: 로고 + 공지 */}
       <div className="left-panel">
+        <button className="patch-notes-btn" onClick={() => setShowPatchNotes(true)}>
+          패치노트
+        </button>
         <div className="logo-area">
           <div className="logo">☕</div>
           <h1>SSAFY COFFEE</h1>
@@ -45,6 +50,7 @@ export default function MainPage() {
           disabled={closed}
         />
       </div>
+      {showPatchNotes && <PatchNotesModal onClose={() => setShowPatchNotes(false)} />}
     </div>
   )
 }

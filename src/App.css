@@ -4,8 +4,28 @@
   min-height: 100vh;
 }
 
+/* 패치노트 버튼 */
+.patch-notes-btn {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: #d4a87a;
+  font-size: 0.72rem;
+  padding: 3px 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.patch-notes-btn:hover {
+  background: rgba(255,255,255,0.2);
+}
+
 /* 왼쪽 패널 */
 .left-panel {
+  position: relative;
   width: 340px;
   flex-shrink: 0;
   background: linear-gradient(160deg, #4a2810, #7c4519);
@@ -733,6 +753,59 @@ tfoot td {
 
 .pickup-detail-btn:hover {
   background: rgba(255,255,255,0.25);
+}
+
+/* ── 패치노트 모달 ── */
+.patch-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.patch-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.patch-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.patch-version {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #4a2810;
+}
+
+.patch-date {
+  font-size: 0.78rem;
+  color: #a07858;
+}
+
+.patch-changes {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 4px;
+}
+
+.patch-changes li {
+  font-size: 0.85rem;
+  color: #3b1f0a;
+  padding-left: 14px;
+  position: relative;
+  line-height: 1.5;
+}
+
+.patch-changes li::before {
+  content: '•';
+  position: absolute;
+  left: 0;
+  color: #a0622a;
 }
 
 /* ── 모달 ── */
