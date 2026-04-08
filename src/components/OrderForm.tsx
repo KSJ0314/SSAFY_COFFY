@@ -18,6 +18,9 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([])
   const [tempOption, setTempOption] = useState<MenuTemp>('ICE')
   const [priceOverride, setPriceOverride] = useState<number | ''>('')
+  const [isCustomOption, setIsCustomOption] = useState(false)
+  const [customOption, setCustomOption] = useState('')
+  const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
 
   const autoPrice = isCustomMenu ? 0 : (MENU_ITEMS.find(m => `${m.temp} ${m.name}` === selectedMenu)?.price ?? 0)
   const menuBasePrice = priceOverride !== '' ? priceOverride : autoPrice
@@ -26,7 +29,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     return sum + (OPTION_ITEMS.find(o => o.name === opt)?.price ?? 0)
   }, 0)
 
-  const totalPrice = menuBasePrice + optionTotal
+  const totalPrice = menuBasePrice + optionTotal + (isCustomOption && customOptionPrice !== '' ? customOptionPrice : 0)
   const currentMenu = isCustomMenu ? customMenu : selectedMenu
 
   function handleMenuClick(fullName: string, price: number, temp: MenuTemp) {
@@ -59,13 +62,18 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
 
     const menuName = isCustomMenu ? currentMenu : currentMenu.slice(4)
 
-    const optionText = selectedOptions.length > 0 ? `\n옵션: ${selectedOptions.join(', ')}` : ''
+    const allOptions = [
+      ...selectedOptions,
+      ...(isCustomOption && customOption ? [`${customOption}${customOptionPrice ? `(+${Number(customOptionPrice).toLocaleString()}원)` : ''}`] : []),
+    ]
+
+    const optionText = allOptions.length > 0 ? `\n옵션: ${allOptions.join(', ')}` : ''
     const confirmed = window.confirm(
       `주문을 확인해주세요!\n\n이름: ${name} (${cls})\n메뉴: [${tempOption}] ${menuName}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n\n주문하시겠습니까?`
     )
     if (!confirmed) return
 
-    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: selectedOptions, price: totalPrice })
+    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: allOptions, price: totalPrice })
 
     setName('')
     setCls('')
@@ -75,6 +83,9 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setSelectedOptions([])
     setTempOption('ICE')
     setPriceOverride('')
+    setIsCustomOption(false)
+    setCustomOption('')
+    setCustomOptionPrice('')
   }
 
   const canSubmit = !!name && !!cls && !!currentMenu && menuBasePrice > 0
@@ -176,41 +187,65 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
               {opt.name}{opt.price > 0 && <span className="option-price"> +{opt.price.toLocaleString()}</span>}
             </button>
           ))}
+          <button
+            type="button"
+            className={`option-btn option-btn-other ${isCustomOption ? 'selected' : ''}`}
+            onClick={() => { setIsCustomOption(p => !p); setCustomOption(''); setCustomOptionPrice('') }}
+            disabled={disabled}
+          >
+            기타
+          </button>
+          {isCustomOption && (
+            <>
+              <input
+                className="custom-option-input"
+                placeholder="옵션명"
+                value={customOption}
+                onChange={e => setCustomOption(e.target.value)}
+                disabled={disabled}
+              />
+              <input
+                type="number"
+                step={100}
+                className="custom-option-input custom-option-price"
+                placeholder="+금액"
+                value={customOptionPrice}
+                onChange={e => setCustomOptionPrice(e.target.value === '' ? '' : Number(e.target.value))}
+                disabled={disabled}
+              />
+            </>
+          )}
         </div>
       </div>
 
-      {/* 가격 */}
-      <div className="kiosk-section">
-        <div className="kiosk-label">가격 <span className="kiosk-label-sub">(메뉴 선택 시 자동 입력, 수정 가능)</span></div>
-        <div className="form-row">
+      {/* 가격 + 요약 한 줄 */}
+      <div className="price-summary-row">
+        <div className="price-input-wrap">
+          <span className="kiosk-label">가격</span>
           <input
             type="number"
-            placeholder="메뉴를 먼저 선택하세요"
+            step={100}
+            placeholder={isCustomMenu ? "가격 입력" : "메뉴 선택 시 자동"}
             value={priceOverride}
             onChange={e => setPriceOverride(e.target.value === '' ? '' : Number(e.target.value))}
-            onWheel={e => {
-              e.preventDefault()
-              const delta = e.deltaY < 0 ? 100 : -100
-              setPriceOverride(prev => Math.max(0, (prev === '' ? 0 : prev) + delta))
-            }}
-            disabled={disabled || (!selectedMenu && !isCustomMenu)}
+            disabled={disabled || !isCustomMenu}
           />
         </div>
-      </div>
-
-      {/* 요약 */}
-      {currentMenu && (
         <div className="order-summary">
-          <div className="summary-menu">
-            <TempBadge temp={tempOption} />
-            <span>{isCustomMenu ? currentMenu : currentMenu.slice(4)}</span>
-          </div>
-          {selectedOptions.length > 0 && (
-            <span className="summary-options">· {selectedOptions.join(', ')}</span>
+          {currentMenu && (
+            <>
+              <div className="summary-menu">
+                <TempBadge temp={tempOption} />
+                <span>{isCustomMenu ? currentMenu : currentMenu.slice(4)}</span>
+              </div>
+              {selectedOptions.length > 0 && (
+                <span className="summary-options">· {selectedOptions.join(', ')}</span>
+              )}
+              <span className="summary-price">{totalPrice.toLocaleString()}원</span>
+            </>
           )}
-          <span className="summary-price">{totalPrice.toLocaleString()}원</span>
         </div>
-      )}
+      </div>
 
       <button type="submit" className="submit-btn" disabled={disabled || !canSubmit}>
         주문하기
