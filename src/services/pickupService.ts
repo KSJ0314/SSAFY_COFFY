@@ -37,6 +37,29 @@ export async function savePickupResult(result: PickupResult): Promise<boolean> {
   }
 }
 
+export async function sendPickupNotification(result: PickupResult, totalOrders: number): Promise<void> {
+  const webhookUrl = import.meta.env.VITE_MM_WEBHOOK_URL
+  if (!webhookUrl) return
+
+  const today = getTodayKST()
+  const [year, month, day] = today.split('-')
+  const dateStr = `${year}년 ${Number(month)}월 ${Number(day)}일`
+  const winnerText = result.winners.map(w => `* **${w.name}** (${w.class}반)`).join('\n')
+
+  await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      attachments: [{
+        color: '#723F17',
+        title: `${dateStr} 오늘의 픽업 당첨자 발표 ☕`,
+        text: `${winnerText}\n\n13:00에 게이트 앞 자전거 보관소에서 커피 받아와주세요~`,
+        footer: `총 ${totalOrders}건 주문 · ${result.winners.length}명 당첨`,
+      }],
+    }),
+  })
+}
+
 export function drawPickup(orders: Order[]): PickupResult {
   const unique = orders.filter((o, _, arr) =>
     arr.findIndex(x => x.name === o.name && x.class === o.class) === arr.indexOf(o)

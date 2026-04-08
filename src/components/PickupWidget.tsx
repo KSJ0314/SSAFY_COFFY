@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useOrders } from '../context/OrderContext'
-import { drawPickup, getTodayPickup, savePickupResult, type PickupResult } from '../services/pickupService'
+import { drawPickup, getTodayPickup, savePickupResult, sendPickupNotification, type PickupResult } from '../services/pickupService'
 import PickupModal from './PickupModal'
 
 function isDrawTime(): boolean {
@@ -34,6 +34,7 @@ export default function PickupWidget() {
       const saved = await savePickupResult(picked)
       if (saved) {
         setResult(picked)
+        await sendPickupNotification(picked, orders.length)
       } else {
         const fallback = await getTodayPickup()
         if (fallback) setResult(fallback)
