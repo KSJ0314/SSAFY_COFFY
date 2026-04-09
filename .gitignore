@@ -2,6 +2,9 @@
 .env
 .env.local
 
+# Secret config
+src/config/exclusions.ts
+
 # Logs
 logs
 *.log

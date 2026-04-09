@@ -21,6 +21,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [isCustomOption, setIsCustomOption] = useState(false)
   const [customOption, setCustomOption] = useState('')
   const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
+  const [password, setPassword] = useState('')
 
   const autoPrice = isCustomMenu ? 0 : (MENU_ITEMS.find(m => `${m.temp} ${m.name}` === selectedMenu)?.price ?? 0)
   const menuBasePrice = priceOverride !== '' ? priceOverride : autoPrice
@@ -69,11 +70,11 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
 
     const optionText = allOptions.length > 0 ? `\n옵션: ${allOptions.join(', ')}` : ''
     const confirmed = window.confirm(
-      `주문을 확인해주세요!\n\n이름: ${name} (${cls})\n메뉴: [${tempOption}] ${menuName}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n\n주문하시겠습니까?`
+      `주문을 확인해주세요!\n\n이름: ${name}\n반: ${cls}\n메뉴: [${tempOption}] ${menuName}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n비밀번호: ${password}\n\n주문하시겠습니까?`
     )
     if (!confirmed) return
 
-    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: allOptions, price: totalPrice })
+    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: allOptions, price: totalPrice, password })
 
     setName('')
     setCls('')
@@ -86,9 +87,10 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setIsCustomOption(false)
     setCustomOption('')
     setCustomOptionPrice('')
+    setPassword('')
   }
 
-  const canSubmit = !!name && !!cls && !!currentMenu && menuBasePrice > 0
+  const canSubmit = !!name && !!cls && !!currentMenu && menuBasePrice > 0 && !!password
 
   return (
     <form className="order-form" onSubmit={handleSubmit}>
@@ -96,7 +98,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         주문하기 {disabled && <span className="closed-badge">마감</span>}
       </div>
 
-      {/* 이름 / 반 */}
+      {/* 이름 / 반 / 비밀번호 */}
       <div className="form-row-inline">
         <div className="form-row">
           <label>이름</label>
@@ -105,6 +107,10 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         <div className="form-row">
           <label>반</label>
           <input value={cls} onChange={e => setCls(e.target.value)} disabled={disabled} placeholder="1" />
+        </div>
+        <div className="form-row">
+          <label>비밀번호</label>
+          <input type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={disabled} placeholder="••••" maxLength={4} className="input-password" />
         </div>
       </div>
 

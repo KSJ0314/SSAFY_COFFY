@@ -14,13 +14,24 @@
   border-radius: 6px;
   color: #d4a87a;
   font-size: 0.72rem;
-  padding: 3px 8px;
+  padding: 4px 10px;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .patch-notes-btn:hover {
   background: rgba(255,255,255,0.2);
+}
+
+.patch-new-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #4a2810;
 }
 
 /* 왼쪽 패널 */
@@ -188,6 +199,11 @@
 
 .form-row-inline .form-row {
   flex: 1;
+}
+
+.form-row-inline .form-row:has(.input-password) {
+  flex: none;
+  width: 80px;
 }
 
 .form-row {
@@ -563,6 +579,33 @@
 .list-meta {
   font-size: 0.85rem;
   color: #8c5c30;
+}
+
+.delete-order-btn {
+  background: none;
+  border: none;
+  color: #c0a090;
+  cursor: pointer;
+  font-size: 0.8rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  display: block;
+  margin: 0 auto;
+}
+
+td:last-child, th:last-child {
+  padding: 4px 8px;
+  width: 32px;
+}
+
+td:nth-last-child(2), th:nth-last-child(2) {
+  width: 80px;
+  white-space: nowrap;
+}
+
+.delete-order-btn:hover {
+  color: #e53e3e;
 }
 
 .save-image-btn {

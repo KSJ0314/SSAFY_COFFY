@@ -1,4 +1,4 @@
-import { collection, addDoc, query, where, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 
@@ -16,16 +16,21 @@ export function subscribeTodayOrders(callback: (orders: Order[]) => void): () =>
     orderBy('createdAt', 'asc')
   )
   return onSnapshot(q, snapshot => {
-    const data = snapshot.docs.map(doc => doc.data() as Order)
+    const data = snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Order))
     callback(data)
   })
 }
 
 export async function saveOrder(order: Order): Promise<void> {
   const today = getTodayKST()
+  const { id: _, ...orderData } = order
   await addDoc(collection(db, 'orders'), {
-    ...order,
+    ...orderData,
     date: today,
     createdAt: serverTimestamp(),
   })
+}
+
+export async function deleteOrder(id: string): Promise<void> {
+  await deleteDoc(doc(db, 'orders', id))
 }
