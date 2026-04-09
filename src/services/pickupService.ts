@@ -1,6 +1,7 @@
 import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
+import { MM_USERNAMES } from '../config/mmUsernames'
 const _exclusionModules = import.meta.glob('../config/exclusions.ts', { eager: true })
 const _exclusionMod = _exclusionModules['../config/exclusions.ts'] as { EXCLUSIONS?: string[] } | undefined
 const EXCLUSIONS: string[] = _exclusionMod?.EXCLUSIONS ?? []
@@ -49,10 +50,17 @@ export async function sendPickupNotification(result: PickupResult, totalOrders: 
   const dateStr = `${year}년 ${Number(month)}월 ${Number(day)}일`
   const winnerText = result.winners.map(w => `* **${w.name}** (${w.class}반)`).join('\n')
 
+  const mentions = result.winners
+    .map(w => MM_USERNAMES[w.name])
+    .filter(Boolean)
+    .map(u => `@${u}`)
+    .join(' ')
+
   await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
+      ...(mentions && { text: mentions }),
       attachments: [{
         color: '#723F17',
         title: `${dateStr} 오늘의 픽업 당첨자 발표 ☕`,
