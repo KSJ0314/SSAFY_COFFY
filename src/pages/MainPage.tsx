@@ -16,7 +16,7 @@ function isClosed(): boolean {
 }
 
 export default function MainPage() {
-  const { addOrder, orders } = useOrders()
+  const { addOrder, orders, loading } = useOrders()
   const [closed, setClosed] = useState(import.meta.env.DEV ? false : isClosed())
   const [showPatchNotes, setShowPatchNotes] = useState(false)
   const [hasNewPatch, setHasNewPatch] = useState(localStorage.getItem(STORAGE_KEY) !== LATEST_VERSION)
@@ -52,7 +52,7 @@ export default function MainPage() {
         <PickupWidget />
         <button className="view-orders-btn" onClick={() => navigate('/orders')}>
           오늘의 주문 목록 보기 →
-          <span className="order-count">{orders.length}건</span>
+          <span className="order-count">{loading ? '…' : `${orders.length}건`}</span>
         </button>
       </div>
 

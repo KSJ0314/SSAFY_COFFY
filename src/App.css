@@ -660,6 +660,15 @@ td:nth-last-child(2), th:nth-last-child(2) {
   padding: 64px;
   font-size: 0.95rem;
 }
+.loading-text {
+  color: #b89878;
+  opacity: 0.6;
+  animation: pulse 1.2s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
 
 table {
   width: 100%;

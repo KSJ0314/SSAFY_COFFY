@@ -12,11 +12,13 @@ export default function PickupWidget() {
   const { orders } = useOrders()
   const [result, setResult] = useState<PickupResult | null>(null)
   const [showModal, setShowModal] = useState(false)
+  const [pickupLoading, setPickupLoading] = useState(true)
 
   // Firebase에서 오늘 당첨자 조회
   useEffect(() => {
     getTodayPickup().then(res => {
       if (res) setResult(res)
+      setPickupLoading(false)
     })
   }, [])
 
@@ -58,7 +60,9 @@ export default function PickupWidget() {
           )}
         </div>
 
-        {result ? (
+        {pickupLoading ? (
+          <div className="pickup-waiting loading-text">불러오는 중...</div>
+        ) : result ? (
           <div className="pickup-winner-card">
             <div className="pickup-winners">
               {result.winners.map((w, i) => (

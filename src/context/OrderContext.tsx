@@ -14,6 +14,7 @@ export type Order = {
 
 type OrderContextType = {
   orders: Order[]
+  loading: boolean
   addOrder: (order: Order) => Promise<void>
   removeOrder: (id: string) => Promise<void>
 }
@@ -22,9 +23,13 @@ const OrderContext = createContext<OrderContextType | null>(null)
 
 export function OrderProvider({ children }: { children: ReactNode }) {
   const [orders, setOrders] = useState<Order[]>([])
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = subscribeTodayOrders(setOrders)
+    const unsubscribe = subscribeTodayOrders(data => {
+      setOrders(data)
+      setLoading(false)
+    })
     return () => unsubscribe()
   }, [])
 
@@ -37,7 +42,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <OrderContext.Provider value={{ orders, addOrder, removeOrder }}>
+    <OrderContext.Provider value={{ orders, loading, addOrder, removeOrder }}>
       {children}
     </OrderContext.Provider>
   )

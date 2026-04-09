@@ -4,15 +4,25 @@ import html2canvas from 'html2canvas'
 import { useOrders } from '../context/OrderContext'
 import TempBadge from '../components/TempBadge'
 
+function isClosed(): boolean {
+  const now = new Date()
+  return now.getHours() > 11 || (now.getHours() === 11 && now.getMinutes() >= 40)
+}
+
 export default function OrderListPage() {
-  const { orders, removeOrder } = useOrders()
+  const { orders, loading, removeOrder } = useOrders()
   const navigate = useNavigate()
   const captureRef = useRef<HTMLDivElement>(null)
   const total = orders.reduce((sum, o) => sum + o.price, 0)
   const today = new Date().toLocaleDateString('ko-KR')
+  const closed = import.meta.env.DEV ? false : isClosed()
 
   async function handleDelete(o: (typeof orders)[0]) {
     if (!o.id) return
+    if (closed) {
+      window.alert('11:40 이후에는 주문을 취소할 수 없습니다.')
+      return
+    }
     const input = window.prompt(`${o.name}님의 주문을 삭제하려면 비밀번호를 입력하세요.`)
     if (input === null) return
     if (input !== o.password) {
@@ -52,7 +62,9 @@ export default function OrderListPage() {
         </div>
       </div>
 
-      {orders.length === 0 ? (
+      {loading ? (
+        <div className="empty loading-text">불러오는 중...</div>
+      ) : orders.length === 0 ? (
         <div className="empty">아직 주문이 없습니다.</div>
       ) : (
         <>
