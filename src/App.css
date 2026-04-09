@@ -624,6 +624,11 @@ td:nth-last-child(2), th:nth-last-child(2) {
   opacity: 0.85;
 }
 
+.capture-area td:last-child, .capture-area th:last-child {
+  width: auto;
+  white-space: nowrap;
+}
+
 /* 캡처 영역 */
 .capture-area {
   background: #fff;
