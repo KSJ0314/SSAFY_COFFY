@@ -2,7 +2,7 @@ import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, 
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 
-function getTodayKST(): string {
+export function getTodayKST(): string {
   const now = new Date()
   const kst = new Date(now.getTime() + 9 * 60 * 60 * 1000)
   return kst.toISOString().slice(0, 10)

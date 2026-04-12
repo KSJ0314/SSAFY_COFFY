@@ -1,0 +1,781 @@
+[
+  {
+    "category": "커피",
+    "items": [
+      {
+        "name": "할메가커피",
+        "temp": "ICE",
+        "price": 2100,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/XTYxU8D5ru8xERuv8Q_nGwtQqY6pckvlnIgsFKM_qcYzWIoFmYm7N_4_3iXMGjyCUxHnjPiH_SZoCRYw1RLD5CTw9nHeUiNM4p2lLm4Hzhg=.jpg"
+      },
+      {
+        "name": "왕할메가커피",
+        "temp": "ICE",
+        "price": 3200,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/pHbAGjPdZo7wmyoVWIPa0JK-X1Er71UHCEDm9n9B3x7z8nhNIuVh2GywxFVfdBGtqHaPeLZRWwNpyRGqtzmOO4Sig1s54SoQD8ywiW8RL4w=.jpg"
+      },
+      {
+        "name": "메가리카노",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/8CsObuLkuMrDWOrREdkcpwWmYWlfI17xflcueqovqDu5twGh02ahesy0CRuqQucN69lZtZJY8f3PK7Z2uvqwSntmQabGRJTm4ArIOZgPQ2w=.jpg"
+      },
+      {
+        "name": "아메리카노",
+        "temp": "HOT",
+        "price": 1700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/dSD5PDtxR3lyFWJixlb7rtCHsj3nRwRdqWCfxak4UeBo9GVO-jcAVJlEhJSQm6Tbt0ee4h2ehKit2OzgNRW8Ewu-rg-UP6YC-NrOxLdUThA=.jpg"
+      },
+      {
+        "name": "아메리카노",
+        "temp": "ICE",
+        "price": 2000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/YCTJRzZzLM3VeSgEAlQ7tuV1LyTaKOPLh4wLzRd-ZcC9nkv9nASXJa5yQB-IAKa4DRwGWjXtk_kvwXu_8qLUHieWowmfXWcQz1r7kUVl28o=.jpg"
+      },
+      {
+        "name": "헛개리카노",
+        "temp": "HOT",
+        "price": 2400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/yHKiitGVKZDmDw_-aJrjoMR4SgrCUos1k8iSSXk3foMHpbuBxJ9_GW3rVjXpFIpZVsYBGtxv5Ki17HvmTwYdqCSOgwUndes4aqiewPv9tmE=.jpg"
+      },
+      {
+        "name": "헛개리카노",
+        "temp": "ICE",
+        "price": 2400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/ImQ5tPNk0JcxDRPqJwVNFmsefUOUEpN4aG1cuwCPDsRD5NpUHjmoMFczbKPtn-2TpiBygoga-qiIJnGz78G7JHjA5EgAkHX9acfkFZ-cWsI=.jpg"
+      },
+      {
+        "name": "왕메가 헛개리카노",
+        "temp": "ICE",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/qNdW5Ud-ZBVlPxXx64zgX7_yWvY-E9vElWviGuvTeDM3jq362kh0JeQ7xURqnvIMYmLYlJf2CDk9nLrJGTHhKZ2Gk0e7JJczsORnG6ONxoU=.jpg"
+      },
+      {
+        "name": "헤이즐넛아메리카노",
+        "temp": "HOT",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7V0TAZIKA1267ZNhJ3t-0K_Svegy-u-52wOqkHXXrV2H2hDmaa9MWdjjp_1GhPnAXj18mFDSEughXNFVUbGfWwRbLBTGDEnmeqSa0NIMlgY=.jpg"
+      },
+      {
+        "name": "헤이즐넛아메리카노",
+        "temp": "ICE",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/cKMztbK7XLq3ioWnlAZfusbQM8ns3lNOswhrFvWF8cWavxKHiqpyecdqTWQZeQxWGwk6ouTFBxUQxbN-z1p_mmKXDGxe3SIEcfzxPzQAw-w=.jpg"
+      },
+      {
+        "name": "바닐라아메리카노",
+        "temp": "HOT",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/2TDbjsz85evdHbyKWrCnuPXSJiM1NTO5KlciwQINPKSk_ES9zC_HCUJXI727eQS0hxRi_PwBeFU9omti6jL8nrS13YdBbd19wMWA2SM0h74=.jpg"
+      },
+      {
+        "name": "바닐라아메리카노",
+        "temp": "ICE",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Dyyg4M-TuivICWG0DzT1ddRM09n5YcVJ2akSZ6euV73MqNAsuaXN3ZH-bdZoiUW_o4mHBw8PzCeRTfcsyGD6iyUDGc5D0S6sGKF7LhbLOSQ=.jpg"
+      },
+      {
+        "name": "꿀아메리카노",
+        "temp": "HOT",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/E_GI92IP8MDF0elc9TmEzBRGL_vtqWqvSkDy5JkoyyFio9bCJHsVCc_HUhU70aVpW4uhJe739fNUoG9cDTHXvILR1vXqffvibQ8PI8L6L5k=.jpg"
+      },
+      {
+        "name": "꿀아메리카노",
+        "temp": "ICE",
+        "price": 2700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/ZmB0jjto-EMFila3QBgFbfkvrWYtDsAfoWhgXSjDWojj6mwWAyozF37O1nH6NGCFmg2UaH0eXzz_fbSQlzNC39VbfMefxnduP7B390G2Ixs=.jpg"
+      },
+      {
+        "name": "카페라떼",
+        "temp": "HOT",
+        "price": 2900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/e6nWNm2hOvNX9cRnTGmvoZ6IzAZXg4aT6xMgmwEMj_FH-_YH5QM9BQo3yqlxp0Q-zUYjqDEYn4hJnAJnO-YJalXA6583v8ByAdw9PdxMZg0=.jpg"
+      },
+      {
+        "name": "카페라떼",
+        "temp": "ICE",
+        "price": 2900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/FCC2nEv-cy9xNWmbf8NL6SANmU7AR2ktB4k9WymJ1QqPZLwU_H5GK2Tw44izYI-QSR3nsERjpF9NOd1b2QtQPfhsYsJ9oFDGtrnDEXA96_I=.jpg"
+      },
+      {
+        "name": "카푸치노",
+        "temp": "HOT",
+        "price": 2900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7qnlkThF_2ff8601wbn4eZfZatRmlCzNpI32gxS4VHqANZ7SBcAR0hjGkdux-v-ojbg34i_nSfZqsiE71faJDqZBGYRf8guDAGvQveBLUb0=.jpg"
+      },
+      {
+        "name": "카푸치노",
+        "temp": "ICE",
+        "price": 2900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/8/27/wJB-x7wYHCga05RJyxxcoixIXihEQ9TF9fRCb9dtrta3zzuE5ex5wAhTYr8N9NAe.jpg"
+      },
+      {
+        "name": "헤이즐넛라떼",
+        "temp": "HOT",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/rgFIKA76rYbztL5hz_ET9M8uaeuiC2N_Jq7lXs0DwCU0i2eaoZU5k0PdJfs0yx72vIvFGIvffvq1GQvocJOQsPKk0gHr_M7AFCKihRhxSTE=.jpg"
+      },
+      {
+        "name": "헤이즐넛라떼",
+        "temp": "ICE",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jMRcX9xf_commN4yBBz-BtxLq7VZFYmRoFryZ_tRPKfRbOdBnBjP6xZr4Lxui5oEYMd3fou6LciSlzRJ1YnHcORBCLwNr3JXjO9D2r_Gqy0=.jpg"
+      },
+      {
+        "name": "바닐라라떼",
+        "temp": "HOT",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FK_ItzAlwFMUqZr9oyC_XN_DmRgsUlxTyYvRgD4_psmJvYhV1HpfKjhLMeeBowZnA-2IJiykoGFw6v23zVGZvl0nxDLHaofDqoZL8gTtBIc=.jpg"
+      },
+      {
+        "name": "바닐라라떼",
+        "temp": "ICE",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/uEqU4V9G546DSKlY-BefMiyymtAt7A0MmhcMGTP3WwTYD1iw7sOp_CNnC6KK6pQsGm0LyHiFf6GL07hiNfnLpSSCuMJtZyB5iLjf0V25fw4=.jpg"
+      },
+      {
+        "name": "카라멜마끼아또",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Lbh3H-R9tIREruhkEin5YPhKG9X5ZEU4Tw8ayHWkfecFwHXe5xtuTzG31MHFLtS1YAkTFGq1Cr2YSeKwvAyeL5es7XF4SA9WZC7-_b0we50=.jpg"
+      },
+      {
+        "name": "카라멜마끼아또",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZP_gZJTGqfnSMl9HwVW0o6RZR3nByKXXdFMvsU2fWI8yWxSeQF8K2iDOgaXfp9jKwgbEuzDpd1CsB7ZSpk0EXcL999TEuA-TgfP01DAjoXU=.jpg"
+      },
+      {
+        "name": "카페모카",
+        "temp": "HOT",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3drWhW1zSAyeHZwYGsWEJlVl2ba9nkENPyi5Zzn14z_cPTdVTPOf6X9idZkO32MSMZPuUyvSpk9MHye1TcoRlAz6kczY6wKcnS_1ieyVHGY=.jpg"
+      },
+      {
+        "name": "카페모카",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/tuLjHc0hz2y94RCd31DnwRK4tjvwczOcHrM-G7VXpxe9ykC8ENqkJpgtVWCeqe_t.jpg"
+      },
+      {
+        "name": "큐브라떼",
+        "temp": "ICE",
+        "price": 4200,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/oIzdaYhQ8HggpGVFaholmFQuAh_6kPOsakrXsoSirkEc423pVbiqZWxuThW5gw4omdwHfUmu9SwL8RkB580Rpf8WrvpuJ_wT8h7EYLLVcco=.jpg"
+      },
+      {
+        "name": "라이트 바닐라 아몬드라떼",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/7/4/MNYEW4vRV-DFkOiJgotutu_Mblgste4-rZdKoTXAl8dbrch67y8KYiKComMUFI4ARyu8qovykIrxhRezfpGyDbb49KWjUmeKdBQyyMB_uzk=.jpg"
+      },
+      {
+        "name": "연유라떼",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/f8TY5r1HI9eWKCivIyv9vqPFdeyK7tE11TwJ3gNQeCBAUXuWkYGl8KuSvGSZ27vnb6UbRygdz0n7pbmvQ2ScpkHq0zDQ5IS53tAEUgGt-lo=.jpg"
+      },
+      {
+        "name": "연유라떼",
+        "temp": "HOT",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/T0fcCOFTu8MpFhtF7lhXy2vxWWLdE6P2v6uw0iPSX99Czgp5cIJFx0LBoNoJQFkHgqWCv24WNGMhsIvGqfV1OHEFobQNbsaRBW31REsEYxc=.jpg"
+      }
+    ]
+  },
+  {
+    "category": "디카페인",
+    "items": [
+      {
+        "name": "디카페인 메가리카노",
+        "temp": "ICE",
+        "price": 4500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/x7nUb0kciADVxM_achO01I65GqnNNZ4pGjqLhNpKjT4h9K-xhdR8ngUDyMrN64znetnV9GSWSlfrTa3yUnnBAblyvtmVjom19s1-se3jTAI=.jpg"
+      },
+      {
+        "name": "디카페인 아메리카노",
+        "temp": "HOT",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/skVc7BWchEyb2Ca5Dn40iuEta-_8W6qkJ7LnoJPNVULktE3wPVaHmaQWuNiW6m99n3dQ69qDz1t1S258f5OGhn_a21mDE9PNPqf4qI95JB0=.jpg"
+      },
+      {
+        "name": "디카페인 아메리카노",
+        "temp": "ICE",
+        "price": 3000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/1fNtPohtW9nOlB5FBEDYUDRi4VQq4tYID6XyaFPctUwQbTDlyno6XGd84zXVgooCgxPivwYyvsdLQMpwV0NiF_nABZ3dri3ou_XkS2k8M9Y=.jpg"
+      },
+      {
+        "name": "디카페인 헛개리카노",
+        "temp": "HOT",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/5GxlWbLUyuE7woSQDlofHujRBmBcrrzqK9t-Un1T5pmfsUPgHA2pi5I0Y-oJWZSOJLvvm6RDXueN_kRzPdlHdVMImLA5q7dkRWNOmAElLhw=.jpg"
+      },
+      {
+        "name": "디카페인 헛개리카노",
+        "temp": "ICE",
+        "price": 3400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/2fcU8MkE2bijqf2d8X1sIR2hlqEHWaspib5PhMT1_Y9jx7jKiIzKgLLaBnwCoN3xJPGNWiFK7VDuQytLYBGsWk3NUAdKA_pF3zbcN3kPOIs=.jpg"
+      },
+      {
+        "name": "디카페인 왕메가헛개리카노",
+        "temp": "ICE",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/YXNAzS4U-xa9RmTwtU2OnWzFGnrwYXpyobQjkI3EVV0EuZiTmkkv5vuithkRT81yOmVxcMZ4PUVQCmfteuqfPKErn8poSNObSmqpWPw7Xto=.jpg"
+      },
+      {
+        "name": "디카페인 왕메가카페라떼",
+        "temp": "ICE",
+        "price": 5900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/KuUe3gLNCjF6o_UCfqT3x_-LqDCv1aLvaGNYCIO3CBPN3CZsPU5FhkH0lsDkVY9z9q30tkyuV7MX3Mg5SeQnysV0EmohpGPVnbGYFpfRKsM=.jpg"
+      },
+      {
+        "name": "디카페인 라이트바닐라아몬드라떼",
+        "temp": "ICE",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/11/6/NsSstOq2-J945QP86fn8hZn7yb-HNr4VsFU9QpONQbXHOyzySzTlS4Yh38_bKX8mD6M97yWsLaJ3ePPxcCP9JK0mCWla-GD8qRI_Yh0nxG8=.jpg"
+      },
+      {
+        "name": "디카페인 꿀아메리카노",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ckhw4zNVGZ7KVqLgj-SoGm2FLb8kjh8a8UyamYbhoazvRQdYgHHSsBNF2qfEYJTCgssRBFqyJeARO_2LYVPoc_5LW83uyOSEDijWkNTJHH4=.jpg"
+      },
+      {
+        "name": "디카페인 꿀아메리카노",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Vrld1P_KUtkVvRIKlWeYojBJagmEv1Hv8JJzGoNjExJqWdQyY0Xl_N5BAOgAuKNgL9g34dOL6FGttcrg9SUw2y-5KPTMOqNfkJp03O1tgag=.jpg"
+      },
+      {
+        "name": "디카페인 헤이즐넛아메리카노",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/mkVt_DBWr2NNiDWVD2-UnsrRykuVHieCG4LsSQbSxPae775K5boIDvSdHvqzbujUwc4nR-2GXVjvYr45Rxlz-5VSZd4cF8h3_Is7jrqG4Ww=.jpg"
+      },
+      {
+        "name": "디카페인 헤이즐넛아메리카노",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/kodu_amIhA-DPPD0ARhxINv3sSkIl3ahnS7B1-XP-eavWRiDJG8QzlnusnvmgQfvUBi8O9QMZt61dmqrfHtaxuX8YlJPh8SAKHKV0CXJsoc=.jpg"
+      },
+      {
+        "name": "디카페인 바닐라아메리카노",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KOUNG1AwU4Bp5u274fI9yucuZArTSi14yaDJv9Eag5wURNEQu5Hl-uHbGluk90URHcGpQ4Zv8XM2ZdZGIxkDwjhPCTieUUjiwJHb-vYduYc=.jpg"
+      },
+      {
+        "name": "디카페인 바닐라아메리카노",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/l_GDxsvo7ZLpGyTMLKgsslNn0ipMaIdBTLYI6_rZ3psN6uBB4w6c8ZPHi1od2f8NbXupJtjRCpDNRQoSfgTWH1dt6kApw29_Nnq6M5tNzh0=.jpg"
+      },
+      {
+        "name": "디카페인 카페라떼",
+        "temp": "HOT",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7mDig55TZN1lcsoJ-RtyBp8h6fwX8x10l6mLBWNsSaF3zF9MbjSGFDAyYT3OOJ2g34YWZ8X1WVrEuBPC5mmFHhlX6bA1vsMTW68ceG2nJZI=.jpg"
+      },
+      {
+        "name": "디카페인 카페라떼",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/QntryCSa9sk__4ok4k_F3T16oUnJfmzCwrxdeydE6VOqte6trGa-J_ue6u1uKAS6qUrHhMzRXWSgwmMT8lz78q4qI9DhmJK1BazdMD0CdEI=.jpg"
+      },
+      {
+        "name": "디카페인 카푸치노",
+        "temp": "HOT",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/LBzhAd2EfEmCZbQ4DZ-QqnjnJOzwTzTMBW6fgcRut2zkT-P7oAUVMANJ3xWiCIxroYCBps7yExJi2xEJLdyoEws1PEmoIYH-9ySEFNoRkhs=.jpg"
+      },
+      {
+        "name": "디카페인 카푸치노",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/QLcSDHi206QjoVR82j1EcIxs1wbSwWfazaKDJzZUgplz8F8gV0bQvO1Lbbg62w-iZcJIH4Fs3V25wLDPqADC2GZcrz6qEtxMxM6_nGknNdw=.jpg"
+      },
+      {
+        "name": "디카페인 바닐라라떼",
+        "temp": "HOT",
+        "price": 4400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/H0IV-4CWmFlw_X8XBGBCR5wybYN7GK0sL3PkngYmd8XIvAIeWOwHpTIjqBHWhBupU7WxktxEUHMloUXB1jjsn2iVA3_vH2dOmLlCv1ZNNRw=.jpg"
+      },
+      {
+        "name": "디카페인 바닐라라떼",
+        "temp": "ICE",
+        "price": 4400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/wzK-IiDULmS6NiyITNJoJ7i_25IopEooO_h5TodWSoQhph-7wLbxx3IQARP8rYpbtj68Gmd6KcyVK4C02PROQDfYh0DPvy2XDKsVtbO12uI=.jpg"
+      },
+      {
+        "name": "디카페인 헤이즐넛라떼",
+        "temp": "HOT",
+        "price": 4400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/VHTcXWLo_t9G0SDMMt_T35FyoixHt0i1xUBpHHtO1jn1VdqHj4zI98jFY3rNde6Lz4hNIDI2QXMLq4ji5lc2xqjPlDGMDy8dOgPlC7z9lE4=.jpg"
+      },
+      {
+        "name": "디카페인 헤이즐넛라떼",
+        "temp": "ICE",
+        "price": 4400,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jdQ4VQ9Xn-5iJZyX33VisJB3iCrv9x0pEI1bmqTK870RR2ohU6p5Rx5CRQyYDRouNVSsaGqtXwHBFKgkwPUenMHH8UNgl67MXipvkQhaQSA=.jpg"
+      },
+      {
+        "name": "디카페인 카라멜마끼아또",
+        "temp": "HOT",
+        "price": 4700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/UxQLNgZsnHypXltzlOv6456wc0saPL5alF4IGVraqH25iR2XX7pepVNYQ0lBUVwVSaJZRC4MMhmIZAbzIClr8CGHWBS1T7ucYet2WtkFCgQ=.jpg"
+      },
+      {
+        "name": "디카페인 카라멜마끼아또",
+        "temp": "ICE",
+        "price": 4700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/ZDloHWlQmeNoVePMrRUWuLNtXLdsIpT_YM1daMq2vK3qDC-Z2aObAtFIrfKXz7Y2QdbfL5mgM4spJQ3P7lb2jK40jtE4QSkPmd8Vkfh3O34=.jpg"
+      },
+      {
+        "name": "디카페인 카페모카",
+        "temp": "HOT",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Ml6EzntvSbRQFFE_bj6OCj0UfNLtm8E9DQEgUfbhY_VPOkujs_txNHz5T7MWe7lhmdNuppQCc5K8wnWbuuh5DK4C1fnkK9CmtX4L4mNzuyA=.jpg"
+      },
+      {
+        "name": "디카페인 카페모카",
+        "temp": "ICE",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/JA9HhCKEnY2DwfC4tba2Cmih2go7T6aWoPJLgPSgM5Mcg6mABbHhPInKaHoIx57AIcfXiB2VSM_HZ1CbrRRC3gm_X3ZH-VTDB87ewQQF-Ds=.jpg"
+      },
+      {
+        "name": "디카페인 연유라떼",
+        "temp": "ICE",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/FVFUpwTG4iiT6isAdlbl3_RMM_Sf7T-f3hjAsvs9sauUZQXVBYtXMkSm_LSOn-QiLlnTPZlMZkJTclG9v2o4UhyQTkYu40-RmF2bG8E4Saw=.jpg"
+      },
+      {
+        "name": "디카페인 연유라떼",
+        "temp": "HOT",
+        "price": 4900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/i0PLW15wSa3tU2BAembTyPPwJoE53qxRRv7v7ZEvWU4rF2d3HeKaioXNeQ_GZm_n34WSgBygRsDrrr65vujOp5bLwzd-sgxOoCr2lgaLITM=.jpg"
+      }
+    ]
+  },
+  {
+    "category": "콜드브루",
+    "items": [
+      {
+        "name": "콜드브루오리지널",
+        "temp": "HOT",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KM0IQkTvYPk8UgQfkDC4PkVepH46mfU5-SvQ53TcAQlRtWBcq_oLHMhifSzvGgtqrvj61yej0-MzlEoC_E_7qFB9Vr1_hLuvE09BGN0jXP0=.jpg"
+      },
+      {
+        "name": "콜드브루오리지널",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/wBZMMZKr_-1d-niKysrpJKafXiKnikZcy7K9TugujVdD48H0Zu_izdy7_AJZ3zX0i6Em4ARnPcUgrjtHiePXurHzUYDh6A3yLb35_gX2qp8=.jpg"
+      },
+      {
+        "name": "콜드브루라떼",
+        "temp": "HOT",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/c4P5gfFHdeR6AS8mOvVeXNXIBpLEXqF_eiPhg-8qOUviI9V_OcECnouHen1Smf8bDAVENf9N63FYLYkXj1a-OBhc1XQaqCaiS56SWhFymAI=.jpg"
+      },
+      {
+        "name": "콜드브루라떼",
+        "temp": "ICE",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/Og6mGDoYAqw8RLQyF9uj21A8urCmzSVt6Z2TksfJ3TgJfmhiWU0MjsJUsejC5G1B.jpg"
+      },
+      {
+        "name": "콜드브루디카페인",
+        "temp": "HOT",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ZPGPcFHZcWodTdirR5LTP6bOvRRrGTsSE6Rc6YEKc2Nb-7lk3i8xmLVbURrj70N54G6iAgm7hObGMMI3A2T_uuBaPHATsfp6f77FzpD93QI=.jpg"
+      },
+      {
+        "name": "콜드브루디카페인",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8k9ajfm47K7hu678chtz7PhI424ONVC_KDsueF6vZVUN.jpg"
+      },
+      {
+        "name": "콜드브루디카페인라떼",
+        "temp": "HOT",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Gj_Chm58Nd7GjIolW8kE0FVRdyq2PgtyFzqbloy9NWCcZfvBQeZPnqe1ZbDzwZz2BzdoTEa_dzztS3Adauw9RIcZI7uY--N58w_CCii79mo=.jpg"
+      },
+      {
+        "name": "콜드브루디카페인라떼",
+        "temp": "ICE",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8pTWPvW9Ovj10Bf-RPqRniUCgwPxMPhvsKlOvSae0-XF.jpg"
+      }
+    ]
+  },
+  {
+    "category": "스무디&프라페",
+    "items": [
+      {
+        "name": "초코허니퐁크러쉬",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/hYknmTYOCwRzKtEmdJa-DSKiBsJDkaWcQXkkVc7gS-mHJOHbqQKtgKdHNab5cON7qSq5p7wluB5_kefkkHnDG2MyXM43I99Ja-cH22FqrPY=.jpg"
+      },
+      {
+        "name": "플레인퐁크러쉬",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/sgtWxTqzKESS26TloH6u7CcY17wFD-Loe3qS1Mn2zBsbUwSWoyW_mSRSEEy23W-foxo0e6_EZBXGgv4KIVTKOSlRizrCQNMUNFaajdobQZY=.jpg"
+      },
+      {
+        "name": "딸기퐁크러쉬",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DeN6uRIN4aUl2HWiiGTw0yn58G2XQh9u4Ij_-d_h525x2dxahmN3EWAO5ptIIDUWWGbwx8JOXyrLC-iKol5wceMs-6Kdt52xOrN0I6b7kHY=.jpg"
+      },
+      {
+        "name": "쿠키프라페",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/U3ulgBShL7iWWeL9sUQuH6K12z3mAsge8cbMZKo9yZTDqwRPY9bwhauQJtab1s1rcjSWMf2FqPsSMIHS09PYMOrriyv9PISYavAYKP1oD00=.jpg"
+      },
+      {
+        "name": "딸기쿠키프라페",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/p3UbVRXvqEAY_o01G7QMlK9l00vBM7fVbMZROa3og3KtYVMVFo6cv1YGNPVOC9ZzzQzTOfev9wRSOgZbzDf7OcYceljLAkqV782u7NSRNXM=.jpg"
+      },
+      {
+        "name": "리얼초코프라페",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/HYAGIStr8O_o5OEr-tqaZ_Gl2PQaohiYQ3GeHTY8zFgPUThDQy6XGWimvx4KT7dNZEQ8nBZfnvPDPymWFaPGrTgImBi78ZMAP7giRzzc3NE=.jpg"
+      },
+      {
+        "name": "녹차프라페",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/C37po66-jmQcIkfDoVq0l6haWx6aqULj0Qkg-U-vyku79zc64dP2SiEMRL_PpFIZA5FkFSSzNSHnJYT0mVsGDr26k4cesriLC-MaTmNqtPM=.jpg"
+      },
+      {
+        "name": "커피프라페",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/fMbT2xfOQMs5JbOKa_FoErvyXXsmfiXlx2rg0wi1eZesdoqmE_z5dlMTFNu7fatYoZhF-3c-McuoLj0J43-7qgMVmufgw3y4Nr0TSQMto6k=.jpg"
+      },
+      {
+        "name": "골드망고스무디",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/HiO3XBKPvdwpdb5KMjSaqE3QoIN0irt1rCHHZKaJK_5-dLm2wkKrbN79gwNxPhknwvu9dLBD79QMQhQp4w0XOAhw8R3A7Bk8ua_BkQ7Xl18=.jpg"
+      },
+      {
+        "name": "블루베리요거트스무디",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/O-Dgf-apoZOKt5Trw4HerxwcXImNLzLHub3ZkKche6LxGs3xv6IjpzcNeXXdP14xUptpnBZ19IP_UI9lDUW85r97yDDYQiZgnLkJ49vIogo=.jpg"
+      },
+      {
+        "name": "플레인요거트스무디",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UnFlDthRpNWFGRZJBeuqCvOn1r72i_l-APyuLfUoCNzYQ_mdtvcPkMIfr8w48cf_ePx71gpvlCEAeLDJds1MphXhsyeAsov3cTozMYzIsaw=.jpg"
+      },
+      {
+        "name": "망고요거트스무디",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8_0Zp8hYrzvjMLfJYJR9NkMWn0XIYLub1kzIoFq2HPkF40vClyct3m-EXZZJtqW9UJzl6gY6UEOc4sfaSq0xCe8JKGT6en5dFn1uSUA1GEg=.jpg"
+      },
+      {
+        "name": "딸기요거트스무디",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/VIencBIHXO0PFoISrd3E6BuAlNr8Dq4grCUxC63Pf6Cg0OyE_606mrV2U5cR4OWI1dnn8UXNKb4vabkbPp3OGe1kwwfC88_Kn5JPKQor2cs=.jpg"
+      }
+    ]
+  },
+  {
+    "category": "에이드&주스",
+    "items": [
+      {
+        "name": "딸기바나나주스",
+        "temp": "ICE",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/IqQXs5tV39WaUp1dxfsOP7aFtnyNGZonm_woowR2GCDfQjBXnhBAZi_3iLB5pLI0FyOB71ffQnLQkFPtCu7Bj8A5GN8xJZD-JHgk_mNnzT8=.jpg"
+      },
+      {
+        "name": "딸기주스",
+        "temp": "ICE",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/fiAyoicvvkXHyKuOXHZSoy6RXDkSVKG8HW23wcQcZEjIrqM95YjoRnT7tRtjFbBTx0YQfaQl9IwWXyfE1S6GbCHl2oVBwdwULpIres3bh9Q=.jpg"
+      },
+      {
+        "name": "골드키위주스",
+        "temp": "ICE",
+        "price": 4000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/78ESCqbt13HDRlBvesQntTC1IQYcLUhoT6svdqDn87lILR15qQG0ZWEBCiCAKIKf7CDBajE6ULgjiiPxq4I8uzKc9CDeg-bnaQXN12bzDmk=.jpg"
+      },
+      {
+        "name": "체리콜라",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/1/26/0n8OMt8tMcq02EI9MdRke80NnuyB_Jo_GG3FEstD6fUz6CarDmHIAI0c9wCS4X4QFFu8y7nRKKHZkQzVjSvy7vqLwQhrAKUbCuMTkB5BsaE=.jpg"
+      },
+      {
+        "name": "제로 부스트 에이드",
+        "temp": "ICE",
+        "price": 3000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/VjJDxfn_lR7rEmq1pOkKP1lWuie2NtKbMAZlAdzQOc9QA2msFHuxMCGUBgDqQ1Bw68NN6mu7zD6gA1ajX9KYwG7yU-Gu4_wDxmwADrSaSjM=.jpg"
+      },
+      {
+        "name": "레몬에이드",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZXA4tkJN3DGmd9pEouXYjWfl2TKE78CqY79KorHMio41Ud-MoEFkEGSf0Mvu52WFf8LdhcLQe7mDWreKW0bozEHT-ibG26bJWcXPFqnhmUI=.jpg"
+      },
+      {
+        "name": "블루레몬에이드",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8wdjlF4OEZ_pyFUlX9iqcXPoeKI9185m-HsM6MK2Ty1bWpSYztP0SsMWmBSf_xdIjb-GV0KQqtvDlxG5NRn0y5nD-t3H0l3NHCYPinSc4U8=.jpg"
+      },
+      {
+        "name": "자몽에이드",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/5lRtLLtoQL_HFUZJqjUdpzTSKIEOFNHHly88bsDpQWhTK8uRQYT377LwM8u6LA2hs4llgfm3jr1LG3cXuSmQ1t9L4wrXSSU9_i1CZPZLnjM=.jpg"
+      },
+      {
+        "name": "청포도에이드",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/2andKV291hDArTBXIpwbjNiSznZWH2ogHB2uVGqLzBxfzBq6wb3K8P-dV_VgsXOXvVLKnln_s5PzBoCH6RTUp59JlaWsynIbQcm6zddkWnc=.jpg"
+      },
+      {
+        "name": "메가에이드",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/Q5tENzcXDDCQPunmkxMh0zRh1M6aTmE4fgUkIKwO2o98x3SgB2RMzC_NAruu_Go2FqbzfUgEmV8LQTW5rGOgJk5KKODLdlggg-euHjS611g=.jpg"
+      },
+      {
+        "name": "라임모히또",
+        "temp": "ICE",
+        "price": 3800,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CEdE6k7h1q-8DIvB37-JDO_CdJST9zSyY6TvC-4IpcppYOCCbT_ECrB-zzDeny5UsW1E6HQwyOj6S8qcTZ8RnM9XH9jHs1rPHlLWbW4V954=.jpg"
+      }
+    ]
+  },
+  {
+    "category": "음료",
+    "items": [
+      {
+        "name": "오레오초코라떼",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CLscCTM4lF9wK3TGC-_jXsHmtqrIlkXoC_FXGf3wGw48qJ7XXhFRrOSpdw42naxfqrBRcg8pEm5kI0ixqAI2BsDprk8EYNL0lsH-dqSj9HU=.jpg"
+      },
+      {
+        "name": "핫초코",
+        "temp": "HOT",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/eCnZ0fbfWdqBGmqe9ULnebNqFFYFglMg_4mzIYhBO6dvQMk0YlRDm7kn5SFb08R4AbIdUSBUvlJAE-k1jCEQt9qDmUHabFjH-ZlpvaUy2hI=.jpg"
+      },
+      {
+        "name": "아이스초코",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/AffY9Ui4NN306YYX3OBdSquPY0830jqFA-BeVjBXiemNaSH9dRTN4oVxbQ-3zWXfDQ3bHS3N_LTUnpl4_oxqmPA4wFQa9qvD8fx4rpsZ1fw=.jpg"
+      },
+      {
+        "name": "토피넛라떼",
+        "temp": "HOT",
+        "price": 3800,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7_7I2nWlmKPeIqCQmBmijHfPY4NqZcesLkOUIhL_Abs8GiPJOsSMsB9JmFiFxl1jsZOOhzm1lNggFR5t4YmcXG1NARCNk-Qh7DiLTSoaF0U=.jpg"
+      },
+      {
+        "name": "토피넛라떼",
+        "temp": "ICE",
+        "price": 3800,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UJOYDOT1iVtRIRIVY7h21MUqhpyOxo1PA4sALQZc3QIkgzM2w_cbxc2gYuf-LsKTbKRgJgb7g0yTTcsAiwncesJ1qhjWLajW7UMIcEaekjM=.jpg"
+      },
+      {
+        "name": "로얄밀크티라떼",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/bBwH5weMkSR6z4aEgl0sLyxyYYLw9HDgqL_ZnN4MYwm7oE9dWWP3FFv9S80APSLDNm8nHxWPMUjXqv02s-GjNkPqQJGa7KXXe4nWhLUmtCg=.jpg"
+      },
+      {
+        "name": "로얄밀크티라떼",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/5nZcFQdOlYmvaX8uIPAekIDCD0KClKNoepVf7WMw8k89Q7Y1kU-vsz-YF2YclnQgRvGUwzoaCus6Zmw9QabBOQaM426wQXu9ndAgd9nJ1oU=.jpg"
+      },
+      {
+        "name": "녹차라떼",
+        "temp": "HOT",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IpLtr10JuJMHs6UVu1LP39fuTmOZLfHnysQrk2aTy6x_s7ny80dJPJS3_cwTDTdGEVMZSkHLRc0OBDpg1IAQaQVywcqwqa1XkGd4_CFjrac=.jpg"
+      },
+      {
+        "name": "녹차라떼",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/1uddJztS6QEfLq2NH_rAW0IzUNeEBLgiKKrA7JqBR3V_tmW371jQgIvUVRi8JE1qsUaw2Bj8A43kVbxv6C1vjXh0S1fmLPoTHnWruUTwO9c=.jpg"
+      },
+      {
+        "name": "곡물라떼",
+        "temp": "HOT",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/s1JoYM41s3UL9d9duiITlpRveqNJ9ZPoKCEPqBrIl7pogOcgO_re_UGmwib4k61BQArOgxfhJzOrHfJG1zh2Quux7j-vNGZWgk4EBSH0V-0=.jpg"
+      },
+      {
+        "name": "곡물라떼",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZvwaiPsQ9NyHmmWoDrxj_iVxE4CnYGE6SyshuCHQZk84mFHRHb-ksl9hnQdeuD5UqOmQfmjCgZEeGCZ4k4PlpgujzoYO_DT-vZidL4eZDoQ=.jpg"
+      },
+      {
+        "name": "흑당버블라떼",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/z1NoRdTofJclMTopMiVplDN_6dJxrRaK4i3Grg5Uv7m-3RqS1pP5LOhp1nJ-rA65qA81nu_nmhaA6WKw8wkSQjfkYd0F4mw3yyUl2eTOOrg=.jpg"
+      },
+      {
+        "name": "흑당버블밀크티라떼",
+        "temp": "ICE",
+        "price": 3800,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/xK7cnG4T8IfWhkGDuVomAPVDk6x6h1M9C8kSP3LyplfwBHaogVd_lxqB1rSdoI_y16Y0pUCI209CL3MMHcBQkrp5hrVKSK-idKMwlSdBn2k=.jpg"
+      },
+      {
+        "name": "흑당라떼(펄X)",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/JZ1v49xs3cLAzISRCEs6xask0E5eapzo8ZJCBcgBnKazBtBqLipOaYBgtJNRLd6HspNDpAVLEjlHeBkdIrHmjJ9fs3uxmJb4gYUls4uGs50=.jpg"
+      },
+      {
+        "name": "흑당밀크티라떼(펄X)",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DmXLWIIWB1_6yywJHwfhPRn9hlK8d4due2jKiN3fk_XxgsnwfIttVvSGO8HPz5a4m34Om_7QXvud0nHhbE1vKOLPJBU1ZaN2u6f_vdTlxR4=.jpg"
+      }
+    ]
+  },
+  {
+    "category": "티",
+    "items": [
+      {
+        "name": "복숭아아이스티",
+        "temp": "ICE",
+        "price": 3000,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/hFZfNE45RMxnk9kn5zbdC6V2UcrsA-6W3dG2hoWBmGYsDJy2xfn_bOhFVVKMBj6m17_bVH0SzJE51sj9oCMayKKDu63hIRTCDrobrLPQ8KU=.jpg"
+      },
+      {
+        "name": "사과유자차",
+        "temp": "HOT",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IQzkyuSvf9uYWOlitBKrve9psGpHikZLFJWkXdtxlq1_5JvnKj-kXxPhqOkjtxIiSol9W6mxky1kMqLXJ0SIWWc8aL5fiawESQWws1Lsa5Y=.jpg"
+      },
+      {
+        "name": "사과유자차",
+        "temp": "ICE",
+        "price": 3500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/PyQzngk8ggsOC87jw3q-nLcdOuQl8Y4sOvp6qLG897jS15jXH5M3t2ONNT9v3BlxwypU_SWVovKGGR9YBLjn0BotM8P_p8-SgfRSZ7eLT84=.jpg"
+      },
+      {
+        "name": "허니자몽블랙티",
+        "temp": "HOT",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/9duwCk5Eis2jdoy6uwulJ6vH775tKK34N1_ormnXTrYYfjZo8TQa_gQPhRBCoy9o3ImtElZzi0XgasSmYVitxrNACEtOU1gIN0gdmQ2Dt8o=.jpg"
+      },
+      {
+        "name": "허니자몽블랙티",
+        "temp": "ICE",
+        "price": 3700,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/lkXrVZtrIjXL5jbPXM504l7ZVxfXHtd_aqrN5gcl4FmSdvjespVbe3jvpJhM54ciQu171bRy86SlKuxtBGQ1Hzk3bbWR_-NXTuN9Bi15BF8=.jpg"
+      },
+      {
+        "name": "자몽차",
+        "temp": "HOT",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/M7XaI7am_xsI6xkOvy47y5DMDv1SUeddVHeXr8fs_LTes1yQ11N8mXm1hfP96sCzyL7gTWWifYKqoEGPwq_PzRqo575Nu9lJTS9jrFfGUuQ=.jpg"
+      },
+      {
+        "name": "자몽차",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/zP6WP2bGSz12K70xdLt4EafXJRsmcSLChU--eRbBKPZqX1uA53UYKucF0YbC6f_o84j-m_sA_wQVObkpQxBckSNWKgmnNDmZfzKB3iVq8lM=.jpg"
+      },
+      {
+        "name": "유자차",
+        "temp": "HOT",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FOMm6mm39zlzNczKUXz12LVa2t7h5gxWp-ScWSk02qzmL0CfCz6G-zCD10idDU8DMTZwcqCidGZU38FPIl6n7I5albspg17KuP4PO_sb4C4=.jpg"
+      },
+      {
+        "name": "유자차",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/bDmWbkUvhJI6dwog3U1vO5P6rmli8g3eLugj5hIanmZuqVTom1PKR3u02QHoG_Zj3RuQG3FHj7_6qf08ytrgy8em4kCcc1cBkp169YXFv18=.jpg"
+      },
+      {
+        "name": "레몬차",
+        "temp": "HOT",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/wsz5AP253xHopKa63ZZYWoR_pgV786wW54xNtwtuWxQgBFBrKx_RW71STCAdfPS557RbK8LAiMdVrKvYWixhZQXwFxqDYZP6dCcERhylP5o=.jpg"
+      },
+      {
+        "name": "레몬차",
+        "temp": "ICE",
+        "price": 3300,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/gOr0iRzIzfby7xTx1iXF7RUzmjKtL7K-s8vNeYPiX3arfO_9f-2pH5ucqF0eo09x7WTm0dd9hKgFEGK0t79a_TWllUoNEmPvYFnX7gfmmWU=.jpg"
+      },
+      {
+        "name": "녹차",
+        "temp": "HOT",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Itrsrt4eAgEgJR6BivC9e90ESV-iZRq3RCxWECetz5IkJRrFuMxJ_Y1dqeuoOSLwPLxp3erUe8zgkEm1uPyEgMTyRRG7GfAalbPFlWKVdog=.jpg"
+      },
+      {
+        "name": "녹차",
+        "temp": "ICE",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/9hDYlB3brlT0s2cVM9sH65SlMTy82WREQNS6v2PXIczfTBBcSOC2dvRvSC4P6j2T.jpg"
+      },
+      {
+        "name": "캐모마일",
+        "temp": "HOT",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/lJpBG9a5cI1FgRPz0sH227oHCUrFFcUTKPTLOc_8E4wEevBXCF0NjKMfEYVoMyFYHXqhMwaj26rVz8oUx-m46Ic0A-IWCo0XvQ_8VHaucwk=.jpg"
+      },
+      {
+        "name": "캐모마일",
+        "temp": "ICE",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/6iZcXaap6Bb5XmF1c67fow_s1bGjtA-17rTXjO7x0dxRMy_Mr3mL3KPzw7E5sUcGZttO6o0sgfhJGur8uq4pTezMN5j68QhKG6TQCPoVQlY=.jpg"
+      },
+      {
+        "name": "페퍼민트",
+        "temp": "HOT",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3Vj9IJvzr8jKZ0QHHyOt7XNi7D_xa3RoO6UKXgNqvgCjqMPfjvgJNZj6qwR7L8-R3J-G2lQoTXkpOfLqWSrF--m0rEpVR48ZK5_QtqmhcrI=.jpg"
+      },
+      {
+        "name": "페퍼민트",
+        "temp": "ICE",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/MOdjfaLH_HCrAOi1FxDlLP50omDldL8x1tN2uOZaqmC56rpv_tj0CjfER33Cq4xi2f5tjAIg6u_m8nKwr1BFtynwKw47c37F1iRCcM9lWdc=.jpg"
+      },
+      {
+        "name": "얼그레이",
+        "temp": "HOT",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/0DdJKuR5TgZzQTZjRM8y46cIYBpZnEmcWFSQcjWTOg3QM1MOY0nctLnpJg8VpQGnMw13wg1EM_EkO3byAszHAM_KT0ckUDXdrzz5jap2Hkc=.jpg"
+      },
+      {
+        "name": "얼그레이",
+        "temp": "ICE",
+        "price": 2500,
+        "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/eVwf9hdU-A0TEEfRrlZ3THCgCum9Pa1pU4bMHEvdaR8x0TNIiR9rJC-tWf0QpgjavwaKTrxTKMYQZJdc9XXgvHq6rXxDbG3mXAunO4vqlbs=.jpg"
+      }
+    ]
+  }
+]

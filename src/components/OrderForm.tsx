@@ -1,17 +1,25 @@
-import { useState } from 'react'
-import { MENU_ITEMS, OPTION_ITEMS } from '../constants/coffeeMenu'
+import { useState, useEffect } from 'react'
+import { OPTION_ITEMS } from '../constants/coffeeMenu'
 import type { MenuTemp } from '../constants/coffeeMenu'
 import TempBadge from './TempBadge'
 import type { Order } from '../context/OrderContext'
+import menuData from '../data/menuData.json'
 
 type Props = {
   onSubmit: (order: Order) => void
   disabled: boolean
 }
 
+function getColCount(): number {
+  const w = window.innerWidth
+  if (w >= 1920) return 5
+  if (w >= 1440) return 4
+  return 3
+}
+
 export default function OrderForm({ onSubmit, disabled }: Props) {
-  const [name, setName] = useState('')
-  const [cls, setCls] = useState('')
+  const [name, setName] = useState(() => localStorage.getItem('coffy_name') ?? '')
+  const [cls, setCls] = useState(() => localStorage.getItem('coffy_class') ?? '')
   const [selectedMenu, setSelectedMenu] = useState<string | null>(null)
   const [customMenu, setCustomMenu] = useState('')
   const [isCustomMenu, setIsCustomMenu] = useState(false)
@@ -22,8 +30,24 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [customOption, setCustomOption] = useState('')
   const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
   const [password, setPassword] = useState('')
+  const CUSTOM_CATEGORY = '기타'
+  const [selectedCategory, setSelectedCategory] = useState(menuData[0].category)
+  const [menuPage, setMenuPage] = useState(0)
+  const [colCount, setColCount] = useState(getColCount)
 
-  const autoPrice = isCustomMenu ? 0 : (MENU_ITEMS.find(m => `${m.temp} ${m.name}` === selectedMenu)?.price ?? 0)
+  useEffect(() => {
+    const handler = () => setColCount(getColCount())
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
+
+  const ITEMS_PER_PAGE = colCount * 2
+  const allCategoryItems = menuData.find(c => c.category === selectedCategory)?.items ?? []
+  const totalPages = Math.ceil(allCategoryItems.length / ITEMS_PER_PAGE)
+  const currentCategoryItems = allCategoryItems.slice(menuPage * ITEMS_PER_PAGE, (menuPage + 1) * ITEMS_PER_PAGE)
+  const allItems = menuData.flatMap(c => c.items)
+  const selectedItem = allItems.find(m => `${m.temp} ${m.name}` === selectedMenu)
+  const autoPrice = isCustomMenu ? 0 : (selectedItem?.price ?? 0)
   const menuBasePrice = priceOverride !== '' ? priceOverride : autoPrice
 
   const optionTotal = selectedOptions.reduce((sum, opt) => {
@@ -41,10 +65,17 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setTempOption(temp)
   }
 
-  function handleCustomMenuClick() {
-    setSelectedMenu(null)
-    setIsCustomMenu(true)
-    setPriceOverride('')
+  function handleCategoryClick(category: string) {
+    setSelectedCategory(category)
+    setMenuPage(0)
+    if (category === CUSTOM_CATEGORY) {
+      setSelectedMenu(null)
+      setIsCustomMenu(true)
+      setPriceOverride('')
+    } else {
+      setIsCustomMenu(false)
+      setCustomMenu('')
+    }
   }
 
   function toggleOption(name: string) {
@@ -74,6 +105,8 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     )
     if (!confirmed) return
 
+    localStorage.setItem('coffy_name', name)
+    localStorage.setItem('coffy_class', cls)
     onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: allOptions, price: totalPrice, password })
 
     setName('')
@@ -94,68 +127,123 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
 
   return (
     <form className="order-form" onSubmit={handleSubmit}>
-      <div className="form-section-title">
-        주문하기 {disabled && <span className="closed-badge">마감</span>}
-      </div>
+      <div className="form-title-row">
+        <div className="form-section-title">
+          주문하기 {disabled && <span className="closed-badge">마감</span>}
+        </div>
 
-      {/* 이름 / 반 / 비밀번호 */}
-      <div className="form-row-inline">
-        <div className="form-row">
-          <label>이름</label>
-          <input value={name} onChange={e => setName(e.target.value)} disabled={disabled} placeholder="김싸피" />
-        </div>
-        <div className="form-row">
-          <label>반</label>
-          <input value={cls} onChange={e => setCls(e.target.value)} disabled={disabled} placeholder="1" />
-        </div>
-        <div className="form-row">
-          <label>비밀번호</label>
-          <input type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={disabled} placeholder="••••" maxLength={4} className="input-password" />
+        {/* 이름 / 반 / 비밀번호 */}
+        <div className="form-row-inline">
+          <div className="form-row">
+            <label>이름</label>
+            <input value={name} onChange={e => setName(e.target.value)} disabled={disabled} placeholder="김싸피" />
+          </div>
+          <div className="form-row">
+            <label>반</label>
+            <input value={cls} onChange={e => setCls(e.target.value)} disabled={disabled} placeholder="1" />
+          </div>
+          <div className="form-row">
+            <label>비밀번호</label>
+            <input type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={disabled} placeholder="••••" maxLength={4} className="input-password" />
+          </div>
         </div>
       </div>
 
       {/* 메뉴 선택 */}
       <div className="kiosk-section">
         <div className="kiosk-label">메뉴</div>
-        <div className="kiosk-grid">
-          {MENU_ITEMS.map(item => {
-            const fullName = `${item.temp} ${item.name}`
-            return (
-              <button
-                key={fullName}
-                type="button"
-                className={`kiosk-btn ${selectedMenu === fullName && !isCustomMenu ? 'selected' : ''}`}
-                onClick={() => handleMenuClick(fullName, item.price, item.temp)}
-                disabled={disabled}
-              >
-                <div className="kiosk-badge-row"><TempBadge temp={item.temp} size="sm" /></div>
-                <span className="kiosk-btn-name">{item.name}</span>
-                <span className="kiosk-btn-price">{item.price.toLocaleString()}원</span>
-              </button>
-            )
-          })}
-          {isCustomMenu ? (
-            <div className="kiosk-btn kiosk-btn-other selected kiosk-btn-input">
+        <div className="category-tabs">
+          {menuData.map(c => (
+            <button
+              key={c.category}
+              type="button"
+              className={`category-tab ${selectedCategory === c.category ? 'selected' : ''}`}
+              onClick={() => handleCategoryClick(c.category)}
+              disabled={disabled}
+            >
+              {c.category}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={`category-tab ${selectedCategory === CUSTOM_CATEGORY ? 'selected' : ''}`}
+            onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
+            disabled={disabled}
+          >
+            기타
+          </button>
+        </div>
+        <div className={`kiosk-grid-with-image${selectedCategory === CUSTOM_CATEGORY ? ' no-min-height' : ''}`}>
+          {selectedCategory === CUSTOM_CATEGORY ? (
+            <div className="kiosk-custom-menu-area">
               <input
-                className="kiosk-inline-input"
-                placeholder="메뉴명 입력"
+                className="kiosk-custom-menu-input"
+                placeholder="메뉴명 직접 입력"
                 value={customMenu}
                 onChange={e => setCustomMenu(e.target.value)}
-                onClick={e => e.stopPropagation()}
                 autoFocus
                 disabled={disabled}
               />
             </div>
           ) : (
-            <button
-              type="button"
-              className="kiosk-btn kiosk-btn-other"
-              onClick={handleCustomMenuClick}
-              disabled={disabled}
-            >
-              <span className="kiosk-btn-name">기타</span>
-              <span className="kiosk-btn-price">직접 입력</span>
-            </button>
+          <div className="kiosk-grid-column">
+            <div className="kiosk-grid">
+            {currentCategoryItems.map(item => {
+              const fullName = `${item.temp} ${item.name}`
+              return (
+                <button
+                  key={fullName}
+                  type="button"
+                  className={`kiosk-btn ${selectedMenu === fullName && !isCustomMenu ? 'selected' : ''}`}
+                  onClick={() => handleMenuClick(fullName, item.price, item.temp as MenuTemp)}
+                  disabled={disabled}
+                >
+                  <div className="kiosk-badge-row"><TempBadge temp={item.temp as MenuTemp} size="sm" /></div>
+                  <span className="kiosk-btn-name">{item.name}</span>
+                  <span className="kiosk-btn-price">{item.price.toLocaleString()}원</span>
+                </button>
+              )
+            })}
+            </div>
+            {totalPages > 1 && (
+              <div className="kiosk-pagination">
+                <button
+                  type="button"
+                  className="kiosk-pagination-btn"
+                  onClick={() => setMenuPage(p => p - 1)}
+                  disabled={menuPage === 0}
+                >
+                  ‹
+                </button>
+                <div className="kiosk-pagination-dots">
+                  {Array.from({ length: totalPages }, (_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      className={`kiosk-pagination-dot ${i === menuPage ? 'active' : ''}`}
+                      onClick={() => setMenuPage(i)}
+                    />
+                  ))}
+                </div>
+                <button
+                  type="button"
+                  className="kiosk-pagination-btn"
+                  onClick={() => setMenuPage(p => p + 1)}
+                  disabled={menuPage >= totalPages - 1}
+                >
+                  ›
+                </button>
+              </div>
+            )}
+          </div>
+          )}
+          {selectedCategory !== CUSTOM_CATEGORY && (
+            <div className="kiosk-menu-image">
+              {selectedItem?.image
+                ? <img src={selectedItem.image} alt={selectedItem.name} />
+                : <span className="kiosk-menu-image-placeholder">☕</span>
+              }
+            </div>
           )}
         </div>
       </div>

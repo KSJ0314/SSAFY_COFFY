@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import { subscribeTodayOrders, saveOrder, deleteOrder } from '../services/orderService'
+import { subscribeTodayOrders, saveOrder, deleteOrder, getTodayKST } from '../services/orderService'
 
 export type Order = {
   id?: string
@@ -26,11 +26,30 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const unsubscribe = subscribeTodayOrders(data => {
+    let currentDate = getTodayKST()
+    let unsubscribe = subscribeTodayOrders(data => {
       setOrders(data)
       setLoading(false)
     })
-    return () => unsubscribe()
+
+    const interval = setInterval(() => {
+      const newDate = getTodayKST()
+      if (newDate !== currentDate) {
+        currentDate = newDate
+        unsubscribe()
+        setOrders([])
+        setLoading(true)
+        unsubscribe = subscribeTodayOrders(data => {
+          setOrders(data)
+          setLoading(false)
+        })
+      }
+    }, 60_000)
+
+    return () => {
+      unsubscribe()
+      clearInterval(interval)
+    }
   }, [])
 
   async function addOrder(order: Order) {
