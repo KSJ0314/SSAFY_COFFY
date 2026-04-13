@@ -136,8 +136,12 @@ export default function InquiryPage() {
   async function handleAddComment(inquiryId: string) {
     const input = getCommentInput(inquiryId)
     if (!input.content.trim() || !input.password) return
-    const isAdmin = import.meta.env.DEV ? true : undefined
-    await saveComment(inquiryId, { content: input.content.trim(), password: input.password, isAdmin })
+    const commentData: { content: string; password: string; isAdmin?: boolean } = {
+      content: input.content.trim(),
+      password: input.password,
+    }
+    if (import.meta.env.DEV) commentData.isAdmin = true
+    await saveComment(inquiryId, commentData)
     setCommentInputs(prev => ({ ...prev, [inquiryId]: { content: '', password: '' } }))
   }
 
