@@ -1312,6 +1312,60 @@ tfoot td {
   line-height: 1.5;
 }
 
+/* ── 주문 목록 그룹 ── */
+
+.group-header-row td {
+  background: #fdf0e0;
+  font-weight: 700;
+  color: #4a2810;
+  border-bottom: 1px solid #e8d4bc;
+}
+
+.group-clickable {
+  cursor: pointer;
+}
+
+.group-clickable:hover td {
+  background: #fde8cc;
+}
+
+.group-toggle {
+  font-size: 0.65rem;
+  color: #a07858;
+  display: inline-block;
+  width: 14px;
+  text-align: center;
+}
+
+.group-count-cell {
+  text-align: center;
+  width: 32px;
+}
+
+.group-name-cell {
+  font-weight: 800;
+}
+
+.group-child-row td {
+  background: #fffaf5;
+  color: #5c3317;
+  font-size: 0.87rem;
+  border-bottom: 1px solid #f5ecdf;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.group-child-row:hover td {
+  background: #fff3e0;
+}
+
+.group-child-index {
+  text-align: center;
+  color: #c0a080;
+  font-size: 0.78rem;
+  padding-left: 20px !important;
+}
+
 /* ── 반응형 ── */
 /* @media (min-width: 1280px) {
   .right-panel { max-width: 880px; }
