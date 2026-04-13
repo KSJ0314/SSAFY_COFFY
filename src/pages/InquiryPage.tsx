@@ -147,11 +147,16 @@ export default function InquiryPage() {
 
   async function handleDeleteComment(inquiryId: string, comment: Comment) {
     if (!comment.id) return
-    const input = window.prompt('댓글을 삭제하려면 비밀번호를 입력하세요.')
-    if (input === null) return
-    if (input !== comment.password) {
-      window.alert('비밀번호가 일치하지 않습니다.')
-      return
+    if (comment.isAdmin) {
+      if (!import.meta.env.DEV) return
+      if (!window.confirm('관리자 댓글을 삭제하시겠습니까?')) return
+    } else {
+      const input = window.prompt('댓글을 삭제하려면 비밀번호를 입력하세요.')
+      if (input === null) return
+      if (input !== comment.password) {
+        window.alert('비밀번호가 일치하지 않습니다.')
+        return
+      }
     }
     await deleteComment(inquiryId, comment.id)
   }
@@ -232,10 +237,12 @@ export default function InquiryPage() {
                               {comment.isAdmin && <span className="comment-admin-badge">관리자</span>}
                               <span className="comment-content">{comment.content}</span>
                               <span className="comment-date">{formatDate(comment.createdAt)}</span>
-                              <button
-                                className="comment-delete-btn"
-                                onClick={() => handleDeleteComment(id, comment)}
-                              >✕</button>
+                              {(!comment.isAdmin || import.meta.env.DEV) && (
+                                <button
+                                  className="comment-delete-btn"
+                                  onClick={() => handleDeleteComment(id, comment)}
+                                >✕</button>
+                              )}
                             </div>
                           ))}
                           <div className="comment-input-row">
