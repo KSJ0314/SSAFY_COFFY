@@ -135,7 +135,8 @@ export default function InquiryPage() {
 
   async function handleAddComment(inquiryId: string) {
     const input = getCommentInput(inquiryId)
-    if (!input.content.trim() || !input.password) return
+    if (!input.content.trim()) return
+    if (!import.meta.env.DEV && !input.password) return
     const commentData: { content: string; password: string; isAdmin?: boolean } = {
       content: input.content.trim(),
       password: input.password,
@@ -253,18 +254,20 @@ export default function InquiryPage() {
                               onChange={e => setCommentField(id, 'content', e.target.value)}
                               onKeyDown={e => { if (e.key === 'Enter') handleAddComment(id) }}
                             />
-                            <input
-                              type="password"
-                              className="comment-password-input"
-                              placeholder="비밀번호"
-                              maxLength={4}
-                              value={input.password}
-                              onChange={e => setCommentField(id, 'password', e.target.value)}
-                            />
+                            {!import.meta.env.DEV && (
+                              <input
+                                type="password"
+                                className="comment-password-input"
+                                placeholder="비밀번호"
+                                maxLength={4}
+                                value={input.password}
+                                onChange={e => setCommentField(id, 'password', e.target.value)}
+                              />
+                            )}
                             <button
                               className="comment-submit-btn"
                               onClick={() => handleAddComment(id)}
-                              disabled={!input.content.trim() || !input.password}
+                              disabled={!input.content.trim() || (!import.meta.env.DEV && !input.password)}
                             >작성</button>
                           </div>
                         </div>

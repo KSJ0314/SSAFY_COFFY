@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useRef } from 'react'
 
 type Props = {
   mode: 'create' | 'edit'
@@ -13,6 +13,7 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
   const [password, setPassword] = useState('')
   const [name, setName] = useState(localStorage.getItem('coffy_name') ?? '')
   const [cls, setCls] = useState(localStorage.getItem('coffy_class') ?? '')
+  const mouseDownOnBackdrop = useRef(false)
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -25,8 +26,12 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
   }
 
   return (
-    <div className="modal-backdrop" onClick={onClose}>
-      <div className="modal inquiry-modal" onClick={e => e.stopPropagation()}>
+    <div
+      className="modal-backdrop"
+      onMouseDown={() => { mouseDownOnBackdrop.current = true }}
+      onMouseUp={() => { if (mouseDownOnBackdrop.current) onClose(); mouseDownOnBackdrop.current = false }}
+    >
+      <div className="modal inquiry-modal" onMouseDown={e => { e.stopPropagation(); mouseDownOnBackdrop.current = false }}>
         <div className="modal-body">
           <div className="modal-header">
             <h2>{mode === 'create' ? '문의 작성' : '문의 수정'}</h2>
