@@ -25,6 +25,10 @@
   transition: background 0.2s;
 }
 
+.patch-notes-btn {
+  position: relative;
+}
+
 .patch-notes-btn:hover,
 .inquiry-top-btn:hover {
   background: rgba(255,255,255,0.2);
