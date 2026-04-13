@@ -38,10 +38,15 @@ export default function MainPage() {
     <div className="main-layout">
       {/* 왼쪽: 로고 + 공지 */}
       <div className="left-panel">
-        <button className="patch-notes-btn" onClick={handleOpenPatchNotes}>
-          패치노트
-          {hasNewPatch && <span className="patch-new-dot" />}
-        </button>
+        <div className="top-btn-group">
+          <button className="patch-notes-btn" onClick={handleOpenPatchNotes}>
+            패치노트
+            {hasNewPatch && <span className="patch-new-dot" />}
+          </button>
+          <button className="inquiry-top-btn" onClick={() => navigate('/inquiry')}>
+            문의하기
+          </button>
+        </div>
         <div className="logo-area">
           <div className="logo">☕</div>
           <h1>SSAFY COFFEE</h1>

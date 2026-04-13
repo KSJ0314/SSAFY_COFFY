@@ -1,8 +1,8 @@
 import { useRef, useState, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
 import html2canvas from 'html2canvas'
 import { useOrders } from '../context/OrderContext'
 import TempBadge from '../components/TempBadge'
+import PageLayout from '../components/PageLayout'
 
 function isClosed(): boolean {
   const now = new Date()
@@ -11,7 +11,6 @@ function isClosed(): boolean {
 
 export default function OrderListPage() {
   const { orders, loading, removeOrder } = useOrders()
-  const navigate = useNavigate()
   const captureRef = useRef<HTMLDivElement>(null)
   const total = orders.reduce((sum, o) => sum + o.price, 0)
   const today = new Date().toLocaleDateString('ko-KR')
@@ -64,31 +63,20 @@ export default function OrderListPage() {
     link.click()
   }
 
-  return (
-    <div className="list-page-bg">
-    <div className="list-page">
-      <div className="list-header">
-        <button className="back-btn" onClick={() => navigate('/')}>← 돌아가기</button>
-        <div className="list-title-area">
-          <span className="logo">☕</span>
-          <h1>오늘의 주문 목록</h1>
-        </div>
-        <div className="list-actions">
-          <div className="list-meta">{today} / 총 {orders.length}건</div>
-          {orders.length > 0 && (
-            <button className="save-image-btn" onClick={handleSaveImage}>
-              이미지로 저장
-            </button>
-          )}
-        </div>
-      </div>
+  const actions = (
+    <>
+      <div className="list-meta">{today} / 총 {orders.length}건</div>
+      {orders.length > 0 && (
+        <button className="save-image-btn" onClick={handleSaveImage}>
+          이미지로 저장
+        </button>
+      )}
+    </>
+  )
 
-      {loading ? (
-        <div className="empty loading-text">불러오는 중...</div>
-      ) : orders.length === 0 ? (
-        <div className="empty">아직 주문이 없습니다.</div>
-      ) : (
-        <>
+  return (
+    <PageLayout title="오늘의 주문 목록" backPath="/" actions={actions}>
+      <>
           {/* 화면용 그룹 테이블 */}
           <table>
             <thead>
@@ -103,7 +91,17 @@ export default function OrderListPage() {
               </tr>
             </thead>
             <tbody>
-              {groupedOrders.map(([name, groupOrders]) => {
+              {loading && (
+                <tr>
+                  <td colSpan={7} className="table-empty-cell loading-text">불러오는 중...</td>
+                </tr>
+              )}
+              {!loading && orders.length === 0 && (
+                <tr>
+                  <td colSpan={7} className="table-empty-cell">아직 주문이 없습니다.</td>
+                </tr>
+              )}
+              {!loading && groupedOrders.map(([name, groupOrders]) => {
                 const expanded = expandedGroups.has(name)
                 const groupTotal = groupOrders.reduce((s, o) => s + o.price, 0)
                 const isMulti = groupOrders.length > 1
@@ -192,8 +190,6 @@ export default function OrderListPage() {
             </table>
           </div>
         </>
-      )}
-    </div>
-    </div>
+    </PageLayout>
   )
 }

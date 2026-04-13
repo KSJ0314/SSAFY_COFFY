@@ -4,11 +4,17 @@
   min-height: 100vh;
 }
 
-/* 패치노트 버튼 */
-.patch-notes-btn {
+/* 패치노트 / 문의하기 버튼 그룹 */
+.top-btn-group {
   position: absolute;
   top: 12px;
   left: 12px;
+  display: flex;
+  gap: 6px;
+}
+
+.patch-notes-btn,
+.inquiry-top-btn {
   background: rgba(255,255,255,0.1);
   border: 1px solid rgba(255,255,255,0.2);
   border-radius: 6px;
@@ -19,7 +25,8 @@
   transition: background 0.2s;
 }
 
-.patch-notes-btn:hover {
+.patch-notes-btn:hover,
+.inquiry-top-btn:hover {
   background: rgba(255,255,255,0.2);
 }
 
@@ -40,7 +47,7 @@
   width: 340px;
   flex-shrink: 0;
   background: linear-gradient(160deg, #4a2810, #7c4519);
-  padding: 32px 24px;
+  padding: 56px 24px 32px;
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -115,6 +122,23 @@
   position: absolute;
   left: 0;
   color: #ffd080;
+}
+
+.account-info {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.account-number {
+  color: #ffd080;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.account-number:hover {
+  text-decoration: underline;
 }
 
 .notice-list a {
@@ -864,22 +888,28 @@ th {
   letter-spacing: 0.5px;
 }
 
-td {
-  padding: 11px 14px;
+tbody tr {
   border-bottom: 1px solid #f0e4d4;
-  color: #3b1f0a;
 }
 
 tbody tr:hover {
   background: #fff3e0;
 }
 
+td {
+  padding: 11px 14px;
+  color: #3b1f0a;
+}
+
+tfoot tr {
+  background: #fdf0e0;
+  border-top: 2px solid #d4b896;
+  border-bottom: none;
+}
+
 tfoot td {
   font-weight: 700;
   color: #7c4519;
-  border-top: 2px solid #d4b896;
-  border-bottom: none;
-  background: #fdf0e0;
 }
 
 /* ── 온도 뱃지 ── */
@@ -1314,18 +1344,21 @@ tfoot td {
 
 /* ── 주문 목록 그룹 ── */
 
-.group-header-row td {
+.group-header-row {
   background: #fdf0e0;
+  border-bottom: 1px solid #e8d4bc;
+}
+
+.group-header-row td {
   font-weight: 700;
   color: #4a2810;
-  border-bottom: 1px solid #e8d4bc;
 }
 
 .group-clickable {
   cursor: pointer;
 }
 
-.group-clickable:hover td {
+.group-clickable:hover {
   background: #fde8cc;
 }
 
@@ -1346,16 +1379,19 @@ tfoot td {
   font-weight: 800;
 }
 
-.group-child-row td {
+.group-child-row {
   background: #fffaf5;
+  border-bottom: 1px solid #f5ecdf;
+}
+
+.group-child-row td {
   color: #5c3317;
   font-size: 0.87rem;
-  border-bottom: 1px solid #f5ecdf;
   padding-top: 8px;
   padding-bottom: 8px;
 }
 
-.group-child-row:hover td {
+.group-child-row:hover {
   background: #fff3e0;
 }
 
@@ -1364,6 +1400,352 @@ tfoot td {
   color: #c0a080;
   font-size: 0.78rem;
   padding-left: 20px !important;
+}
+
+/* ── 문의 게시판 ── */
+.inquiry-write-btn {
+  padding: 8px 16px;
+  background: #4a2810;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.inquiry-write-btn:hover {
+  opacity: 0.85;
+}
+
+.inquiry-header-row {
+  background: #fdf0e0;
+  border-bottom: 1px solid #e8d4bc;
+}
+
+.inquiry-header-row td {
+  font-weight: 600;
+  color: #3b1f0a;
+}
+
+.inquiry-clickable {
+  cursor: pointer;
+}
+
+.inquiry-clickable:hover {
+  background: #fde8cc;
+}
+
+.inquiry-title-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.inquiry-actions-cell {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+}
+
+.inquiry-edit-btn {
+  background: none;
+  border: none;
+  color: #a07858;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+}
+
+.inquiry-edit-btn:hover {
+  color: #7c4519;
+}
+
+.inquiry-content-row {
+  background: #fffaf5;
+  border-bottom: 1px solid #e8d4bc;
+}
+
+.inquiry-content-row:hover {
+  background: #fffaf5;
+}
+
+.inquiry-content-row td {
+  padding: 0;
+}
+
+.inquiry-content {
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inquiry-content-text {
+  font-size: 0.9rem;
+  color: #3b1f0a;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+.inquiry-comments {
+  border-top: 1px solid #f0e4d4;
+  padding-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inquiry-comments-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #8c5c30;
+  letter-spacing: 0.5px;
+}
+
+.inquiry-no-comments {
+  font-size: 0.82rem;
+  color: #c0a080;
+}
+
+.comment-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px;
+  background: #fdf6ec;
+  border-radius: 8px;
+  border: 1px solid #f0e4d4;
+}
+
+.comment-item-admin {
+  background: #fff8ec;
+  border-color: #d4a84b;
+}
+
+.comment-admin-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #fff;
+  background: #c47d1a;
+  border-radius: 4px;
+  padding: 2px 6px;
+  flex-shrink: 0;
+}
+
+.comment-content {
+  flex: 1;
+  font-size: 0.88rem;
+  color: #3b1f0a;
+}
+
+.comment-date {
+  font-size: 0.75rem;
+  color: #a07858;
+  flex-shrink: 0;
+}
+
+.comment-delete-btn {
+  background: none;
+  border: none;
+  color: #c0a090;
+  cursor: pointer;
+  font-size: 0.75rem;
+  padding: 2px 4px;
+  border-radius: 4px;
+  transition: color 0.15s;
+  flex-shrink: 0;
+}
+
+.comment-delete-btn:hover {
+  color: #e53e3e;
+}
+
+.comment-input-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.comment-content-input {
+  flex: 1;
+  padding: 7px 10px;
+  border: 1.5px solid #d4b896;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: #fff;
+  color: #2c1a0e;
+  outline: none;
+}
+
+.comment-content-input:focus {
+  border-color: #a0622a;
+}
+
+.comment-password-input {
+  width: 80px;
+  padding: 7px 10px;
+  border: 1.5px solid #d4b896;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  background: #fff;
+  color: #2c1a0e;
+  outline: none;
+}
+
+.comment-password-input:focus {
+  border-color: #a0622a;
+}
+
+.comment-submit-btn {
+  padding: 7px 14px;
+  background: #7c4519;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  flex-shrink: 0;
+}
+
+.comment-submit-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.comment-submit-btn:disabled {
+  background: #c4b0a0;
+  cursor: not-allowed;
+}
+
+.table-empty-cell {
+  text-align: center;
+  color: #b89878;
+  font-size: 0.9rem;
+  vertical-align: middle;
+}
+
+
+.inquiry-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.inquiry-page-info {
+  font-size: 0.85rem;
+  color: #7c4519;
+  font-weight: 600;
+}
+
+/* 문의 모달 */
+.inquiry-modal {
+  width: 560px;
+}
+
+.inquiry-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.inquiry-form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inquiry-form-row-inline {
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.inquiry-form-inline-item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inquiry-form-row label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #6b3f1a;
+}
+
+.inquiry-form-row input,
+.inquiry-form-row textarea {
+  padding: 10px 12px;
+  border: 1.5px solid #d4b896;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: #fff;
+  color: #2c1a0e;
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.inquiry-form-row input:focus,
+.inquiry-form-row textarea:focus {
+  border-color: #a0622a;
+}
+
+.inquiry-password-input {
+  width: 100px;
+}
+
+.inquiry-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.inquiry-cancel-btn {
+  padding: 9px 20px;
+  background: none;
+  border: 1.5px solid #d4b896;
+  border-radius: 8px;
+  color: #8c5c30;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.inquiry-cancel-btn:hover {
+  background: #f5ede3;
+}
+
+.inquiry-submit-btn {
+  padding: 9px 20px;
+  background: #7c4519;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.inquiry-submit-btn:hover:not(:disabled) {
+  opacity: 0.85;
+}
+
+.inquiry-submit-btn:disabled {
+  background: #c4b0a0;
+  cursor: not-allowed;
 }
 
 /* ── 반응형 ── */
