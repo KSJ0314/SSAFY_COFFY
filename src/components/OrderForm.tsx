@@ -158,7 +158,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setPassword('')
   }
 
-  const canAddToCart = true
   const missingInfo = !name || !cls || !password
 
   return (
