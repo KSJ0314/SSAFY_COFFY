@@ -64,7 +64,7 @@ export default function MainPage() {
       {/* 오른쪽: 주문 폼 */}
       <div className="right-panel">
         <OrderForm
-          onSubmit={order => { addOrder(order); navigate('/orders') }}
+          onSubmit={async orders => { await Promise.all(orders.map(addOrder)); navigate('/orders') }}
           disabled={closed}
         />
       </div>

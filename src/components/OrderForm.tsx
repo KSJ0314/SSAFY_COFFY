@@ -4,9 +4,19 @@ import type { MenuTemp } from '../constants/coffeeMenu'
 import TempBadge from './TempBadge'
 import type { Order } from '../context/OrderContext'
 import menuData from '../data/menuData.json'
+import CartModal from './CartModal'
+
+export type CartItem = {
+  id: string
+  menu: string
+  temp: MenuTemp
+  options: string[]
+  price: number
+  image?: string
+}
 
 type Props = {
-  onSubmit: (order: Order) => void
+  onSubmit: (orders: Order[]) => void
   disabled: boolean
 }
 
@@ -30,6 +40,15 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [customOption, setCustomOption] = useState('')
   const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
   const [password, setPassword] = useState('')
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    try { return JSON.parse(sessionStorage.getItem('coffy_cart') ?? '[]') } catch { return [] }
+  })
+  const [showCart, setShowCart] = useState(false)
+
+  useEffect(() => {
+    sessionStorage.setItem('coffy_cart', JSON.stringify(cart))
+  }, [cart])
+  const [showInfoMessage, setShowInfoMessage] = useState(false)
   const CUSTOM_CATEGORY = '기타'
   const [selectedCategory, setSelectedCategory] = useState(menuData[0].category)
   const [menuPage, setMenuPage] = useState(0)
@@ -88,29 +107,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setTempOption(temp)
   }
 
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault()
-    if (!name || !cls || !currentMenu || !menuBasePrice) return
-
-    const menuName = isCustomMenu ? currentMenu : currentMenu.slice(4)
-
-    const allOptions = [
-      ...selectedOptions,
-      ...(isCustomOption && customOption ? [`${customOption}${customOptionPrice ? `(+${Number(customOptionPrice).toLocaleString()}원)` : ''}`] : []),
-    ]
-
-    const optionText = allOptions.length > 0 ? `\n옵션: ${allOptions.join(', ')}` : ''
-    const confirmed = window.confirm(
-      `주문을 확인해주세요!\n\n이름: ${name}\n반: ${cls}\n메뉴: [${tempOption}] ${menuName}${optionText}\n가격: ${totalPrice.toLocaleString()}원\n비밀번호: ${password}\n\n주문하시겠습니까?`
-    )
-    if (!confirmed) return
-
-    localStorage.setItem('coffy_name', name)
-    localStorage.setItem('coffy_class', cls)
-    onSubmit({ name, class: cls, menu: menuName, temp: tempOption, options: allOptions, price: totalPrice, password })
-
-    setName('')
-    setCls('')
+  function resetMenuSelection() {
     setSelectedMenu(null)
     setCustomMenu('')
     setIsCustomMenu(false)
@@ -120,13 +117,52 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     setIsCustomOption(false)
     setCustomOption('')
     setCustomOptionPrice('')
+    setSelectedCategory(menuData[0].category)
+    setMenuPage(0)
+  }
+
+  function handleAddToCart() {
+    if (!currentMenu || !menuBasePrice) {
+      window.alert('메뉴를 선택해주세요.')
+      return
+    }
+    const menuName = isCustomMenu ? currentMenu : currentMenu.slice(4)
+    const allOptions = [
+      ...selectedOptions,
+      ...(isCustomOption && customOption ? [`${customOption}${customOptionPrice ? `(+${Number(customOptionPrice).toLocaleString()}원)` : ''}`] : []),
+    ]
+    const newItem: CartItem = {
+      id: crypto.randomUUID(),
+      menu: menuName,
+      temp: tempOption,
+      options: allOptions,
+      price: totalPrice,
+      image: selectedItem?.image,
+    }
+    setCart(prev => [...prev, newItem])
+    resetMenuSelection()
+  }
+
+  function handleCartSubmit() {
+    if (!name || !cls || !password || cart.length === 0) return
+    localStorage.setItem('coffy_name', name)
+    localStorage.setItem('coffy_class', cls)
+    const orders: Order[] = cart.map(item => ({
+      name, class: cls, menu: item.menu, temp: item.temp,
+      options: item.options, price: item.price, password,
+    }))
+    onSubmit(orders)
+    setCart([])
+    sessionStorage.removeItem('coffy_cart')
+    setShowCart(false)
     setPassword('')
   }
 
-  const canSubmit = !!name && !!cls && !!currentMenu && menuBasePrice > 0 && !!password
+  const canAddToCart = true
+  const missingInfo = !name || !cls || !password
 
   return (
-    <form className="order-form" onSubmit={handleSubmit}>
+    <form className="order-form" onSubmit={e => e.preventDefault()}>
       <div className="form-title-row">
         <div className="form-section-title">
           주문하기 {disabled && <span className="closed-badge">마감</span>}
@@ -136,15 +172,24 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         <div className="form-row-inline">
           <div className="form-row">
             <label>이름</label>
-            <input value={name} onChange={e => setName(e.target.value)} disabled={disabled} placeholder="김싸피" />
+            <div className="input-tooltip-wrap">
+              {showInfoMessage && !name && <div className="input-tooltip">필수 입력</div>}
+              <input value={name} onChange={e => { setName(e.target.value); setShowInfoMessage(false) }} placeholder="김싸피" />
+            </div>
           </div>
           <div className="form-row">
             <label>반</label>
-            <input value={cls} onChange={e => setCls(e.target.value)} disabled={disabled} placeholder="1" />
+            <div className="input-tooltip-wrap">
+              {showInfoMessage && !cls && <div className="input-tooltip">필수 입력</div>}
+              <input value={cls} onChange={e => { setCls(e.target.value); setShowInfoMessage(false) }} placeholder="1" />
+            </div>
           </div>
           <div className="form-row">
             <label>비밀번호</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} disabled={disabled} placeholder="••••" maxLength={4} className="input-password" />
+            <div className="input-tooltip-wrap">
+              {showInfoMessage && !password && <div className="input-tooltip">필수 입력</div>}
+              <input type="password" value={password} onChange={e => { setPassword(e.target.value); setShowInfoMessage(false) }} placeholder="••••" maxLength={4} className="input-password" />
+            </div>
           </div>
         </div>
       </div>
@@ -159,8 +204,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
               type="button"
               className={`category-tab ${selectedCategory === c.category ? 'selected' : ''}`}
               onClick={() => handleCategoryClick(c.category)}
-              disabled={disabled}
-            >
+              >
               {c.category}
             </button>
           ))}
@@ -168,7 +212,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             type="button"
             className={`category-tab ${selectedCategory === CUSTOM_CATEGORY ? 'selected' : ''}`}
             onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
-            disabled={disabled}
           >
             기타
           </button>
@@ -182,7 +225,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                 value={customMenu}
                 onChange={e => setCustomMenu(e.target.value)}
                 autoFocus
-                disabled={disabled}
               />
             </div>
           ) : (
@@ -196,7 +238,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                   type="button"
                   className={`kiosk-btn ${selectedMenu === fullName && !isCustomMenu ? 'selected' : ''}`}
                   onClick={() => handleMenuClick(fullName, item.price, item.temp as MenuTemp)}
-                  disabled={disabled}
                 >
                   <div className="kiosk-badge-row"><TempBadge temp={item.temp as MenuTemp} size="sm" /></div>
                   <span className="kiosk-btn-name">{item.name}</span>
@@ -257,7 +298,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             type="button"
             className={`option-btn option-btn-ice ${tempOption === 'ICE' ? 'selected' : ''}`}
             onClick={() => toggleTemp('ICE')}
-            disabled={disabled || !isCustomMenu}
+            disabled={!isCustomMenu}
           >
             ICE
           </button>
@@ -265,7 +306,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             type="button"
             className={`option-btn option-btn-hot ${tempOption === 'HOT' ? 'selected' : ''}`}
             onClick={() => toggleTemp('HOT')}
-            disabled={disabled || !isCustomMenu}
+            disabled={!isCustomMenu}
           >
             HOT
           </button>
@@ -276,8 +317,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
               type="button"
               className={`option-btn ${selectedOptions.includes(opt.name) ? 'selected' : ''}`}
               onClick={() => toggleOption(opt.name)}
-              disabled={disabled}
-            >
+              >
               {opt.name}{opt.price > 0 && <span className="option-price"> +{opt.price.toLocaleString()}</span>}
             </button>
           ))}
@@ -285,7 +325,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             type="button"
             className={`option-btn option-btn-other ${isCustomOption ? 'selected' : ''}`}
             onClick={() => { setIsCustomOption(p => !p); setCustomOption(''); setCustomOptionPrice('') }}
-            disabled={disabled}
           >
             기타
           </button>
@@ -296,7 +335,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                 placeholder="옵션명"
                 value={customOption}
                 onChange={e => setCustomOption(e.target.value)}
-                disabled={disabled}
               />
               <input
                 type="number"
@@ -305,7 +343,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                 placeholder="+금액"
                 value={customOptionPrice}
                 onChange={e => setCustomOptionPrice(e.target.value === '' ? '' : Number(e.target.value))}
-                disabled={disabled}
               />
             </>
           )}
@@ -322,7 +359,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             placeholder={isCustomMenu ? "가격 입력" : "메뉴 선택 시 자동"}
             value={priceOverride}
             onChange={e => setPriceOverride(e.target.value === '' ? '' : Number(e.target.value))}
-            disabled={disabled || !isCustomMenu}
+            disabled={!isCustomMenu}
           />
         </div>
         <div className="order-summary">
@@ -341,9 +378,42 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         </div>
       </div>
 
-      <button type="submit" className="submit-btn" disabled={disabled || !canSubmit}>
-        주문하기
-      </button>
+      <div className="submit-row">
+        <button
+          type="button"
+          className="add-to-cart-btn"
+          onClick={handleAddToCart}
+        >
+          장바구니에 추가
+        </button>
+        <button
+          type="button"
+          className="submit-btn"
+          disabled={cart.length === 0}
+          onClick={() => {
+            if (missingInfo) {
+              setShowInfoMessage(true)
+            } else {
+              setShowInfoMessage(false)
+              setShowCart(true)
+            }
+          }}
+        >
+          장바구니 확인
+          {cart.length > 0 && <span className="cart-count-badge">{cart.length}</span>}
+        </button>
+      </div>
+      {showCart && (
+        <CartModal
+          cart={cart}
+          name={name}
+          cls={cls}
+          closed={disabled}
+          onRemove={id => setCart(prev => prev.filter(item => item.id !== id))}
+          onSubmit={handleCartSubmit}
+          onClose={() => setShowCart(false)}
+        />
+      )}
     </form>
   )
 }

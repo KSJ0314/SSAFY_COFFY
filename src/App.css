@@ -690,6 +690,54 @@
   color: #4a2810;
 }
 
+/* 제출 버튼 행 */
+.submit-row {
+  display: flex;
+  gap: 10px;
+}
+
+.submit-row .submit-btn {
+  flex: 1;
+}
+
+.add-to-cart-btn {
+  flex: 1;
+  padding: 14px;
+  background: #fff;
+  color: #7c4519;
+  border: 2px solid #a0622a;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.add-to-cart-btn:hover {
+  background: #fdf0e0;
+  transform: translateY(-1px);
+}
+
+.add-to-cart-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.cart-count-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  background: #fff;
+  color: #7c4519;
+  font-size: 0.75rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+
 /* 제출 버튼 */
 .submit-btn {
   padding: 14px;
@@ -1654,6 +1702,210 @@ tfoot td {
 .inquiry-modal {
   width: 560px;
 }
+
+/* 장바구니 모달 */
+.cart-modal {
+  width: 480px;
+}
+
+.cart-submitter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0e4d4;
+  margin-bottom: 8px;
+}
+
+.cart-submitter-name {
+  font-weight: 800;
+  font-size: 1rem;
+  color: #3b1f0a;
+}
+
+.cart-submitter-cls {
+  font-size: 0.85rem;
+  color: #7c4519;
+}
+
+.cart-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: #fdf6ec;
+  border: 1px solid #f0e4d4;
+  border-radius: 10px;
+}
+
+.cart-item-image {
+  width: 56px;
+  height: 56px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  background: #f5ede3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cart-item-image-placeholder {
+  font-size: 1.6rem;
+}
+
+.cart-item-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.cart-item-menu {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: #3b1f0a;
+}
+
+.cart-item-options {
+  font-size: 0.8rem;
+  color: #8c5c30;
+}
+
+.cart-item-price {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #7c4519;
+}
+
+.cart-item-remove {
+  background: none;
+  border: none;
+  color: #c0a080;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.cart-item-remove:hover {
+  color: #e53e3e;
+}
+
+.cart-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 4px 4px;
+  border-top: 2px solid #d4b896;
+  font-weight: 800;
+  color: #4a2810;
+  font-size: 1rem;
+  margin-top: 8px;
+}
+
+.cart-modal-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.cart-submit-btn {
+  flex: 1;
+  padding: 12px;
+  font-size: 0.95rem;
+}
+
+.cart-submit-wrap {
+  flex: 1;
+  position: relative;
+}
+
+.cart-submit-wrap .submit-btn {
+  width: 100%;
+}
+
+.cart-closed-tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: #7c4519;
+  color: #fff8f0;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.cart-closed-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 5px solid transparent;
+  border-top-color: #7c4519;
+}
+
+.cart-submit-wrap:hover .cart-closed-tooltip {
+  display: block;
+}
+
+.input-tooltip-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.input-tooltip-wrap input {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.input-tooltip {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  background: #7c4519;
+  color: #fff8f0;
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+}
+
+.input-tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 12px;
+  border: 5px solid transparent;
+  border-top-color: #7c4519;
+}
+
 
 .inquiry-form {
   display: flex;
