@@ -45,6 +45,7 @@ export default function OrderListPage() {
   }
 
   return (
+    <div className="list-page-bg">
     <div className="list-page">
       <div className="list-header">
         <button className="back-btn" onClick={() => navigate('/')}>← 돌아가기</button>
@@ -142,6 +143,7 @@ export default function OrderListPage() {
           </div>
         </>
       )}
+    </div>
     </div>
   )
 }

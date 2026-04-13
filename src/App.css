@@ -688,6 +688,12 @@
 }
 
 /* ── 주문 목록 페이지 ── */
+.list-page-bg {
+  min-height: 100vh;
+  background-color: #f5ede3;
+  background-image: radial-gradient(ellipse at top, #eedcca 0%, #e8d0b8 100%);
+}
+
 .list-page {
   max-width: 900px;
   margin: 0 auto;
