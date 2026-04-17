@@ -75,5 +75,5 @@ src/
 
 ## 버전
 
-현재 버전: **v1.4.0**<br/>
+현재 버전: **v1.4.1**<br/>
 전체 릴리즈 내역은 [Releases](https://github.com/KSJ0314/SSAFY_COFFY/releases) 페이지에서 확인하세요.

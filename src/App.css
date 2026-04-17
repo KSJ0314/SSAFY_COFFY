@@ -470,6 +470,20 @@
   transition: all 0.15s;
   max-height: 105px;
   width: 180px;
+  position: relative;
+}
+
+.kiosk-btn-kcal {
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  font-size: 0.62rem;
+  color: #a07858;
+  line-height: 1;
+}
+
+.kiosk-btn.selected .kiosk-btn-kcal {
+  color: #ffd080cc;
 }
 
 .kiosk-btn:hover:not(:disabled):not(.selected),

@@ -238,6 +238,9 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                   className={`kiosk-btn ${selectedMenu === fullName && !isCustomMenu ? 'selected' : ''}`}
                   onClick={() => handleMenuClick(fullName, item.price, item.temp as MenuTemp)}
                 >
+                  {'kcal' in item && item.kcal != null && (
+                    <span className="kiosk-btn-kcal">{item.kcal} kcal</span>
+                  )}
                   <div className="kiosk-badge-row"><TempBadge temp={item.temp as MenuTemp} size="sm" /></div>
                   <span className="kiosk-btn-name">{item.name}</span>
                   <span className="kiosk-btn-price">{item.price.toLocaleString()}원</span>

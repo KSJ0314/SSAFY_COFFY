@@ -1,7 +1,7 @@
 {
   "name": "ssafy-coffy",
   "private": true,
-  "version": "1.4.0",
+  "version": "1.4.1",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",
   "scripts": {
