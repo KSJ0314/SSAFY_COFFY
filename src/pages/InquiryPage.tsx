@@ -188,7 +188,7 @@ export default function InquiryPage() {
         <table className="inquiry-table">
           <thead>
             <tr>
-              <th style={{ width: '40px' }}>#</th>
+              <th style={{ width: '60px' }}>#</th>
               <th>제목</th>
               <th style={{ width: '70px' }}>작성자</th>
               <th style={{ width: '60px' }}>날짜</th>
@@ -214,24 +214,26 @@ export default function InquiryPage() {
                   className="inquiry-header-row inquiry-clickable"
                   onClick={() => toggleExpand(id)}
                 >
-                  <td>{globalIndex}</td>
-                  <td className="inquiry-title-cell">
+                  <td className="inquiry-index-cell">
                     <span className="group-toggle">{expanded ? '▼' : '▶'}</span>
-                    {inquiry.title}
+                    &ensp;{globalIndex}
                   </td>
+                  <td>{inquiry.title}</td>
                   <td>{inquiry.name ?? '익명'}</td>
                   <td>{formatDate(inquiry.createdAt)}</td>
                   <td className="inquiry-actions-cell">
-                    <button
-                      className="inquiry-edit-btn"
-                      title="수정"
-                      onClick={e => { e.stopPropagation(); handleOpenEdit(inquiry) }}
-                    >✎</button>
-                    <button
-                      className="delete-order-btn"
-                      title="삭제"
-                      onClick={e => { e.stopPropagation(); handleDelete(inquiry) }}
-                    >✕</button>
+                    <div className="inquiry-actions-inner">
+                      <button
+                        className="inquiry-edit-btn"
+                        title="수정"
+                        onClick={e => { e.stopPropagation(); handleOpenEdit(inquiry) }}
+                      >✎</button>
+                      <button
+                        className="delete-order-btn"
+                        title="삭제"
+                        onClick={e => { e.stopPropagation(); handleDelete(inquiry) }}
+                      >✕</button>
+                    </div>
                   </td>
                 </tr>,
                 expanded && (

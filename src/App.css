@@ -859,8 +859,9 @@ td:last-child, th:last-child {
 }
 
 td:nth-last-child(2), th:nth-last-child(2) {
-  width: 80px;
+  width: 60px;
   white-space: nowrap;
+  text-align: center;
 }
 
 .delete-order-btn:hover {
@@ -1517,6 +1518,11 @@ tfoot td {
 .inquiry-header-row td {
   font-weight: 600;
   color: #3b1f0a;
+  vertical-align: middle;
+}
+
+.inquiry-header-row td:nth-child(4) {
+  text-align: right;
 }
 
 .inquiry-clickable {
@@ -1527,18 +1533,26 @@ tfoot td {
   background: #fde8cc;
 }
 
+.inquiry-index-cell {
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 .inquiry-title-cell {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  vertical-align: middle;
 }
 
 .inquiry-actions-cell {
+  vertical-align: middle;
+}
+
+.inquiry-actions-inner {
   display: flex;
   align-items: center;
-  gap: 4px;
   justify-content: center;
+  gap: 4px;
 }
+
 
 .inquiry-edit-btn {
   background: none;
