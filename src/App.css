@@ -883,6 +883,30 @@ td:nth-last-child(2), th:nth-last-child(2) {
   opacity: 0.85;
 }
 
+.order-account-wrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+  margin-left: 12px;
+}
+
+.order-account-label {
+  font-size: 0.85rem;
+  color: #a07858;
+}
+
+.order-account {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #7c4519;
+  cursor: pointer;
+}
+
+.order-account:hover {
+  color: #4a2810;
+}
+
 .capture-area td:last-child, .capture-area th:last-child {
   width: auto;
   white-space: nowrap;

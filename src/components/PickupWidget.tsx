@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { useOrders } from '../context/OrderContext'
 import { drawPickup, getTodayPickup, savePickupResult, sendPickupNotification, type PickupResult } from '../services/pickupService'
 import PickupModal from './PickupModal'
+import siteConfig from '../data/siteConfig.json'
 
 function isDrawTime(): boolean {
+  const { hour, minute } = siteConfig.closingTime
   const now = new Date()
-  return now.getHours() > 11 || (now.getHours() === 11 && now.getMinutes() >= 40)
+  return now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= minute)
 }
 
 export default function PickupWidget() {
@@ -76,7 +78,7 @@ export default function PickupWidget() {
         ) : (
           <div className="pickup-waiting">
             <div className="pickup-lock">🔒</div>
-            <p>11:40에 자동 추첨됩니다</p>
+            <p>{siteConfig.closingTime.hour}:{String(siteConfig.closingTime.minute).padStart(2, '0')}에 자동 추첨됩니다</p>
           </div>
         )}
       </div>

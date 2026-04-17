@@ -6,13 +6,15 @@ import PickupWidget from '../components/PickupWidget'
 import PatchNotesModal from '../components/PatchNotesModal'
 import { useOrders } from '../context/OrderContext'
 import patchNotes from '../data/patchNotes.json'
+import siteConfig from '../data/siteConfig.json'
 
 const LATEST_VERSION = patchNotes[0].version
 const STORAGE_KEY = 'lastSeenPatchVersion'
 
 function isClosed(): boolean {
+  const { hour, minute } = siteConfig.closingTime
   const now = new Date()
-  return now.getHours() > 11 || (now.getHours() === 11 && now.getMinutes() >= 40)
+  return now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= minute)
 }
 
 export default function MainPage() {
@@ -49,9 +51,9 @@ export default function MainPage() {
         </div>
         <div className="logo-area">
           <div className="logo">☕</div>
-          <h1>SSAFY COFFEE</h1>
-          <p>MEGA COFFEE</p>
-          <p className="deadline">매일 11:40 마감</p>
+          <h1>{siteConfig.serviceName}</h1>
+          <p>{siteConfig.cafeName}</p>
+          <p className="deadline">매일 {siteConfig.closingTime.hour}:{String(siteConfig.closingTime.minute).padStart(2, '0')} 마감</p>
         </div>
         <NoticeBoard />
         <PickupWidget />

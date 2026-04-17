@@ -2,6 +2,7 @@ import { doc, getDoc, setDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 import { MM_USERNAMES } from '../config/mmUsernames'
+import siteConfig from '../data/siteConfig.json'
 const _exclusionModules = import.meta.glob('../config/exclusions.ts', { eager: true })
 const _exclusionMod = _exclusionModules['../config/exclusions.ts'] as { EXCLUSIONS?: string[] } | undefined
 const EXCLUSIONS: string[] = _exclusionMod?.EXCLUSIONS ?? []
@@ -64,7 +65,7 @@ export async function sendPickupNotification(result: PickupResult, totalOrders: 
       attachments: [{
         color: '#723F17',
         title: `${dateStr} 오늘의 픽업 당첨자 발표 ☕`,
-        text: `${winnerText}\n\n13:00에 게이트 앞 자전거 보관소에서 커피 받아와주세요~\n수령한 커피는 2반 옆 선반에 두고 가주세요!`,
+        text: `${winnerText}\n\n${siteConfig.mmNotification.pickupMessage}`,
         footer: `총 ${totalOrders}건 주문 · ${result.winners.length}명 당첨`,
       }],
     }),

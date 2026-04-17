@@ -3,10 +3,12 @@ import html2canvas from 'html2canvas'
 import { useOrders } from '../context/OrderContext'
 import TempBadge from '../components/TempBadge'
 import PageLayout from '../components/PageLayout'
+import siteConfig from '../data/siteConfig.json'
 
 function isClosed(): boolean {
+  const { hour, minute } = siteConfig.closingTime
   const now = new Date()
-  return now.getHours() > 11 || (now.getHours() === 11 && now.getMinutes() >= 40)
+  return now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= minute)
 }
 
 export default function OrderListPage() {
@@ -39,7 +41,8 @@ export default function OrderListPage() {
   async function handleDelete(o: (typeof orders)[0]) {
     if (!o.id) return
     if (closed) {
-      window.alert('11:40 이후에는 주문을 취소할 수 없습니다.')
+      const { hour, minute } = siteConfig.closingTime
+      window.alert(`${hour}:${String(minute).padStart(2, '0')} 이후에는 주문을 취소할 수 없습니다.`)
       return
     }
     const input = window.prompt(`${o.name}님의 주문을 삭제하려면 비밀번호를 입력하세요.`)
@@ -63,6 +66,10 @@ export default function OrderListPage() {
     link.click()
   }
 
+  function handleCopyAccount() {
+    navigator.clipboard.writeText(siteConfig.account)
+  }
+
   const actions = (
     <>
       <div className="list-meta">{today} / 총 {orders.length}건</div>
@@ -70,6 +77,14 @@ export default function OrderListPage() {
         <button className="save-image-btn" onClick={handleSaveImage}>
           이미지로 저장
         </button>
+      )}
+      {siteConfig.account && (
+        <span className="order-account-wrap">
+          <span className="order-account-label">입금 계좌 : </span>
+          <strong className="order-account" onClick={handleCopyAccount} title="클릭하여 복사">
+            {siteConfig.account}
+          </strong>
+        </span>
       )}
     </>
   )
@@ -157,7 +172,7 @@ export default function OrderListPage() {
           {/* 이미지 저장용 (화면 밖에 숨김, 이름/반 제외) */}
           <div ref={captureRef} className="capture-area capture-offscreen">
             <div className="capture-header">
-              <div className="capture-title">SSAFY COFFEE / 주문 목록</div>
+              <div className="capture-title">{siteConfig.serviceName} / 주문 목록</div>
               <div className="capture-date">{today} / 총 {orders.length}건 / 합계 {total.toLocaleString()}원</div>
             </div>
             <table>
