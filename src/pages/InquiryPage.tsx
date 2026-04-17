@@ -3,7 +3,7 @@ import PageLayout from '../components/PageLayout'
 import InquiryModal from '../components/InquiryModal'
 import {
   subscribeInquiries, saveInquiry, updateInquiry, deleteInquiry,
-  subscribeComments, saveComment, deleteComment,
+  subscribeComments, saveComment, deleteComment, fetchComments,
   type Inquiry, type Comment,
 } from '../services/inquiryService'
 
@@ -119,11 +119,22 @@ export default function InquiryPage() {
 
   async function handleDelete(inquiry: Inquiry) {
     if (!inquiry.id) return
-    const input = window.prompt(`문의를 삭제하려면 비밀번호를 입력하세요.`)
-    if (input === null) return
-    if (input !== inquiry.password) {
-      window.alert('비밀번호가 일치하지 않습니다.')
-      return
+    if (import.meta.env.DEV) {
+      if (!window.confirm('[관리자 모드] 문의를 삭제하시겠습니까?')) return
+    } else {
+      const comments = commentsMap[inquiry.id] ?? await fetchComments(inquiry.id)
+      if (comments.some(c => c.isAdmin)) {
+        window.alert('관리자 답변이 달린 문의는 삭제할 수 없습니다.')
+        return
+      }
+    }
+    if (!import.meta.env.DEV) {
+      const input = window.prompt(`문의를 삭제하려면 비밀번호를 입력하세요.`)
+      if (input === null) return
+      if (input !== inquiry.password) {
+        window.alert('비밀번호가 일치하지 않습니다.')
+        return
+      }
     }
     if (expandedId === inquiry.id) {
       commentUnsubsRef.current.get(inquiry.id)?.()

@@ -39,6 +39,11 @@ export async function updateInquiry(id: string, data: { title: string; content: 
   await updateDoc(doc(db, 'inquiries', id), data)
 }
 
+export async function fetchComments(inquiryId: string): Promise<Comment[]> {
+  const snap = await getDocs(collection(db, 'inquiries', inquiryId, 'comments'))
+  return snap.docs.map(d => ({ id: d.id, ...d.data() } as Comment))
+}
+
 export async function deleteInquiry(id: string): Promise<void> {
   const commentsSnap = await getDocs(collection(db, 'inquiries', id, 'comments'))
   await Promise.all(commentsSnap.docs.map(d => deleteDoc(d.ref)))
