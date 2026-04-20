@@ -190,7 +190,7 @@ export default function InquiryPage() {
             <tr>
               <th style={{ width: '60px' }}>#</th>
               <th>제목</th>
-              <th style={{ width: '70px' }}>작성자</th>
+              <th style={{ width: '150px' }}>작성자</th>
               <th style={{ width: '60px' }}>날짜</th>
               <th style={{ width: '56px' }}></th>
             </tr>
