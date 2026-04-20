@@ -803,6 +803,20 @@
         "kcal": 265.8
       },
       {
+        "name": "상큼 리치티",
+        "temp": "HOT",
+        "price": 3900,
+        "image": "https://cdn.011st.com/11dims/resize/1000x1000/quality/75/11src/dl/v2/2/9/0/8/8/2/IiOoa/7787290882_190253549.jpg",
+        "kcal": 274.8
+      },
+      {
+        "name": "상큼 리치티",
+        "temp": "ICE",
+        "price": 3900,
+        "image": "https://image.auction.co.kr/itemimage/4c/c9/c5/4cc9c5fd11.jpg",
+        "kcal": 260.1
+      },
+      {
         "name": "자몽차",
         "temp": "HOT",
         "price": 3300,
