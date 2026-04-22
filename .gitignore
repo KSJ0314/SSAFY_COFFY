@@ -1,5 +1,8 @@
 CLAUDE.md
 
+# GitHub Wiki (별도 저장소)
+wiki/
+
 # Environment
 .env
 .env.local
