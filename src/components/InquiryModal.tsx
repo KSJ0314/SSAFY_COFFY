@@ -18,10 +18,6 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
     if (!title.trim() || !content.trim() || !password) return
-    if (mode === 'create') {
-      localStorage.setItem('coffy_name', name.trim())
-      localStorage.setItem('coffy_class', cls.trim())
-    }
     onSubmit({ title: title.trim(), content: content.trim(), password, name: name.trim(), class: cls.trim() })
   }
 

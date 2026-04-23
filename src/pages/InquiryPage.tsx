@@ -112,6 +112,7 @@ export default function InquiryPage() {
         password: data.password,
         name: data.name || null,
         class: data.class || null,
+        localStorageName: localStorage.getItem('coffy_name') || null,
       })
     }
     setShowModal(false)

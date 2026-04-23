@@ -11,6 +11,7 @@ export type Inquiry = {
   password: string
   name: string | null
   class: string | null
+  localStorageName: string | null
   createdAt?: ReturnType<typeof serverTimestamp>
 }
 
