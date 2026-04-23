@@ -1,7 +1,7 @@
 /* ── 메인 레이아웃 ── */
 .main-layout {
   display: flex;
-  min-height: 100vh;
+  height: 100%;
 }
 
 /* 패치노트 / 문의하기 버튼 그룹 */
@@ -893,7 +893,7 @@
 
 /* ── 주문 목록 페이지 ── */
 .list-page-bg {
-  min-height: 100vh;
+  min-height: 100%;
   background-color: #f5ede3;
   background-image: radial-gradient(ellipse at top, #eedcca 0%, #e8d0b8 100%);
 }
@@ -1373,8 +1373,8 @@ tfoot td {
   border-radius: 16px;
   padding: 4px;
   width: 480px;
-  max-width: 90vw;
-  max-height: 80vh;
+  max-width: calc(90vw / var(--ui-scale));
+  max-height: calc(80vh / var(--ui-scale));
   overflow: hidden;
   display: flex;
   flex-direction: column;
