@@ -29,6 +29,7 @@ export const OPTION_ITEMS: OptionItem[] = [
   { name: '2샷 추가', price: 1200 },
   { name: '디카페인 샷 추가', price: 1000 },
   { name: '디카페인 2샷 추가', price: 2000 },
+  { name: '오트밀크 변경', price: 500 },
 ]
 
 export const CUSTOM_PRICE_OPTIONS: number[] = [
