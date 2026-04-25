@@ -18,7 +18,7 @@
   },
   "build": {
     "appId": "com.ssafy.coffy",
-    "productName": "싸피커피",
+    "productName": "SSAFY_COFFEE",
     "directories": {
       "output": "dist-electron"
     },
@@ -30,7 +30,7 @@
     "win": {
       "target": "portable",
       "icon": "electron/favicon.ico",
-      "artifactName": "싸피커피.exe"
+      "artifactName": "SSAFY_COFFEE.exe"
     }
   },
   "dependencies": {
