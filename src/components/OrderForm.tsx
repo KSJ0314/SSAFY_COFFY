@@ -5,6 +5,7 @@ import TempBadge from './TempBadge'
 import type { Order } from '../context/OrderContext'
 import menuData from '../data/menuData.json'
 import CartModal from './CartModal'
+import UserInfoFields from './UserInfoFields'
 
 export type CartItem = {
   id: string
@@ -24,6 +25,7 @@ function getColCount(): number {
   const w = window.innerWidth
   if (w >= 1920) return 5
   if (w >= 1440) return 4
+  if (w <= 1000) return 2
   return 3
 }
 
@@ -39,9 +41,9 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [isCustomOption, setIsCustomOption] = useState(false)
   const [customOption, setCustomOption] = useState('')
   const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState(() => localStorage.getItem('coffy_password') ?? '')
   const [cart, setCart] = useState<CartItem[]>(() => {
-    try { return JSON.parse(sessionStorage.getItem('coffy_cart') ?? '[]') } catch { return [] }
+    try { return JSON.parse(localStorage.getItem('coffy_cart') ?? '[]') } catch { return [] }
   })
   const [showCart, setShowCart] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')
@@ -49,9 +51,10 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [showDropdown, setShowDropdown] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
 
-  useEffect(() => {
-    sessionStorage.setItem('coffy_cart', JSON.stringify(cart))
-  }, [cart])
+  useEffect(() => { localStorage.setItem('coffy_cart', JSON.stringify(cart)) }, [cart])
+  useEffect(() => { localStorage.setItem('coffy_name', name) }, [name])
+  useEffect(() => { localStorage.setItem('coffy_class', cls) }, [cls])
+  useEffect(() => { localStorage.setItem('coffy_password', password) }, [password])
   const [showInfoMessage, setShowInfoMessage] = useState(false)
   const CUSTOM_CATEGORY = '기타'
   const [selectedCategory, setSelectedCategory] = useState(menuData[0].category)
@@ -193,7 +196,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     }))
     onSubmit(orders)
     setCart([])
-    sessionStorage.removeItem('coffy_cart')
+    localStorage.removeItem('coffy_cart')
     setShowCart(false)
     setPassword('')
   }
@@ -201,6 +204,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const missingInfo = !name || !cls || !password
 
   return (
+    <div className="right-panel">
     <form className="order-form" onSubmit={e => e.preventDefault()}>
       <div className="form-title-row">
         <div className="form-section-title">
@@ -208,54 +212,19 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         </div>
 
         {/* 이름 / 반 / 비밀번호 */}
-        <div className="form-row-inline">
-          <div className="form-row">
-            <label>이름</label>
-            <div className="input-tooltip-wrap">
-              {showInfoMessage && !name && <div className="input-tooltip">필수 입력</div>}
-              <input value={name} onChange={e => { setName(e.target.value); setShowInfoMessage(false) }} placeholder="김싸피" />
-            </div>
-          </div>
-          <div className="form-row">
-            <label>반</label>
-            <div className="input-tooltip-wrap">
-              {showInfoMessage && !cls && <div className="input-tooltip">필수 입력</div>}
-              <input value={cls} onChange={e => { setCls(e.target.value); setShowInfoMessage(false) }} placeholder="1" />
-            </div>
-          </div>
-          <div className="form-row">
-            <label>비밀번호</label>
-            <div className="input-tooltip-wrap">
-              {showInfoMessage && !password && <div className="input-tooltip">필수 입력</div>}
-              <input type="password" value={password} onChange={e => { setPassword(e.target.value); setShowInfoMessage(false) }} placeholder="••••" maxLength={4} className="input-password" />
-            </div>
-          </div>
-        </div>
+        <UserInfoFields
+          name={name} cls={cls} password={password}
+          onNameChange={v => { setName(v); setShowInfoMessage(false) }}
+          onClsChange={v => { setCls(v); setShowInfoMessage(false) }}
+          onPasswordChange={v => { setPassword(v); setShowInfoMessage(false) }}
+          showValidation={showInfoMessage}
+        />
       </div>
 
       {/* 메뉴 선택 */}
       <div className="kiosk-section">
-        <div className="kiosk-label">메뉴</div>
         <div className="category-tabs-row">
-          <div className="category-tabs">
-            {menuData.map(c => (
-              <button
-                key={c.category}
-                type="button"
-                className={`category-tab ${selectedCategory === c.category ? 'selected' : ''}`}
-                onClick={() => handleCategoryClick(c.category)}
-              >
-                {c.category}
-              </button>
-            ))}
-            <button
-              type="button"
-              className={`category-tab ${selectedCategory === CUSTOM_CATEGORY ? 'selected' : ''}`}
-              onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
-            >
-              기타
-            </button>
-          </div>
+          <div className="kiosk-label">메뉴</div>
           <div className="menu-search-wrap">
             <div className="menu-search-input-wrap" style={{ paddingRight: '6px' }}>
               {ghostCompletion && (
@@ -321,6 +290,25 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
               </ul>
             )}
           </div>
+        </div>
+        <div className="category-tabs">
+          {menuData.map(c => (
+            <button
+              key={c.category}
+              type="button"
+              className={`category-tab ${selectedCategory === c.category ? 'selected' : ''}`}
+              onClick={() => handleCategoryClick(c.category)}
+            >
+              {c.category}
+            </button>
+          ))}
+          <button
+            type="button"
+            className={`category-tab ${selectedCategory === CUSTOM_CATEGORY ? 'selected' : ''}`}
+            onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
+          >
+            기타
+          </button>
         </div>
         <div className={`kiosk-grid-with-image${selectedCategory === CUSTOM_CATEGORY ? ' no-min-height' : ''}`}>
           {selectedCategory === CUSTOM_CATEGORY ? (
@@ -509,7 +497,11 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
               setShowInfoMessage(true)
             } else {
               setShowInfoMessage(false)
-              setShowCart(true)
+              if (window.electronAPI) {
+                window.electronAPI.openCart()
+              } else {
+                setShowCart(true)
+              }
             }
           }}
         >
@@ -529,5 +521,6 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         />
       )}
     </form>
+    </div>
   )
 }

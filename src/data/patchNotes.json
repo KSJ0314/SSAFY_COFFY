@@ -1,5 +1,12 @@
 [
   {
+    "version": "1.6.0",
+    "date": "2026-04-25",
+    "changes": [
+      "Electron 기반 데스크탑 앱 출시"
+    ]
+  },
+  {
     "version": "1.5.1",
     "date": "2026-04-23",
     "changes": [

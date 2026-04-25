@@ -10,7 +10,11 @@ function isDrawTime(): boolean {
   return now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= minute)
 }
 
-export default function PickupWidget() {
+type Props = {
+  autoOpenModal?: boolean
+}
+
+export default function PickupWidget({ autoOpenModal = false }: Props) {
   const { orders } = useOrders()
   const [result, setResult] = useState<PickupResult | null>(null)
   const [showModal, setShowModal] = useState(false)
@@ -23,6 +27,17 @@ export default function PickupWidget() {
       setPickupLoading(false)
     })
   }, [])
+
+  // 결과 첫 수신 시 Electron 토스트 알림 (하루 1회) + autoOpenModal 처리
+  useEffect(() => {
+    if (!result) return
+    const today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10)
+    if (localStorage.getItem('coffy_pickup_notified') !== today) {
+      localStorage.setItem('coffy_pickup_notified', today)
+      window.electronAPI?.notifyPickup(result.winners)
+    }
+    if (autoOpenModal) setShowModal(true)
+  }, [result, autoOpenModal])
 
   // 11:40 감지 → 당첨자 없으면 자동 추첨
   useEffect(() => {

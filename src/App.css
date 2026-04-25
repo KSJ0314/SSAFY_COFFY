@@ -9,6 +9,7 @@
   position: absolute;
   top: 12px;
   left: 12px;
+  right: 12px;
   display: flex;
   gap: 6px;
 }
@@ -32,6 +33,50 @@
 .patch-notes-btn:hover,
 .inquiry-top-btn:hover {
   background: rgba(255,255,255,0.2);
+}
+
+.download-app-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 7px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 6px;
+  color: rgba(255,255,255,0.75);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+}
+
+.download-app-btn:hover {
+  background: rgba(255,255,255,0.18);
+  color: #fff;
+}
+
+.download-btn-wrap {
+  position: relative;
+  margin-left: auto;
+  display: flex;
+}
+
+.download-btn-wrap .download-app-btn {
+  margin-left: 0;
+}
+
+.electron-update-dot {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid #4a2810;
+  pointer-events: none;
 }
 
 .patch-new-dot {
@@ -431,7 +476,7 @@
 }
 
 .kiosk-label {
-  font-size: 0.82rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #6b3f1a;
   text-transform: uppercase;
@@ -2177,6 +2222,10 @@ tfoot td {
   .kiosk-grid { grid-template-columns: repeat(3, 1fr); }
 } */
 
+@media (max-width: 1000px) {
+  .kiosk-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
 @media (min-width: 1440px) {
   .right-panel { max-width: 1100px; }
   .kiosk-grid { grid-template-columns: repeat(4, 1fr); }
@@ -2186,4 +2235,98 @@ tfoot td {
   .right-panel { max-width: 1400px; }
   .kiosk-grid { grid-template-columns: repeat(5, 1fr); }
   .kiosk-menu-image { max-width: 280px;}
+}
+
+/* ── Electron 전용 페이지 ── */
+.pickup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(160deg, #4a2810, #7c4519);
+}
+
+.pickup-page .pickup-widget {
+  width: 100%;
+  max-width: 600px;
+}
+
+.notices-page {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(160deg, #4a2810, #7c4519);
+}
+
+.notices-page .notice-board {
+  width: 100%;
+}
+
+.settings-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: var(--bg);
+}
+
+.settings-page h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+.settings-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 320px;
+}
+
+.settings-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.settings-form input {
+  padding: 0.6rem 0.8rem;
+  border: 1.5px solid #d8cec7;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.settings-form input:focus {
+  border-color: var(--primary);
+}
+
+.settings-save-btn {
+  margin-top: 0.5rem;
+  padding: 0.7rem;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+
+.settings-save-btn:hover {
+  opacity: 0.85;
 }

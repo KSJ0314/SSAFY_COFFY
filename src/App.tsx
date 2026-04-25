@@ -3,6 +3,11 @@ import { OrderProvider } from './context/OrderContext'
 import MainPage from './pages/MainPage'
 import OrderListPage from './pages/OrderListPage'
 import InquiryPage from './pages/InquiryPage'
+import OrderPage from './pages/OrderPage'
+import CartPage from './pages/CartPage'
+import PickupPage from './pages/PickupPage'
+import SettingsPage from './pages/SettingsPage'
+import NoticesPage from './pages/NoticesPage'
 import './App.css'
 
 export default function App() {
@@ -13,6 +18,11 @@ export default function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/orders" element={<OrderListPage />} />
           <Route path="/inquiry" element={<InquiryPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/pickup" element={<PickupPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/notices" element={<NoticesPage />} />
         </Routes>
       </HashRouter>
     </OrderProvider>
