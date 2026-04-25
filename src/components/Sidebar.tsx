@@ -53,8 +53,7 @@ export default function Sidebar() {
         <div className="download-btn-wrap">
           <a
             className="download-app-btn"
-            href={`${import.meta.env.BASE_URL}싸피커피.exe`}
-            download
+            href="https://github.com/KSJ0314/SSAFY_COFFY/releases/download/v1.6.0/SSAFY_COFFEE.exe"
             title="데스크탑 앱 다운로드"
             onClick={handleDownload}
           >
