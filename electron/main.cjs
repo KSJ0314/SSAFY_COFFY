@@ -162,6 +162,24 @@ function createWindow(key, route, opts = {}) {
   return win
 }
 
+// ─── 창 설정 ─────────────────────────────────────────────────────────────────
+const WIN_CONFIGS = {
+  order:    { route: '/order',    width: 660, height: 900 },
+  cart:     { route: '/cart',     width: 540, height: 780 },
+  orders:   { route: '/orders',   width: 900, height: 800 },
+  inquiry:  { route: '/inquiry',  width: 900, height: 800 },
+  notices:  { route: '/notices',  width: 600, height: 240 },
+  pickup:   { route: '/pickup',   width: 580, height: 760 },
+  settings: { route: '/settings', width: 460, height: 160, resizable: false },
+}
+
+const openWindow = key => createWindow(key, WIN_CONFIGS[key].route, WIN_CONFIGS[key])
+
+// ─── 중복 실행 방지 ──────────────────────────────────────────────────────────
+if (!app.requestSingleInstanceLock()) {
+  app.quit()
+}
+
 // ─── 앱 초기화 ───────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
   Menu.setApplicationMenu(null)
@@ -174,14 +192,14 @@ app.whenReady().then(() => {
     return Menu.buildFromTemplate([
       { label: '싸피커피', enabled: false },
       { type: 'separator' },
-      { label: '🛒 주문하기',         click: () => createWindow('order',    '/order',    { width: 660,  height: 900 }) },
-      { label: '🛍️ 장바구니',        click: () => createWindow('cart',     '/cart',     { width: 540,  height: 780 }) },
-      { label: '📋 주문 목록',        click: () => createWindow('orders',   '/orders',   { width: 900,  height: 800 }) },
-      { label: '💬 문의 게시판',      click: () => createWindow('inquiry',  '/inquiry',  { width: 900,  height: 800 }) },
-      { label: '📢 공지사항',         click: () => createWindow('notices',  '/notices',  { width: 600,  height: 240 }) },
-      { label: '🎰 오늘의 픽업 추첨', click: () => createWindow('pickup',  '/pickup',   { width: 580,  height: 760 }) },
+      { label: '🛒 주문하기',         click: () => openWindow('order') },
+      { label: '🛍️ 장바구니',        click: () => openWindow('cart') },
+      { label: '📋 주문 목록',        click: () => openWindow('orders') },
+      { label: '💬 문의 게시판',      click: () => openWindow('inquiry') },
+      { label: '📢 공지사항',         click: () => openWindow('notices') },
+      { label: '🎰 오늘의 픽업 추첨', click: () => openWindow('pickup') },
       { type: 'separator' },
-      { label: '⚙️ 내 정보 설정',    click: () => createWindow('settings', '/settings', { width: 460,  height: 160, resizable: false }) },
+      { label: '⚙️ 내 정보 설정',    click: () => openWindow('settings') },
       {
         label: `🚀 컴퓨터 시작 시 자동 실행  ${openAtLogin ? '✓' : ''}`,
         enabled: !isDev,
@@ -202,7 +220,9 @@ app.whenReady().then(() => {
   }
 
   tray.setContextMenu(buildMenu())
-  tray.on('double-click', () => createWindow('order', '/order', { width: 660, height: 900 }))
+  tray.on('double-click', () => openWindow('order'))
+
+  openWindow('order')
 
   // 11:40 당첨자 추첨 및 토스트 알림을 위한 백그라운드 창
   bgWin = new BrowserWindow({
@@ -220,7 +240,7 @@ app.whenReady().then(() => {
 })
 
 // ─── IPC 핸들러 ───────────────────────────────────────────────────────────────
-ipcMain.on('open-cart',     () => createWindow('cart',     '/cart',     { width: 540, height: 780 }))
+ipcMain.on('open-cart',     () => openWindow('cart'))
 
 ipcMain.on('resize-window', (event, w, h) => {
   const win = BrowserWindow.fromWebContents(event.sender)
@@ -231,7 +251,7 @@ ipcMain.on('resize-window', (event, w, h) => {
   const { workArea } = screen.getPrimaryDisplay()
   win.setPosition(workArea.x + workArea.width - actualW - WINDOW_MARGIN, workArea.y + workArea.height - actualH - WINDOW_MARGIN)
 })
-ipcMain.on('open-settings', () => createWindow('settings', '/settings', { width: 420, height: 370, resizable: false }))
+ipcMain.on('open-settings', () => openWindow('settings'))
 
 ipcMain.handle('get-settings', () => loadSettings())
 ipcMain.handle('save-settings', (_, data) => { persistSettings(data); return true })
