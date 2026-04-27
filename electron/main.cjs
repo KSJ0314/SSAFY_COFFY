@@ -137,7 +137,7 @@ function createWindow(key, route, opts = {}) {
     height,
     x,
     y,
-    title: opts.title ?? '싸피커피',
+    title: opts.title ?? `SSAFY_COFFEE for Desktop v${ELECTRON_VERSION}`,
     icon: ensureIcon(),
     resizable: false,
     webPreferences: {
@@ -147,6 +147,7 @@ function createWindow(key, route, opts = {}) {
       zoomFactor: zoom,
     },
   })
+  win.on('page-title-updated', e => e.preventDefault())
   win.webContents.on('did-finish-load', () => {
     win.webContents.setZoomFactor(zoom)
   })
