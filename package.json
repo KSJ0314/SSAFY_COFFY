@@ -2,7 +2,7 @@
   "name": "ssafy-coffy",
   "private": true,
   "version": "1.6.0",
-  "electronVersion": "1.1.0",
+  "electronVersion": "1.2.0",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",
   "main": "electron/main.cjs",
@@ -28,9 +28,15 @@
       "electron/**/*"
     ],
     "win": {
-      "target": "portable",
-      "icon": "electron/favicon.ico",
-      "artifactName": "SSAFY_COFFEE.exe"
+      "target": "nsis",
+      "icon": "electron/favicon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "artifactName": "SSAFY_COFFEE_Setup.exe"
     }
   },
   "dependencies": {

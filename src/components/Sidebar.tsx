@@ -53,7 +53,7 @@ export default function Sidebar() {
         <div className="download-btn-wrap">
           <a
             className="download-app-btn"
-            href={`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${ELECTRON_VERSION}/SSAFY_COFFEE.exe`}
+            href={`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${ELECTRON_VERSION}/SSAFY_COFFEE_Setup.exe`}
             title="SSAFY_COFFEE for Desktop"
             onClick={handleDownload}
           >

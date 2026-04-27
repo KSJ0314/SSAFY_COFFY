@@ -224,7 +224,7 @@ app.whenReady().then(() => {
       { label: `v${ELECTRON_VERSION}`, enabled: false },
       ...(latestVersion ? [{
         label: `⬆️ 새 버전 v${latestVersion} 다운로드`,
-        click: () => shell.openExternal(`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${latestVersion}/SSAFY_COFFEE.exe`),
+        click: () => shell.openExternal(`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${latestVersion}/SSAFY_COFFEE_Setup.exe`),
       }] : []),
       { type: 'separator' },
       { label: '종료', click: () => app.quit() },
