@@ -34,7 +34,7 @@
     "nsis": {
       "oneClick": true,
       "perMachine": false,
-      "createDesktopShortcut": true,
+      "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "artifactName": "SSAFY_COFFEE_Setup.exe"
     }
