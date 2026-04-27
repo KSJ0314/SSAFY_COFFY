@@ -9,6 +9,7 @@ declare global {
       onOpenPickupModal: (cb: () => void) => void
       offOpenPickupModal: (cb: () => void) => void
       openCart: () => void
+      openOrders: () => void
       openSettings: () => void
       resizeWindow: (w: number, h: number) => void
     }

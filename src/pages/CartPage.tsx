@@ -41,7 +41,12 @@ export default function CartPage() {
     }))
     await Promise.all(orders.map(addOrder))
     localStorage.removeItem('coffy_cart')
-    navigate('/orders')
+    if (window.electronAPI) {
+      window.electronAPI.openOrders()
+      window.close()
+    } else {
+      navigate('/orders')
+    }
   }
 
   function handleClose() {

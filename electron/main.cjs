@@ -253,6 +253,7 @@ app.whenReady().then(() => {
 
 // ─── IPC 핸들러 ───────────────────────────────────────────────────────────────
 ipcMain.on('open-cart',     () => openWindow('cart'))
+ipcMain.on('open-orders',   () => openWindow('orders'))
 
 ipcMain.on('resize-window', (event, w, h) => {
   const win = BrowserWindow.fromWebContents(event.sender)

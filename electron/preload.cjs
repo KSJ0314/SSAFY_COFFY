@@ -8,6 +8,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
   onOpenPickupModal: cb => ipcRenderer.on('open-pickup-modal', cb),
   offOpenPickupModal: cb => ipcRenderer.removeListener('open-pickup-modal', cb),
   openCart: () => ipcRenderer.send('open-cart'),
+  openOrders: () => ipcRenderer.send('open-orders'),
   openSettings: () => ipcRenderer.send('open-settings'),
   resizeWindow: (w, h) => ipcRenderer.send('resize-window', w, h),
 })
