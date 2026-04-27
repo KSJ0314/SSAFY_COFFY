@@ -4,8 +4,17 @@ import type { Order } from '../context/OrderContext'
 import { MM_USERNAMES } from '../config/mmUsernames'
 import siteConfig from '../data/siteConfig.json'
 const _exclusionModules = import.meta.glob('../config/exclusions.ts', { eager: true })
-const _exclusionMod = _exclusionModules['../config/exclusions.ts'] as { EXCLUSIONS?: string[] } | undefined
-const EXCLUSIONS: string[] = _exclusionMod?.EXCLUSIONS ?? []
+const _exclusionMod = _exclusionModules['../config/exclusions.ts'] as { EXCLUSIONS?: string[][] } | undefined
+const EXCLUSIONS: string[][] = _exclusionMod?.EXCLUSIONS ?? []
+
+const GROUP_CAPS = [0.10, 0.20, 0.50]
+
+function getCap(name: string): number {
+  for (let i = 0; i < EXCLUSIONS.length; i++) {
+    if (EXCLUSIONS[i].includes(name)) return GROUP_CAPS[i]
+  }
+  return 1
+}
 
 function getTodayKST(): string {
   const now = new Date()
@@ -79,7 +88,7 @@ export function drawPickup(orders: Order[]): PickupResult {
 
   const draws: DrawEntry[] = unique.map(o => {
     const count = orders.filter(x => x.name === o.name && x.class === o.class).length
-    const cap = EXCLUSIONS.includes(o.name) ? 0.5 : 1
+    const cap = getCap(o.name)
     const randomValue = Math.max(...Array.from({ length: count }, () => Math.random() * cap))
     return { name: o.name, class: o.class, randomValue }
   })
