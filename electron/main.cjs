@@ -8,10 +8,10 @@ const https = require('https')
 const isDev = process.env.NODE_ENV === 'development'
 
 const { electronVersion: ELECTRON_VERSION, homepage: HOMEPAGE } = require('../package.json')
-const DOWNLOAD_URL    = `${HOMEPAGE}/싸피커피.exe`
 const VERSION_URL     = `${HOMEPAGE}/electron-version.json`
 
 let latestVersion = null
+let bgWin = null
 
 function isNewer(available, current) {
   const p = v => v.split('.').map(Number)
@@ -193,7 +193,7 @@ app.whenReady().then(() => {
       { label: `v${ELECTRON_VERSION}`, enabled: false },
       ...(latestVersion ? [{
         label: `⬆️ 새 버전 v${latestVersion} 다운로드`,
-        click: () => shell.openExternal(DOWNLOAD_URL),
+        click: () => shell.openExternal(`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${latestVersion}/SSAFY_COFFEE.exe`),
       }] : []),
       { type: 'separator' },
       { label: '종료', click: () => app.quit() },
@@ -202,6 +202,18 @@ app.whenReady().then(() => {
 
   tray.setContextMenu(buildMenu())
   tray.on('double-click', () => createWindow('order', '/order', { width: 660, height: 900 }))
+
+  // 11:40 당첨자 추첨 및 토스트 알림을 위한 백그라운드 창
+  bgWin = new BrowserWindow({
+    show: false,
+    skipTaskbar: true,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.cjs'),
+      contextIsolation: true,
+      nodeIntegration: false,
+    },
+  })
+  bgWin.loadURL(getUrl('/background'))
 
   if (!isDev) setTimeout(() => checkUpdate(tray, buildMenu), 5000)
 })
