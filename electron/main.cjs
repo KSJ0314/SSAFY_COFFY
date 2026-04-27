@@ -178,7 +178,19 @@ const openWindow = key => createWindow(key, WIN_CONFIGS[key].route, WIN_CONFIGS[
 // ─── 중복 실행 방지 ──────────────────────────────────────────────────────────
 if (!app.requestSingleInstanceLock()) {
   app.quit()
+  process.exit(0)
 }
+
+app.on('second-instance', () => {
+  const win = windows['order']
+  if (win && !win.isDestroyed()) {
+    if (win.isMinimized()) win.restore()
+    win.show()
+    win.focus()
+  } else {
+    openWindow('order')
+  }
+})
 
 // ─── 앱 초기화 ───────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
