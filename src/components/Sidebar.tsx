@@ -54,7 +54,7 @@ export default function Sidebar() {
           <a
             className="download-app-btn"
             href={`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${ELECTRON_VERSION}/SSAFY_COFFEE.exe`}
-            title="데스크탑 앱 다운로드"
+            title="SSAFY_COFFEE for Desktop"
             onClick={handleDownload}
           >
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
