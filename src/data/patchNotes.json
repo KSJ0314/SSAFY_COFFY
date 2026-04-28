@@ -1,5 +1,12 @@
 [
   {
+    "version": "1.6.1",
+    "date": "2026-04-28",
+    "changes": [
+      "패치 노트에 Desktop 탭 추가"
+    ]
+  },
+  {
     "version": "1.6.0",
     "date": "2026-04-25",
     "changes": [

@@ -56,7 +56,7 @@ Firebase 연결, 메뉴 수정, 배포 방법 등 상세한 안내는 **[Wiki](h
 
 ## 버전
 
-현재 버전: **v1.6.0**<br/>
+현재 버전: **v1.6.1**<br/>
 전체 릴리즈 내역은 [Releases](https://github.com/KSJ0314/SSAFY_COFFY/releases) 페이지에서 확인하세요.
 
 ## License

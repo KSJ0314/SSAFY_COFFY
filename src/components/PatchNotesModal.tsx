@@ -1,10 +1,15 @@
+import { useState } from 'react'
 import patchNotes from '../data/patchNotes.json'
+import electronPatchNotes from '../data/electronPatchNotes.json'
 
 type Props = {
   onClose: () => void
 }
 
 export default function PatchNotesModal({ onClose }: Props) {
+  const [tab, setTab] = useState<'web' | 'desktop'>('web')
+  const notes = tab === 'web' ? patchNotes : electronPatchNotes
+
   return (
     <div className="modal-backdrop" onClick={onClose}>
       <div className="modal" onClick={e => e.stopPropagation()}>
@@ -24,8 +29,18 @@ export default function PatchNotesModal({ onClose }: Props) {
               </a>
             </div>
           </div>
+          <div className="patch-tabs">
+            <button
+              className={`category-tab${tab === 'web' ? ' selected' : ''}`}
+              onClick={() => setTab('web')}
+            >Web</button>
+            <button
+              className={`category-tab${tab === 'desktop' ? ' selected' : ''}`}
+              onClick={() => setTab('desktop')}
+            >Desktop</button>
+          </div>
           <div className="patch-list">
-            {patchNotes.map(patch => (
+            {notes.map(patch => (
               <div key={patch.version} className="patch-item">
                 <div className="patch-header">
                   <span className="patch-version">v{patch.version}</span>

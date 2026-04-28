@@ -1,8 +1,8 @@
 {
   "name": "ssafy-coffy",
   "private": true,
-  "version": "1.6.0",
-  "electronVersion": "1.2.0",
+  "version": "1.6.1",
+  "electronVersion": "1.2.1",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",
   "main": "electron/main.cjs",

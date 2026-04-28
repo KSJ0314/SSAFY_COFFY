@@ -1350,6 +1350,11 @@ tfoot td {
 }
 
 /* ── 패치노트 모달 ── */
+.patch-tabs {
+  display: flex;
+  gap: 8px;
+}
+
 .patch-list {
   display: flex;
   flex-direction: column;

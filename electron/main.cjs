@@ -11,6 +11,7 @@ const { electronVersion: ELECTRON_VERSION, homepage: HOMEPAGE } = require('../pa
 const VERSION_URL     = `${HOMEPAGE}/electron-version.json`
 
 let latestVersion = null
+let downloadUrl = null
 let bgWin = null
 
 function isNewer(available, current) {
@@ -26,9 +27,10 @@ function checkUpdate(tray, buildMenu) {
     res.on('data', d => { data += d })
     res.on('end', () => {
       try {
-        const { version } = JSON.parse(data)
-        if (isNewer(version, ELECTRON_VERSION)) {
-          latestVersion = version
+        const parsed = JSON.parse(data)
+        if (isNewer(parsed.version, ELECTRON_VERSION)) {
+          latestVersion = parsed.version
+          downloadUrl = parsed.downloadUrl
           tray.setContextMenu(buildMenu())
         }
       } catch {}
@@ -170,7 +172,8 @@ const WIN_CONFIGS = {
   inquiry:  { route: '/inquiry',  width: 900, height: 800 },
   notices:  { route: '/notices',  width: 600, height: 240 },
   pickup:   { route: '/pickup',   width: 580, height: 760 },
-  settings: { route: '/settings', width: 460, height: 160, resizable: false },
+  settings:   { route: '/settings',   width: 460, height: 160, resizable: false },
+  patchnotes: { route: '/patchnotes', width: 480, height: 800 },
 }
 
 const openWindow = key => createWindow(key, WIN_CONFIGS[key].route, WIN_CONFIGS[key])
@@ -200,15 +203,16 @@ app.whenReady().then(() => {
   tray.setToolTip('싸피커피')
 
   function buildMenu() {
-    const openAtLogin = isDev ? false : app.getLoginItemSettings().openAtLogin
+    const openAtLogin = isDev ? false : app.getLoginItemSettings({ args: ['--hidden'] }).openAtLogin
     return Menu.buildFromTemplate([
-      { label: '싸피커피', enabled: false },
+      { label: '싸피커피', click: () => shell.openExternal(HOMEPAGE) },
       { type: 'separator' },
       { label: '🛒 주문하기',         click: () => openWindow('order') },
       { label: '🛍️ 장바구니',        click: () => openWindow('cart') },
       { label: '📋 주문 목록',        click: () => openWindow('orders') },
       { label: '💬 문의 게시판',      click: () => openWindow('inquiry') },
       { label: '📢 공지사항',         click: () => openWindow('notices') },
+      { label: '📝 패치 노트',        click: () => openWindow('patchnotes') },
       { label: '🎰 오늘의 픽업 추첨', click: () => openWindow('pickup') },
       { type: 'separator' },
       { label: '⚙️ 내 정보 설정',    click: () => openWindow('settings') },
@@ -216,15 +220,16 @@ app.whenReady().then(() => {
         label: `🚀 컴퓨터 시작 시 자동 실행  ${openAtLogin ? '✓' : ''}`,
         enabled: !isDev,
         click() {
-          app.setLoginItemSettings({ openAtLogin: !openAtLogin })
+          const next = !openAtLogin
+          app.setLoginItemSettings({ openAtLogin: next, args: next ? ['--hidden'] : [] })
           tray.setContextMenu(buildMenu())
         },
       },
       { type: 'separator' },
       { label: `v${ELECTRON_VERSION}`, enabled: false },
-      ...(latestVersion ? [{
+      ...(latestVersion && downloadUrl ? [{
         label: `⬆️ 새 버전 v${latestVersion} 다운로드`,
-        click: () => shell.openExternal(`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${latestVersion}/SSAFY_COFFEE_Setup.exe`),
+        click: () => shell.openExternal(downloadUrl),
       }] : []),
       { type: 'separator' },
       { label: '종료', click: () => app.quit() },
@@ -234,7 +239,8 @@ app.whenReady().then(() => {
   tray.setContextMenu(buildMenu())
   tray.on('double-click', () => openWindow('order'))
 
-  openWindow('order')
+  const isAutoStart = process.argv.includes('--hidden')
+  if (!isAutoStart) openWindow('order')
 
   // 11:40 당첨자 추첨 및 토스트 알림을 위한 백그라운드 창
   bgWin = new BrowserWindow({

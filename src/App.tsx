@@ -9,6 +9,7 @@ import PickupPage from './pages/PickupPage'
 import SettingsPage from './pages/SettingsPage'
 import NoticesPage from './pages/NoticesPage'
 import BackgroundPage from './pages/BackgroundPage'
+import PatchNotesPage from './pages/PatchNotesPage'
 import './App.css'
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/notices" element={<NoticesPage />} />
           <Route path="/background" element={<BackgroundPage />} />
+          <Route path="/patchnotes" element={<PatchNotesPage />} />
         </Routes>
       </HashRouter>
     </OrderProvider>
