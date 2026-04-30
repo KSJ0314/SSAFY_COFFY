@@ -40,7 +40,12 @@ export default function OrderListPage() {
         map.set(key, { temp: o.temp, menu: o.menu, options: o.options, qty, unitPrice: o.price })
       }
     }
-    return Array.from(map.values())
+    return Array.from(map.values()).sort((a, b) => {
+      const menuCmp = a.menu.localeCompare(b.menu, 'ko')
+      if (menuCmp !== 0) return menuCmp
+      if (a.temp !== b.temp) return a.temp.localeCompare(b.temp)
+      return a.options.join(',').localeCompare(b.options.join(','), 'ko')
+    })
   }, [orders])
 
   const totalQty = captureItems.reduce((sum, item) => sum + item.qty, 0)
@@ -208,9 +213,7 @@ export default function OrderListPage() {
                 {captureItems.map((item, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
-                    <td>
-                      <span className="menu-cell"><TempBadge temp={item.temp} size="sm" />{item.menu}</span>
-                    </td>
+                    <td><TempBadge temp={item.temp} size="sm" /> {item.menu}</td>
                     <td>{item.options.length > 0 ? item.options.join(', ') : '-'}</td>
                     <td>{item.qty}</td>
                     <td>{(item.unitPrice * item.qty).toLocaleString()}원</td>

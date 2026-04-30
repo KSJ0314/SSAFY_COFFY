@@ -1067,6 +1067,10 @@ td:nth-last-child(2), th:nth-last-child(2) {
   color: #4a2810;
 }
 
+.capture-area table {
+  width: max-content;
+}
+
 .capture-area td:last-child, .capture-area th:last-child {
   width: auto;
   white-space: nowrap;
@@ -1084,6 +1088,7 @@ td:nth-last-child(2), th:nth-last-child(2) {
   position: absolute;
   left: -9999px;
   top: 0;
+  width: fit-content;
 }
 
 .capture-header {
@@ -1247,6 +1252,7 @@ tfoot td {
   align-items: center;
   gap: 6px;
 }
+
 
 /* ── 픽업 위젯 ── */
 .pickup-widget {
