@@ -9,6 +9,7 @@ export type Order = {
   temp: 'ICE' | 'HOT'
   options: string[]
   price: number
+  qty?: number
   password: string
 }
 

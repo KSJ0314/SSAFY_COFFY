@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
 import TempBadge from './TempBadge'
 import type { CartItem } from './OrderForm'
 
@@ -8,13 +8,22 @@ type Props = {
   cls: string
   closed: boolean
   onRemove: (id: string) => void
+  onChangeQty: (id: string, qty: number) => void
   onSubmit: () => void
   onClose: () => void
+  focusItemId?: string | null
 }
 
-export default function CartModal({ cart, name, cls, closed, onRemove, onSubmit, onClose }: Props) {
+export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQty, onSubmit, onClose, focusItemId }: Props) {
   const mouseDownOnBackdrop = useRef(false)
-  const total = cart.reduce((sum, item) => sum + item.price, 0)
+  const plusBtnRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
+
+  useEffect(() => {
+    if (!focusItemId) return
+    const btn = plusBtnRefs.current.get(focusItemId)
+    if (btn) btn.focus()
+  }, [focusItemId])
 
   return (
     <div
@@ -49,7 +58,28 @@ export default function CartModal({ cart, name, cls, closed, onRemove, onSubmit,
                   {item.options.length > 0 && (
                     <div className="cart-item-options">{item.options.join(', ')}</div>
                   )}
-                  <div className="cart-item-price">{item.price.toLocaleString()}원</div>
+                  <div className="cart-item-price">
+                    {item.qty > 1 && (
+                      <span className="cart-item-unit-price">{item.price.toLocaleString()}원 × {item.qty} = </span>
+                    )}
+                    {(item.price * item.qty).toLocaleString()}원
+                  </div>
+                </div>
+                <div className="cart-item-qty">
+                  <button
+                    className="cart-qty-btn"
+                    onClick={() => onChangeQty(item.id, item.qty - 1)}
+                    disabled={item.qty <= 1}
+                  >−</button>
+                  <span className="cart-qty-value">{item.qty}</span>
+                  <button
+                    className="cart-qty-btn"
+                    ref={el => {
+                      if (el) plusBtnRefs.current.set(item.id, el)
+                      else plusBtnRefs.current.delete(item.id)
+                    }}
+                    onClick={() => onChangeQty(item.id, item.qty + 1)}
+                  >+</button>
                 </div>
                 <button className="cart-item-remove" onClick={() => onRemove(item.id)}>✕</button>
               </div>

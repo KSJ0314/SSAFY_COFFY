@@ -14,7 +14,7 @@ function isClosed(): boolean {
 export default function OrderListPage() {
   const { orders, loading, removeOrder } = useOrders()
   const captureRef = useRef<HTMLDivElement>(null)
-  const total = orders.reduce((sum, o) => sum + o.price, 0)
+  const total = orders.reduce((sum, o) => sum + o.price * (o.qty ?? 1), 0)
   const today = new Date().toLocaleDateString('ko-KR')
   const closed = import.meta.env.DEV ? false : isClosed()
 
@@ -28,6 +28,22 @@ export default function OrderListPage() {
     }
     return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b, 'ko'))
   }, [orders])
+
+  const captureItems = useMemo(() => {
+    const map = new Map<string, { temp: typeof orders[0]['temp'], menu: string, options: string[], qty: number, unitPrice: number }>()
+    for (const o of orders) {
+      const qty = o.qty ?? 1
+      const key = `${o.temp}||${o.menu}||${[...o.options].sort().join('|')}`
+      if (map.has(key)) {
+        map.get(key)!.qty += qty
+      } else {
+        map.set(key, { temp: o.temp, menu: o.menu, options: o.options, qty, unitPrice: o.price })
+      }
+    }
+    return Array.from(map.values())
+  }, [orders])
+
+  const totalQty = captureItems.reduce((sum, item) => sum + item.qty, 0)
 
   function toggleGroup(name: string) {
     setExpandedGroups(prev => {
@@ -72,7 +88,7 @@ export default function OrderListPage() {
 
   const actions = (
     <>
-      <div className="list-meta">{today} / 총 {orders.length}건</div>
+      <div className="list-meta">{today} / 총 {totalQty}잔</div>
       {orders.length > 0 && (
         <button className="save-image-btn" onClick={handleSaveImage}>
           이미지로 저장
@@ -101,6 +117,7 @@ export default function OrderListPage() {
                 <th>반</th>
                 <th>메뉴</th>
                 <th>옵션</th>
+                <th>수량</th>
                 <th>가격</th>
                 <th></th>
               </tr>
@@ -108,17 +125,17 @@ export default function OrderListPage() {
             <tbody>
               {loading && (
                 <tr>
-                  <td colSpan={7} className="table-empty-cell loading-text">불러오는 중...</td>
+                  <td colSpan={8} className="table-empty-cell loading-text">불러오는 중...</td>
                 </tr>
               )}
               {!loading && orders.length === 0 && (
                 <tr>
-                  <td colSpan={7} className="table-empty-cell">아직 주문이 없습니다.</td>
+                  <td colSpan={8} className="table-empty-cell">아직 주문이 없습니다.</td>
                 </tr>
               )}
               {!loading && groupedOrders.map(([name, groupOrders]) => {
                 const expanded = expandedGroups.has(name)
-                const groupTotal = groupOrders.reduce((s, o) => s + o.price, 0)
+                const groupTotal = groupOrders.reduce((s, o) => s + o.price * (o.qty ?? 1), 0)
                 const isMulti = groupOrders.length > 1
                 return [
                   <tr
@@ -134,14 +151,15 @@ export default function OrderListPage() {
                     <td className="group-name-cell">{name}</td>
                     <td>{groupOrders[0].class}</td>
                     {isMulti ? (
-                      <td colSpan={2}>{groupOrders.length}건</td>
+                      <td colSpan={3}>{groupOrders.length}건</td>
                     ) : (
                       <>
                         <td><span className="menu-cell"><TempBadge temp={groupOrders[0].temp} size="sm" />{groupOrders[0].menu}</span></td>
                         <td>{groupOrders[0].options.length > 0 ? groupOrders[0].options.join(', ') : '-'}</td>
+                        <td>{groupOrders[0].qty ?? 1}</td>
                       </>
                     )}
-                    <td>{isMulti ? groupTotal.toLocaleString() + '원' : groupOrders[0].price.toLocaleString() + '원'}</td>
+                    <td>{isMulti ? groupTotal.toLocaleString() + '원' : (groupOrders[0].price * (groupOrders[0].qty ?? 1)).toLocaleString() + '원'}</td>
                     <td>{!isMulti && <button className="delete-order-btn" onClick={e => { e.stopPropagation(); handleDelete(groupOrders[0]) }}>✕</button>}</td>
                   </tr>,
                   ...(expanded && isMulti ? groupOrders.map((o, j) => (
@@ -153,7 +171,8 @@ export default function OrderListPage() {
                         <span className="menu-cell"><TempBadge temp={o.temp} size="sm" />{o.menu}</span>
                       </td>
                       <td>{o.options.length > 0 ? o.options.join(', ') : '-'}</td>
-                      <td>{o.price.toLocaleString()}원</td>
+                      <td>{o.qty ?? 1}</td>
+                      <td>{(o.price * (o.qty ?? 1)).toLocaleString()}원</td>
                       <td><button className="delete-order-btn" onClick={() => handleDelete(o)}>✕</button></td>
                     </tr>
                   )) : [])
@@ -162,7 +181,7 @@ export default function OrderListPage() {
             </tbody>
             <tfoot>
               <tr>
-                <td colSpan={5}>합계</td>
+                <td colSpan={6}>합계</td>
                 <td>{total.toLocaleString()}원</td>
                 <td></td>
               </tr>
@@ -173,7 +192,7 @@ export default function OrderListPage() {
           <div ref={captureRef} className="capture-area capture-offscreen">
             <div className="capture-header">
               <div className="capture-title">{siteConfig.serviceName} / 주문 목록</div>
-              <div className="capture-date">{today} / 총 {orders.length}건 / 합계 {total.toLocaleString()}원</div>
+              <div className="capture-date">{today} / 총 {totalQty}잔 / 합계 {total.toLocaleString()}원</div>
             </div>
             <table>
               <thead>
@@ -181,24 +200,26 @@ export default function OrderListPage() {
                   <th>#</th>
                   <th>메뉴</th>
                   <th>옵션</th>
+                  <th>수량</th>
                   <th>가격</th>
                 </tr>
               </thead>
               <tbody>
-                {orders.map((o, i) => (
+                {captureItems.map((item, i) => (
                   <tr key={i}>
                     <td>{i + 1}</td>
                     <td>
-                      <span className="menu-cell"><TempBadge temp={o.temp} size="sm" />{o.menu}</span>
+                      <span className="menu-cell"><TempBadge temp={item.temp} size="sm" />{item.menu}</span>
                     </td>
-                    <td>{o.options.length > 0 ? o.options.join(', ') : '-'}</td>
-                    <td>{o.price.toLocaleString()}원</td>
+                    <td>{item.options.length > 0 ? item.options.join(', ') : '-'}</td>
+                    <td>{item.qty}</td>
+                    <td>{(item.unitPrice * item.qty).toLocaleString()}원</td>
                   </tr>
                 ))}
               </tbody>
               <tfoot>
                 <tr>
-                  <td colSpan={3}>합계</td>
+                  <td colSpan={4}>합계</td>
                   <td>{total.toLocaleString()}원</td>
                 </tr>
               </tfoot>

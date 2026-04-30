@@ -16,7 +16,9 @@ export default function PageLayout({ title, icon = '☕', backPath, actions, chi
     <div className="list-page-bg">
       <div className="list-page">
         <div className="list-header">
-          <button className="back-btn" onClick={() => navigate(backPath)}>← 돌아가기</button>
+          {!window.electronAPI && (
+            <button className="back-btn" onClick={() => navigate(backPath)}>← 돌아가기</button>
+          )}
           <div className="list-title-area">
             <span className="logo">{icon}</span>
             <h1>{title}</h1>

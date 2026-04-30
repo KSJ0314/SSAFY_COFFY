@@ -75,7 +75,7 @@ export async function sendPickupNotification(result: PickupResult, totalOrders: 
         color: '#723F17',
         title: `${dateStr} 오늘의 픽업 당첨자 발표 ☕`,
         text: `${winnerText}\n\n${siteConfig.mmNotification.pickupMessage}`,
-        footer: `총 ${totalOrders}건 주문 · ${result.winners.length}명 당첨`,
+        footer: `총 ${totalOrders}잔 주문 · ${result.winners.length}명 당첨`,
       }],
     }),
   })
@@ -86,15 +86,19 @@ export function drawPickup(orders: Order[]): PickupResult {
     arr.findIndex(x => x.name === o.name && x.class === o.class) === arr.indexOf(o)
   )
 
+  const totalQty = orders.reduce((sum, o) => sum + (o.qty ?? 1), 0)
+
   const draws: DrawEntry[] = unique.map(o => {
-    const count = orders.filter(x => x.name === o.name && x.class === o.class).length
+    const count = orders
+      .filter(x => x.name === o.name && x.class === o.class)
+      .reduce((sum, x) => sum + (x.qty ?? 1), 0)
     const cap = getCap(o.name)
     const randomValue = Math.max(...Array.from({ length: count }, () => Math.random() * cap))
     return { name: o.name, class: o.class, randomValue }
   })
 
   const sorted = draws.sort((a, b) => b.randomValue - a.randomValue)
-  const winnerCount = Math.max(1, Math.ceil(orders.length / 9))
+  const winnerCount = Math.max(1, Math.ceil(totalQty / 9))
   const topDraws = sorted.slice(0, winnerCount)
   const winners = topDraws.map(d => unique.find(o => o.name === d.name && o.class === d.class)!)
 

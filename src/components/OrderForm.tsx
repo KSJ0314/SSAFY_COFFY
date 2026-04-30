@@ -13,6 +13,7 @@ export type CartItem = {
   temp: MenuTemp
   options: string[]
   price: number
+  qty: number
   image?: string
 }
 
@@ -43,9 +44,13 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   const [customOptionPrice, setCustomOptionPrice] = useState<number | ''>('')
   const [password, setPassword] = useState(() => localStorage.getItem('coffy_password') ?? '')
   const [cart, setCart] = useState<CartItem[]>(() => {
-    try { return JSON.parse(localStorage.getItem('coffy_cart') ?? '[]') } catch { return [] }
+    try {
+      const raw = JSON.parse(localStorage.getItem('coffy_cart') ?? '[]')
+      return raw.map((item: CartItem) => ({ ...item, qty: item.qty ?? 1 }))
+    } catch { return [] }
   })
   const [showCart, setShowCart] = useState(false)
+  const [focusCartItemId, setFocusCartItemId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchFilter, setSearchFilter] = useState('')
   const [showDropdown, setShowDropdown] = useState(false)
@@ -174,12 +179,31 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
       ...selectedOptions,
       ...(isCustomOption && customOption ? [`${customOption}${customOptionPrice ? `(+${Number(customOptionPrice).toLocaleString()}원)` : ''}`] : []),
     ]
+    const existing = cart.find(item =>
+      item.menu === menuName &&
+      item.temp === tempOption &&
+      item.options.length === allOptions.length &&
+      [...item.options].sort().join(',') === [...allOptions].sort().join(',')
+    )
+    if (existing) {
+      const confirmed = window.confirm('이미 장바구니에 있는 메뉴입니다.\n장바구니에서 수량을 늘리시겠습니까?')
+      if (confirmed) {
+        setFocusCartItemId(existing.id)
+        if (window.electronAPI) {
+          window.electronAPI.openCart()
+        } else {
+          setShowCart(true)
+        }
+      }
+      return
+    }
     const newItem: CartItem = {
       id: crypto.randomUUID(),
       menu: menuName,
       temp: tempOption,
       options: allOptions,
       price: totalPrice,
+      qty: 1,
       image: selectedType?.image,
     }
     setCart(prev => [...prev, newItem])
@@ -187,21 +211,26 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   }
 
   function handleCartSubmit() {
-    if (!name || !cls || !password || cart.length === 0) return
+    if (cart.length === 0) return
+    if (!name || !cls || !password) {
+      setShowCart(false)
+      setFocusCartItemId(null)
+      setShowInfoMessage(true)
+      return
+    }
     localStorage.setItem('coffy_name', name)
     localStorage.setItem('coffy_class', cls)
     const orders: Order[] = cart.map(item => ({
       name, class: cls, menu: item.menu, temp: item.temp,
-      options: item.options, price: item.price, password,
+      options: item.options, price: item.price, qty: item.qty, password,
     }))
     onSubmit(orders)
     setCart([])
     localStorage.removeItem('coffy_cart')
     setShowCart(false)
+    setFocusCartItemId(null)
     setPassword('')
   }
-
-  const missingInfo = !name || !cls || !password
 
   return (
     <div className="right-panel">
@@ -493,20 +522,15 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
           className="submit-btn"
           disabled={cart.length === 0}
           onClick={() => {
-            if (missingInfo) {
-              setShowInfoMessage(true)
+            if (window.electronAPI) {
+              window.electronAPI.openCart()
             } else {
-              setShowInfoMessage(false)
-              if (window.electronAPI) {
-                window.electronAPI.openCart()
-              } else {
-                setShowCart(true)
-              }
+              setShowCart(true)
             }
           }}
         >
           장바구니 확인
-          {cart.length > 0 && <span className="cart-count-badge">{cart.length}</span>}
+          {cart.length > 0 && <span className="cart-count-badge">{cart.reduce((sum, item) => sum + item.qty, 0)}</span>}
         </button>
       </div>
       {showCart && (
@@ -516,8 +540,10 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
           cls={cls}
           closed={disabled}
           onRemove={id => setCart(prev => prev.filter(item => item.id !== id))}
+          onChangeQty={(id, qty) => setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))}
           onSubmit={handleCartSubmit}
-          onClose={() => setShowCart(false)}
+          onClose={() => { setShowCart(false); setFocusCartItemId(null) }}
+          focusItemId={focusCartItemId}
         />
       )}
     </form>

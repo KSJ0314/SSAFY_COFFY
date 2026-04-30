@@ -53,7 +53,8 @@ export default function PickupWidget({ autoOpenModal = false }: Props) {
       const saved = await savePickupResult(picked)
       if (saved) {
         setResult(picked)
-        await sendPickupNotification(picked, orders.length)
+        const totalQty = orders.reduce((sum, o) => sum + (o.qty ?? 1), 0)
+        await sendPickupNotification(picked, totalQty)
       } else {
         const fallback = await getTodayPickup()
         if (fallback) setResult(fallback)
