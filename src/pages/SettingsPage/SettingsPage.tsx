@@ -1,5 +1,17 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 import UserInfoFields from '../../components/UserInfoFields'
+import { RightPanel, Form, FormTitleRow, SubmitBtn } from '../../components/OrderForm/OrderForm.styled'
+
+const SettingsLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background: ${({ theme }) => theme.colors.bg};
+`
 
 export default function SettingsPage() {
   const [name, setName] = useState(() => localStorage.getItem('coffy_name') ?? '')
@@ -19,20 +31,22 @@ export default function SettingsPage() {
   }
 
   return (
-    <div className="right-panel">
-      <div className="order-form">
-        <div className="form-title-row">
-          <UserInfoFields
-            name={name} cls={cls} password={password}
-            onNameChange={setName}
-            onClsChange={setCls}
-            onPasswordChange={setPassword}
-          />
-          <button className="submit-btn" onClick={handleSave}>
-            {saved ? '저장됨 ✓' : '저장'}
-          </button>
-        </div>
-      </div>
-    </div>
+    <SettingsLayout>
+      <RightPanel>
+        <Form onSubmit={e => e.preventDefault()}>
+          <FormTitleRow>
+            <UserInfoFields
+              name={name} cls={cls} password={password}
+              onNameChange={setName}
+              onClsChange={setCls}
+              onPasswordChange={setPassword}
+            />
+            <SubmitBtn type="button" onClick={handleSave}>
+              {saved ? '저장됨 ✓' : '저장'}
+            </SubmitBtn>
+          </FormTitleRow>
+        </Form>
+      </RightPanel>
+    </SettingsLayout>
   )
 }

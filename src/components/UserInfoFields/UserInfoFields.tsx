@@ -1,4 +1,39 @@
+import styled from 'styled-components'
+import { FormRowInline, FormRow } from '../OrderForm/OrderForm.styled'
 import type { Props } from './types'
+
+const TooltipWrap = styled.div`
+  position: relative;
+  width: 100%;
+
+  input {
+    width: 100%;
+    box-sizing: border-box;
+  }
+`
+
+const Tooltip = styled.div`
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 0;
+  background: ${({ theme }) => theme.colors.secondary};
+  color: ${({ theme }) => theme.colors.textOnDark};
+  font-size: 0.75rem;
+  padding: 5px 10px;
+  border-radius: 4px;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 10;
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 12px;
+    border: 5px solid transparent;
+    border-top-color: ${({ theme }) => theme.colors.secondary};
+  }
+`
 
 export default function UserInfoFields({
   name, cls, password,
@@ -6,25 +41,25 @@ export default function UserInfoFields({
   showValidation = false,
 }: Props) {
   return (
-    <div className="form-row-inline">
-      <div className="form-row">
+    <FormRowInline>
+      <FormRow>
         <label>이름</label>
-        <div className="input-tooltip-wrap">
-          {showValidation && !name && <div className="input-tooltip">필수 입력</div>}
+        <TooltipWrap>
+          {showValidation && !name && <Tooltip>필수 입력</Tooltip>}
           <input value={name} onChange={e => onNameChange(e.target.value)} placeholder="김싸피" />
-        </div>
-      </div>
-      <div className="form-row">
+        </TooltipWrap>
+      </FormRow>
+      <FormRow>
         <label>반</label>
-        <div className="input-tooltip-wrap">
-          {showValidation && !cls && <div className="input-tooltip">필수 입력</div>}
+        <TooltipWrap>
+          {showValidation && !cls && <Tooltip>필수 입력</Tooltip>}
           <input value={cls} onChange={e => onClsChange(e.target.value)} placeholder="1" />
-        </div>
-      </div>
-      <div className="form-row">
+        </TooltipWrap>
+      </FormRow>
+      <FormRow>
         <label>비밀번호</label>
-        <div className="input-tooltip-wrap">
-          {showValidation && !password && <div className="input-tooltip">필수 입력</div>}
+        <TooltipWrap>
+          {showValidation && !password && <Tooltip>필수 입력</Tooltip>}
           <input
             type="password"
             value={password}
@@ -33,8 +68,8 @@ export default function UserInfoFields({
             maxLength={4}
             className="input-password"
           />
-        </div>
-      </div>
-    </div>
+        </TooltipWrap>
+      </FormRow>
+    </FormRowInline>
   )
 }

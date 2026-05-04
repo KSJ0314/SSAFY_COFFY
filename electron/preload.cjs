@@ -11,4 +11,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openOrders: () => ipcRenderer.send('open-orders'),
   openSettings: () => ipcRenderer.send('open-settings'),
   resizeWindow: (w, h) => ipcRenderer.send('resize-window', w, h),
+  onThemeChange: cb => ipcRenderer.on('set-theme', (_, mode) => cb(mode)),
+  offThemeChange: cb => ipcRenderer.removeListener('set-theme', cb),
 })

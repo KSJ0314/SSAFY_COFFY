@@ -1,9 +1,110 @@
 import { useEffect, useState } from 'react'
+import styled, { css, keyframes } from 'styled-components'
 import { useOrders } from '../../context/OrderContext'
 import { drawPickup, getTodayPickup, savePickupResult, sendPickupNotification, type PickupResult } from '../../services/pickupService'
 import PickupModal from '../PickupModal'
 import siteConfig from '../../data/siteConfig.json'
 import type { Props } from './types'
+
+const Wrap = styled.div`
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 16px;
+  color: #ffe8cc;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+const TitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 24px;
+`
+
+const Title = styled.div`
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffd080;
+`
+
+const DetailBtn = styled.button`
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 20px;
+  color: #fff8f0;
+  padding: 2px 8px;
+  font-size: 0.68rem;
+  cursor: pointer;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+`
+
+const pulse = keyframes`
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+`
+
+const Waiting = styled.div<{ $loading?: boolean }>`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 0;
+  ${({ $loading }) => $loading && css`animation: ${pulse} 1.2s ease-in-out infinite;`}
+
+  p {
+    font-size: 0.82rem;
+    color: #c8a882;
+  }
+`
+
+const Lock = styled.div`
+  font-size: 1.8rem;
+  opacity: 0.6;
+`
+
+const WinnerCard = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 0;
+`
+
+const Winners = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-bottom: 10px;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+`
+
+const WinnerRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+`
+
+const WinnerName = styled.span`
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #ffd080;
+`
+
+const WinnerClass = styled.span`
+  font-size: 0.82rem;
+  color: #c8a882;
+`
 
 function isDrawTime(): boolean {
   const { hour, minute } = siteConfig.closingTime
@@ -17,7 +118,6 @@ export default function PickupWidget({ autoOpenModal = false }: Props) {
   const [showModal, setShowModal] = useState(false)
   const [pickupLoading, setPickupLoading] = useState(true)
 
-  // Firebase에서 오늘 당첨자 조회
   useEffect(() => {
     getTodayPickup().then(res => {
       if (res) setResult(res)
@@ -25,7 +125,6 @@ export default function PickupWidget({ autoOpenModal = false }: Props) {
     })
   }, [])
 
-  // 결과 첫 수신 시 Electron 토스트 알림 (하루 1회) + autoOpenModal 처리
   useEffect(() => {
     if (!result) return
     const today = new Date(Date.now() + 9 * 3600000).toISOString().slice(0, 10)
@@ -36,7 +135,6 @@ export default function PickupWidget({ autoOpenModal = false }: Props) {
     if (autoOpenModal) setShowModal(true)
   }, [result, autoOpenModal])
 
-  // 11:40 감지 → 당첨자 없으면 자동 추첨
   useEffect(() => {
     if (result) return
 
@@ -65,36 +163,36 @@ export default function PickupWidget({ autoOpenModal = false }: Props) {
 
   return (
     <>
-      <div className="pickup-widget">
-        <div className="pickup-title-row">
-          <div className="pickup-title">오늘의 픽업 👑</div>
+      <Wrap>
+        <TitleRow>
+          <Title>오늘의 픽업 👑</Title>
           {result && (
-            <button className="pickup-detail-btn" onClick={() => setShowModal(true)}>
+            <DetailBtn onClick={() => setShowModal(true)}>
               자세히 보기
-            </button>
+            </DetailBtn>
           )}
-        </div>
+        </TitleRow>
 
         {pickupLoading ? (
-          <div className="pickup-waiting loading-text">불러오는 중...</div>
+          <Waiting $loading>불러오는 중...</Waiting>
         ) : result ? (
-          <div className="pickup-winner-card">
-            <div className="pickup-winners">
+          <WinnerCard>
+            <Winners>
               {result.winners.map((w, i) => (
-                <div key={i} className="pickup-winner-row">
-                  <span className="pickup-winner-name">{w.name}</span>
-                  <span className="pickup-winner-class">{w.class}반</span>
-                </div>
+                <WinnerRow key={i}>
+                  <WinnerName>{w.name}</WinnerName>
+                  <WinnerClass>{w.class}반</WinnerClass>
+                </WinnerRow>
               ))}
-            </div>
-          </div>
+            </Winners>
+          </WinnerCard>
         ) : (
-          <div className="pickup-waiting">
-            <div className="pickup-lock">🔒</div>
+          <Waiting>
+            <Lock>🔒</Lock>
             <p>{siteConfig.closingTime.hour}:{String(siteConfig.closingTime.minute).padStart(2, '0')}에 자동 추첨됩니다</p>
-          </div>
+          </Waiting>
         )}
-      </div>
+      </Wrap>
 
       {showModal && result && (
         <PickupModal result={result} onClose={() => setShowModal(false)} />

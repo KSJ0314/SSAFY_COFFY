@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import { useOrders } from '../../context/OrderContext'
 import NoticeBoard from '../NoticeBoard'
@@ -21,6 +22,154 @@ function isNewer(available: string, current: string): boolean {
   return a > x || (a === x && b > y) || (a === x && b === y && c > z)
 }
 
+const Panel = styled.div`
+  position: relative;
+  width: 340px;
+  flex-shrink: 0;
+  background: linear-gradient(160deg, ${({ theme }) => theme.colors.sidebarFrom}, ${({ theme }) => theme.colors.sidebarTo});
+  padding: 56px 24px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`
+
+const TopBtnGroup = styled.div`
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  right: 12px;
+  display: flex;
+  gap: 6px;
+`
+
+const TopBtn = styled.button<{ $relative?: boolean }>`
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: #d4a87a;
+  font-size: 0.72rem;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+  position: ${({ $relative }) => ($relative ? 'relative' : 'static')};
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+`
+
+
+const NewDot = styled.span`
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid ${({ theme }) => theme.colors.sidebarFrom};
+`
+
+const DownloadBtnWrap = styled.div`
+  position: relative;
+  margin-left: auto;
+  display: flex;
+`
+
+const DownloadBtn = styled.a`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 7px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.2s, color 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+`
+
+const UpdateDot = styled.span`
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  width: 7px;
+  height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 1.5px solid ${({ theme }) => theme.colors.sidebarFrom};
+  pointer-events: none;
+`
+
+const LogoArea = styled.div`
+  text-align: center;
+  color: #fff8f0;
+
+  .logo {
+    font-size: 3rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-top: 4px;
+  }
+
+  p {
+    font-size: 0.8rem;
+    color: #d4a87a;
+    letter-spacing: 2px;
+    margin-top: 2px;
+  }
+`
+
+const Deadline = styled.p`
+  margin-top: 8px !important;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 4px 12px;
+  font-size: 0.8rem !important;
+  color: #ffe0b2 !important;
+  display: inline-block;
+`
+
+const ViewOrdersBtn = styled.button`
+  margin-top: auto;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+  color: #fff8f0;
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+  }
+`
+
+const OrderCount = styled.span`
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 12px;
+`
+
 export default function Sidebar() {
   const { orders, loading } = useOrders()
   const navigate = useNavigate()
@@ -41,18 +190,17 @@ export default function Sidebar() {
   }
 
   return (
-    <div className="left-panel">
-      <div className="top-btn-group">
-        <button className="patch-notes-btn" onClick={handleOpenPatchNotes}>
+    <Panel>
+      <TopBtnGroup>
+        <TopBtn $relative onClick={handleOpenPatchNotes}>
           패치노트
-          {hasNewPatch && <span className="patch-new-dot" />}
-        </button>
-        <button className="inquiry-top-btn" onClick={() => navigate('/inquiry')}>
+          {hasNewPatch && <NewDot />}
+        </TopBtn>
+        <TopBtn onClick={() => navigate('/inquiry')}>
           문의하기
-        </button>
-        <div className="download-btn-wrap">
-          <a
-            className="download-app-btn"
+        </TopBtn>
+        <DownloadBtnWrap>
+          <DownloadBtn
             href={`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${ELECTRON_VERSION}/SSAFY_COFFEE_Setup.exe`}
             title="SSAFY_COFFEE for Desktop"
             onClick={handleDownload}
@@ -60,29 +208,29 @@ export default function Sidebar() {
             <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
               <path d="M6.5 1v7M3.5 5.5l3 3 3-3M2 11h9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
-          </a>
-          {hasElectronUpdate && <span className="electron-update-dot" />}
-        </div>
-      </div>
+          </DownloadBtn>
+          {hasElectronUpdate && <UpdateDot />}
+        </DownloadBtnWrap>
+      </TopBtnGroup>
 
-      <div className="logo-area">
+      <LogoArea>
         <div className="logo">☕</div>
         <h1>{siteConfig.serviceName}</h1>
         <p>{siteConfig.cafeName}</p>
-        <p className="deadline">
+        <Deadline>
           매일 {siteConfig.closingTime.hour}:{String(siteConfig.closingTime.minute).padStart(2, '0')} 마감
-        </p>
-      </div>
+        </Deadline>
+      </LogoArea>
 
       <NoticeBoard />
       <PickupWidget />
 
-      <button className="view-orders-btn" onClick={() => navigate('/orders')}>
+      <ViewOrdersBtn onClick={() => navigate('/orders')}>
         오늘의 주문 목록 보기 →
-        <span className="order-count">{loading ? '…' : `${orders.length}건`}</span>
-      </button>
+        <OrderCount>{loading ? '…' : `${orders.length}건`}</OrderCount>
+      </ViewOrdersBtn>
 
       {showPatchNotes && <PatchNotesModal onClose={() => setShowPatchNotes(false)} />}
-    </div>
+    </Panel>
   )
 }

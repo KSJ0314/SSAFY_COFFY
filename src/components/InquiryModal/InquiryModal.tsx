@@ -1,5 +1,83 @@
 import { useState, useRef } from 'react'
+import styled from 'styled-components'
+import {
+  ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose,
+  InquiryCancelBtn, InquirySubmitBtn,
+} from '../../styles/shared'
 import type { Props } from './types'
+
+const InquiryModal_ = styled(Modal)`
+  width: 560px;
+`
+
+const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 16px;
+`
+
+const FormRow = styled.div<{ $inline?: boolean }>`
+  display: ${({ $inline }) => ($inline ? 'flex' : 'flex')};
+  flex-direction: ${({ $inline }) => ($inline ? 'row' : 'column')};
+  align-items: ${({ $inline }) => ($inline ? 'flex-end' : 'initial')};
+  gap: ${({ $inline }) => ($inline ? '12px' : '6px')};
+`
+
+const InlineItem = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+`
+
+const Label = styled.label`
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: ${({ theme }) => theme.colors.label};
+`
+
+const Input = styled.input`
+  padding: 10px 12px;
+  border: 1.5px solid ${({ theme }) => theme.colors.border};
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textInput};
+  outline: none;
+  font-family: inherit;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.accent};
+  }
+
+  &.password {
+    width: 100px;
+  }
+`
+
+const Textarea = styled.textarea`
+  padding: 10px 12px;
+  border: 1.5px solid ${({ theme }) => theme.colors.border};
+  border-radius: 8px;
+  font-size: 0.9rem;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textInput};
+  outline: none;
+  font-family: inherit;
+  resize: vertical;
+
+  &:focus {
+    border-color: ${({ theme }) => theme.colors.accent};
+  }
+`
+
+const FormActions = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+`
 
 export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props) {
   const [title, setTitle] = useState(initial?.title ?? '')
@@ -16,80 +94,70 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
   }
 
   return (
-    <div
-      className="modal-backdrop"
+    <ModalBackdrop
       onMouseDown={() => { mouseDownOnBackdrop.current = true }}
       onMouseUp={() => { if (mouseDownOnBackdrop.current) onClose(); mouseDownOnBackdrop.current = false }}
     >
-      <div className="modal inquiry-modal" onMouseDown={e => { e.stopPropagation(); mouseDownOnBackdrop.current = false }}>
-        <div className="modal-body">
-          <div className="modal-header">
+      <InquiryModal_ onMouseDown={e => { e.stopPropagation(); mouseDownOnBackdrop.current = false }}>
+        <ModalBody>
+          <ModalHeader>
             <h2>{mode === 'create' ? '문의 작성' : '문의 수정'}</h2>
-            <button className="modal-close" onClick={onClose}>✕</button>
-          </div>
-          <form className="inquiry-form" onSubmit={handleSubmit}>
+            <ModalClose onClick={onClose}>✕</ModalClose>
+          </ModalHeader>
+          <Form onSubmit={handleSubmit}>
             {mode === 'create' && (
-              <div className="inquiry-form-row inquiry-form-row-inline">
-                <div className="inquiry-form-inline-item">
-                  <label>이름</label>
-                  <input
-                    value={name}
-                    onChange={e => setName(e.target.value)}
-                    placeholder="이름"
-                  />
-                </div>
-                <div className="inquiry-form-inline-item">
-                  <label>반</label>
-                  <input
-                    value={cls}
-                    onChange={e => setCls(e.target.value)}
-                    placeholder="반"
-                  />
-                </div>
-              </div>
+              <FormRow $inline>
+                <InlineItem>
+                  <Label>이름</Label>
+                  <Input value={name} onChange={e => setName(e.target.value)} placeholder="이름" />
+                </InlineItem>
+                <InlineItem>
+                  <Label>반</Label>
+                  <Input value={cls} onChange={e => setCls(e.target.value)} placeholder="반" />
+                </InlineItem>
+              </FormRow>
             )}
-            <div className="inquiry-form-row">
-              <label>제목</label>
-              <input
+            <FormRow>
+              <Label>제목</Label>
+              <Input
                 value={title}
                 onChange={e => setTitle(e.target.value)}
                 placeholder="제목을 입력하세요"
                 autoFocus
               />
-            </div>
-            <div className="inquiry-form-row">
-              <label>내용</label>
-              <textarea
+            </FormRow>
+            <FormRow>
+              <Label>내용</Label>
+              <Textarea
                 value={content}
                 onChange={e => setContent(e.target.value)}
                 placeholder="내용을 입력하세요"
                 rows={5}
               />
-            </div>
-            <div className="inquiry-form-row">
-              <label>비밀번호</label>
-              <input
+            </FormRow>
+            <FormRow>
+              <Label>비밀번호</Label>
+              <Input
                 type="password"
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 placeholder="••••"
                 maxLength={4}
-                className="inquiry-password-input"
+                className="password"
               />
-            </div>
-            <div className="inquiry-form-actions">
-              <button type="button" className="inquiry-cancel-btn" onClick={onClose}>취소</button>
-              <button
+            </FormRow>
+            <FormActions>
+              <InquiryCancelBtn type="button" onClick={onClose}>취소</InquiryCancelBtn>
+              <InquirySubmitBtn
                 type="submit"
-                className="inquiry-submit-btn"
                 disabled={!title.trim() || !content.trim() || !password}
               >
                 {mode === 'create' ? '작성' : '수정'}
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+              </InquirySubmitBtn>
+            </FormActions>
+          </Form>
+        </ModalBody>
+      </InquiryModal_>
+    </ModalBackdrop>
   )
 }

@@ -1,9 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import styled from 'styled-components'
 import Sidebar from '../../components/Sidebar'
 import OrderForm from '../../components/OrderForm'
 import { useOrders } from '../../context/OrderContext'
 import siteConfig from '../../data/siteConfig.json'
+
+const MainLayout = styled.div`
+  display: flex;
+  height: 100%;
+`
 
 function isClosed(): boolean {
   const { hour, minute } = siteConfig.closingTime
@@ -23,12 +29,12 @@ export default function MainPage() {
   }, [])
 
   return (
-    <div className="main-layout">
+    <MainLayout>
       <Sidebar />
       <OrderForm
         onSubmit={async orders => { await Promise.all(orders.map(addOrder)); navigate('/orders') }}
         disabled={closed}
       />
-    </div>
+    </MainLayout>
   )
 }

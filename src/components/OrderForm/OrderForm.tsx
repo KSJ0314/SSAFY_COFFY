@@ -2,10 +2,27 @@ import { useState, useEffect } from 'react'
 import { OPTION_ITEMS } from '../../constants/coffeeMenu'
 import type { MenuTemp } from '../../constants/coffeeMenu'
 import TempBadge from '../TempBadge'
+import { CategoryTab } from '../../styles/shared'
 import type { Order } from '../../context/OrderContext'
 import menuData from '../../data/menuData.json'
 import CartModal from '../CartModal'
 import UserInfoFields from '../UserInfoFields'
+import {
+  RightPanel, Form, FormTitleRow, FormSectionTitle, ClosedBadge,
+  FormRowInline, FormRow,
+  CategoryTabsRow, CategoryTabs, MenuSearchWrap, MenuSearchInputWrap,
+  MenuSearchGhost, MenuSearchGhostCompletion, MenuSearchInput, MenuSearchBtn,
+  MenuSearchDropdown, MenuSearchDropdownItem,
+  KioskSection, KioskLabel, KioskLabelSub,
+  KioskGridWithImage, KioskGridColumn, KioskGrid,
+  KioskPagination, KioskPaginationDots, KioskPaginationDot,
+  KioskMenuImage, KioskImageKcal, KioskMenuImagePlaceholder,
+  KioskCustomMenuArea, KioskCustomMenuInput,
+  KioskBtn, KioskBtnBadgeRow, KioskBtnName, KioskBtnPrice, KioskInlineInput,
+  KioskOptions, OptionBtn, OptionPrice, OptionDivider, CustomOptionInput,
+  PriceSummaryRow, PriceInputWrap, OrderSummary, SummaryMenu, SummaryOptions, SummaryPrice,
+  SubmitRow, AddToCartBtn, SubmitBtn, CartCountBadge,
+} from './OrderForm.styled'
 import type { CartItem, Props } from './types'
 
 function getColCount(): number {
@@ -219,320 +236,304 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
   }
 
   return (
-    <div className="right-panel">
-    <form className="order-form" onSubmit={e => e.preventDefault()}>
-      <div className="form-title-row">
-        <div className="form-section-title">
-          주문하기 {disabled && <span className="closed-badge">마감</span>}
-        </div>
+    <RightPanel>
+      <Form onSubmit={e => e.preventDefault()}>
+        <FormTitleRow>
+          <FormSectionTitle>
+            주문하기 {disabled && <ClosedBadge>마감</ClosedBadge>}
+          </FormSectionTitle>
 
-        {/* 이름 / 반 / 비밀번호 */}
-        <UserInfoFields
-          name={name} cls={cls} password={password}
-          onNameChange={v => { setName(v); setShowInfoMessage(false) }}
-          onClsChange={v => { setCls(v); setShowInfoMessage(false) }}
-          onPasswordChange={v => { setPassword(v); setShowInfoMessage(false) }}
-          showValidation={showInfoMessage}
-        />
-      </div>
-
-      {/* 메뉴 선택 */}
-      <div className="kiosk-section">
-        <div className="category-tabs-row">
-          <div className="kiosk-label">메뉴</div>
-          <div className="menu-search-wrap">
-            <div className="menu-search-input-wrap" style={{ paddingRight: '6px' }}>
-              {ghostCompletion && (
-                <div className="menu-search-ghost" aria-hidden="true">
-                  <span style={{ visibility: 'hidden' }}>{searchQuery}</span>
-                  <span className="menu-search-ghost-completion">{ghostCompletion}</span>
-                </div>
-              )}
-              <input
-                className="menu-search-input"
-                style={{ paddingRight: '4px' }}
-                placeholder="메뉴 검색"
-                value={searchQuery}
-                onChange={e => {
-                  const v = e.target.value
-                  setSearchQuery(v)
-                  setSearchFilter(v)
-                  setShowDropdown(true)
-                  setHighlightedIndex(-1)
-                }}
-                onFocus={() => { if (searchFilter) setShowDropdown(true) }}
-                onBlur={() => setTimeout(() => {
-                  setShowDropdown(false)
-                  setHighlightedIndex(-1)
-                  setSearchQuery(searchFilter)
-                }, 150)}
-                onKeyDown={e => {
-                  if (e.key === 'ArrowDown') {
-                    e.preventDefault()
-                    const next = Math.min(highlightedIndex + 1, searchResults.length - 1)
-                    setHighlightedIndex(next)
-                    setSearchQuery(searchResults[next]?.name ?? searchFilter)
-                  } else if (e.key === 'ArrowUp') {
-                    e.preventDefault()
-                    const prev = Math.max(highlightedIndex - 1, -1)
-                    setHighlightedIndex(prev)
-                    setSearchQuery(prev === -1 ? searchFilter : (searchResults[prev]?.name ?? searchFilter))
-                  } else if (e.key === 'Enter') {
-                    e.preventDefault()
-                    executeSearch()
-                  } else if (e.key === 'Escape') {
-                    setSearchQuery(''); setSearchFilter(''); setShowDropdown(false); setHighlightedIndex(-1)
-                  }
-                }}
-              />
-              <button
-                type="button"
-                className="menu-search-btn"
-                onMouseDown={e => { e.preventDefault(); executeSearch() }}
-              >🔍</button>
-            </div>
-            {showDropdown && searchResults.length > 0 && (
-              <ul className="menu-search-dropdown">
-                {searchResults.map((item, i) => (
-                  <li
-                    key={item.name}
-                    className={`menu-search-dropdown-item${i === highlightedIndex ? ' highlighted' : ''}`}
-                    onMouseDown={() => handleSearchSelect(item.name)}
-                  >
-                    {item.name}
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
-        </div>
-        <div className="category-tabs">
-          {menuData.map(c => (
-            <button
-              key={c.category}
-              type="button"
-              className={`category-tab ${selectedCategory === c.category ? 'selected' : ''}`}
-              onClick={() => handleCategoryClick(c.category)}
-            >
-              {c.category}
-            </button>
-          ))}
-          <button
-            type="button"
-            className={`category-tab ${selectedCategory === CUSTOM_CATEGORY ? 'selected' : ''}`}
-            onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
-          >
-            기타
-          </button>
-        </div>
-        <div className={`kiosk-grid-with-image${selectedCategory === CUSTOM_CATEGORY ? ' no-min-height' : ''}`}>
-          {selectedCategory === CUSTOM_CATEGORY ? (
-            <div className="kiosk-custom-menu-area">
-              <input
-                className="kiosk-custom-menu-input"
-                placeholder="메뉴명 직접 입력"
-                value={customMenu}
-                onChange={e => setCustomMenu(e.target.value)}
-                autoFocus
-              />
-            </div>
-          ) : (
-          <div className="kiosk-grid-column">
-            <div className="kiosk-grid">
-            {currentCategoryItems.map(item => {
-              const availableTemps: MenuTemp[] = item.types.map((t: { temp: string }) => t.temp as MenuTemp)
-              const displayPrice = item.types.find((t: { temp: string }) => t.temp === 'ICE')?.price ?? item.types[0]?.price ?? 0
-              return (
-                <button
-                  key={item.name}
-                  type="button"
-                  className={`kiosk-btn ${selectedMenu === item.name && !isCustomMenu ? 'selected' : ''}`}
-                  onClick={() => handleMenuClick(item.name)}
-                >
-                  <div className="kiosk-badge-row">
-                    {availableTemps.map(t => <TempBadge key={t} temp={t} size="sm" />)}
-                  </div>
-                  <span className="kiosk-btn-name">{item.name}</span>
-                  <span className="kiosk-btn-price">{displayPrice.toLocaleString()}원</span>
-                </button>
-              )
-            })}
-            </div>
-            {totalPages > 1 && (
-              <div className="kiosk-pagination">
-                <button
-                  type="button"
-                  className="kiosk-pagination-btn"
-                  onClick={() => setMenuPage(p => p - 1)}
-                  disabled={menuPage === 0}
-                >
-                  ‹
-                </button>
-                <div className="kiosk-pagination-dots">
-                  {Array.from({ length: totalPages }, (_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      className={`kiosk-pagination-dot ${i === menuPage ? 'active' : ''}`}
-                      onClick={() => setMenuPage(i)}
-                    />
-                  ))}
-                </div>
-                <button
-                  type="button"
-                  className="kiosk-pagination-btn"
-                  onClick={() => setMenuPage(p => p + 1)}
-                  disabled={menuPage >= totalPages - 1}
-                >
-                  ›
-                </button>
-              </div>
-            )}
-          </div>
-          )}
-          {selectedCategory !== CUSTOM_CATEGORY && (
-            <div className="kiosk-menu-image">
-              {selectedType?.image
-                ? <>
-                    <img src={selectedType.image} alt={selectedItem?.name} />
-                    {selectedType.kcal != null && (
-                      <span className="kiosk-image-kcal">{selectedType.kcal} kcal</span>
-                    )}
-                  </>
-                : <span className="kiosk-menu-image-placeholder">☕</span>
-              }
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* 옵션 선택 */}
-      <div className="kiosk-section">
-        <div className="kiosk-label">옵션 <span className="kiosk-label-sub">(중복 선택 가능)</span></div>
-        <div className="kiosk-options">
-          {/* ICE / HOT 토글 */}
-          <button
-            type="button"
-            className={`option-btn option-btn-ice ${tempOption === 'ICE' ? 'selected' : ''}`}
-            onClick={() => toggleTemp('ICE')}
-            disabled={!isCustomMenu && (selectedItem?.types.length ?? 0) < 2}
-          >
-            ICE
-          </button>
-          <button
-            type="button"
-            className={`option-btn option-btn-hot ${tempOption === 'HOT' ? 'selected' : ''}`}
-            onClick={() => toggleTemp('HOT')}
-            disabled={!isCustomMenu && (selectedItem?.types.length ?? 0) < 2}
-          >
-            HOT
-          </button>
-          <div className="option-divider" />
-          {OPTION_ITEMS.map(opt => (
-            <button
-              key={opt.name}
-              type="button"
-              className={`option-btn ${selectedOptions.includes(opt.name) ? 'selected' : ''}`}
-              onClick={() => toggleOption(opt.name)}
-              >
-              {opt.name}{opt.price > 0 && <span className="option-price"> +{opt.price.toLocaleString()}</span>}
-            </button>
-          ))}
-          <button
-            type="button"
-            className={`option-btn option-btn-other ${isCustomOption ? 'selected' : ''}`}
-            onClick={() => { setIsCustomOption(p => !p); setCustomOption(''); setCustomOptionPrice('') }}
-          >
-            기타
-          </button>
-          {isCustomOption && (
-            <>
-              <input
-                className="custom-option-input"
-                placeholder="옵션명"
-                value={customOption}
-                onChange={e => setCustomOption(e.target.value)}
-              />
-              <input
-                type="number"
-                step={100}
-                className="custom-option-input custom-option-price"
-                placeholder="+금액"
-                value={customOptionPrice}
-                onChange={e => setCustomOptionPrice(e.target.value === '' ? '' : Number(e.target.value))}
-              />
-            </>
-          )}
-        </div>
-      </div>
-
-      {/* 가격 + 요약 한 줄 */}
-      <div className="price-summary-row">
-        <div className="price-input-wrap">
-          <span className="kiosk-label">가격</span>
-          <input
-            type="number"
-            step={100}
-            placeholder={isCustomMenu ? "가격 입력" : "메뉴 선택 시 자동"}
-            value={isCustomMenu ? priceOverride : (autoPrice || '')}
-            onChange={e => setPriceOverride(e.target.value === '' ? '' : Number(e.target.value))}
-            disabled={!isCustomMenu}
+          <UserInfoFields
+            name={name} cls={cls} password={password}
+            onNameChange={v => { setName(v); setShowInfoMessage(false) }}
+            onClsChange={v => { setCls(v); setShowInfoMessage(false) }}
+            onPasswordChange={v => { setPassword(v); setShowInfoMessage(false) }}
+            showValidation={showInfoMessage}
           />
-        </div>
-        <div className="order-summary">
-          {currentMenu && (
-            <>
-              <div className="summary-menu">
-                <TempBadge temp={tempOption} />
-                <span>{currentMenu}</span>
-              </div>
-              {selectedOptions.length > 0 && (
-                <span className="summary-options">· {selectedOptions.join(', ')}</span>
-              )}
-              <span className="summary-price">{totalPrice.toLocaleString()}원</span>
-            </>
-          )}
-        </div>
-      </div>
+        </FormTitleRow>
 
-      <div className="submit-row">
-        <button
-          type="button"
-          className="add-to-cart-btn"
-          onClick={handleAddToCart}
-        >
-          장바구니에 추가
-        </button>
-        <button
-          type="button"
-          className="submit-btn"
-          disabled={cart.length === 0}
-          onClick={() => {
-            if (window.electronAPI) {
-              window.electronAPI.openCart()
-            } else {
-              setShowCart(true)
-            }
-          }}
-        >
-          장바구니 확인
-          {cart.length > 0 && <span className="cart-count-badge">{cart.reduce((sum, item) => sum + item.qty, 0)}</span>}
-        </button>
-      </div>
-      {showCart && (
-        <CartModal
-          cart={cart}
-          name={name}
-          cls={cls}
-          closed={disabled}
-          onRemove={id => setCart(prev => prev.filter(item => item.id !== id))}
-          onChangeQty={(id, qty) => setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))}
-          onSubmit={handleCartSubmit}
-          onClose={() => { setShowCart(false); setFocusCartItemId(null) }}
-          focusItemId={focusCartItemId}
-        />
-      )}
-    </form>
-    </div>
+        {/* 메뉴 선택 */}
+        <KioskSection>
+          <CategoryTabsRow>
+            <KioskLabel>메뉴</KioskLabel>
+            <MenuSearchWrap>
+              <MenuSearchInputWrap style={{ paddingRight: '6px' }}>
+                {ghostCompletion && (
+                  <MenuSearchGhost aria-hidden="true">
+                    <span style={{ visibility: 'hidden' }}>{searchQuery}</span>
+                    <MenuSearchGhostCompletion>{ghostCompletion}</MenuSearchGhostCompletion>
+                  </MenuSearchGhost>
+                )}
+                <MenuSearchInput
+                  style={{ paddingRight: '4px' }}
+                  placeholder="메뉴 검색"
+                  value={searchQuery}
+                  onChange={e => {
+                    const v = e.target.value
+                    setSearchQuery(v)
+                    setSearchFilter(v)
+                    setShowDropdown(true)
+                    setHighlightedIndex(-1)
+                  }}
+                  onFocus={() => { if (searchFilter) setShowDropdown(true) }}
+                  onBlur={() => setTimeout(() => {
+                    setShowDropdown(false)
+                    setHighlightedIndex(-1)
+                    setSearchQuery(searchFilter)
+                  }, 150)}
+                  onKeyDown={e => {
+                    if (e.key === 'ArrowDown') {
+                      e.preventDefault()
+                      const next = Math.min(highlightedIndex + 1, searchResults.length - 1)
+                      setHighlightedIndex(next)
+                      setSearchQuery(searchResults[next]?.name ?? searchFilter)
+                    } else if (e.key === 'ArrowUp') {
+                      e.preventDefault()
+                      const prev = Math.max(highlightedIndex - 1, -1)
+                      setHighlightedIndex(prev)
+                      setSearchQuery(prev === -1 ? searchFilter : (searchResults[prev]?.name ?? searchFilter))
+                    } else if (e.key === 'Enter') {
+                      e.preventDefault()
+                      executeSearch()
+                    } else if (e.key === 'Escape') {
+                      setSearchQuery(''); setSearchFilter(''); setShowDropdown(false); setHighlightedIndex(-1)
+                    }
+                  }}
+                />
+                <MenuSearchBtn
+                  type="button"
+                  onMouseDown={e => { e.preventDefault(); executeSearch() }}
+                >🔍</MenuSearchBtn>
+              </MenuSearchInputWrap>
+              {showDropdown && searchResults.length > 0 && (
+                <MenuSearchDropdown>
+                  {searchResults.map((item, i) => (
+                    <MenuSearchDropdownItem
+                      key={item.name}
+                      $highlighted={i === highlightedIndex}
+                      onMouseDown={() => handleSearchSelect(item.name)}
+                    >
+                      {item.name}
+                    </MenuSearchDropdownItem>
+                  ))}
+                </MenuSearchDropdown>
+              )}
+            </MenuSearchWrap>
+          </CategoryTabsRow>
+          <CategoryTabs>
+            {menuData.map(c => (
+              <CategoryTab
+                key={c.category}
+                type="button"
+                $selected={selectedCategory === c.category}
+                onClick={() => handleCategoryClick(c.category)}
+              >
+                {c.category}
+              </CategoryTab>
+            ))}
+            <CategoryTab
+              type="button"
+              $selected={selectedCategory === CUSTOM_CATEGORY}
+              onClick={() => handleCategoryClick(CUSTOM_CATEGORY)}
+            >
+              기타
+            </CategoryTab>
+          </CategoryTabs>
+          <KioskGridWithImage $noMinHeight={selectedCategory === CUSTOM_CATEGORY}>
+            {selectedCategory === CUSTOM_CATEGORY ? (
+              <KioskCustomMenuArea>
+                <KioskCustomMenuInput
+                  placeholder="메뉴명 직접 입력"
+                  value={customMenu}
+                  onChange={e => setCustomMenu(e.target.value)}
+                  autoFocus
+                />
+              </KioskCustomMenuArea>
+            ) : (
+              <KioskGridColumn>
+                <KioskGrid>
+                  {currentCategoryItems.map(item => {
+                    const availableTemps: MenuTemp[] = item.types.map((t: { temp: string }) => t.temp as MenuTemp)
+                    const displayPrice = item.types.find((t: { temp: string }) => t.temp === 'ICE')?.price ?? item.types[0]?.price ?? 0
+                    const isSelected = selectedMenu === item.name && !isCustomMenu
+                    return (
+                      <KioskBtn
+                        key={item.name}
+                        type="button"
+                        $selected={isSelected}
+                        onClick={() => handleMenuClick(item.name)}
+                      >
+                        <KioskBtnBadgeRow>
+                          {availableTemps.map(t => <TempBadge key={t} temp={t} size="sm" />)}
+                        </KioskBtnBadgeRow>
+                        <KioskBtnName>{item.name}</KioskBtnName>
+                        <KioskBtnPrice $selected={isSelected}>{displayPrice.toLocaleString()}원</KioskBtnPrice>
+                      </KioskBtn>
+                    )
+                  })}
+                </KioskGrid>
+                {totalPages > 1 && (
+                  <KioskPagination>
+                    <CategoryTab
+                      type="button"
+                      onClick={() => setMenuPage(p => p - 1)}
+                      disabled={menuPage === 0}
+                      style={{ padding: '4px 12px', fontSize: '1.1rem', lineHeight: 1 }}
+                    >‹</CategoryTab>
+                    <KioskPaginationDots>
+                      {Array.from({ length: totalPages }, (_, i) => (
+                        <KioskPaginationDot
+                          key={i}
+                          type="button"
+                          $active={i === menuPage}
+                          onClick={() => setMenuPage(i)}
+                        />
+                      ))}
+                    </KioskPaginationDots>
+                    <CategoryTab
+                      type="button"
+                      onClick={() => setMenuPage(p => p + 1)}
+                      disabled={menuPage >= totalPages - 1}
+                      style={{ padding: '4px 12px', fontSize: '1.1rem', lineHeight: 1 }}
+                    >›</CategoryTab>
+                  </KioskPagination>
+                )}
+              </KioskGridColumn>
+            )}
+            {selectedCategory !== CUSTOM_CATEGORY && (
+              <KioskMenuImage>
+                {selectedType?.image
+                  ? <>
+                      <img src={selectedType.image} alt={selectedItem?.name} />
+                      {selectedType.kcal != null && (
+                        <KioskImageKcal>{selectedType.kcal} kcal</KioskImageKcal>
+                      )}
+                    </>
+                  : <KioskMenuImagePlaceholder>☕</KioskMenuImagePlaceholder>
+                }
+              </KioskMenuImage>
+            )}
+          </KioskGridWithImage>
+        </KioskSection>
+
+        {/* 옵션 선택 */}
+        <KioskSection>
+          <KioskLabel>옵션 <KioskLabelSub>(중복 선택 가능)</KioskLabelSub></KioskLabel>
+          <KioskOptions>
+            <OptionBtn
+              type="button"
+              $temp="ice"
+              $selected={tempOption === 'ICE'}
+              onClick={() => toggleTemp('ICE')}
+              disabled={!isCustomMenu && (selectedItem?.types.length ?? 0) < 2}
+            >ICE</OptionBtn>
+            <OptionBtn
+              type="button"
+              $temp="hot"
+              $selected={tempOption === 'HOT'}
+              onClick={() => toggleTemp('HOT')}
+              disabled={!isCustomMenu && (selectedItem?.types.length ?? 0) < 2}
+            >HOT</OptionBtn>
+            <OptionDivider />
+            {OPTION_ITEMS.map(opt => (
+              <OptionBtn
+                key={opt.name}
+                type="button"
+                $selected={selectedOptions.includes(opt.name)}
+                onClick={() => toggleOption(opt.name)}
+              >
+                {opt.name}{opt.price > 0 && <OptionPrice> +{opt.price.toLocaleString()}</OptionPrice>}
+              </OptionBtn>
+            ))}
+            <OptionBtn
+              type="button"
+              $other
+              $selected={isCustomOption}
+              onClick={() => { setIsCustomOption(p => !p); setCustomOption(''); setCustomOptionPrice('') }}
+            >기타</OptionBtn>
+            {isCustomOption && (
+              <>
+                <CustomOptionInput
+                  placeholder="옵션명"
+                  value={customOption}
+                  onChange={e => setCustomOption(e.target.value)}
+                />
+                <CustomOptionInput
+                  type="number"
+                  step={100}
+                  $price
+                  placeholder="+금액"
+                  value={customOptionPrice}
+                  onChange={e => setCustomOptionPrice(e.target.value === '' ? '' : Number(e.target.value))}
+                />
+              </>
+            )}
+          </KioskOptions>
+        </KioskSection>
+
+        {/* 가격 + 요약 */}
+        <PriceSummaryRow>
+          <PriceInputWrap>
+            <KioskLabel>가격</KioskLabel>
+            <input
+              type="number"
+              step={100}
+              placeholder={isCustomMenu ? '가격 입력' : '메뉴 선택 시 자동'}
+              value={isCustomMenu ? priceOverride : (autoPrice || '')}
+              onChange={e => setPriceOverride(e.target.value === '' ? '' : Number(e.target.value))}
+              disabled={!isCustomMenu}
+            />
+          </PriceInputWrap>
+          <OrderSummary>
+            {currentMenu && (
+              <>
+                <SummaryMenu>
+                  <TempBadge temp={tempOption} />
+                  <span>{currentMenu}</span>
+                </SummaryMenu>
+                {selectedOptions.length > 0 && (
+                  <SummaryOptions>· {selectedOptions.join(', ')}</SummaryOptions>
+                )}
+                <SummaryPrice>{totalPrice.toLocaleString()}원</SummaryPrice>
+              </>
+            )}
+          </OrderSummary>
+        </PriceSummaryRow>
+
+        <SubmitRow>
+          <AddToCartBtn type="button" onClick={handleAddToCart}>
+            장바구니에 추가
+          </AddToCartBtn>
+          <SubmitBtn
+            type="button"
+            disabled={cart.length === 0}
+            onClick={() => {
+              if (window.electronAPI) {
+                window.electronAPI.openCart()
+              } else {
+                setShowCart(true)
+              }
+            }}
+          >
+            장바구니 확인
+            {cart.length > 0 && <CartCountBadge>{cart.reduce((sum, item) => sum + item.qty, 0)}</CartCountBadge>}
+          </SubmitBtn>
+        </SubmitRow>
+
+        {showCart && (
+          <CartModal
+            cart={cart}
+            name={name}
+            cls={cls}
+            closed={disabled}
+            onRemove={id => setCart(prev => prev.filter(item => item.id !== id))}
+            onChangeQty={(id, qty) => setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))}
+            onSubmit={handleCartSubmit}
+            onClose={() => { setShowCart(false); setFocusCartItemId(null) }}
+            focusItemId={focusCartItemId}
+          />
+        )}
+      </Form>
+    </RightPanel>
   )
 }

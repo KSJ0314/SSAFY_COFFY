@@ -1,5 +1,5 @@
 'use strict'
-const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen, nativeImage, shell } = require('electron')
+const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen, nativeImage, shell, nativeTheme } = require('electron')
 const path = require('path')
 const fs = require('fs')
 const zlib = require('zlib')
@@ -100,7 +100,7 @@ function loadSettings() {
   try {
     return JSON.parse(fs.readFileSync(getSettingsPath(), 'utf-8'))
   } catch {
-    return { name: '', class: '', password: '' }
+    return { name: '', class: '', password: '', theme: 'light' }
   }
 }
 
@@ -202,8 +202,20 @@ app.whenReady().then(() => {
   const tray = new Tray(iconPath)
   tray.setToolTip('싸피커피')
 
+  const settings = loadSettings()
+  let currentTheme = settings.theme ?? (nativeTheme.shouldUseDarkColors ? 'dark' : 'light')
+
+  function applyTheme(mode) {
+    currentTheme = mode
+    const s = loadSettings()
+    persistSettings({ ...s, theme: mode })
+    BrowserWindow.getAllWindows().forEach(w => w.webContents.send('set-theme', mode))
+    tray.setContextMenu(buildMenu())
+  }
+
   function buildMenu() {
     const openAtLogin = isDev ? false : app.getLoginItemSettings({ args: ['--hidden'] }).openAtLogin
+    const isDark = currentTheme === 'dark'
     return Menu.buildFromTemplate([
       { label: '싸피커피', click: () => shell.openExternal(HOMEPAGE) },
       { type: 'separator' },
@@ -216,6 +228,7 @@ app.whenReady().then(() => {
       { label: '🎰 오늘의 픽업 추첨', click: () => openWindow('pickup') },
       { type: 'separator' },
       { label: '⚙️ 내 정보 설정',    click: () => openWindow('settings') },
+      { label: `🌙 다크 모드  ${isDark ? '✓' : ''}`, click: () => applyTheme(isDark ? 'light' : 'dark') },
       {
         label: `🚀 컴퓨터 시작 시 자동 실행  ${openAtLogin ? '✓' : ''}`,
         enabled: !isDev,

@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import PageLayout from '../../components/PageLayout'
 import InquiryModal from '../../components/InquiryModal'
+import { StyledTable, DeleteOrderBtn, KioskPaginationBtn } from '../../styles/shared'
+import {
+  WriteBtn, MetaText, EmptyBox, InquiryHeaderRow, GroupToggle,
+  IndexCell, ActionsCell, ActionsInner, EditBtn,
+  ContentRow, ContentExpand, ContentText,
+  Comments, CommentsTitle, NoComments,
+  CommentItem, AdminBadge, CommentContent, CommentDate, CommentDeleteBtn,
+  CommentInputRow, CommentContentInput, CommentPasswordInput, CommentSubmitBtn,
+  Pagination, PageInfo,
+} from './InquiryPage.styled'
 import {
   subscribeInquiries, saveInquiry, updateInquiry, deleteInquiry,
   subscribeComments, saveComment, deleteComment, fetchComments,
@@ -176,17 +186,17 @@ export default function InquiryPage() {
 
   const actions = (
     <>
-      <div className="list-meta">총 {inquiries.length}건</div>
-      <button className="inquiry-write-btn" onClick={handleOpenCreate}>+ 문의 작성</button>
+      <MetaText>총 {inquiries.length}건</MetaText>
+      <WriteBtn onClick={handleOpenCreate}>+ 문의 작성</WriteBtn>
     </>
   )
 
   return (
     <PageLayout title="문의 게시판" backPath="/" actions={actions} tableMinHeight={540}>
       {loading ? (
-        <div className="empty loading-text">불러오는 중...</div>
+        <EmptyBox className="loading-text">불러오는 중...</EmptyBox>
       ) : (
-        <table className="inquiry-table">
+        <StyledTable>
           <thead>
             <tr>
               <th style={{ width: '60px' }}>#</th>
@@ -199,7 +209,7 @@ export default function InquiryPage() {
           <tbody>
             {inquiries.length === 0 && (
               <tr>
-                <td colSpan={5} className="table-empty-cell">아직 문의가 없습니다.</td>
+                <td colSpan={5} style={{ textAlign: 'center', padding: '32px', color: 'inherit' }}>아직 문의가 없습니다.</td>
               </tr>
             )}
             {pageItems.map((inquiry, i) => {
@@ -210,84 +220,77 @@ export default function InquiryPage() {
               const input = getCommentInput(id)
 
               return [
-                <tr
+                <InquiryHeaderRow
                   key={`row-${id}`}
-                  className="inquiry-header-row inquiry-clickable"
                   onClick={() => toggleExpand(id)}
                 >
-                  <td className="inquiry-index-cell">
-                    <span className="group-toggle">{expanded ? '▼' : '▶'}</span>
+                  <IndexCell>
+                    <GroupToggle>{expanded ? '▼' : '▶'}</GroupToggle>
                     &ensp;{globalIndex}
-                  </td>
+                  </IndexCell>
                   <td>{inquiry.title}</td>
                   <td>{inquiry.name ?? '익명'}</td>
                   <td>{formatDate(inquiry.createdAt)}</td>
-                  <td className="inquiry-actions-cell">
-                    <div className="inquiry-actions-inner">
-                      <button
-                        className="inquiry-edit-btn"
+                  <ActionsCell>
+                    <ActionsInner>
+                      <EditBtn
                         title="수정"
                         onClick={e => { e.stopPropagation(); handleOpenEdit(inquiry) }}
-                      >✎</button>
-                      <button
-                        className="delete-order-btn"
+                      >✎</EditBtn>
+                      <DeleteOrderBtn
                         title="삭제"
                         onClick={e => { e.stopPropagation(); handleDelete(inquiry) }}
-                      >✕</button>
-                    </div>
-                  </td>
-                </tr>,
+                      >✕</DeleteOrderBtn>
+                    </ActionsInner>
+                  </ActionsCell>
+                </InquiryHeaderRow>,
                 expanded && (
-                  <tr key={`content-${id}`} className="inquiry-content-row">
+                  <ContentRow key={`content-${id}`}>
                     <td colSpan={5}>
-                      <div className="inquiry-content">
-                        <p className="inquiry-content-text">{inquiry.content}</p>
-                        <div className="inquiry-comments">
-                          <div className="inquiry-comments-title">댓글 {comments.length > 0 ? `(${comments.length})` : ''}</div>
+                      <ContentExpand>
+                        <ContentText>{inquiry.content}</ContentText>
+                        <Comments>
+                          <CommentsTitle>댓글 {comments.length > 0 ? `(${comments.length})` : ''}</CommentsTitle>
                           {comments.length === 0 && (
-                            <div className="inquiry-no-comments">아직 댓글이 없습니다.</div>
+                            <NoComments>아직 댓글이 없습니다.</NoComments>
                           )}
                           {comments.map(comment => (
-                            <div key={comment.id} className={`comment-item${comment.isAdmin ? ' comment-item-admin' : ''}`}>
-                              {comment.isAdmin && <span className="comment-admin-badge">관리자</span>}
-                              <span className="comment-content">{comment.content}</span>
-                              <span className="comment-date">{formatDate(comment.createdAt)}</span>
+                            <CommentItem key={comment.id} $admin={comment.isAdmin}>
+                              {comment.isAdmin && <AdminBadge>관리자</AdminBadge>}
+                              <CommentContent>{comment.content}</CommentContent>
+                              <CommentDate>{formatDate(comment.createdAt)}</CommentDate>
                               {(!comment.isAdmin || import.meta.env.DEV) && (
-                                <button
-                                  className="comment-delete-btn"
+                                <CommentDeleteBtn
                                   onClick={() => handleDeleteComment(id, comment)}
-                                >✕</button>
+                                >✕</CommentDeleteBtn>
                               )}
-                            </div>
+                            </CommentItem>
                           ))}
-                          <div className="comment-input-row">
-                            <input
-                              className="comment-content-input"
+                          <CommentInputRow>
+                            <CommentContentInput
                               placeholder="댓글 내용"
                               value={input.content}
                               onChange={e => setCommentField(id, 'content', e.target.value)}
                               onKeyDown={e => { if (e.key === 'Enter') handleAddComment(id) }}
                             />
                             {!import.meta.env.DEV && (
-                              <input
+                              <CommentPasswordInput
                                 type="password"
-                                className="comment-password-input"
                                 placeholder="비밀번호"
                                 maxLength={4}
                                 value={input.password}
                                 onChange={e => setCommentField(id, 'password', e.target.value)}
                               />
                             )}
-                            <button
-                              className="comment-submit-btn"
+                            <CommentSubmitBtn
                               onClick={() => handleAddComment(id)}
                               disabled={!input.content.trim() || (!import.meta.env.DEV && !input.password)}
-                            >작성</button>
-                          </div>
-                        </div>
-                      </div>
+                            >작성</CommentSubmitBtn>
+                          </CommentInputRow>
+                        </Comments>
+                      </ContentExpand>
                     </td>
-                  </tr>
+                  </ContentRow>
                 ),
               ]
             })}
@@ -295,23 +298,21 @@ export default function InquiryPage() {
           <tfoot>
             <tr>
               <td colSpan={5}>
-                <div className="inquiry-pagination">
-                  <button
-                    className="kiosk-pagination-btn"
+                <Pagination>
+                  <KioskPaginationBtn
                     onClick={() => setPage(p => p - 1)}
                     disabled={page === 0}
-                  >‹</button>
-                  <span className="inquiry-page-info">{page + 1} / {totalPages}</span>
-                  <button
-                    className="kiosk-pagination-btn"
+                  >‹</KioskPaginationBtn>
+                  <PageInfo>{page + 1} / {totalPages}</PageInfo>
+                  <KioskPaginationBtn
                     onClick={() => setPage(p => p + 1)}
                     disabled={page >= totalPages - 1}
-                  >›</button>
-                </div>
+                  >›</KioskPaginationBtn>
+                </Pagination>
               </td>
             </tr>
           </tfoot>
-        </table>
+        </StyledTable>
       )}
       {showModal && (
         <InquiryModal

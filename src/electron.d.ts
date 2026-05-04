@@ -12,6 +12,8 @@ declare global {
       openOrders: () => void
       openSettings: () => void
       resizeWindow: (w: number, h: number) => void
+      onThemeChange: (cb: (mode: 'light' | 'dark') => void) => void
+      offThemeChange: (cb: (mode: 'light' | 'dark') => void) => void
     }
   }
 }
