@@ -106,4 +106,7 @@ export const darkTheme = {
   },
 } as const
 
-export type Theme = typeof lightTheme
+type ColorKeys = keyof typeof lightTheme['colors']
+export type Theme = {
+  colors: Record<ColorKeys, string>
+}

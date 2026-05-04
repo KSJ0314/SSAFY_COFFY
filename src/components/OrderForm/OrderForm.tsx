@@ -9,7 +9,6 @@ import CartModal from '../CartModal'
 import UserInfoFields from '../UserInfoFields'
 import {
   RightPanel, Form, FormTitleRow, FormSectionTitle, ClosedBadge,
-  FormRowInline, FormRow,
   CategoryTabsRow, CategoryTabs, MenuSearchWrap, MenuSearchInputWrap,
   MenuSearchGhost, MenuSearchGhostCompletion, MenuSearchInput, MenuSearchBtn,
   MenuSearchDropdown, MenuSearchDropdownItem,
@@ -18,7 +17,7 @@ import {
   KioskPagination, KioskPaginationDots, KioskPaginationDot,
   KioskMenuImage, KioskImageKcal, KioskMenuImagePlaceholder,
   KioskCustomMenuArea, KioskCustomMenuInput,
-  KioskBtn, KioskBtnBadgeRow, KioskBtnName, KioskBtnPrice, KioskInlineInput,
+  KioskBtn, KioskBtnBadgeRow, KioskBtnName, KioskBtnPrice,
   KioskOptions, OptionBtn, OptionPrice, OptionDivider, CustomOptionInput,
   PriceSummaryRow, PriceInputWrap, OrderSummary, SummaryMenu, SummaryOptions, SummaryPrice,
   SubmitRow, AddToCartBtn, SubmitBtn, CartCountBadge,

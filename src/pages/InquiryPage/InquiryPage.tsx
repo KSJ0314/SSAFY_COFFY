@@ -131,16 +131,16 @@ export default function InquiryPage() {
   async function handleDelete(inquiry: Inquiry) {
     if (!inquiry.id) return
     if (import.meta.env.DEV) {
-      if (!window.confirm('[관리자 모드] 문의를 삭제하시겠습니까?')) return
+      if (!window.confirm('[관리자 모드] 게시글을 삭제하시겠습니까?')) return
     } else {
       const comments = commentsMap[inquiry.id] ?? await fetchComments(inquiry.id)
       if (comments.some(c => c.isAdmin)) {
-        window.alert('관리자 답변이 달린 문의는 삭제할 수 없습니다.')
+        window.alert('관리자 답변이 달린 게시글은 삭제할 수 없습니다.')
         return
       }
     }
     if (!import.meta.env.DEV) {
-      const input = window.prompt(`문의를 삭제하려면 비밀번호를 입력하세요.`)
+      const input = window.prompt(`게시글을 삭제하려면 비밀번호를 입력하세요.`)
       if (input === null) return
       if (input !== inquiry.password) {
         window.alert('비밀번호가 일치하지 않습니다.')
@@ -187,12 +187,12 @@ export default function InquiryPage() {
   const actions = (
     <>
       <MetaText>총 {inquiries.length}건</MetaText>
-      <WriteBtn onClick={handleOpenCreate}>+ 문의 작성</WriteBtn>
+      <WriteBtn onClick={handleOpenCreate}>+ 글 작성</WriteBtn>
     </>
   )
 
   return (
-    <PageLayout title="문의 게시판" backPath="/" actions={actions} tableMinHeight={540}>
+    <PageLayout title="자유 게시판" subTitle="자유롭게 게시글을 작성하세요!!" backPath="/" actions={actions} tableMinHeight={540}>
       {loading ? (
         <EmptyBox className="loading-text">불러오는 중...</EmptyBox>
       ) : (
@@ -209,7 +209,7 @@ export default function InquiryPage() {
           <tbody>
             {inquiries.length === 0 && (
               <tr>
-                <td colSpan={5} style={{ textAlign: 'center', padding: '32px', color: 'inherit' }}>아직 문의가 없습니다.</td>
+                <td colSpan={5} style={{ textAlign: 'center', padding: '32px', color: 'inherit' }}>아직 게시글이 없습니다.</td>
               </tr>
             )}
             {pageItems.map((inquiry, i) => {

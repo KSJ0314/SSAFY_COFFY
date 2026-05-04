@@ -101,7 +101,7 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
       <InquiryModal_ onMouseDown={e => { e.stopPropagation(); mouseDownOnBackdrop.current = false }}>
         <ModalBody>
           <ModalHeader>
-            <h2>{mode === 'create' ? '문의 작성' : '문의 수정'}</h2>
+            <h2>{mode === 'create' ? '게시글 작성' : '게시글 수정'}</h2>
             <ModalClose onClick={onClose}>✕</ModalClose>
           </ModalHeader>
           <Form onSubmit={handleSubmit}>

@@ -9,8 +9,14 @@ const SettingsLayout = styled.div`
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  padding: 2rem;
+  padding: 0.75rem 2rem;
   background: ${({ theme }) => theme.colors.bg};
+`
+
+const SaveBtn = styled(SubmitBtn)`
+  flex-shrink: 0;
+  white-space: nowrap;
+  align-self: flex-end;
 `
 
 export default function SettingsPage() {
@@ -41,9 +47,9 @@ export default function SettingsPage() {
               onClsChange={setCls}
               onPasswordChange={setPassword}
             />
-            <SubmitBtn type="button" onClick={handleSave}>
+            <SaveBtn type="button" onClick={handleSave}>
               {saved ? '저장됨 ✓' : '저장'}
-            </SubmitBtn>
+            </SaveBtn>
           </FormTitleRow>
         </Form>
       </RightPanel>

@@ -197,7 +197,7 @@ export default function Sidebar() {
           {hasNewPatch && <NewDot />}
         </TopBtn>
         <TopBtn onClick={() => navigate('/inquiry')}>
-          문의하기
+          자유 게시판
         </TopBtn>
         <DownloadBtnWrap>
           <DownloadBtn

@@ -52,6 +52,12 @@ const TitleArea = styled.div`
     color: ${({ theme }) => theme.colors.primary};
   }
 `
+const SubTitleArea = styled.div`
+  align-items: center;
+  font-size: 0.8rem;
+  color: ${({ theme }) => theme.colors.textMuted};
+  margin-bottom: 1rem;
+`
 
 const Actions = styled.div`
   display: flex;
@@ -59,7 +65,7 @@ const Actions = styled.div`
   gap: 16px;
 `
 
-export default function PageLayout({ title, icon = '☕', backPath, actions, children, tableMinHeight }: Props) {
+export default function PageLayout({ title, subTitle, icon = '☕', backPath, actions, children, tableMinHeight }: Props) {
   const navigate = useNavigate()
   return (
     <Bg>
@@ -72,6 +78,9 @@ export default function PageLayout({ title, icon = '☕', backPath, actions, chi
             <span className="logo">{icon}</span>
             <h1>{title}</h1>
           </TitleArea>
+          <SubTitleArea>
+            {subTitle}
+          </SubTitleArea>
           <Actions>
             {actions}
           </Actions>

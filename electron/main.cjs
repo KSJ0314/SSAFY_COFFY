@@ -172,7 +172,7 @@ const WIN_CONFIGS = {
   inquiry:  { route: '/inquiry',  width: 900, height: 800 },
   notices:  { route: '/notices',  width: 600, height: 240 },
   pickup:   { route: '/pickup',   width: 580, height: 760 },
-  settings:   { route: '/settings',   width: 460, height: 160, resizable: false },
+  settings:   { route: '/settings',   width: 480, height: 180, resizable: false },
   patchnotes: { route: '/patchnotes', width: 480, height: 800 },
 }
 
@@ -222,7 +222,7 @@ app.whenReady().then(() => {
       { label: '🛒 주문하기',         click: () => openWindow('order') },
       { label: '🛍️ 장바구니',        click: () => openWindow('cart') },
       { label: '📋 주문 목록',        click: () => openWindow('orders') },
-      { label: '💬 문의 게시판',      click: () => openWindow('inquiry') },
+      { label: '💬 자유 게시판',      click: () => openWindow('inquiry') },
       { label: '📢 공지사항',         click: () => openWindow('notices') },
       { label: '📝 패치 노트',        click: () => openWindow('patchnotes') },
       { label: '🎰 오늘의 픽업 추첨', click: () => openWindow('pickup') },
@@ -268,7 +268,25 @@ app.whenReady().then(() => {
   bgWin.loadURL(getUrl('/background'))
 
   if (!isDev) setTimeout(() => checkUpdate(tray, buildMenu), 5000)
+
+  scheduleEntryReminder()
 })
+
+function scheduleEntryReminder() {
+  const now = new Date()
+  const target = new Date()
+  target.setHours(8, 58, 0, 0)
+  if (target <= now) target.setDate(target.getDate() + 1)
+  setTimeout(() => {
+    if (Notification.isSupported()) {
+      new Notification({
+        title: '⏰ 아 맞다! 입실!! ⏰',
+        icon: path.join(__dirname, 'icon.png'),
+      }).show()
+    }
+    scheduleEntryReminder()
+  }, target - now)
+}
 
 // ─── IPC 핸들러 ───────────────────────────────────────────────────────────────
 ipcMain.on('open-cart',     () => openWindow('cart'))
