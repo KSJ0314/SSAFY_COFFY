@@ -1,8 +1,7 @@
 'use strict'
-const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen, nativeImage, shell, nativeTheme } = require('electron')
+const { app, BrowserWindow, Tray, Menu, Notification, ipcMain, screen, shell, nativeTheme } = require('electron')
 const path = require('path')
 const fs = require('fs')
-const zlib = require('zlib')
 const https = require('https')
 
 const isDev = process.env.NODE_ENV === 'development'
@@ -38,57 +37,14 @@ function checkUpdate(tray, buildMenu) {
   }).on('error', () => {})
 }
 
+app.setName('싸피커피')
 app.setAppUserModelId('com.ssafy.coffy')
 
-// ─── 트레이 아이콘 생성 (없으면 자동 생성) ──────────────────────────────────
-function crc32(buf) {
-  let crc = 0xFFFFFFFF
-  for (let i = 0; i < buf.length; i++) {
-    crc ^= buf[i]
-    for (let j = 0; j < 8; j++) crc = (crc & 1) ? (0xEDB88320 ^ (crc >>> 1)) : (crc >>> 1)
-  }
-  return (crc ^ 0xFFFFFFFF) >>> 0
-}
-
-function makeChunk(type, data) {
-  const len = Buffer.alloc(4)
-  len.writeUInt32BE(data.length)
-  const typeBytes = Buffer.from(type)
-  const crcBuf = Buffer.alloc(4)
-  crcBuf.writeUInt32BE(crc32(Buffer.concat([typeBytes, data])))
-  return Buffer.concat([len, typeBytes, data, crcBuf])
-}
-
-function createSolidPNG(size, r, g, b) {
-  const sig = Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])
-  const ihdr = Buffer.alloc(13)
-  ihdr.writeUInt32BE(size, 0)
-  ihdr.writeUInt32BE(size, 4)
-  ihdr[8] = 8
-  ihdr[9] = 2
-  const rows = []
-  for (let y = 0; y < size; y++) {
-    const row = Buffer.alloc(1 + size * 3)
-    row[0] = 0
-    for (let x = 0; x < size; x++) {
-      row[1 + x * 3] = r
-      row[2 + x * 3] = g
-      row[3 + x * 3] = b
-    }
-    rows.push(row)
-  }
-  const idat = zlib.deflateSync(Buffer.concat(rows))
-  return Buffer.concat([sig, makeChunk('IHDR', ihdr), makeChunk('IDAT', idat), makeChunk('IEND', Buffer.alloc(0))])
-}
-
-function ensureIcon() {
-  const ico = path.join(__dirname, 'favicon.ico')
-  if (fs.existsSync(ico)) return ico
-  const png = path.join(__dirname, 'icon.png')
-  if (!fs.existsSync(png)) {
-    fs.writeFileSync(png, createSolidPNG(32, 114, 63, 23))
-  }
-  return png
+// ─── 아이콘 경로 ─────────────────────────────────────────────────────────────
+function getIconPath() {
+  const p = path.join(__dirname, 'favicon.ico')
+  // 패키징 시 asarUnpack된 실제 파일시스템 경로를 반환 (OS 직접 접근용)
+  return p.includes('app.asar') ? p.replace('app.asar', 'app.asar.unpacked') : p
 }
 
 // ─── 설정 저장소 (userData/settings.json) ────────────────────────────────────
@@ -140,7 +96,7 @@ function createWindow(key, route, opts = {}) {
     x,
     y,
     title: opts.title ?? `SSAFY_COFFEE for Desktop v${ELECTRON_VERSION}`,
-    icon: ensureIcon(),
+    icon: getIconPath(),
     resizable: false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
@@ -198,8 +154,7 @@ app.on('second-instance', () => {
 // ─── 앱 초기화 ───────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
   Menu.setApplicationMenu(null)
-  const iconPath = ensureIcon()
-  const tray = new Tray(iconPath)
+  const tray = new Tray(getIconPath())
   tray.setToolTip('싸피커피')
 
   const settings = loadSettings()
@@ -281,7 +236,7 @@ function scheduleEntryReminder() {
     if (Notification.isSupported()) {
       new Notification({
         title: '⏰ 아 맞다! 입실!! ⏰',
-        icon: path.join(__dirname, 'icon.png'),
+        icon: getIconPath(),
       }).show()
     }
     scheduleEntryReminder()
@@ -313,7 +268,7 @@ ipcMain.on('notify-pickup', (_, winners) => {
   const note = new Notification({
     title: '☕ 싸피커피 - 오늘의 픽업 당첨!',
     body: `🎉 ${names}`,
-    icon: path.join(__dirname, 'icon.png'),
+    icon: getIconPath(),
   })
 
   note.on('click', () => {
