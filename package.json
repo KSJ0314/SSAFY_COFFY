@@ -27,6 +27,9 @@
       "!dist/*.exe",
       "electron/**/*"
     ],
+    "asarUnpack": [
+      "electron/favicon.ico"
+    ],
     "win": {
       "target": "nsis",
       "icon": "electron/favicon.ico"
