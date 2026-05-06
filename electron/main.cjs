@@ -31,6 +31,15 @@ function checkUpdate(tray, buildMenu) {
           latestVersion = parsed.version
           downloadUrl = parsed.downloadUrl
           tray.setContextMenu(buildMenu())
+          if (Notification.isSupported()) {
+            const note = new Notification({
+              title: '⬆️ 싸피커피 업데이트 안내',
+              body: `새 버전 v${latestVersion}이 출시되었습니다.`,
+              icon: getIconPath(),
+            })
+            note.on('click', () => shell.openExternal(downloadUrl))
+            note.show()
+          }
         }
       } catch {}
     })
