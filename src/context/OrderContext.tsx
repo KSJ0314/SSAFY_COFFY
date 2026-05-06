@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
-import { subscribeTodayOrders, saveOrder, deleteOrder, getTodayKST } from '../services/orderService'
+import { subscribeTodayOrders, saveOrder, updateOrderQty, deleteOrder, getTodayKST } from '../services/orderService'
 
 export type Order = {
   id?: string
@@ -54,7 +54,19 @@ export function OrderProvider({ children }: { children: ReactNode }) {
   }, [])
 
   async function addOrder(order: Order) {
-    await saveOrder(order)
+    const sortedNewOptions = [...(order.options ?? [])].sort().join('|')
+    const existing = orders.find(o =>
+      o.name === order.name &&
+      o.class === order.class &&
+      o.menu === order.menu &&
+      o.temp === order.temp &&
+      [...(o.options ?? [])].sort().join('|') === sortedNewOptions
+    )
+    if (existing?.id) {
+      await updateOrderQty(existing.id, (existing.qty ?? 1) + (order.qty ?? 1))
+    } else {
+      await saveOrder(order)
+    }
   }
 
   async function removeOrder(id: string) {

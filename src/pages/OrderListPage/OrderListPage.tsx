@@ -35,7 +35,14 @@ export default function OrderListPage() {
       if (!map.has(order.name)) map.set(order.name, [])
       map.get(order.name)!.push(order)
     }
-    return Array.from(map.entries()).sort(([a], [b]) => a.localeCompare(b, 'ko'))
+    for (const groupOrders of map.values()) {
+      groupOrders.sort((a, b) => a.menu.localeCompare(b.menu, 'ko'))
+    }
+    return Array.from(map.entries()).sort(([aName, aOrders], [bName, bOrders]) => {
+      const clsCmp = (aOrders[0]?.class ?? '').localeCompare(bOrders[0]?.class ?? '', 'ko')
+      if (clsCmp !== 0) return clsCmp
+      return aName.localeCompare(bName, 'ko')
+    })
   }, [orders])
 
   const captureItems = useMemo(() => {

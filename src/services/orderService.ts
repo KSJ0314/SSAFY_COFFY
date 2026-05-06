@@ -1,4 +1,4 @@
-import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp } from 'firebase/firestore'
+import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 
@@ -29,6 +29,10 @@ export async function saveOrder(order: Order): Promise<void> {
     date: today,
     createdAt: serverTimestamp(),
   })
+}
+
+export async function updateOrderQty(id: string, qty: number): Promise<void> {
+  await updateDoc(doc(db, 'orders', id), { qty })
 }
 
 export async function deleteOrder(id: string): Promise<void> {
