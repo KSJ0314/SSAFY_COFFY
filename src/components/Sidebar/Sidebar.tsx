@@ -227,7 +227,7 @@ export default function Sidebar() {
 
       <ViewOrdersBtn onClick={() => navigate('/orders')}>
         오늘의 주문 목록 보기 →
-        <OrderCount>{loading ? '…' : `${orders.length}건`}</OrderCount>
+        <OrderCount>{loading ? '…' : `${orders.reduce((sum, o) => sum + (o.qty ?? 1), 0)}잔`}</OrderCount>
       </ViewOrdersBtn>
 
       {showPatchNotes && <PatchNotesModal onClose={() => setShowPatchNotes(false)} />}

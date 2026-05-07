@@ -180,7 +180,7 @@ export default function OrderListPage() {
                   <GroupNameCell>{name}</GroupNameCell>
                   <td>{groupOrders[0].class}</td>
                   {isMulti ? (
-                    <td colSpan={3}>{groupOrders.length}건</td>
+                    <td colSpan={3}>{groupOrders.reduce((s, o) => s + (o.qty ?? 1), 0)}잔</td>
                   ) : (
                     <>
                       <td><MenuCell><TempBadge temp={groupOrders[0].temp} size="sm" />{groupOrders[0].menu}</MenuCell></td>

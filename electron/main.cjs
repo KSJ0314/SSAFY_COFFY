@@ -32,6 +32,7 @@ function checkUpdate(tray, buildMenu) {
           downloadUrl = parsed.downloadUrl
           tray.setContextMenu(buildMenu())
           if (Notification.isSupported()) {
+            app.setAppUserModelId('com.ssafy.coffee')
             const note = new Notification({
               title: '⬆️ 싸피커피 업데이트 안내',
               body: `새 버전 v${latestVersion}이 출시되었습니다.`,
@@ -47,7 +48,6 @@ function checkUpdate(tray, buildMenu) {
 }
 
 app.setName('싸피커피')
-app.setAppUserModelId('com.ssafy.coffy')
 
 // ─── 아이콘 경로 ─────────────────────────────────────────────────────────────
 function getIconPath() {
@@ -80,7 +80,7 @@ const windows = {}
 function getUrl(route) {
   return isDev
     ? `http://localhost:5173/#${route}`
-    : `file://${path.join(__dirname, '../dist/index.html')}#${route}`
+    : `https://KSJ0314.github.io/SSAFY_COFFY/#${route}`
 }
 
 function createWindow(key, route, opts = {}) {
@@ -136,6 +136,7 @@ const WIN_CONFIGS = {
   orders:   { route: '/orders',   width: 900, height: 800 },
   inquiry:  { route: '/inquiry',  width: 900, height: 800 },
   notices:  { route: '/notices',  width: 600, height: 240 },
+  roulette: { route: '/roulette', width: 720, height: 600 },
   pickup:   { route: '/pickup',   width: 580, height: 760 },
   settings:   { route: '/settings',   width: 480, height: 180, resizable: false },
   patchnotes: { route: '/patchnotes', width: 480, height: 800 },
@@ -162,6 +163,8 @@ app.on('second-instance', () => {
 
 // ─── 앱 초기화 ───────────────────────────────────────────────────────────────
 app.whenReady().then(() => {
+  app.setAppUserModelId('com.ssafy.coffee')
+  
   Menu.setApplicationMenu(null)
   const tray = new Tray(getIconPath())
   tray.setToolTip('싸피커피')
@@ -186,10 +189,12 @@ app.whenReady().then(() => {
       { label: '🛒 주문하기',         click: () => openWindow('order') },
       { label: '🛍️ 장바구니',        click: () => openWindow('cart') },
       { label: '📋 주문 목록',        click: () => openWindow('orders') },
+      { label: '👑 오늘의 픽업 추첨', click: () => openWindow('pickup') },
+      { label: '🎰 주문자 뽑기',       click: () => openWindow('roulette') },
+      { type: 'separator' },
       { label: '💬 자유 게시판',      click: () => openWindow('inquiry') },
       { label: '📢 공지사항',         click: () => openWindow('notices') },
       { label: '📝 패치 노트',        click: () => openWindow('patchnotes') },
-      { label: '🎰 오늘의 픽업 추첨', click: () => openWindow('pickup') },
       { type: 'separator' },
       { label: '⚙️ 내 정보 설정',    click: () => openWindow('settings') },
       { label: `🌙 다크 모드  ${isDark ? '✓' : ''}`, click: () => applyTheme(isDark ? 'light' : 'dark') },
@@ -236,20 +241,25 @@ app.whenReady().then(() => {
   scheduleEntryReminder()
 })
 
+let entryReminderShown = false
 function scheduleEntryReminder() {
-  const now = new Date()
-  const target = new Date()
-  target.setHours(8, 58, 0, 0)
-  if (target <= now) target.setDate(target.getDate() + 1)
-  setTimeout(() => {
-    if (Notification.isSupported()) {
-      new Notification({
-        title: '⏰ 아 맞다! 입실!! ⏰',
-        icon: getIconPath(),
-      }).show()
+  setInterval(() => {
+    const now = new Date()
+    if (now.getHours() === 8 && now.getMinutes() === 58) {
+      if (!entryReminderShown && Notification.isSupported()) {
+        app.setAppUserModelId('com.ssafy.coffee')
+        const note = new Notification({
+          title: '⏰ 아 맞다! 입실!! ⏰',
+          icon: getIconPath(),
+        })
+        note.on('click', () => shell.openExternal('https://edu.ssafy.com/edu/main/index.do'))
+        note.show()
+        entryReminderShown = true
+      }
+    } else {
+      entryReminderShown = false
     }
-    scheduleEntryReminder()
-  }, target - now)
+  }, 60 * 1000)
 }
 
 // ─── IPC 핸들러 ───────────────────────────────────────────────────────────────
@@ -273,6 +283,8 @@ ipcMain.handle('save-settings', (_, data) => { persistSettings(data); return tru
 ipcMain.on('notify-pickup', (_, winners) => {
   if (!Notification.isSupported()) return
 
+  app.setAppUserModelId('com.ssafy.coffee')
+  
   const names = winners.map(w => `${w.name}(${w.class}반)`).join(', ')
   const note = new Notification({
     title: '☕ 싸피커피 - 오늘의 픽업 당첨!',

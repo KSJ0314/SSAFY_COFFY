@@ -48,6 +48,32 @@ export const FormRowInline = styled.div`
   align-items: flex-end;
 `
 
+export const UserInfoWithActions = styled.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+`
+
+export const RouletteBtn = styled.button`
+  width: 40px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  border: 1.5px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.surface};
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.surfaceAlt};
+  }
+`
+
 export const FormRow = styled.div`
   display: flex;
   flex-direction: column;

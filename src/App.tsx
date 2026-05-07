@@ -13,6 +13,7 @@ import SettingsPage from './pages/SettingsPage'
 import NoticesPage from './pages/NoticesPage'
 import BackgroundPage from './pages/BackgroundPage'
 import PatchNotesPage from './pages/PatchNotesPage'
+import RoulettePage from './pages/RoulettePage'
 
 const ThemeToggleBtn = styled.button`
   position: fixed;
@@ -64,6 +65,7 @@ export default function App() {
             <Route path="/notices" element={<NoticesPage />} />
             <Route path="/background" element={<BackgroundPage />} />
             <Route path="/patchnotes" element={<PatchNotesPage />} />
+            <Route path="/roulette" element={<RoulettePage />} />
           </Routes>
           {!window.electronAPI && <ThemeToggle />}
         </HashRouter>

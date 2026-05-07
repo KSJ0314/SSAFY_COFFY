@@ -1,8 +1,8 @@
 {
-  "name": "ssafy-coffy",
+  "name": "ssafy_coffee",
   "private": true,
-  "version": "1.7.0",
-  "electronVersion": "1.3.0",
+  "version": "1.8.0",
+  "electronVersion": "1.4.0",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",
   "main": "electron/main.cjs",
@@ -10,21 +10,19 @@
     "dev": "vite",
     "dev:electron": "concurrently \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development nodemon --watch electron --ext cjs --exec 'electron electron/main.cjs'\"",
     "build": "tsc -b && vite build",
-    "build:electron": "cross-env ELECTRON=true CSC_IDENTITY_AUTO_DISCOVERY=false npm run build && electron-builder",
+    "build:electron": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=false electron-builder",
     "lint": "eslint .",
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
   "build": {
-    "appId": "com.ssafy.coffy",
+    "appId": "com.ssafy.coffee",
     "productName": "SSAFY_COFFEE",
     "directories": {
       "output": "dist-electron"
     },
     "files": [
-      "dist/**/*",
-      "!dist/*.exe",
       "electron/**/*"
     ],
     "asarUnpack": [

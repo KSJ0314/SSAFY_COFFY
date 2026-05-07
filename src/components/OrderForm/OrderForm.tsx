@@ -7,6 +7,7 @@ import type { Order } from '../../context/OrderContext'
 import menuData from '../../data/menuData.json'
 import CartModal from '../CartModal'
 import UserInfoFields from '../UserInfoFields'
+import RouletteModal from '../RouletteModal'
 import {
   RightPanel, Form, FormTitleRow, FormSectionTitle, ClosedBadge,
   CategoryTabsRow, CategoryTabs, MenuSearchWrap, MenuSearchInputWrap,
@@ -21,6 +22,7 @@ import {
   KioskOptions, OptionBtn, OptionPrice, OptionDivider, CustomOptionInput,
   PriceSummaryRow, PriceInputWrap, OrderSummary, SummaryMenu, SummaryOptions, SummaryPrice,
   SubmitRow, AddToCartBtn, SubmitBtn, CartCountBadge,
+  UserInfoWithActions, RouletteBtn,
 } from './OrderForm.styled'
 import type { CartItem, Props } from './types'
 
@@ -52,6 +54,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
     } catch { return [] }
   })
   const [showCart, setShowCart] = useState(false)
+  const [showRoulette, setShowRoulette] = useState(false)
   const [focusCartItemId, setFocusCartItemId] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState('')
   const [searchFilter, setSearchFilter] = useState('')
@@ -242,13 +245,18 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             주문하기 {disabled && <ClosedBadge>마감</ClosedBadge>}
           </FormSectionTitle>
 
-          <UserInfoFields
-            name={name} cls={cls} password={password}
-            onNameChange={v => { setName(v); setShowInfoMessage(false) }}
-            onClsChange={v => { setCls(v); setShowInfoMessage(false) }}
-            onPasswordChange={v => { setPassword(v); setShowInfoMessage(false) }}
-            showValidation={showInfoMessage}
-          />
+          <UserInfoWithActions>
+            <RouletteBtn type="button" title="주문자 뽑기" onClick={() => setShowRoulette(true)}>
+              🎰
+            </RouletteBtn>
+            <UserInfoFields
+              name={name} cls={cls} password={password}
+              onNameChange={v => { setName(v); setShowInfoMessage(false) }}
+              onClsChange={v => { setCls(v); setShowInfoMessage(false) }}
+              onPasswordChange={v => { setPassword(v); setShowInfoMessage(false) }}
+              showValidation={showInfoMessage}
+            />
+          </UserInfoWithActions>
         </FormTitleRow>
 
         {/* 메뉴 선택 */}
@@ -518,6 +526,12 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             {cart.length > 0 && <CartCountBadge>{cart.reduce((sum, item) => sum + item.qty, 0)}</CartCountBadge>}
           </SubmitBtn>
         </SubmitRow>
+
+        <RouletteModal
+          open={showRoulette}
+          onClose={() => setShowRoulette(false)}
+          onWinner={picked => { setName(picked); setShowInfoMessage(false) }}
+        />
 
         {showCart && (
           <CartModal
