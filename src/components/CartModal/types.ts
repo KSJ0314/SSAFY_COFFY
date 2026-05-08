@@ -9,6 +9,6 @@ export type Props = {
   onChangeQty: (id: string, qty: number) => void
   onSubmit: () => void
   onClose: () => void
-  onRoulette: () => void
+  onRoulette?: () => void
   focusItemId?: string | null
 }

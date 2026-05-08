@@ -318,7 +318,7 @@ export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQ
             <span>{total.toLocaleString()}원</span>
           </CartTotal>
           <CartActions>
-            <RouletteBtn type="button" title="주문자 뽑기" onClick={onRoulette}>🎰</RouletteBtn>
+            {onRoulette && <RouletteBtn type="button" title="주문자 뽑기" onClick={onRoulette}>🎰</RouletteBtn>}
             <SubmitWrap>
               <SubmitBtn onClick={onSubmit} disabled={cart.length === 0 || closed}>
                 주문하기
