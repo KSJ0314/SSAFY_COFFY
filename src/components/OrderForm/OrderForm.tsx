@@ -530,7 +530,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
         <RouletteModal
           open={showRoulette}
           onClose={() => setShowRoulette(false)}
-          onWinner={picked => { setName(picked); setShowInfoMessage(false) }}
+          onWinner={(picked, cls) => { setName(picked); if (cls) setCls(cls); setShowInfoMessage(false) }}
         />
 
         {showCart && (
@@ -543,6 +543,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
             onChangeQty={(id, qty) => setCart(prev => prev.map(item => item.id === id ? { ...item, qty } : item))}
             onSubmit={handleCartSubmit}
             onClose={() => { setShowCart(false); setFocusCartItemId(null) }}
+            onRoulette={() => setShowRoulette(true)}
             focusItemId={focusCartItemId}
           />
         )}

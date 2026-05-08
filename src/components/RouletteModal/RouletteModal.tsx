@@ -2,7 +2,7 @@ import { useState, useRef, useLayoutEffect, useEffect } from 'react'
 import {
   Backdrop, Modal, ModalHeader, ModalTitle, CloseBtn, TabGroup, TabBtn,
   ModalBody, RouletteSection, ParticipantSection, ParticipantSectionLabel,
-  ParticipantList, ParticipantRow, ParticipantInput, RemoveBtn, AddBtn,
+  ParticipantList, ParticipantRow, ParticipantInput, ClsInput, RemoveBtn, AddBtn,
   CanvasWrap, SpinBtn,
   WinnerOverlay, WinnerCard, WinnerEmoji, WinnerName, WinnerLabel, ResetBtn,
 } from './RouletteModal.styled'
@@ -19,18 +19,19 @@ interface Props {
   open: boolean
   standalone?: boolean
   onClose: () => void
-  onWinner: (name: string) => void
+  onWinner: (name: string, cls: string) => void
 }
 
 export default function RouletteModal({ open, standalone, onClose, onWinner }: Props) {
   const [mode, setMode] = useState<'wheel' | 'marble'>('wheel')
-  const [inputs, setInputs] = useState(['', ''])
+  const [inputs, setInputs] = useState([{ name: '', cls: '' }, { name: '', cls: '' }])
   const [winner, setWinner] = useState<string | null>(null)
   const [spinning, setSpinning] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const angleRef = useRef(-Math.PI / 2)
   const rafRef = useRef<number | null>(null)
-  const names = inputs.map(s => s.trim()).filter(Boolean)
+  const participants = inputs.filter(({ name }) => name.trim())
+  const names = participants.map(({ name }) => name.trim())
 
   function drawWheel(angle: number) {
     const canvas = canvasRef.current
@@ -148,7 +149,7 @@ export default function RouletteModal({ open, standalone, onClose, onWinner }: P
         const picked = names[winnerIndex]
         setWinner(picked)
         setSpinning(false)
-        onWinner(picked)
+        onWinner(participants[winnerIndex].name.trim(), participants[winnerIndex].cls.trim())
       }
     }
 
@@ -193,9 +194,16 @@ export default function RouletteModal({ open, standalone, onClose, onWinner }: P
                 <ParticipantRow key={i}>
                   <ParticipantInput
                     placeholder={`참여자 ${i + 1}`}
-                    value={v}
-                    onChange={e => setInputs(prev => prev.map((val, idx) => idx === i ? e.target.value : val))}
+                    value={v.name}
+                    onChange={e => setInputs(prev => prev.map((val, idx) => idx === i ? { ...val, name: e.target.value } : val))}
                     maxLength={10}
+                    disabled={spinning}
+                  />
+                  <ClsInput
+                    placeholder="반"
+                    value={v.cls}
+                    onChange={e => setInputs(prev => prev.map((val, idx) => idx === i ? { ...val, cls: e.target.value } : val))}
+                    maxLength={2}
                     disabled={spinning}
                   />
                   {inputs.length > 2 && (
@@ -212,7 +220,7 @@ export default function RouletteModal({ open, standalone, onClose, onWinner }: P
             </ParticipantList>
             <AddBtn
               type="button"
-              onClick={() => setInputs(prev => [...prev, ''])}
+              onClick={() => setInputs(prev => [...prev, { name: '', cls: '' }])}
               disabled={spinning}
             >
               + 추가

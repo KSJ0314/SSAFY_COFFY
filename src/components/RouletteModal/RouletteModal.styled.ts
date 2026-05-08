@@ -163,6 +163,29 @@ export const ParticipantInput = styled.input`
   }
 `
 
+export const ClsInput = styled.input`
+  width: 44px;
+  padding: 8px 6px;
+  border: 1.5px solid ${({ theme }) => theme.colors.border};
+  border-radius: 8px;
+  font-size: 0.88rem;
+  background: ${({ theme }) => theme.colors.surface};
+  color: ${({ theme }) => theme.colors.textInput};
+  transition: border-color 0.15s;
+  text-align: center;
+  flex-shrink: 0;
+
+  &:focus {
+    outline: none;
+    border-color: ${({ theme }) => theme.colors.accent};
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+`
+
 export const RemoveBtn = styled.button`
   background: none;
   border: none;

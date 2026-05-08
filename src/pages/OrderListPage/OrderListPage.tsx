@@ -32,16 +32,17 @@ export default function OrderListPage() {
   const groupedOrders = useMemo(() => {
     const map = new Map<string, (typeof orders)>()
     for (const order of orders) {
-      if (!map.has(order.name)) map.set(order.name, [])
-      map.get(order.name)!.push(order)
+      const key = `${order.name}\x00${order.class}`
+      if (!map.has(key)) map.set(key, [])
+      map.get(key)!.push(order)
     }
     for (const groupOrders of map.values()) {
       groupOrders.sort((a, b) => a.menu.localeCompare(b.menu, 'ko'))
     }
-    return Array.from(map.entries()).sort(([aName, aOrders], [bName, bOrders]) => {
+    return Array.from(map.entries()).sort(([, aOrders], [, bOrders]) => {
       const clsCmp = (aOrders[0]?.class ?? '').localeCompare(bOrders[0]?.class ?? '', 'ko')
       if (clsCmp !== 0) return clsCmp
-      return aName.localeCompare(bName, 'ko')
+      return (aOrders[0]?.name ?? '').localeCompare(bOrders[0]?.name ?? '', 'ko')
     })
   }, [orders])
 
@@ -177,7 +178,7 @@ export default function OrderListPage() {
                       <GroupToggle>{expanded ? '▼' : '▶'}</GroupToggle>
                     )}
                   </GroupCountCell>
-                  <GroupNameCell>{name}</GroupNameCell>
+                  <GroupNameCell>{groupOrders[0].name}</GroupNameCell>
                   <td>{groupOrders[0].class}</td>
                   {isMulti ? (
                     <td colSpan={3}>{groupOrders.reduce((s, o) => s + (o.qty ?? 1), 0)}잔</td>

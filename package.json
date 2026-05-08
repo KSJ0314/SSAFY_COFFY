@@ -1,7 +1,7 @@
 {
   "name": "ssafy_coffee",
   "private": true,
-  "version": "1.8.0",
+  "version": "1.8.1",
   "electronVersion": "1.4.0",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",

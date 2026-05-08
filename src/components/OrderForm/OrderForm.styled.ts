@@ -55,9 +55,9 @@ export const UserInfoWithActions = styled.div`
 `
 
 export const RouletteBtn = styled.button`
-  width: 40px;
-  height: 40px;
   flex-shrink: 0;
+  min-height: 40px;
+  aspect-ratio: 1 / 1;
   border-radius: 8px;
   border: 1.5px solid ${({ theme }) => theme.colors.border};
   background: ${({ theme }) => theme.colors.surface};

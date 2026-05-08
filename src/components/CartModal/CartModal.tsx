@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import TempBadge from '../TempBadge'
 import {
   ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose,
-  InquiryCancelBtn,
 } from '../../styles/shared'
+import { RouletteBtn } from '../OrderForm/OrderForm.styled'
 import type { Props } from './types'
 
 const CartModal_ = styled(Modal)`
@@ -179,7 +179,8 @@ const CartTotal = styled.div`
 `
 
 const CartActions = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr;
   gap: 10px;
   margin-top: 16px;
 `
@@ -244,7 +245,7 @@ const ClosedTooltip = styled.div`
   }
 `
 
-export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQty, onSubmit, onClose, focusItemId }: Props) {
+export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQty, onSubmit, onClose, onRoulette, focusItemId }: Props) {
   const mouseDownOnBackdrop = useRef(false)
   const plusBtnRefs = useRef<Map<string, HTMLButtonElement>>(new Map())
   const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0)
@@ -317,7 +318,7 @@ export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQ
             <span>{total.toLocaleString()}원</span>
           </CartTotal>
           <CartActions>
-            <InquiryCancelBtn onClick={onClose}>닫기</InquiryCancelBtn>
+            <RouletteBtn type="button" title="주문자 뽑기" onClick={onRoulette}>🎰</RouletteBtn>
             <SubmitWrap>
               <SubmitBtn onClick={onSubmit} disabled={cart.length === 0 || closed}>
                 주문하기

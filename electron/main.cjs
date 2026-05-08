@@ -12,6 +12,7 @@ const VERSION_URL     = `${HOMEPAGE}/electron-version.json`
 let latestVersion = null
 let downloadUrl = null
 let bgWin = null
+let lastUpdateNotifiedAt = 0
 
 function isNewer(available, current) {
   const p = v => v.split('.').map(Number)
@@ -31,7 +32,8 @@ function checkUpdate(tray, buildMenu) {
           latestVersion = parsed.version
           downloadUrl = parsed.downloadUrl
           tray.setContextMenu(buildMenu())
-          if (Notification.isSupported()) {
+          if (Notification.isSupported() && Date.now() - lastUpdateNotifiedAt >= 60000) {
+            lastUpdateNotifiedAt = Date.now()
             app.setAppUserModelId('com.ssafy.coffee')
             const note = new Notification({
               title: '⬆️ 싸피커피 업데이트 안내',
@@ -186,7 +188,7 @@ app.whenReady().then(() => {
     return Menu.buildFromTemplate([
       { label: '싸피커피', click: () => shell.openExternal(HOMEPAGE) },
       { type: 'separator' },
-      { label: '🛒 주문하기',         click: () => openWindow('order') },
+      { label: '🛒 주문하기',         click: () => { openWindow('order'); scheduleUpdateCheck() } },
       { label: '🛍️ 장바구니',        click: () => openWindow('cart') },
       { label: '📋 주문 목록',        click: () => openWindow('orders') },
       { label: '👑 오늘의 픽업 추첨', click: () => openWindow('pickup') },
@@ -218,11 +220,17 @@ app.whenReady().then(() => {
     ])
   }
 
+  function scheduleUpdateCheck() {
+    if (isDev) return
+    setTimeout(() => checkUpdate(tray, buildMenu), 5000)
+  }
+
   tray.setContextMenu(buildMenu())
-  tray.on('double-click', () => openWindow('order'))
+  tray.on('double-click', () => { openWindow('order'); scheduleUpdateCheck() })
 
   const isAutoStart = process.argv.includes('--hidden')
   if (!isAutoStart) openWindow('order')
+  scheduleUpdateCheck()
 
   // 11:40 당첨자 추첨 및 토스트 알림을 위한 백그라운드 창
   bgWin = new BrowserWindow({
@@ -235,8 +243,6 @@ app.whenReady().then(() => {
     },
   })
   bgWin.loadURL(getUrl('/background'))
-
-  if (!isDev) setTimeout(() => checkUpdate(tray, buildMenu), 5000)
 
   scheduleEntryReminder()
 })

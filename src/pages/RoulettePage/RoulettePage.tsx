@@ -6,7 +6,7 @@ export default function RoulettePage() {
       open={true}
       standalone={true}
       onClose={() => window.close()}
-      onWinner={name => localStorage.setItem('coffy_name', name)}
+      onWinner={(name, cls) => { localStorage.setItem('coffy_name', name); if (cls) localStorage.setItem('coffy_class', cls) }}
     />
   )
 }
