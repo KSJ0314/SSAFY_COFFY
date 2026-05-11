@@ -137,14 +137,14 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
     // 스코어보드는 줌 영향 없이 고정 위치에 렌더
     const done = bs.filter(b => b.rank > 0).sort((a, b) => a.rank-b.rank)
     if (done.length) {
-      const lh=15, pw=78, ph=lh*(done.length+.6), px=MARBLE_W-pw-6
+      const lh=15, pw=52, ph=lh*(done.length+.6), px=MARBLE_W-pw-6
       ctx.fillStyle = 'rgba(0,0,0,.65)'; ctx.beginPath(); ctx.roundRect(px, 6, pw, ph, 7); ctx.fill()
       ctx.font = 'bold 8px sans-serif'; ctx.textBaseline = 'middle'
       done.forEach((b, i) => {
         const y = 6+lh*(i+.8)
         ctx.fillStyle = i===0?'#ffd700':i===1?'#c0c0c0':i===2?'#cd7f32':'#aaa'
-        ctx.textAlign = 'left'; ctx.fillText(`${b.rank}위`, px+5, y)
-        ctx.fillStyle = `hsl(${b.hue} 100% 70%)`; ctx.fillText(b.name, px+24, y)
+        ctx.textAlign = 'left'; ctx.fillText(`${b.rank}위`, px+3, y)
+        ctx.fillStyle = `hsl(${b.hue} 100% 70%)`; ctx.fillText(b.name, px+20, y)
       })
     }
   }, [])
