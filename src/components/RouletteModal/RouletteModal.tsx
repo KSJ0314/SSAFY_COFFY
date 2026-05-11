@@ -1,19 +1,15 @@
-import { useState, useRef, useLayoutEffect, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Backdrop, Modal, ModalHeader, ModalTitle, CloseBtn, TabGroup, TabBtn,
-  ModalBody, RouletteSection, ParticipantSection, ParticipantSectionLabel,
-  ParticipantList, ParticipantRow, ParticipantInput, ClsInput, RemoveBtn, AddBtn,
-  CanvasWrap, SpinBtn,
+  ModalBody, RouletteSection, CanvasWrap, SpinBtn, MaximizeBtn,
+  ParticipantSection, ParticipantSectionLabel, ParticipantList,
+  ParticipantRow, ParticipantInput, ClsInput, RemoveBtn, AddBtn,
   WinnerOverlay, WinnerCard, WinnerEmoji, WinnerName, WinnerLabel, ResetBtn,
+  MinimapCanvas,
+  CanvasRefreshBtn,
 } from './RouletteModal.styled'
-
-const COLORS = [
-  '#FF6B6B', '#4D96FF', '#6BCB77', '#FFD93D',
-  '#CC5DE8', '#FF922B', '#20C997', '#F06595',
-  '#74C0FC', '#A9E34B', '#FFA8A8', '#63E6BE',
-]
-
-const SIZE = 280
+import WheelRoulette from './WheelRoulette'
+import MarbleRoulette, { MARBLE_W, MARBLE_H, MINIMAP_W, MINIMAP_H } from './MarbleRoulette'
 
 interface Props {
   open: boolean
@@ -23,218 +19,175 @@ interface Props {
 }
 
 export default function RouletteModal({ open, standalone, onClose, onWinner }: Props) {
-  const [mode, setMode] = useState<'wheel' | 'marble'>('wheel')
+  const [mode, setMode] = useState<'wheel' | 'marble'>('marble')
   const [inputs, setInputs] = useState([{ name: '', cls: '' }, { name: '', cls: '' }])
   const [winner, setWinner] = useState<string | null>(null)
-  const [spinning, setSpinning] = useState(false)
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const angleRef = useRef(-Math.PI / 2)
-  const rafRef = useRef<number | null>(null)
-  const participants = inputs.filter(({ name }) => name.trim())
-  const names = participants.map(({ name }) => name.trim())
+  const [spinning, setSpinning]     = useState(false)
+  const [marbleSpin, setMarbleSpin] = useState(false)
+  const [expanded, setExpanded]     = useState(false)
+  const [fsScale, setFsScale]       = useState(1)
+  const [marbleKey, setMarbleKey]   = useState(0)
+  const minimapRef = useRef<HTMLCanvasElement>(null)
+  const modalRef   = useRef<HTMLDivElement>(null)
 
-  function drawWheel(angle: number) {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-    const cx = SIZE / 2
-    const cy = SIZE / 2
-    const r = cx - 12
+  const participants = inputs.filter(v => v.name.trim())
+  const names = participants.map(v => v.name.trim())
+  const isLocked = spinning || marbleSpin
 
-    ctx.clearRect(0, 0, SIZE, SIZE)
-
-    if (names.length < 2) {
-      ctx.beginPath()
-      ctx.arc(cx, cy, r, 0, Math.PI * 2)
-      ctx.fillStyle = '#e5e7eb'
-      ctx.fill()
-      ctx.fillStyle = '#9ca3af'
-      ctx.font = '12px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.textBaseline = 'middle'
-      ctx.fillText('참여자를 2명 이상 입력하세요', cx, cy)
-      return
+  // standalone(Electron)이면 항상, 아니면 expanded일 때만 scale 계산
+  useEffect(() => {
+    if (!expanded && !standalone) { setFsScale(1); return }
+    const calc = () => {
+      const el = modalRef.current
+      if (!el) return
+      const rootZoom = parseFloat(getComputedStyle(document.getElementById('root')!).zoom) || 1
+      const scale = Math.min(
+        (window.innerWidth  / rootZoom) * 0.90 / el.offsetWidth,
+        (window.innerHeight / rootZoom) * 0.90 / el.offsetHeight,
+      )
+      setFsScale(Math.max(1, scale))
     }
+    calc()
+    window.addEventListener('resize', calc)
+    return () => window.removeEventListener('resize', calc)
+  }, [expanded, standalone, mode])
 
-    const slice = (Math.PI * 2) / names.length
-    names.forEach((name, i) => {
-      const start = angle + i * slice
-      const end = start + slice
+  function setName(i: number, v: string) { setInputs(p => p.map((x,j) => j===i ? {...x,name:v} : x)) }
+  function setCls (i: number, v: string) { setInputs(p => p.map((x,j) => j===i ? {...x,cls:v}  : x)) }
+  function remove (i: number)            { setInputs(p => p.filter((_,j) => j!==i)) }
+  function add()                         { setInputs(p => [...p, {name:'', cls:''}]) }
 
-      ctx.beginPath()
-      ctx.moveTo(cx, cy)
-      ctx.arc(cx, cy, r, start, end)
-      ctx.closePath()
-      ctx.fillStyle = COLORS[i % COLORS.length]
-      ctx.fill()
-      ctx.strokeStyle = '#fff'
-      ctx.lineWidth = 2
-      ctx.stroke()
-
-      ctx.save()
-      ctx.translate(cx, cy)
-      ctx.rotate(start + slice / 2)
-      ctx.textAlign = 'right'
-      ctx.textBaseline = 'middle'
-      ctx.fillStyle = '#fff'
-      ctx.font = `bold ${names.length > 8 ? 11 : 13}px sans-serif`
-      ctx.shadowColor = 'rgba(0,0,0,0.3)'
-      ctx.shadowBlur = 3
-      const label = name.length > 5 ? name.slice(0, 5) + '…' : name
-      ctx.fillText(label, r - 14, 0)
-      ctx.restore()
-    })
-
-    // 중앙 원
-    ctx.beginPath()
-    ctx.arc(cx, cy, 18, 0, Math.PI * 2)
-    ctx.fillStyle = '#fff'
-    ctx.fill()
-    ctx.strokeStyle = '#d1d5db'
-    ctx.lineWidth = 2
-    ctx.stroke()
-
-    // 상단 포인터 (고정)
-    ctx.beginPath()
-    ctx.moveTo(cx - 8, 2)
-    ctx.lineTo(cx + 8, 2)
-    ctx.lineTo(cx, 28)
-    ctx.closePath()
-    ctx.fillStyle = '#1f2937'
-    ctx.strokeStyle = '#fff'
-    ctx.lineWidth = 1.5
-    ctx.fill()
-    ctx.stroke()
+  function handleWheelSpin() {
+    if (spinning || names.length < 2) return
+    setWinner(null); setSpinning(true)
+  }
+  function handleWheelEnd(idx: number) {
+    setSpinning(false)
+    setWinner(participants[idx].name)
+    onWinner(participants[idx].name, participants[idx].cls)
   }
 
-  useLayoutEffect(() => {
-    if (!spinning && mode === 'wheel') drawWheel(angleRef.current)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputs.join(','), spinning, mode])
-
-  useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }, [])
+  function handleMarbleSpin() {
+    if (marbleSpin || participants.length < 2) return
+    setWinner(null); setMarbleSpin(true)
+  }
+  function handleMarbleEnd(name: string, cls: string) {
+    setWinner(name); onWinner(name, cls)  // marbleSpin은 유지 — 레이스 계속
+  }
+  function handleMarbleAllDone() {
+    setMarbleSpin(false)
+  }
 
   function reset() {
-    if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    setWinner(null)
-    setSpinning(false)
-    angleRef.current = -Math.PI / 2
+    setWinner(null); setSpinning(false); setMarbleSpin(false)
   }
 
-  function spin() {
-    if (spinning || names.length < 2) return
-    setWinner(null)
-    setSpinning(true)
+  const spinLabel = mode === 'wheel'
+    ? (spinning   ? '돌아가는 중...' : 'SPIN')
+    : (marbleSpin ? '레이스 중...'   : 'START')
+  const spinDisabled = mode === 'wheel'
+    ? (spinning   || names.length < 2)
+    : (marbleSpin || participants.length < 2)
 
-    const totalRotation = Math.PI * 2 * (6 + Math.random() * 6)
-    const duration = 4000 + Math.random() * 1500
-    const startTime = performance.now()
-    const startAngle = angleRef.current
-
-    function animate(now: number) {
-      const elapsed = now - startTime
-      const t = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - t, 4)
-      const currentAngle = startAngle + totalRotation * eased
-      angleRef.current = currentAngle
-      drawWheel(currentAngle)
-
-      if (t < 1) {
-        rafRef.current = requestAnimationFrame(animate)
-      } else {
-        const slice = (Math.PI * 2) / names.length
-        const normalizedOffset = ((Math.PI * 3 / 2 - currentAngle) % (Math.PI * 2) + Math.PI * 2) % (Math.PI * 2)
-        const winnerIndex = Math.floor(normalizedOffset / slice) % names.length
-        const picked = names[winnerIndex]
-        setWinner(picked)
-        setSpinning(false)
-        onWinner(participants[winnerIndex].name.trim(), participants[winnerIndex].cls.trim())
-      }
-    }
-
-    rafRef.current = requestAnimationFrame(animate)
+  function renderInputs(disabled: boolean) {
+    return inputs.map((v, i) => (
+      <ParticipantRow key={i}>
+        <ParticipantInput placeholder={`참여자 ${i+1}`} value={v.name} maxLength={10} disabled={disabled}
+          onChange={e => setName(i, e.target.value)} />
+        <ClsInput placeholder="반" value={v.cls} maxLength={2} disabled={disabled}
+          onChange={e => setCls(i, e.target.value)} />
+        {inputs.length > 2 && <RemoveBtn type="button" disabled={disabled} onClick={() => remove(i)}>✕</RemoveBtn>}
+      </ParticipantRow>
+    ))
   }
 
   return (
-    <Backdrop $standalone={standalone} onClick={standalone ? undefined : onClose} style={{ display: open ? undefined : 'none' }}>
-      <Modal onClick={e => e.stopPropagation()}>
+    <Backdrop $standalone={standalone} onClick={standalone ? undefined : onClose}
+      style={{ display: open ? undefined : 'none' }}>
+      <Modal
+        ref={modalRef}
+        $wide={mode === 'marble'}
+        $standalone={standalone}
+        style={{ transform: fsScale !== 1 ? `scale(${fsScale})` : undefined, transition: 'transform 0.2s ease' }}
+        onClick={e => e.stopPropagation()}
+      >
         <ModalHeader>
           <ModalTitle>🎰 주문자 뽑기</ModalTitle>
           <TabGroup>
-            <TabBtn type="button" $active={mode === 'wheel'} onClick={() => setMode('wheel')}>일반 룰렛</TabBtn>
-            <TabBtn type="button" $active={mode === 'marble'} onClick={() => setMode('marble')}>마블 룰렛</TabBtn>
+            <TabBtn type="button" $active={mode==='marble'} onClick={() => setMode('marble')}>마블 룰렛</TabBtn>
+            <TabBtn type="button" $active={mode==='wheel'}  onClick={() => setMode('wheel')}>스핀 룰렛</TabBtn>
           </TabGroup>
-          <CloseBtn type="button" onClick={onClose}>✕</CloseBtn>
+          <div style={{ display:'flex', gap:4, alignItems:'center' }}>
+            {mode === 'marble' && !window.electronAPI && (
+              <MaximizeBtn type="button" title={expanded ? '축소' : '확대'}
+                onClick={() => setExpanded(v => !v)}>
+                {expanded
+                  ? <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor"><path d="m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z"/></svg>
+                  : <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 -960 960 960" fill="currentColor"><path d="M120-120v-240h80v104l124-124 56 56-124 124h104v80H120Zm480 0v-80h104L580-324l56-56 124 124v-104h80v240H600ZM324-580 200-704v104h-80v-240h240v80H256l124 124-56 56Zm312 0-56-56 124-124H600v-80h240v240h-80v-104L636-580Z"/></svg>
+                }
+              </MaximizeBtn>
+            )}
+            <CloseBtn type="button" onClick={onClose}>✕</CloseBtn>
+          </div>
         </ModalHeader>
 
         <ModalBody>
+          {mode === 'marble' && (
+            <MinimapCanvas ref={minimapRef} width={MINIMAP_W} height={MINIMAP_H} />
+          )}
           <RouletteSection>
-            {mode === 'wheel' ? (
-              <>
-                <CanvasWrap>
-                  <canvas ref={canvasRef} width={SIZE} height={SIZE} />
-                </CanvasWrap>
-                <SpinBtn type="button" onClick={spin} disabled={spinning || names.length < 2}>
-                  {spinning ? '돌아가는 중...' : 'SPIN 🎯'}
-                </SpinBtn>
-              </>
-            ) : (
-              <CanvasWrap style={{ width: SIZE, height: SIZE, flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 12 }}>
-                <span style={{ fontSize: '2rem' }}>🪀</span>
-                <span style={{ fontSize: '0.9rem', color: '#9ca3af' }}>마블 룰렛 준비 중</span>
-              </CanvasWrap>
-            )}
+            <CanvasWrap>
+              {mode === 'wheel'
+                ? <WheelRoulette names={names} spinning={spinning} onSpinEnd={handleWheelEnd} />
+                : <MarbleRoulette key={marbleKey} participants={participants} spinning={marbleSpin} minimapRef={minimapRef} onRaceEnd={handleMarbleEnd} onAllFinished={handleMarbleAllDone} />
+              }
+              {mode === 'marble' && (
+                <CanvasRefreshBtn type="button"
+                  onClick={() => { reset(); setMarbleKey(k => k+1) }}>↺</CanvasRefreshBtn>
+              )}
+            </CanvasWrap>
+            <SpinBtn type="button" disabled={spinDisabled}
+              onClick={mode === 'wheel' ? handleWheelSpin : handleMarbleSpin}>
+              {spinLabel}
+            </SpinBtn>
           </RouletteSection>
 
-          <ParticipantSection>
+          <ParticipantSection style={{ position: 'relative' }}>
             <ParticipantSectionLabel>참여자</ParticipantSectionLabel>
-            <ParticipantList>
-              {inputs.map((v, i) => (
-                <ParticipantRow key={i}>
-                  <ParticipantInput
-                    placeholder={`참여자 ${i + 1}`}
-                    value={v.name}
-                    onChange={e => setInputs(prev => prev.map((val, idx) => idx === i ? { ...val, name: e.target.value } : val))}
-                    maxLength={10}
-                    disabled={spinning}
-                  />
-                  <ClsInput
-                    placeholder="반"
-                    value={v.cls}
-                    onChange={e => setInputs(prev => prev.map((val, idx) => idx === i ? { ...val, cls: e.target.value } : val))}
-                    maxLength={2}
-                    disabled={spinning}
-                  />
-                  {inputs.length > 2 && (
-                    <RemoveBtn
-                      type="button"
-                      onClick={() => setInputs(prev => prev.filter((_, idx) => idx !== i))}
-                      disabled={spinning}
-                    >
-                      ✕
-                    </RemoveBtn>
-                  )}
-                </ParticipantRow>
-              ))}
-            </ParticipantList>
-            <AddBtn
-              type="button"
-              onClick={() => setInputs(prev => [...prev, { name: '', cls: '' }])}
-              disabled={spinning}
-            >
-              + 추가
-            </AddBtn>
+            <ParticipantList>{renderInputs(isLocked)}</ParticipantList>
+            <AddBtn type="button" disabled={isLocked} onClick={add}>+ 추가</AddBtn>
+
+            {/* 마블 모드: 참여자 영역에만 당첨 카드 표시 (캔버스 영역 블러 없음) */}
+            {mode === 'marble' && winner && (
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(3px)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                borderRadius: 12, zIndex: 5,
+              }}>
+                <WinnerCard style={{ position: 'relative' }} onClick={e => e.stopPropagation()}>
+                  <CloseBtn type="button"
+                    style={{ position: 'absolute', top: 8, right: 8, padding: '2px 6px' }}
+                    onClick={() => setWinner(null)}>✕</CloseBtn>
+                  <WinnerEmoji>🎉</WinnerEmoji>
+                  <WinnerName>{winner}</WinnerName>
+                  <WinnerLabel>당첨!</WinnerLabel>
+                </WinnerCard>
+              </div>
+            )}
           </ParticipantSection>
         </ModalBody>
-        {winner && (
+
+        {/* 일반 룰렛: 모달 전체 오버레이 */}
+        {mode === 'wheel' && winner && (
           <WinnerOverlay onClick={onClose}>
             <WinnerCard onClick={e => e.stopPropagation()}>
               <WinnerEmoji>🎉</WinnerEmoji>
               <WinnerName>{winner}</WinnerName>
               <WinnerLabel>당첨!</WinnerLabel>
             </WinnerCard>
-            <ResetBtn type="button" title="초기화" onClick={e => { e.stopPropagation(); reset() }}>🔄</ResetBtn>
+            <ResetBtn type="button" title="초기화"
+              onClick={e => { e.stopPropagation(); reset() }}>🔄</ResetBtn>
           </WinnerOverlay>
         )}
       </Modal>

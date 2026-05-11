@@ -108,7 +108,7 @@ function createWindow(key, route, opts = {}) {
     y,
     title: opts.title ?? `SSAFY_COFFEE for Desktop v${ELECTRON_VERSION}`,
     icon: getIconPath(),
-    resizable: false,
+    resizable: opts.resizable ?? false,
     webPreferences: {
       preload: path.join(__dirname, 'preload.cjs'),
       contextIsolation: true,
@@ -138,7 +138,7 @@ const WIN_CONFIGS = {
   orders:   { route: '/orders',   width: 900, height: 800 },
   inquiry:  { route: '/inquiry',  width: 900, height: 800 },
   notices:  { route: '/notices',  width: 600, height: 240 },
-  roulette: { route: '/roulette', width: 720, height: 600 },
+  roulette: { route: '/roulette', width: 800, height: 600, resizable: true },
   pickup:   { route: '/pickup',   width: 580, height: 760 },
   settings:   { route: '/settings',   width: 480, height: 180, resizable: false },
   patchnotes: { route: '/patchnotes', width: 480, height: 800 },
@@ -282,6 +282,7 @@ ipcMain.on('resize-window', (event, w, h) => {
   win.setPosition(workArea.x + workArea.width - actualW - WINDOW_MARGIN, workArea.y + workArea.height - actualH - WINDOW_MARGIN)
 })
 ipcMain.on('open-settings', () => openWindow('settings'))
+
 
 ipcMain.handle('get-settings', () => loadSettings())
 ipcMain.handle('save-settings', (_, data) => { persistSettings(data); return true })

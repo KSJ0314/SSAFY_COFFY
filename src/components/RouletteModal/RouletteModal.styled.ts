@@ -11,18 +11,26 @@ export const Backdrop = styled.div<{ $standalone?: boolean }>`
   cursor: ${({ $standalone }) => $standalone ? 'default' : 'pointer'};
 `
 
-export const Modal = styled.div`
+export const Modal = styled.div<{ $wide?: boolean; $standalone?: boolean }>`
   background: ${({ theme }) => theme.colors.surface};
   border-radius: 16px;
   padding: 24px;
-  width: 580px;
-  max-height: 88vh;
+  width: ${({ $wide }) => $wide ? '700px' : '580px'};
+  max-height: ${({ $standalone }) => $standalone ? 'none' : '88vh'};
   overflow: hidden;
   display: flex;
   flex-direction: column;
   gap: 18px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
   position: relative;
+  cursor: default;
+`
+
+export const MinimapCanvas = styled.canvas`
+  display: block;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 229, 255, 0.25);
+  flex-shrink: 0;
 `
 
 export const ModalHeader = styled.div`
@@ -77,6 +85,22 @@ export const CloseBtn = styled.button`
   }
 `
 
+export const MaximizeBtn = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.05rem;
+  color: ${({ theme }) => theme.colors.textMutedAlt};
+  padding: 4px 6px;
+  line-height: 1;
+  border-radius: 6px;
+
+  &:hover {
+    color: ${({ theme }) => theme.colors.text};
+    background: ${({ theme }) => theme.colors.surfaceAlt};
+  }
+`
+
 export const ModalBody = styled.div`
   display: flex;
   gap: 20px;
@@ -89,7 +113,6 @@ export const RouletteSection = styled.div`
   gap: 12px;
   flex-shrink: 0;
   width: 280px;
-  height: 336px;
 `
 
 export const ParticipantSection = styled.div`
@@ -99,7 +122,6 @@ export const ParticipantSection = styled.div`
   gap: 7px;
   min-width: 0;
   min-height: 0;
-  max-height: 336px;
 `
 
 export const ParticipantSectionLabel = styled.div`
@@ -231,11 +253,41 @@ export const AddBtn = styled.button`
 `
 
 export const CanvasWrap = styled.div`
+  position: relative;
   display: flex;
   justify-content: center;
 
   canvas {
     display: block;
+  }
+`
+
+export const CanvasRefreshBtn = styled.button`
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
   }
 `
 
@@ -338,4 +390,164 @@ export const ResetBtn = styled.button`
     border-color: ${({ theme }) => theme.colors.accent};
     background: ${({ theme }) => theme.colors.surfaceAlt};
   }
+`
+
+// 전체화면 오버레이
+export const FullscreenOverlay = styled.div`
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+`
+
+export const FullscreenHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+`
+
+export const FullscreenTitle = styled.span`
+  font-size: 1rem;
+  font-weight: 800;
+  color: #fff;
+`
+
+export const FullscreenShrinkBtn = styled.button`
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  color: #ccc;
+  padding: 6px 14px;
+  font-size: 0.82rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+  }
+`
+
+export const FullscreenContent = styled.div`
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 0;
+  overflow: hidden;
+`
+
+export const FullscreenCanvasArea = styled.div`
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+`
+
+export const FullscreenSidebar = styled.div`
+  width: 220px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 16px 16px 16px 0;
+  border-left: 1px solid rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+`
+
+export const FsParticipantList = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  margin-bottom: 10px;
+
+  &::-webkit-scrollbar { width: 3px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 999px; }
+`
+
+export const FsParticipantRow = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+`
+
+export const FsParticipantInput = styled.input`
+  flex: 1;
+  padding: 7px 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 7px;
+  font-size: 0.84rem;
+  background: rgba(255,255,255,0.06);
+  color: #eee;
+  min-width: 0;
+
+  &:focus { outline: none; border-color: #00e5ff; }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+  &::placeholder { color: #666; }
+`
+
+export const FsClsInput = styled.input`
+  width: 38px;
+  padding: 7px 4px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 7px;
+  font-size: 0.84rem;
+  background: rgba(255,255,255,0.06);
+  color: #eee;
+  text-align: center;
+  flex-shrink: 0;
+
+  &:focus { outline: none; border-color: #00e5ff; }
+  &:disabled { opacity: 0.45; cursor: not-allowed; }
+  &::placeholder { color: #666; }
+`
+
+export const FsRemoveBtn = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: #666;
+  padding: 4px 6px;
+  border-radius: 5px;
+  flex-shrink: 0;
+
+  &:hover { color: #ef4444; background: rgba(239,68,68,0.12); }
+  &:disabled { opacity: 0.3; cursor: not-allowed; }
+`
+
+export const FsAddBtn = styled.button`
+  background: none;
+  border: 1px dashed rgba(255,255,255,0.2);
+  border-radius: 7px;
+  padding: 7px;
+  font-size: 0.8rem;
+  color: #888;
+  cursor: pointer;
+  flex-shrink: 0;
+
+  &:hover { border-color: #00e5ff; color: #00e5ff; }
+  &:disabled { opacity: 0.3; cursor: not-allowed; }
+`
+
+export const FsSectionLabel = styled.div`
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+  padding-left: 2px;
 `
