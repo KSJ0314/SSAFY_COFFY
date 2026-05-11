@@ -9,7 +9,7 @@ import {
   CanvasRefreshBtn,
 } from './RouletteModal.styled'
 import WheelRoulette from './WheelRoulette'
-import MarbleRoulette, { MARBLE_W, MARBLE_H, MINIMAP_W, MINIMAP_H } from './MarbleRoulette'
+import MarbleRoulette, { MINIMAP_W, MINIMAP_H } from './MarbleRoulette'
 
 interface Props {
   open: boolean

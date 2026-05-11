@@ -1,5 +1,5 @@
 import { useRef, useEffect, useLayoutEffect, useCallback, type RefObject } from 'react'
-import { MARBLE_W, MARBLE_H, WORLD_W, WORLD_H, MINIMAP_W, MINIMAP_H, GRAVITY, FRICTION, SUBSTEPS, REST_BAR, CAMERA_LERP, CAMERA_OFFSET, FUNNEL_Y } from './constants'
+import { MARBLE_W, MARBLE_H, WORLD_W, WORLD_H, MINIMAP_W, MINIMAP_H, GRAVITY, FRICTION, SUBSTEPS, REST_BAR, CAMERA_LERP, FUNNEL_Y } from './constants'
 import type { Ball, Participant } from './types'
 import { hitLine, hitPin, hitBall, hitRotatingBar } from './physics'
 import { walls, goalY } from './course'

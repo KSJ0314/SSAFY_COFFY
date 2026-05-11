@@ -1,5 +1,5 @@
 import type { Wall } from './types'
-import { WORLD_W, WORLD_H } from './constants'
+import { WORLD_H } from './constants'
 
 // 골라인 y좌표 (구슬이 이 선에 닿으면 완료 처리)
 export const goalY = WORLD_H * 0.96  // 1440
