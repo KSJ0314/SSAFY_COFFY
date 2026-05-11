@@ -10,6 +10,7 @@ import { pins } from './pins'
 interface Props {
   participants: Participant[]
   spinning: boolean
+  scale?: number
   minimapRef?: RefObject<HTMLCanvasElement | null>
   onRaceEnd: (name: string, cls: string) => void
   onAllFinished?: () => void
@@ -24,7 +25,7 @@ function shuffle<T>(arr: T[]): T[] {
   return a
 }
 
-export default function MarbleRoulette({ participants, spinning, minimapRef, onRaceEnd, onAllFinished }: Props) {
+export default function MarbleRoulette({ participants, spinning, scale = 1, minimapRef, onRaceEnd, onAllFinished }: Props) {
   const canvasRef  = useRef<HTMLCanvasElement>(null)
   const ballsRef   = useRef<Ball[]>([])
   const rafRef     = useRef<number|null>(null)
@@ -34,6 +35,7 @@ export default function MarbleRoulette({ participants, spinning, minimapRef, onR
   const running    = useRef(false)
   const inFunnel      = useRef(false)
   const allDoneFired  = useRef(false)
+  const shuffledRef = useRef(shuffle(participants))
 
   const ballR = (n: number) => n <= 4 ? 5 : n <= 8 ? 4 : 3
   const dropX = (i: number, n: number, r: number) => {
@@ -201,30 +203,67 @@ export default function MarbleRoulette({ participants, spinning, minimapRef, onR
     mctx.shadowBlur = 0
   }, [minimapRef])
 
-  // DPR + CSS zoom 대응: getBoundingClientRect로 실제 렌더 크기 계산 → 물리 픽셀 일치
+  // DPR + CSS zoom 대응 + 초기 드로우
   useLayoutEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
-    const dpr      = window.devicePixelRatio || 1
-    const rect     = canvas.getBoundingClientRect()
-    const cssScale = rect.width > 0 ? rect.width / MARBLE_W : 1  // CSS zoom 배율
-    const total    = dpr * cssScale
-    canvas.width   = Math.round(MARBLE_W * total)
-    canvas.height  = Math.round(MARBLE_H * total)
-    canvas.style.width  = `${MARBLE_W}px`
-    canvas.style.height = `${MARBLE_H}px`
-    canvas.getContext('2d')?.setTransform(total, 0, 0, total, 0, 0)
-  }, [])
 
-  useLayoutEffect(() => {
-    if (!running.current) { drawViewport(ballsRef.current, 0); drawMinimap(ballsRef.current, 0) }
-  }, [drawViewport, drawMinimap])
+    const apply = () => {
+      const rect = canvas.getBoundingClientRect()
+      if (rect.width === 0) return false
+      const dpr      = window.devicePixelRatio || 1
+      const cssScale = rect.width / MARBLE_W
+      const total    = dpr * cssScale
+      canvas.width   = Math.round(MARBLE_W * total)
+      canvas.height  = Math.round(MARBLE_H * total)
+      canvas.style.width  = `${MARBLE_W}px`
+      canvas.style.height = `${MARBLE_H}px`
+      canvas.getContext('2d')?.setTransform(total, 0, 0, total, 0, 0)
+      if (!running.current) {
+        drawViewport(ballsRef.current, 0)
+        drawMinimap(ballsRef.current, 0)
+      }
+      return true
+    }
+
+    if (!apply()) {
+      const ro = new ResizeObserver(() => { if (apply()) ro.disconnect() })
+      ro.observe(canvas)
+      return () => ro.disconnect()
+    }
+  }, [drawViewport, drawMinimap, scale])
+
+  // CSS transition(0.2s) 완료 후 DPR 재적용
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const timer = setTimeout(() => {
+      const rect = canvas.getBoundingClientRect()
+      if (rect.width === 0) return
+      const dpr      = window.devicePixelRatio || 1
+      const cssScale = rect.width / MARBLE_W
+      const total    = dpr * cssScale
+      canvas.width   = Math.round(MARBLE_W * total)
+      canvas.height  = Math.round(MARBLE_H * total)
+      canvas.style.width  = `${MARBLE_W}px`
+      canvas.style.height = `${MARBLE_H}px`
+      canvas.getContext('2d')?.setTransform(total, 0, 0, total, 0, 0)
+      if (!running.current) {
+        drawViewport(ballsRef.current, 0)
+        drawMinimap(ballsRef.current, 0)
+      }
+    }, 210)
+    return () => clearTimeout(timer)
+  }, [scale, drawViewport, drawMinimap])
+
   useEffect(() => () => { if (rafRef.current) cancelAnimationFrame(rafRef.current) }, [])
 
   // ─── 참여자 변경 시 구슬 생성 (대기 상태) ────────────────────────────
   useEffect(() => {
     if (running.current) return
-    const shuffled = shuffle(participants)
+    shuffledRef.current = shuffledRef.current.filter(p => participants.some(q => q.name === p.name && q.cls === p.cls))
+    participants.forEach(p => { if (!shuffledRef.current.some(q => q.name === p.name && q.cls === p.cls)) shuffledRef.current.push(p) })
+    const shuffled = shuffledRef.current
     const n = shuffled.length, r = ballR(n)
     ballsRef.current = shuffled.map((p, i) => ({
       x: dropX(i, n, r), y: 50,
@@ -242,7 +281,7 @@ export default function MarbleRoulette({ participants, spinning, minimapRef, onR
     camY.current=0; rankCount.current=0; wFired.current=false; running.current=true; inFunnel.current=false; allDoneFired.current=false
 
     // 구슬 위치 리셋 + 초기 속도 부여
-    const shuffled = shuffle(participants)
+    const shuffled = shuffledRef.current
     const n = shuffled.length, r = ballR(n)
     ballsRef.current = shuffled.map((p, i) => ({
       x: dropX(i, n, r), y: 50,

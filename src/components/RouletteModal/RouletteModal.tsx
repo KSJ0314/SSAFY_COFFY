@@ -139,7 +139,7 @@ export default function RouletteModal({ open, standalone, onClose, onWinner }: P
             <CanvasWrap>
               {mode === 'wheel'
                 ? <WheelRoulette names={names} spinning={spinning} onSpinEnd={handleWheelEnd} />
-                : <MarbleRoulette key={marbleKey} participants={participants} spinning={marbleSpin} minimapRef={minimapRef} onRaceEnd={handleMarbleEnd} onAllFinished={handleMarbleAllDone} />
+                : <MarbleRoulette key={marbleKey} participants={participants} spinning={marbleSpin} scale={fsScale} minimapRef={minimapRef} onRaceEnd={handleMarbleEnd} onAllFinished={handleMarbleAllDone} />
               }
               {mode === 'marble' && (
                 <CanvasRefreshBtn type="button"

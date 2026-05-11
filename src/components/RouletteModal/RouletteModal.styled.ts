@@ -104,7 +104,10 @@ export const MaximizeBtn = styled.button`
 export const ModalBody = styled.div`
   display: flex;
   gap: 20px;
+  flex: 1;
+  height: 0;
   min-height: 0;
+  overflow: hidden;
 `
 
 export const RouletteSection = styled.div`
@@ -122,6 +125,7 @@ export const ParticipantSection = styled.div`
   gap: 7px;
   min-width: 0;
   min-height: 0;
+  overflow: hidden;
 `
 
 export const ParticipantSectionLabel = styled.div`
@@ -139,6 +143,7 @@ export const ParticipantList = styled.div`
   gap: 7px;
   flex: 1;
   min-height: 0;
+  max-height: 305px;
   overflow-y: auto;
   margin-bottom: 20px;
 
