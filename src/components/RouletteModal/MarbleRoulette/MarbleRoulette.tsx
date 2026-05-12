@@ -35,6 +35,7 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
   const running    = useRef(false)
   const inFunnel      = useRef(false)
   const allDoneFired  = useRef(false)
+  const lastTimeRef   = useRef(0)
   const shuffledRef = useRef(shuffle(participants))
 
   const ballR = (n: number) => n <= 4 ? 5 : n <= 8 ? 4 : 3
@@ -278,7 +279,7 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
   // ─── 레이스 ───────────────────────────────────────────────────────────
   useEffect(() => {
     if (!spinning) return
-    camY.current=0; rankCount.current=0; wFired.current=false; running.current=true; inFunnel.current=false; allDoneFired.current=false
+    camY.current=0; rankCount.current=0; wFired.current=false; running.current=true; inFunnel.current=false; allDoneFired.current=false; lastTimeRef.current=0
 
     // 구슬 위치 리셋 + 초기 속도 부여
     const shuffled = shuffledRef.current
@@ -291,7 +292,11 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
     }))
 
     if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    function tick() {
+    function tick(now: number) {
+      if (lastTimeRef.current === 0) lastTimeRef.current = now
+      const dt = Math.min((now - lastTimeRef.current) / (1000 / 60), 3)
+      lastTimeRef.current = now
+
       const bs = ballsRef.current
       const active = bs.filter(b => b.rank === 0)
 
@@ -304,20 +309,22 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
       const zoom     = inFunnel.current ? 2 : 1
 
       // 회전 막대 각도 업데이트 (틱당 1회, 구간 속도 적용)
-      rotatingBars.forEach(rb => { rb.angle += rb.angularVelocity * zoneMult })
+      rotatingBars.forEach(rb => { rb.angle += rb.angularVelocity * zoneMult * dt })
 
       // 중력·마찰 적용 (틱당 1회, 구간 중력 적용)
       bs.forEach(ball => {
-        if (ball.rank > 0) { ball.alpha = Math.max(0, ball.alpha-.015); return }
-        ball.vy += GRAVITY * zoneMult * (0.8 + Math.random() * 0.2); ball.vx *= FRICTION; ball.vy *= FRICTION
+        if (ball.rank > 0) { ball.alpha = Math.max(0, ball.alpha - 0.015 * dt); return }
+        ball.vy += GRAVITY * zoneMult * (0.8 + Math.random() * 0.2) * dt
+        ball.vx *= Math.pow(FRICTION, dt)
+        ball.vy *= Math.pow(FRICTION, dt)
       })
 
       // 서브스텝: 이동·충돌을 SUBSTEPS번 나눠 처리 → 터널링 방지
       for (let s = 0; s < SUBSTEPS; s++) {
         bs.forEach(ball => {
           if (ball.rank > 0) return
-          ball.x += ball.vx / SUBSTEPS
-          ball.y += ball.vy / SUBSTEPS
+          ball.x += (ball.vx / SUBSTEPS) * dt
+          ball.y += (ball.vy / SUBSTEPS) * dt
 
           walls.forEach(w => hitLine(ball, w.x1, w.y1, w.x2, w.y2))
           bars.forEach(b => hitLine(ball, b.x1, b.y1, b.x2, b.y2, REST_BAR))
