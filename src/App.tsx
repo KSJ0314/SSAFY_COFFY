@@ -1,10 +1,7 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
-import styled from 'styled-components'
 import { OrderProvider } from './context/OrderContext'
 import { ThemeProvider } from './styles/ThemeContext'
-import { useTheme } from './styles/ThemeContext'
-import MMWebhookModal from './components/MMWebhookModal'
+import FloatingButtons from './components/FloatingButtons'
 import MainPage from './pages/MainPage'
 import OrderListPage from './pages/OrderListPage'
 import InquiryPage from './pages/InquiryPage'
@@ -16,75 +13,8 @@ import NoticesPage from './pages/NoticesPage'
 import BackgroundPage from './pages/BackgroundPage'
 import PatchNotesPage from './pages/PatchNotesPage'
 import RoulettePage from './pages/RoulettePage'
+import LunchPage from './pages/LunchPage'
 
-const MMBtn = styled.button`
-  position: fixed;
-  bottom: 24px;
-  right: 80px;
-  z-index: 200;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: 1.1rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px ${({ theme }) => theme.colors.shadow};
-  transition: transform 0.15s, box-shadow 0.15s;
-
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px ${({ theme }) => theme.colors.shadow};
-  }
-`
-
-const ThemeToggleBtn = styled.button`
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 200;
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 2px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
-  color: ${({ theme }) => theme.colors.secondary};
-  font-size: 1.2rem;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px ${({ theme }) => theme.colors.shadow};
-  transition: transform 0.15s, box-shadow 0.15s;
-
-  &:hover {
-    transform: scale(1.1);
-    box-shadow: 0 6px 16px ${({ theme }) => theme.colors.shadow};
-  }
-`
-
-function DevTools() {
-  const [mmOpen, setMmOpen] = useState(false)
-  return (
-    <>
-      <MMBtn onClick={() => setMmOpen(true)} title="MM 웹훅 전송">MM</MMBtn>
-      {mmOpen && <MMWebhookModal onClose={() => setMmOpen(false)} />}
-    </>
-  )
-}
-
-function ThemeToggle() {
-  const { mode, toggle } = useTheme()
-  return (
-    <ThemeToggleBtn onClick={toggle} title={mode === 'light' ? '다크 모드로 전환' : '라이트 모드로 전환'}>
-      {mode === 'light' ? '🌙' : '☀️'}
-    </ThemeToggleBtn>
-  )
-}
 
 export default function App() {
   return (
@@ -103,9 +33,9 @@ export default function App() {
             <Route path="/background" element={<BackgroundPage />} />
             <Route path="/patchnotes" element={<PatchNotesPage />} />
             <Route path="/roulette" element={<RoulettePage />} />
+            <Route path="/lunch" element={<LunchPage />} />
           </Routes>
-          {!window.electronAPI && <ThemeToggle />}
-          {import.meta.env.DEV && <DevTools />}
+          <FloatingButtons />
         </HashRouter>
       </OrderProvider>
     </ThemeProvider>
