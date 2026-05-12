@@ -38,7 +38,7 @@ export default function MarbleRoulette({ participants, spinning, scale = 1, mini
   const lastTimeRef   = useRef(0)
   const shuffledRef = useRef(shuffle(participants))
 
-  const ballR = (n: number) => n <= 4 ? 5 : n <= 8 ? 4 : 3
+  const ballR = (n: number) => n <= 4 ? 5 : 4
   const dropX = (i: number, n: number, r: number) => {
     const left = WORLD_W*2/5+r, right = WORLD_W*3/5-r
     return left + (right-left)/Math.max(n-1,1)*i + (Math.random()-.5)*r*.5
