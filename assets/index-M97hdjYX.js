@@ -66,19 +66,618 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     opacity: 0.6;
     animation: pulse 1.2s ease-in-out infinite;
   }
-`,qb=(0,S.createContext)(null);function Jb({children:e}){let[t,n]=(0,S.useState)(()=>localStorage.getItem(`coffy_theme`)||(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`)),r=t===`light`?Wb:Gb;function i(){n(e=>{let t=e===`light`?`dark`:`light`;return localStorage.setItem(`coffy_theme`,t),t})}return(0,S.useEffect)(()=>{let e=window.electronAPI;if(!e)return;let t=e=>{localStorage.setItem(`coffy_theme`,e),n(e)};return e.onThemeChange(t),()=>e.offThemeChange(t)},[]),(0,$.jsx)(qb.Provider,{value:{mode:t,toggle:i},children:(0,$.jsxs)(La,{theme:r,children:[(0,$.jsx)(Kb,{}),e]})})}function Yb(){let e=(0,S.useContext)(qb);if(!e)throw Error(`useTheme must be used within ThemeProvider`);return e}var Xb={serviceName:`SSAFY COFFEE`,cafeName:`MEGA COFFEE`,closingTime:{hour:11,minute:40},cafe:{name:`메가커피 광주첨단쌍암공원점`,menuLink:`https://map.naver.com/p/entry/place/1450717255?c=12.16,0,0,3,dh&isCorrectAnswer=true&placePath=/menu?entry=bmp&from=map&fromPanelNum=1&additionalHeight=76&timestamp=202601231202&locale=ko&svcName=map_pcv5&searchText=%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC%20%EA%B4%91%EC%A3%BC%EC%B2%A8%EB%8B%A8%EC%8C%8D%EC%95%94%EA%B3%B5%EC%9B%90%EC%A0%90`},notices:[`커피 수령자는 13:00 게이트 앞 자전거 보관소에서 커피 받아오셔야합니다.`,`입금 안하면 MM에 올립니다~`],account:`신한 110601232721 김보경`,mmNotification:{pickupMessage:`13:00에 게이트 앞 자전거 보관소에서 커피 받아와주세요~
-수령한 커피는 2반 옆 선반에 두고 가주세요!`}},Zb=N.div`
+`,qb=(0,S.createContext)(null);function Jb({children:e}){let[t,n]=(0,S.useState)(()=>localStorage.getItem(`coffy_theme`)||(window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`)),r=t===`light`?Wb:Gb;function i(){n(e=>{let t=e===`light`?`dark`:`light`;return localStorage.setItem(`coffy_theme`,t),t})}return(0,S.useEffect)(()=>{let e=window.electronAPI;if(!e)return;let t=e=>{localStorage.setItem(`coffy_theme`,e),n(e)};return e.onThemeChange(t),()=>e.offThemeChange(t)},[]),(0,$.jsx)(qb.Provider,{value:{mode:t,toggle:i},children:(0,$.jsxs)(La,{theme:r,children:[(0,$.jsx)(Kb,{}),e]})})}function Yb(){let e=(0,S.useContext)(qb);if(!e)throw Error(`useTheme must be used within ThemeProvider`);return e}var Xb=N.div`
+  flex: 1;
+  padding: 20px 40px;
+  overflow-y: auto;
+  max-width: 880px;
+
+  @media (min-width: 1440px) { max-width: 1100px; }
+  @media (min-width: 1920px) { max-width: 1400px; }
+`,Zb=N.form`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`,Qb=N.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+`,$b=N.div`
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: ${({theme:e})=>e.colors.text};
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+`,ex=N.span`
+  background: #dc2626;
+  color: white;
+  font-size: 0.72rem;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+`,tx=N.div`
+  display: flex;
+  gap: 16px;
+  align-items: flex-end;
+`,nx=N.div`
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+`,rx=N.button`
+  flex-shrink: 0;
+  min-height: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  background: ${({theme:e})=>e.colors.surface};
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: ${({theme:e})=>e.colors.accent};
+    background: ${({theme:e})=>e.colors.surfaceAlt};
+  }
+`,ix=N.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 80px;
+  flex: none;
+
+  label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: ${({theme:e})=>e.colors.label};
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  input {
+    padding: 10px 12px;
+    border: 1.5px solid ${({theme:e})=>e.colors.border};
+    border-radius: 8px;
+    font-size: 0.95rem;
+    background: ${({theme:e})=>e.colors.surface};
+    color: ${({theme:e})=>e.colors.textInput};
+    transition: border-color 0.2s;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+      border-color: ${({theme:e})=>e.colors.accent};
+    }
+
+    &:disabled {
+      background: ${({theme:e})=>e.colors.surfaceDisabled};
+      color: ${({theme:e})=>e.colors.textDisabled};
+    }
+  }
+`,ax=N.div`
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+`,ox=N.div`
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+`,sx=N.div`
+  position: relative;
+  flex-shrink: 0;
+`,cx=N.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: ${({theme:e})=>e.colors.surface};
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 20px;
+  padding: 0 14px;
+  height: 34px;
+  min-width: 160px;
+  transition: border-color 0.15s;
+
+  &:focus-within {
+    border-color: ${({theme:e})=>e.colors.accent};
+  }
+`,lx=N.div`
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.85rem;
+  pointer-events: none;
+  white-space: pre;
+  overflow: hidden;
+  line-height: 1;
+`,ux=N.span`
+  color: ${({theme:e})=>e.colors.textFaint};
+`,dx=N.input`
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  color: ${({theme:e})=>e.colors.textInput};
+  width: 100%;
+  position: relative;
+  z-index: 1;
+
+  &::placeholder {
+    color: ${({theme:e})=>e.colors.textMutedAlt};
+  }
+`,fx=N.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 0 2px;
+  line-height: 1;
+  opacity: 0.6;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+
+  &:hover {
+    opacity: 1;
+  }
+`,px=N.ul`
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 100%;
+  background: ${({theme:e})=>e.colors.surface};
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 12px;
+  box-shadow: 0 4px 16px ${({theme:e})=>e.colors.shadow};
+  list-style: none;
+  padding: 4px 0;
+  margin: 0;
+  z-index: 100;
+  max-height: 240px;
+  overflow-y: auto;
+`,mx=N.li`
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  color: ${({$highlighted:e,theme:t})=>e?t.colors.secondary:t.colors.textInput};
+  background: ${({$highlighted:e,theme:t})=>e?t.colors.surfaceAlt:`transparent`};
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.1s;
+
+  &:hover {
+    background: ${({theme:e})=>e.colors.surfaceAlt};
+    color: ${({theme:e})=>e.colors.secondary};
+  }
+`,hx=N.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`,gx=N.div`
+  font-size: 1rem;
+  font-weight: 700;
+  color: ${({theme:e})=>e.colors.label};
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`,_x=N.span`
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: ${({theme:e})=>e.colors.textMutedAlt};
+  text-transform: none;
+`,vx=N.div`
+  display: flex;
+  gap: 32px;
+  align-items: stretch;
+  min-height: ${({$noMinHeight:e})=>e?`unset`:`200px`};
+`,yx=N.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`,bx=N.div`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  align-items: start;
+  align-content: start;
+
+  @media (max-width: 1000px) { grid-template-columns: repeat(2, 1fr); }
+  @media (min-width: 1440px) { grid-template-columns: repeat(4, 1fr); }
+  @media (min-width: 1920px) { grid-template-columns: repeat(5, 1fr); }
+`,xx=N.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 8px;
+`,Sx=N.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+`,Cx=N.button`
+  width: ${({$active:e})=>e?`20px`:`8px`};
+  height: 8px;
+  border-radius: ${({$active:e})=>e?`4px`:`50%`};
+  border: none;
+  background: ${({$active:e,theme:t})=>e?t.colors.secondary:t.colors.border};
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s;
+`,wx=N.div`
+  flex: 1;
+  border-radius: 12px;
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  background: ${({theme:e})=>e.colors.surface};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-width: 240px;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  @media (min-width: 1920px) { max-width: 280px; }
+`,Tx=N.span`
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-size: 0.65rem;
+  color: ${({theme:e})=>e.colors.secondary};
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 6px;
+  padding: 2px 5px;
+  line-height: 1.3;
+  pointer-events: none;
+`,Ex=N.span`
+  font-size: 3rem;
+  opacity: 0.3;
+`,Dx=N.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+`,Ox=N.input`
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 10px;
+  font-size: 1rem;
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.textInput};
+  outline: none;
+
+  &:focus {
+    border-color: ${({theme:e})=>e.colors.accent};
+  }
+`,kx=N.button`
+  background: ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.surface};
+  border: 1.5px solid ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.border};
+  border-style: ${({$other:e})=>e?`dashed`:`solid`};
+  border-radius: 10px;
+  padding: 10px 8px;
+  cursor: ${({$inputMode:e})=>e?`default`:`pointer`};
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.15s;
+  max-height: 105px;
+  width: 180px;
+  position: relative;
+  color: ${({$selected:e,theme:t})=>e?`#fff`:t.colors.text};
+
+  ${({$selected:e,theme:t})=>e?Ga`&:hover:not(:disabled) { background: ${t.colors.primary}; }`:Ga`&:hover:not(:disabled) { border-color: ${t.colors.accent}; background: ${t.colors.surfaceAlt}; }`}
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+`,Ax=N.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+`,jx=N.span`
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: inherit;
+`,Mx=N.span`
+  font-size: 0.75rem;
+  color: ${({$selected:e,theme:t})=>e?t.colors.gold:t.colors.textMutedAlt};
+`;N.input`
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #fff;
+  font-weight: 600;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+  }
+`;var Nx=N.div`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+`,Px=N.button`
+  background: ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.surface};
+  border: 1.5px solid ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.border};
+  border-style: ${({$other:e})=>e?`dashed`:`solid`};
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.15s;
+  color: ${({$selected:e,theme:t})=>e?`#fff`:t.colors.text};
+
+  &:hover:not(:disabled) {
+    border-color: ${({theme:e})=>e.colors.accent};
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  ${({$temp:e,$selected:t,theme:n})=>e===`ice`&&t&&Ga`
+    background: ${n.colors.iceBg};
+    border-color: ${n.colors.iceBorder};
+    color: ${n.colors.iceText};
+  `}
+
+  ${({$temp:e,$selected:t,theme:n})=>e===`ice`&&!t&&Ga`
+    &:hover:not(:disabled) {
+      border-color: ${n.colors.iceBorder};
+      color: ${n.colors.iceText};
+    }
+  `}
+
+  ${({$temp:e,$selected:t,theme:n})=>e===`hot`&&t&&Ga`
+    background: ${n.colors.hotBg};
+    border-color: ${n.colors.hotBorder};
+    color: ${n.colors.hotText};
+  `}
+
+  ${({$temp:e,$selected:t,theme:n})=>e===`hot`&&!t&&Ga`
+    &:hover:not(:disabled) {
+      border-color: ${n.colors.hotBorder};
+      color: ${n.colors.hotText};
+    }
+  `}
+`,Fx=N.span`
+  font-size: 0.75rem;
+  opacity: 0.8;
+`,Ix=N.div`
+  width: 1px;
+  height: 28px;
+  background: ${({theme:e})=>e.colors.border};
+  margin: 0 2px;
+`,Lx=N.input`
+  box-sizing: border-box;
+  padding: 7px 10px;
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 20px;
+  font-size: 0.85rem;
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.textInput};
+  min-width: ${({$price:e})=>e?`unset`:`150px`};
+  width: ${({$price:e})=>e?`100px`:`auto`};
+
+  &:focus {
+    outline: none;
+    border-color: ${({theme:e})=>e.colors.accent};
+  }
+`,Rx=N.div`
+  display: flex;
+  align-items: center;
+  gap: 12px;
+`,zx=N.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+
+  input {
+    flex: 1;
+    height: 44px;
+    box-sizing: border-box;
+    padding: 0 12px;
+    border: 1.5px solid ${({theme:e})=>e.colors.border};
+    border-radius: 8px;
+    font-size: 0.9rem;
+    background: ${({theme:e})=>e.colors.surface};
+    color: ${({theme:e})=>e.colors.textInput};
+
+    &:focus {
+      outline: none;
+      border-color: ${({theme:e})=>e.colors.accent};
+    }
+
+    &:disabled {
+      background: ${({theme:e})=>e.colors.surfaceDisabled};
+      color: ${({theme:e})=>e.colors.textDisabled};
+    }
+  }
+`,Bx=N.div`
+  flex: 1;
+  min-width: 0;
+  height: 44px;
+  box-sizing: border-box;
+  background: ${({theme:e})=>e.colors.surfaceHighlight};
+  border: 1.5px solid #f59e0b;
+  border-radius: 10px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: ${({theme:e})=>e.colors.secondary};
+  overflow: hidden;
+`,Vx=N.div`
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: ${({theme:e})=>e.colors.text};
+`,Hx=N.span`
+  color: ${({theme:e})=>e.colors.textMutedAlt};
+  font-weight: 400;
+  flex: 1;
+`,Ux=N.span`
+  margin-left: auto;
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: ${({theme:e})=>e.colors.primary};
+`,Wx=N.div`
+  display: flex;
+  gap: 10px;
+
+  > button {
+    flex: 1;
+  }
+`,Gx=N.button`
+  flex: 1;
+  padding: 14px;
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.secondary};
+  border: 2px solid ${({theme:e})=>e.colors.accent};
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+
+  &:hover {
+    background: ${({theme:e})=>e.colors.surfaceAccent};
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+`,Kx=N.button`
+  padding: 14px;
+  background: linear-gradient(135deg, ${({theme:e})=>e.colors.accent}, ${({theme:e})=>e.colors.secondary});
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: opacity 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: ${({theme:e})=>e.colors.btnDisabled};
+    cursor: not-allowed;
+    transform: none;
+  }
+`,qx=N.span`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.secondary};
+  font-size: 0.75rem;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+`;N.div`
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+`,N.div`
+  background: ${({theme:e})=>e.colors.surface};
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 16px;
+  padding: 32px;
+  width: 760px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 8px 32px ${({theme:e})=>e.colors.shadow};
+`,N.div`
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: ${({theme:e})=>e.colors.textMutedAlt};
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+`,N.textarea`
+  width: 100%;
+  min-height: 320px;
+  padding: 10px 12px;
+  border: 1.5px solid ${({theme:e})=>e.colors.border};
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  background: ${({theme:e})=>e.colors.bg};
+  color: ${({theme:e})=>e.colors.textInput};
+  resize: vertical;
+  box-sizing: border-box;
+
+  &:focus {
+    outline: none;
+    border-color: ${({theme:e})=>e.colors.accent};
+  }
+`,N.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+`,N(Kx)`
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.secondary};
+  border: 1.5px solid ${({theme:e})=>e.colors.accent};
+
+  &:hover:not(:disabled) {
+    opacity: 0.85;
+    transform: translateY(-1px);
+  }
+`,N(Kx)`
+  padding: 10px 18px;
+  font-size: 0.9rem;
+`;var Jx={serviceName:`SSAFY COFFEE`,cafeName:`MEGA COFFEE`,closingTime:{hour:11,minute:40},cafe:{name:`메가커피 광주첨단쌍암공원점`,menuLink:`https://map.naver.com/p/entry/place/1450717255?c=12.16,0,0,3,dh&isCorrectAnswer=true&placePath=/menu?entry=bmp&from=map&fromPanelNum=1&additionalHeight=76&timestamp=202601231202&locale=ko&svcName=map_pcv5&searchText=%EB%A9%94%EA%B0%80%EC%BB%A4%ED%94%BC%20%EA%B4%91%EC%A3%BC%EC%B2%A8%EB%8B%A8%EC%8C%8D%EC%95%94%EA%B3%B5%EC%9B%90%EC%A0%90`},notices:[`커피 수령자는 13:00 게이트 앞 자전거 보관소에서 커피 받아오셔야합니다.`,`입금 안하면 MM에 올립니다~`],account:`신한 110601232721 김보경`,mmNotification:{pickupMessage:`13:00에 게이트 앞 자전거 보관소에서 커피 받아와주세요~
+수령한 커피는 2반 옆 선반에 두고 가주세요!`}},Yx=N.div`
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 14px 16px;
   color: #ffe8cc;
-`,Qb=N.div`
+`,Xx=N.div`
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 1px;
   color: #ffd080;
   margin-bottom: 8px;
-`,$b=N.ul`
+`,Zx=N.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -108,8 +707,8 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
       color: #fff;
     }
   }
-`;function ex(){return(0,$.jsxs)(Zb,{children:[(0,$.jsx)(Qb,{children:`📋 공지사항`}),(0,$.jsxs)($b,{children:[(0,$.jsx)(`li`,{children:(0,$.jsx)(`a`,{href:Xb.cafe.menuLink,target:`_blank`,rel:`noreferrer`,children:Xb.cafe.name})}),Xb.notices.map((e,t)=>(0,$.jsx)(`li`,{children:e},t))]})]})}var tx=s({EXCLUSIONS:()=>nx}),nx=[[`박세영`,`박찬국`,`박세영 컨설턴트`,`박찬국 컨설턴트`],[`한유선`,`방상제`,`한유선 프로`,`방상제 프로`,`한유선프로`,`방상제프로`],[`이준익`,`정유코`,`양다인`,`김소중`]],rx={강건재:`kgj200401`,강동휘:`kfor11`,강보승:`gda05189`,강산천:`rkdtkscjs1`,고형권:`gudrnjs99`,곽명철:`kwakmc1025`,국민혁:`sodjal321`,권순재:`yaja7698`,기장선:`kjs4199`,김경한:`ele925343`,김규민:`rlawlstlr35`,김대원:`eolzzang99`,김동언:`kimde1852`,김민경:`gyeongmin2121`,김민상:`msok11`,김민석:`best0667`,김민재:`heymanoh`,김범수:`beumsu0702`,김보경:`bokyeong405`,김선엽:`sunyeop12`,김수연:`rtd710`,김영웅:`youngwoong`,김영진:`seyjk`,김은서:`kkkks9203`,김지원:`kjw3568`,김태연:`xodus6478`,김현종:`vkfkddlsp2`,김회인:`wnsl2002ok`,김희수:`answerme0622`,나경원:`nkw601`,남윤서:`namyunseo85`,노소연:`noso42`,노학기:`shgkrrl123`,류광철:`fbrhkdcjf1`,류병선:`abcfg89`,문희성:`heeseong2394`,박기택:`qkrrlxor627`,박상훈:`yjec12`,박성환:`qtg9651`,박세진:`andrew6914`,박재서:`wotjoo`,박정희:`naskc5533`,박주형:`owo__omo`,박지유:`jiucchu`,박형주:`hju00forwork`,서민규:`hanamin3810`,서정우:`frirgfgg96`,손동완:`dolong014`,손영록:`shark6544863`,손지유:`guson`,손홍민:`sonhm48021`,송이룸:`thd2410`,송주헌:`ch6854`,신재헌:`shjh3117`,신현준:`june9807`,안지수:`ajs00717`,오충민:`dhcndals3`,유지호:`dbwlgh`,은태현:`unimokw`,이건도:`eh1als2`,이다희:`1129dahee`,이병관:`yt2bg`,이수영:`dltndud0313`,이승환:`seaung13`,이영은:`tlfqj1302`,이영현:`eyh125`,이용호:`cici12358`,이주형:`dlwngud629`,이지언:`cmsk0227`,이진원:`ljin2091`,이화목:`ghkahr1890`,임재호:`ecckane`,임정환:`dlawjdghks`,임찬혁:`ibb61`,장병헌:`jang961111`,장상민:`jsm04010`,장현준:`jun201401`,전석균:`jsg998877`,전연수:`eoyeou`,정관우:`jkw4805`,정다운:`rhseb963`,정동재:`jdongj96`,정우주:`goqkfkrltl12`,정유진:`herrjyj`,정유찬:`mm0183`,정지용:`jjy092801`,정진우:`wjdwpals0125`,정혜원:`dnjs3023`,조형준:`gudwns9009`,주요한:`yohan0924`,차민성:`recordofcar`,차지훈:`zoas1564`,차진훈:`wlsgns326`,최성민:`alsruddo121`,최진서:`chlwlstj15`,추지인:`cnchoo25`,하은지:`eunbyul0805`,한용만:`ymhan0724`,함지수:`hjsu0825`},ix=Object.assign({"../config/exclusions.ts":tx})[`../config/exclusions.ts`]?.EXCLUSIONS??[],ax=[.1,.2,.5];function ox(e){for(let t=0;t<ix.length;t++)if(ix[t].includes(e))return ax[t];return 1}function sx(){return new Date(new Date().getTime()+540*60*1e3).toISOString().slice(0,10)}async function cx(){let e=await lv(n_(Pb,`winners`,sx()));return e.exists()?e.data():null}async function lx(e){let t=n_(Pb,`winners`,sx());try{return await dv(t,e),!0}catch{return!1}}async function ux(e,t){let[n,r,i]=sx().split(`-`),a=`${n}년 ${Number(r)}월 ${Number(i)}일`,o=e.winners.map(e=>`* **${e.name}** (${e.class}반)`).join(`
-`),s=e.winners.map(e=>rx[e.name]).filter(Boolean).map(e=>`@${e}`).join(` `);await fetch(`https://meeting.ssafy.com/hooks/4ke5w6hii7fj8d5r8k434noxdw`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({...s&&{text:s},attachments:[{color:`#723F17`,title:`${a} 오늘의 픽업 당첨자 발표 ☕`,text:`${o}\n\n${Xb.mmNotification.pickupMessage}`,footer:`총 ${t}잔 주문 · ${e.winners.length}명 당첨`}]})})}function dx(e){let t=e.filter((e,t,n)=>n.findIndex(t=>t.name===e.name&&t.class===e.class)===n.indexOf(e)),n=e.reduce((e,t)=>e+(t.qty??1),0),r=t.map(t=>{let n=e.filter(e=>e.name===t.name&&e.class===t.class).reduce((e,t)=>e+(t.qty??1),0),r=ox(t.name),i=Math.max(...Array.from({length:n},()=>Math.random()*r));return{name:t.name,class:t.class,randomValue:i}}).sort((e,t)=>t.randomValue-e.randomValue),i=Math.max(1,Math.ceil(n/9));return{winners:r.slice(0,i).map(e=>t.find(t=>t.name===e.name&&t.class===e.class)),draws:r,drawnAt:new Date().toISOString()}}var fx=N.div`
+`;function Qx(){return(0,$.jsxs)(Yx,{children:[(0,$.jsx)(Xx,{children:`📋 공지사항`}),(0,$.jsxs)(Zx,{children:[(0,$.jsx)(`li`,{children:(0,$.jsx)(`a`,{href:Jx.cafe.menuLink,target:`_blank`,rel:`noreferrer`,children:Jx.cafe.name})}),Jx.notices.map((e,t)=>(0,$.jsx)(`li`,{children:e},t))]})]})}var $x=s({EXCLUSIONS:()=>eS}),eS=[[`박세영`,`박찬국`,`박세영 컨설턴트`,`박찬국 컨설턴트`],[`한유선`,`방상제`,`한유선 프로`,`방상제 프로`,`한유선프로`,`방상제프로`],[`이준익`,`정유코`,`양다인`,`김소중`]],tS={강건재:`kgj200401`,강동휘:`kfor11`,강보승:`gda05189`,강산천:`rkdtkscjs1`,고형권:`gudrnjs99`,곽명철:`kwakmc1025`,국민혁:`sodjal321`,권순재:`yaja7698`,기장선:`kjs4199`,김경한:`ele925343`,김규민:`rlawlstlr35`,김대원:`eolzzang99`,김동언:`kimde1852`,김민경:`gyeongmin2121`,김민상:`msok11`,김민석:`best0667`,김민재:`heymanoh`,김범수:`beumsu0702`,김보경:`bokyeong405`,김선엽:`sunyeop12`,김수연:`rtd710`,김영웅:`youngwoong`,김영진:`seyjk`,김은서:`kkkks9203`,김지원:`kjw3568`,김태연:`xodus6478`,김현종:`vkfkddlsp2`,김회인:`wnsl2002ok`,김희수:`answerme0622`,나경원:`nkw601`,남윤서:`namyunseo85`,노소연:`noso42`,노학기:`shgkrrl123`,류광철:`fbrhkdcjf1`,류병선:`abcfg89`,문희성:`heeseong2394`,박기택:`qkrrlxor627`,박상훈:`yjec12`,박성환:`qtg9651`,박세진:`andrew6914`,박재서:`wotjoo`,박정희:`naskc5533`,박주형:`owo__omo`,박지유:`jiucchu`,박형주:`hju00forwork`,서민규:`hanamin3810`,서정우:`frirgfgg96`,손동완:`dolong014`,손영록:`shark6544863`,손지유:`guson`,손홍민:`sonhm48021`,송이룸:`thd2410`,송주헌:`ch6854`,신재헌:`shjh3117`,신현준:`june9807`,안지수:`ajs00717`,오충민:`dhcndals3`,유지호:`dbwlgh`,은태현:`unimokw`,이건도:`eh1als2`,이다희:`1129dahee`,이병관:`yt2bg`,이수영:`dltndud0313`,이승환:`seaung13`,이영은:`tlfqj1302`,이영현:`eyh125`,이용호:`cici12358`,이주형:`dlwngud629`,이지언:`cmsk0227`,이진원:`ljin2091`,이화목:`ghkahr1890`,임재호:`ecckane`,임정환:`dlawjdghks`,임찬혁:`ibb61`,장병헌:`jang961111`,장상민:`jsm04010`,장현준:`jun201401`,전석균:`jsg998877`,전연수:`eoyeou`,정관우:`jkw4805`,정다운:`rhseb963`,정동재:`jdongj96`,정우주:`goqkfkrltl12`,정유진:`herrjyj`,정유찬:`mm0183`,정지용:`jjy092801`,정진우:`wjdwpals0125`,정혜원:`dnjs3023`,조형준:`gudwns9009`,주요한:`yohan0924`,차민성:`recordofcar`,차지훈:`zoas1564`,차진훈:`wlsgns326`,최성민:`alsruddo121`,최진서:`chlwlstj15`,추지인:`cnchoo25`,하은지:`eunbyul0805`,한용만:`ymhan0724`,함지수:`hjsu0825`},nS=Object.assign({"../config/exclusions.ts":$x})[`../config/exclusions.ts`]?.EXCLUSIONS??[],rS=[.1,.2,.5];function iS(e){for(let t=0;t<nS.length;t++)if(nS[t].includes(e))return rS[t];return 1}function aS(){return new Date(new Date().getTime()+540*60*1e3).toISOString().slice(0,10)}async function oS(){let e=await lv(n_(Pb,`winners`,aS()));return e.exists()?e.data():null}async function sS(e){let t=n_(Pb,`winners`,aS());try{return await dv(t,e),!0}catch{return!1}}async function cS(e,t){let[n,r,i]=aS().split(`-`),a=`${n}년 ${Number(r)}월 ${Number(i)}일`,o=e.winners.map(e=>`* **${e.name}** (${e.class}반)`).join(`
+`),s=e.winners.map(e=>tS[e.name]).filter(Boolean).map(e=>`@${e}`).join(` `);await fetch(`https://meeting.ssafy.com/hooks/4ke5w6hii7fj8d5r8k434noxdw`,{method:`POST`,headers:{"Content-Type":`application/json`},body:JSON.stringify({...s&&{text:s},attachments:[{color:`#723F17`,title:`${a} 오늘의 픽업 당첨자 발표 ☕`,text:`${o}\n\n${Jx.mmNotification.pickupMessage}`,footer:`총 ${t}잔 주문 · ${e.winners.length}명 당첨`}]})})}function lS(e){let t=e.filter((e,t,n)=>n.findIndex(t=>t.name===e.name&&t.class===e.class)===n.indexOf(e)),n=e.reduce((e,t)=>e+(t.qty??1),0),r=t.map(t=>{let n=e.filter(e=>e.name===t.name&&e.class===t.class).reduce((e,t)=>e+(t.qty??1),0),r=iS(t.name),i=Math.max(...Array.from({length:n},()=>Math.random()*r));return{name:t.name,class:t.class,randomValue:i}}).sort((e,t)=>t.randomValue-e.randomValue),i=Math.max(1,Math.ceil(n/9));return{winners:r.slice(0,i).map(e=>t.find(t=>t.name===e.name&&t.class===e.class)),draws:r,drawnAt:new Date().toISOString()}}var uS=N.div`
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,0.6);
@@ -117,7 +716,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   align-items: center;
   justify-content: center;
   z-index: 100;
-`,px=N.div`
+`,dS=N.div`
   background: ${({theme:e})=>e.colors.surfaceModal};
   border-radius: 16px;
   padding: 4px;
@@ -128,7 +727,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   display: flex;
   flex-direction: column;
   gap: 16px;
-`,mx=N.div`
+`,fS=N.div`
   overflow-y: auto;
   flex: 1;
   min-height: 0;
@@ -143,7 +742,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &::-webkit-scrollbar-track { background: transparent; }
   &::-webkit-scrollbar-thumb { background: ${({theme:e})=>e.colors.border}; border-radius: 4px; }
   &::-webkit-scrollbar-thumb:hover { background: ${({theme:e})=>e.colors.accent}; }
-`,hx=N.div`
+`,pS=N.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -153,25 +752,25 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     font-weight: 800;
     color: ${({theme:e})=>e.colors.text};
   }
-`,gx=N.div`
+`,mS=N.div`
   display: flex;
   align-items: center;
   gap: 16px;
-`,_x=N.button`
+`,hS=N.button`
   background: none;
   border: none;
   font-size: 1rem;
   color: ${({theme:e})=>e.colors.textMuted};
   cursor: pointer;
-`,vx=N.p`
+`,gS=N.p`
   font-size: 0.8rem;
   color: ${({theme:e})=>e.colors.textMutedAlt};
   margin-top: -8px;
-`,yx=N.p`
+`,_S=N.p`
   font-size: 0.75rem;
   color: ${({theme:e})=>e.colors.textDisabled};
   line-height: 1.5;
-`,bx=N.table`
+`,vS=N.table`
   width: 100%;
   border-collapse: collapse;
   font-size: 0.9rem;
@@ -226,7 +825,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     font-weight: 700;
     color: ${({theme:e})=>e.colors.secondary};
   }
-`,xx=N.button`
+`,yS=N.button`
   background: none;
   border: none;
   color: ${({theme:e})=>e.colors.textFaint};
@@ -241,7 +840,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     color: #e53e3e;
   }
-`,Sx=N.button`
+`,bS=N.button`
   padding: 9px 20px;
   background: none;
   border: 1.5px solid ${({theme:e})=>e.colors.border};
@@ -254,7 +853,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     background: ${({theme:e})=>e.colors.pageBg};
   }
-`,Cx=N.button`
+`,xS=N.button`
   padding: 9px 20px;
   background: ${({theme:e})=>e.colors.secondary};
   color: #fff;
@@ -273,7 +872,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     background: ${({theme:e})=>e.colors.btnDisabled};
     cursor: not-allowed;
   }
-`,wx=Ga`
+`,SS=Ga`
   color: ${({theme:e})=>e.colors.textDisabled};
   opacity: 0.6;
   animation: ${Qa`
@@ -287,9 +886,9 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   vertical-align: middle;
 
   &.loading-text {
-    ${wx}
+    ${SS}
   }
-`;var Tx=N.button`
+`;var CS=N.button`
   padding: 6px 16px;
   border-radius: 20px;
   border: 1.5px solid ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.border};
@@ -306,7 +905,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     opacity: 0.5;
     cursor: not-allowed;
   }
-`,Ex=N.button`
+`,wS=N.button`
   background: ${({theme:e})=>e.colors.surface};
   border: 1.5px solid ${({theme:e})=>e.colors.border};
   border-radius: 8px;
@@ -326,11 +925,11 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     opacity: 0.3;
     cursor: default;
   }
-`,Dx=N.div`
+`,TS=N.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-`,Ox=N.div`
+`,ES=N.div`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -339,47 +938,47 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   border-radius: 8px;
   background: ${({$winner:e,$header:t,theme:n})=>t?n.colors.surfaceAccent:e?n.colors.surfaceHighlight:n.colors.surfaceAlt};
   border: ${({$winner:e,$header:t,theme:n})=>t?`none`:e?`1px solid #f59e0b`:`1px solid ${n.colors.borderLight}`};
-`,kx=N.div`
+`,DS=N.div`
   width: 28px;
   font-size: 0.78rem;
   color: ${({theme:e})=>e.colors.textMutedAlt};
   text-align: center;
   flex-shrink: 0;
-`,Ax=N.div`
+`,OS=N.div`
   font-size: 0.88rem;
   font-weight: 600;
   color: ${({theme:e})=>e.colors.text};
   width: 64px;
   text-align: center;
   flex-shrink: 0;
-`,jx=N.div`
+`,kS=N.div`
   font-size: 0.82rem;
   color: ${({theme:e})=>e.colors.textMutedAlt};
   width: 40px;
   text-align: center;
   flex-shrink: 0;
-`,Mx=N.div`
+`,AS=N.div`
   flex: 1;
   background: ${({theme:e})=>e.colors.borderLight};
   border-radius: 4px;
   height: 8px;
   overflow: hidden;
-`,Nx=N.div`
+`,jS=N.div`
   height: 100%;
   background: ${({$winner:e})=>e?`linear-gradient(90deg, #f59e0b, #fbbf24)`:`linear-gradient(90deg, #a0622a, #f59e0b)`};
   border-radius: 4px;
   transition: width 0.5s ease;
-`,Px=N.div`
+`,MS=N.div`
   font-size: 0.78rem;
   color: ${({theme:e})=>e.colors.textMuted};
   width: 40px;
   text-align: center;
   flex-shrink: 0;
-`,Fx=N.div`
+`,NS=N.div`
   font-size: 0.78rem;
   font-weight: 700;
   color: ${({theme:e})=>e.colors.label};
-`;function Ix({result:e,onClose:t}){return(0,$.jsx)(fx,{onClick:t,children:(0,$.jsx)(px,{onClick:e=>e.stopPropagation(),children:(0,$.jsxs)(mx,{children:[(0,$.jsx)(hx,{children:(0,$.jsx)(`h2`,{children:`뽑기 결과 상세`})}),(0,$.jsxs)(vx,{children:[new Date(e.drawnAt).toLocaleTimeString(`ko-KR`,{hour:`2-digit`,minute:`2-digit`,second:`2-digit`}),` 추첨`]}),(0,$.jsxs)(Dx,{children:[(0,$.jsxs)(Ox,{$header:!0,children:[(0,$.jsx)(Fx,{style:{width:28,textAlign:`center`,flexShrink:0},children:`순위`}),(0,$.jsx)(Fx,{style:{width:64,textAlign:`center`,flexShrink:0},children:`이름`}),(0,$.jsx)(Fx,{style:{width:40,textAlign:`center`,flexShrink:0},children:`반`}),(0,$.jsx)(Mx,{}),(0,$.jsx)(Fx,{style:{width:40,textAlign:`center`,flexShrink:0},children:`점수`})]}),e.draws.map((t,n)=>{let r=e.winners.some(e=>e.name===t.name&&e.class===t.class);return(0,$.jsxs)(Ox,{$winner:r,children:[(0,$.jsx)(kx,{children:n+1}),(0,$.jsx)(Ax,{children:t.name}),(0,$.jsx)(jx,{children:t.class}),(0,$.jsx)(Mx,{children:(0,$.jsx)(Nx,{$winner:r,style:{width:`${(t.randomValue*100).toFixed(1)}%`}})}),(0,$.jsx)(Px,{children:(t.randomValue*100).toFixed(2)})]},n)})]}),(0,$.jsxs)(yx,{children:[`* 각 참여자에게 0~100 사이의 랜덤값이 배정되며, 상위 `,e.winners.length,`명이 당첨됩니다.`]})]})})})}var Lx=N.div`
+`;function PS({result:e,onClose:t}){return(0,$.jsx)(uS,{onClick:t,children:(0,$.jsx)(dS,{onClick:e=>e.stopPropagation(),children:(0,$.jsxs)(fS,{children:[(0,$.jsx)(pS,{children:(0,$.jsx)(`h2`,{children:`뽑기 결과 상세`})}),(0,$.jsxs)(gS,{children:[new Date(e.drawnAt).toLocaleTimeString(`ko-KR`,{hour:`2-digit`,minute:`2-digit`,second:`2-digit`}),` 추첨`]}),(0,$.jsxs)(TS,{children:[(0,$.jsxs)(ES,{$header:!0,children:[(0,$.jsx)(NS,{style:{width:28,textAlign:`center`,flexShrink:0},children:`순위`}),(0,$.jsx)(NS,{style:{width:64,textAlign:`center`,flexShrink:0},children:`이름`}),(0,$.jsx)(NS,{style:{width:40,textAlign:`center`,flexShrink:0},children:`반`}),(0,$.jsx)(AS,{}),(0,$.jsx)(NS,{style:{width:40,textAlign:`center`,flexShrink:0},children:`점수`})]}),e.draws.map((t,n)=>{let r=e.winners.some(e=>e.name===t.name&&e.class===t.class);return(0,$.jsxs)(ES,{$winner:r,children:[(0,$.jsx)(DS,{children:n+1}),(0,$.jsx)(OS,{children:t.name}),(0,$.jsx)(kS,{children:t.class}),(0,$.jsx)(AS,{children:(0,$.jsx)(jS,{$winner:r,style:{width:`${(t.randomValue*100).toFixed(1)}%`}})}),(0,$.jsx)(MS,{children:(t.randomValue*100).toFixed(2)})]},n)})]}),(0,$.jsxs)(_S,{children:[`* 각 참여자에게 0~100 사이의 랜덤값이 배정되며, 상위 `,e.winners.length,`명이 당첨됩니다.`]})]})})})}var FS=N.div`
   background: rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   padding: 16px;
@@ -387,17 +986,17 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   display: flex;
   flex-direction: column;
   gap: 10px;
-`,Rx=N.div`
+`,IS=N.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
   min-height: 24px;
-`,zx=N.div`
+`,LS=N.div`
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 1px;
   color: #ffd080;
-`,Bx=N.button`
+`,RS=N.button`
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 20px;
@@ -410,31 +1009,31 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     background: rgba(255, 255, 255, 0.25);
   }
-`,Vx=Qa`
+`,zS=Qa`
   0%, 100% { opacity: 0.4; }
   50% { opacity: 0.9; }
-`,Hx=N.div`
+`,BS=N.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 6px;
   padding: 8px 0;
-  ${({$loading:e})=>e&&Ga`animation: ${Vx} 1.2s ease-in-out infinite;`}
+  ${({$loading:e})=>e&&Ga`animation: ${zS} 1.2s ease-in-out infinite;`}
 
   p {
     font-size: 0.82rem;
     color: #c8a882;
   }
-`,Ux=N.div`
+`,VS=N.div`
   font-size: 1.8rem;
   opacity: 0.6;
-`,Wx=N.div`
+`,HS=N.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   padding: 8px 0;
-`,Gx=N.div`
+`,US=N.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -443,19 +1042,19 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   width: 100%;
   justify-content: center;
   align-items: center;
-`,Kx=N.div`
+`,WS=N.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 2px;
-`,qx=N.span`
+`,GS=N.span`
   font-size: 1.3rem;
   font-weight: 800;
   color: #ffd080;
-`,Jx=N.span`
+`,KS=N.span`
   font-size: 0.82rem;
   color: #c8a882;
-`;function Yx(){let{hour:e,minute:t}=Xb.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function Xx({autoOpenModal:e=!1}){let{orders:t}=Ub(),[n,r]=(0,S.useState)(null),[i,a]=(0,S.useState)(!1),[o,s]=(0,S.useState)(!0);return(0,S.useEffect)(()=>{cx().then(e=>{e&&r(e),s(!1)})},[]),(0,S.useEffect)(()=>{if(!n)return;let t=new Date(Date.now()+9*36e5).toISOString().slice(0,10);localStorage.getItem(`coffy_pickup_notified`)!==t&&(localStorage.setItem(`coffy_pickup_notified`,t),window.electronAPI?.notifyPickup(n.winners)),e&&a(!0)},[n,e]),(0,S.useEffect)(()=>{if(n)return;async function e(){if(!Yx()||t.length===0)return;let e=await cx();if(e){r(e);return}let n=dx(t);if(await lx(n))r(n),await ux(n,t.reduce((e,t)=>e+(t.qty??1),0));else{let e=await cx();e&&r(e)}}e();let i=setInterval(e,5e3);return()=>clearInterval(i)},[t,n]),(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(Lx,{children:[(0,$.jsxs)(Rx,{children:[(0,$.jsx)(zx,{children:`오늘의 픽업 👑`}),n&&(0,$.jsx)(Bx,{onClick:()=>a(!0),children:`자세히 보기`})]}),o?(0,$.jsx)(Hx,{$loading:!0,children:`불러오는 중...`}):n?(0,$.jsx)(Wx,{children:(0,$.jsx)(Gx,{children:n.winners.map((e,t)=>(0,$.jsxs)(Kx,{children:[(0,$.jsx)(qx,{children:e.name}),(0,$.jsxs)(Jx,{children:[e.class,`반`]})]},t))})}):(0,$.jsxs)(Hx,{children:[(0,$.jsx)(Ux,{children:`🔒`}),(0,$.jsxs)(`p`,{children:[Xb.closingTime.hour,`:`,String(Xb.closingTime.minute).padStart(2,`0`),`에 자동 추첨됩니다`]})]})]}),i&&n&&(0,$.jsx)(Ix,{result:n,onClose:()=>a(!1)})]})}var Zx=[{version:`1.9.0`,date:`2026-05-11`,changes:[`마블 룰렛 미니게임 추가 (구슬이 핀/막대를 통과해 골인하는 레이스)`,`주문자 뽑기 기본 탭을 마블 룰렛으로 변경`]},{version:`1.8.1`,date:`2026-05-08`,changes:[`장바구니에서 주문자 뽑기 버튼 추가`,`주문자 뽑기 룰렛 참여자 반 입력 기능 추가`,`이름이 같고 반이 다른 경우 주문 목록에서 별도 표기되도록 수정`]},{version:`1.8.0`,date:`2026-05-07`,changes:[`주문자 뽑기 룰렛 미니게임 추가 (일반 룰렛 / 마블 룰렛 탭)`,`중복 주문 수량 합산 및 정렬 개선`]},{version:`1.7.0`,date:`2026-05-04`,changes:[`다크모드 전체 적용 (시스템 기본값 자동 적용)`,`문의 게시판 → 자유 게시판으로 이름 변경`,`컴포넌트/페이지 폴더 구조 개편`]},{version:`1.6.2`,date:`2026-04-30`,changes:[`장바구니 수량 조절 기능 추가 (+/- 버튼)`,`동일 메뉴 중복 추가 시 수량 변경 안내로 변경`,`주문목록에 수량 표시 및 잔수 기준 합계 계산`,`이미지 저장 시 메뉴별 수량 집계 표로 변경`]},{version:`1.6.1`,date:`2026-04-28`,changes:[`패치 노트에 Desktop 탭 추가`]},{version:`1.6.0`,date:`2026-04-25`,changes:[`Electron 기반 데스크탑 앱 출시`]},{version:`1.5.1`,date:`2026-04-23`,changes:[`UI 배율 시스템 추가 - QHD(2K) 이상 모니터에서 자동 1.5배 확대`]},{version:`1.5.0`,date:`2026-04-23`,changes:[`HOT/ICE 메뉴 통합 - 하나의 버튼에 두 온도 뱃지 표시`,`온도 토글 시 이미지·가격·칼로리 실시간 변경`,`칼로리 표시 위치 변경 (버튼 → 이미지 우측 상단)`,`메뉴 검색 기능 추가 (자동완성, 방향키 내비게이션, 검색 버튼)`]},{version:`1.4.1`,date:`2026-04-17`,changes:[`메뉴 버튼에 칼로리(kcal) 표시 추가`]},{version:`1.4.0`,date:`2026-04-13`,changes:[`장바구니 기능 추가`]},{version:`1.3.0`,date:`2026-04-13`,changes:[`자유 게시판 추가 (작성, 수정, 삭제, 댓글 기능 포함)`]},{version:`1.2.1`,date:`2026-04-13`,changes:[`주문 목록 이름순 그룹화`,`동일 이름 복수 주문 시 토글로 펼쳐보기`]},{version:`1.2.0`,date:`2026-04-12`,changes:[`메뉴 대량 추가 및 카테고리 탭 분류`,`메뉴 선택 시 이미지 표시`,`메뉴 페이지네이션 추가`,`자정 이후 자동으로 당일 주문 갱신`,`주문 폼 UI 개선`]},{version:`1.1.1`,date:`2026-04-09`,changes:[`픽업 당첨자 MM 알림에 @멘션 추가`]},{version:`1.1.0`,date:`2026-04-09`,changes:[`MM 웹훅 연동으로 픽업 당첨자 자동 알림 발송`,`주문 삭제 기능 추가 (비밀번호 인증)`,`픽업 당첨 인원 산정 방식 변경 (주문 수 9개당 1명)`,`동일 인원 복수 주문 시 당첨 확률 반영`,`신규 패치노트 미확인 시 알림 뱃지 표시`]},{version:`1.0.4`,date:`2026-04-08`,changes:[`오늘의 픽업 당첨자 다수 선정 (주문 수 × 15%, 올림)`,`뽑기 결과 상세에서 당첨자 전원 강조 표시`,`패치노트 모달 GitHub 링크 추가`,`모달 스크롤 UI 개선`]},{version:`1.0.3`,date:`2026-04-08`,changes:[`가격 및 주문 요약 영역 UI 개선`,`옵션 기타 직접 입력 기능 추가 (옵션명 + 추가금액)`]},{version:`1.0.2`,date:`2026-04-08`,changes:[`메뉴 temp(ICE/HOT) 필드를 메뉴명에서 분리하여 별도 저장`,`가격 입력 100원 단위 조정`,`구글 애널리틱스 연동`,`패치노트 모달 추가`]},{version:`1.0.1`,date:`2026-04-08`,changes:[`날짜 기준을 UTC에서 KST(한국 표준시)로 수정`]},{version:`1.0.0`,date:`2026-04-07`,changes:[`SSAFY COFFEE 최초 릴리즈`,`메가커피 단체 주문 폼 (키오스크 스타일)`,`ICE/HOT 뱃지 메뉴 표시`,`오늘의 주문 목록 실시간 조회`,`주문 목록 이미지 저장 기능`,`오늘의 픽업 자동 추첨 (11:40 기준)`,`Firebase Firestore 연동`]}],Qx=[{version:`1.4.1`,date:`2026-05-11`,changes:[`웹 v1.9.0 마블 룰렛 추가 반영`,`룰렛 창 리사이즈 및 최대화 지원 (마블 룰렛 대응)`]},{version:`1.4.0`,date:`2026-05-07`,changes:[`트레이 메뉴에 주문자 뽑기 룰렛 추가`,`앱 로딩 방식 GitHub Pages 원격 전환 (설치 파일 크기 대폭 감소)`,`웹 v1.8.0 업데이트 반영`]},{version:`1.3.0`,date:`2026-05-04`,changes:[`트레이 메뉴에 다크모드 토글 추가`,`오전 8:58 입실 알림 기능 추가`,`웹 v1.7.0 업데이트 반영`]},{version:`1.2.2`,date:`2026-04-30`,changes:[`웹 v1.6.2 장바구니 수량 기능 업데이트 반영`]},{version:`1.2.1`,date:`2026-04-28`,changes:[`트레이 메뉴 '싸피커피'에 웹 링크 연결`,`새 버전 다운로드 URL을 서버에서 동적으로 가져오도록 개선`]},{version:`1.2.0`,date:`2026-04-25`,changes:[`NSIS one-click 인스톨러 전환`,`컴퓨터 시작 시 자동 실행 기능 개선`]},{version:`1.1.0`,date:`2026-04-17`,changes:[`백그라운드 당첨자 토스트 알림 추가`]},{version:`1.0.0`,date:`2026-04-14`,changes:[`Electron 데스크탑 앱 최초 출시`]}],$x=N.a`
+`;function qS(){let{hour:e,minute:t}=Jx.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function JS({autoOpenModal:e=!1}){let{orders:t}=Ub(),[n,r]=(0,S.useState)(null),[i,a]=(0,S.useState)(!1),[o,s]=(0,S.useState)(!0);return(0,S.useEffect)(()=>{oS().then(e=>{e&&r(e),s(!1)})},[]),(0,S.useEffect)(()=>{if(!n)return;let t=new Date(Date.now()+9*36e5).toISOString().slice(0,10);localStorage.getItem(`coffy_pickup_notified`)!==t&&(localStorage.setItem(`coffy_pickup_notified`,t),window.electronAPI?.notifyPickup(n.winners)),e&&a(!0)},[n,e]),(0,S.useEffect)(()=>{if(n)return;async function e(){if(!qS()||t.length===0)return;let e=await oS();if(e){r(e);return}let n=lS(t);if(await sS(n))r(n),await cS(n,t.reduce((e,t)=>e+(t.qty??1),0));else{let e=await oS();e&&r(e)}}e();let i=setInterval(e,5e3);return()=>clearInterval(i)},[t,n]),(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(FS,{children:[(0,$.jsxs)(IS,{children:[(0,$.jsx)(LS,{children:`오늘의 픽업 👑`}),n&&(0,$.jsx)(RS,{onClick:()=>a(!0),children:`자세히 보기`})]}),o?(0,$.jsx)(BS,{$loading:!0,children:`불러오는 중...`}):n?(0,$.jsx)(HS,{children:(0,$.jsx)(US,{children:n.winners.map((e,t)=>(0,$.jsxs)(WS,{children:[(0,$.jsx)(GS,{children:e.name}),(0,$.jsxs)(KS,{children:[e.class,`반`]})]},t))})}):(0,$.jsxs)(BS,{children:[(0,$.jsx)(VS,{children:`🔒`}),(0,$.jsxs)(`p`,{children:[Jx.closingTime.hour,`:`,String(Jx.closingTime.minute).padStart(2,`0`),`에 자동 추첨됩니다`]})]})]}),i&&n&&(0,$.jsx)(PS,{result:n,onClose:()=>a(!1)})]})}var YS=[{version:`1.9.0`,date:`2026-05-11`,changes:[`마블 룰렛 미니게임 추가 (구슬이 핀/막대를 통과해 골인하는 레이스)`,`주문자 뽑기 기본 탭을 마블 룰렛으로 변경`]},{version:`1.8.1`,date:`2026-05-08`,changes:[`장바구니에서 주문자 뽑기 버튼 추가`,`주문자 뽑기 룰렛 참여자 반 입력 기능 추가`,`이름이 같고 반이 다른 경우 주문 목록에서 별도 표기되도록 수정`]},{version:`1.8.0`,date:`2026-05-07`,changes:[`주문자 뽑기 룰렛 미니게임 추가 (일반 룰렛 / 마블 룰렛 탭)`,`중복 주문 수량 합산 및 정렬 개선`]},{version:`1.7.0`,date:`2026-05-04`,changes:[`다크모드 전체 적용 (시스템 기본값 자동 적용)`,`문의 게시판 → 자유 게시판으로 이름 변경`,`컴포넌트/페이지 폴더 구조 개편`]},{version:`1.6.2`,date:`2026-04-30`,changes:[`장바구니 수량 조절 기능 추가 (+/- 버튼)`,`동일 메뉴 중복 추가 시 수량 변경 안내로 변경`,`주문목록에 수량 표시 및 잔수 기준 합계 계산`,`이미지 저장 시 메뉴별 수량 집계 표로 변경`]},{version:`1.6.1`,date:`2026-04-28`,changes:[`패치 노트에 Desktop 탭 추가`]},{version:`1.6.0`,date:`2026-04-25`,changes:[`Electron 기반 데스크탑 앱 출시`]},{version:`1.5.1`,date:`2026-04-23`,changes:[`UI 배율 시스템 추가 - QHD(2K) 이상 모니터에서 자동 1.5배 확대`]},{version:`1.5.0`,date:`2026-04-23`,changes:[`HOT/ICE 메뉴 통합 - 하나의 버튼에 두 온도 뱃지 표시`,`온도 토글 시 이미지·가격·칼로리 실시간 변경`,`칼로리 표시 위치 변경 (버튼 → 이미지 우측 상단)`,`메뉴 검색 기능 추가 (자동완성, 방향키 내비게이션, 검색 버튼)`]},{version:`1.4.1`,date:`2026-04-17`,changes:[`메뉴 버튼에 칼로리(kcal) 표시 추가`]},{version:`1.4.0`,date:`2026-04-13`,changes:[`장바구니 기능 추가`]},{version:`1.3.0`,date:`2026-04-13`,changes:[`자유 게시판 추가 (작성, 수정, 삭제, 댓글 기능 포함)`]},{version:`1.2.1`,date:`2026-04-13`,changes:[`주문 목록 이름순 그룹화`,`동일 이름 복수 주문 시 토글로 펼쳐보기`]},{version:`1.2.0`,date:`2026-04-12`,changes:[`메뉴 대량 추가 및 카테고리 탭 분류`,`메뉴 선택 시 이미지 표시`,`메뉴 페이지네이션 추가`,`자정 이후 자동으로 당일 주문 갱신`,`주문 폼 UI 개선`]},{version:`1.1.1`,date:`2026-04-09`,changes:[`픽업 당첨자 MM 알림에 @멘션 추가`]},{version:`1.1.0`,date:`2026-04-09`,changes:[`MM 웹훅 연동으로 픽업 당첨자 자동 알림 발송`,`주문 삭제 기능 추가 (비밀번호 인증)`,`픽업 당첨 인원 산정 방식 변경 (주문 수 9개당 1명)`,`동일 인원 복수 주문 시 당첨 확률 반영`,`신규 패치노트 미확인 시 알림 뱃지 표시`]},{version:`1.0.4`,date:`2026-04-08`,changes:[`오늘의 픽업 당첨자 다수 선정 (주문 수 × 15%, 올림)`,`뽑기 결과 상세에서 당첨자 전원 강조 표시`,`패치노트 모달 GitHub 링크 추가`,`모달 스크롤 UI 개선`]},{version:`1.0.3`,date:`2026-04-08`,changes:[`가격 및 주문 요약 영역 UI 개선`,`옵션 기타 직접 입력 기능 추가 (옵션명 + 추가금액)`]},{version:`1.0.2`,date:`2026-04-08`,changes:[`메뉴 temp(ICE/HOT) 필드를 메뉴명에서 분리하여 별도 저장`,`가격 입력 100원 단위 조정`,`구글 애널리틱스 연동`,`패치노트 모달 추가`]},{version:`1.0.1`,date:`2026-04-08`,changes:[`날짜 기준을 UTC에서 KST(한국 표준시)로 수정`]},{version:`1.0.0`,date:`2026-04-07`,changes:[`SSAFY COFFEE 최초 릴리즈`,`메가커피 단체 주문 폼 (키오스크 스타일)`,`ICE/HOT 뱃지 메뉴 표시`,`오늘의 주문 목록 실시간 조회`,`주문 목록 이미지 저장 기능`,`오늘의 픽업 자동 추첨 (11:40 기준)`,`Firebase Firestore 연동`]}],XS=[{version:`1.4.1`,date:`2026-05-11`,changes:[`웹 v1.9.0 마블 룰렛 추가 반영`,`룰렛 창 리사이즈 및 최대화 지원 (마블 룰렛 대응)`]},{version:`1.4.0`,date:`2026-05-07`,changes:[`트레이 메뉴에 주문자 뽑기 룰렛 추가`,`앱 로딩 방식 GitHub Pages 원격 전환 (설치 파일 크기 대폭 감소)`,`웹 v1.8.0 업데이트 반영`]},{version:`1.3.0`,date:`2026-05-04`,changes:[`트레이 메뉴에 다크모드 토글 추가`,`오전 8:58 입실 알림 기능 추가`,`웹 v1.7.0 업데이트 반영`]},{version:`1.2.2`,date:`2026-04-30`,changes:[`웹 v1.6.2 장바구니 수량 기능 업데이트 반영`]},{version:`1.2.1`,date:`2026-04-28`,changes:[`트레이 메뉴 '싸피커피'에 웹 링크 연결`,`새 버전 다운로드 URL을 서버에서 동적으로 가져오도록 개선`]},{version:`1.2.0`,date:`2026-04-25`,changes:[`NSIS one-click 인스톨러 전환`,`컴퓨터 시작 시 자동 실행 기능 개선`]},{version:`1.1.0`,date:`2026-04-17`,changes:[`백그라운드 당첨자 토스트 알림 추가`]},{version:`1.0.0`,date:`2026-04-14`,changes:[`Electron 데스크탑 앱 최초 출시`]}],ZS=N.a`
   display: flex;
   align-items: center;
   color: ${({theme:e})=>e.colors.accent};
@@ -465,29 +1064,29 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     opacity: 1;
   }
-`,eS=N.div`
+`,QS=N.div`
   display: flex;
   gap: 8px;
-`,tS=N.div`
+`,$S=N.div`
   display: flex;
   flex-direction: column;
   gap: 20px;
-`,nS=N.div`
+`,eC=N.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
-`,rS=N.div`
+`,tC=N.div`
   display: flex;
   align-items: center;
   gap: 10px;
-`,iS=N.span`
+`,nC=N.span`
   font-size: 0.95rem;
   font-weight: 800;
   color: ${({theme:e})=>e.colors.primary};
-`,aS=N.span`
+`,rC=N.span`
   font-size: 0.78rem;
   color: ${({theme:e})=>e.colors.textMutedAlt};
-`,oS=N.ul`
+`,iC=N.ul`
   list-style: none;
   display: flex;
   flex-direction: column;
@@ -508,7 +1107,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
       color: ${({theme:e})=>e.colors.accent};
     }
   }
-`;function sS({onClose:e}){let[t,n]=(0,S.useState)(`web`);return(0,$.jsx)(fx,{onClick:e,children:(0,$.jsx)(px,{onClick:e=>e.stopPropagation(),children:(0,$.jsxs)(mx,{children:[(0,$.jsx)(hx,{children:(0,$.jsxs)(gx,{children:[(0,$.jsx)(`h2`,{children:`패치 노트`}),(0,$.jsx)($x,{href:`https://github.com/KSJ0314/SSAFY_COFFY`,target:`_blank`,rel:`noopener noreferrer`,children:(0,$.jsx)(`svg`,{height:`20`,viewBox:`0 0 16 16`,width:`20`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z`})})})]})}),(0,$.jsxs)(eS,{children:[(0,$.jsx)(Tx,{$selected:t===`web`,onClick:()=>n(`web`),children:`Web`}),(0,$.jsx)(Tx,{$selected:t===`desktop`,onClick:()=>n(`desktop`),children:`Desktop`})]}),(0,$.jsx)(tS,{children:(t===`web`?Zx:Qx).map(e=>(0,$.jsxs)(nS,{children:[(0,$.jsxs)(rS,{children:[(0,$.jsxs)(iS,{children:[`v`,e.version]}),(0,$.jsx)(aS,{children:e.date})]}),(0,$.jsx)(oS,{children:e.changes.map((e,t)=>(0,$.jsx)(`li`,{children:e},t))})]},e.version))})]})})})}var cS=Zx[0].version,lS=`lastSeenPatchVersion`,uS=`1.4.1`,dS=`coffy_electron_version`;function fS(e,t){let n=e=>e.split(`.`).map(Number),[r,i,a]=n(e),[o,s,c]=n(t);return r>o||r===o&&i>s||r===o&&i===s&&a>c}var pS=N.div`
+`;function aC({onClose:e}){let[t,n]=(0,S.useState)(`web`);return(0,$.jsx)(uS,{onClick:e,children:(0,$.jsx)(dS,{onClick:e=>e.stopPropagation(),children:(0,$.jsxs)(fS,{children:[(0,$.jsx)(pS,{children:(0,$.jsxs)(mS,{children:[(0,$.jsx)(`h2`,{children:`패치 노트`}),(0,$.jsx)(ZS,{href:`https://github.com/KSJ0314/SSAFY_COFFY`,target:`_blank`,rel:`noopener noreferrer`,children:(0,$.jsx)(`svg`,{height:`20`,viewBox:`0 0 16 16`,width:`20`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z`})})})]})}),(0,$.jsxs)(QS,{children:[(0,$.jsx)(CS,{$selected:t===`web`,onClick:()=>n(`web`),children:`Web`}),(0,$.jsx)(CS,{$selected:t===`desktop`,onClick:()=>n(`desktop`),children:`Desktop`})]}),(0,$.jsx)($S,{children:(t===`web`?YS:XS).map(e=>(0,$.jsxs)(eC,{children:[(0,$.jsxs)(tC,{children:[(0,$.jsxs)(nC,{children:[`v`,e.version]}),(0,$.jsx)(rC,{children:e.date})]}),(0,$.jsx)(iC,{children:e.changes.map((e,t)=>(0,$.jsx)(`li`,{children:e},t))})]},e.version))})]})})})}var oC=YS[0].version,sC=`lastSeenPatchVersion`,cC=`1.4.1`,lC=`coffy_electron_version`;function uC(e,t){let n=e=>e.split(`.`).map(Number),[r,i,a]=n(e),[o,s,c]=n(t);return r>o||r===o&&i>s||r===o&&i===s&&a>c}var dC=N.div`
   position: relative;
   width: 340px;
   flex-shrink: 0;
@@ -517,14 +1116,14 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   display: flex;
   flex-direction: column;
   gap: 24px;
-`,mS=N.div`
+`,fC=N.div`
   position: absolute;
   top: 12px;
   left: 12px;
   right: 12px;
   display: flex;
   gap: 6px;
-`,hS=N.button`
+`,pC=N.button`
   background: rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 6px;
@@ -538,7 +1137,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     background: rgba(255, 255, 255, 0.2);
   }
-`,gS=N.span`
+`,mC=N.span`
   position: absolute;
   top: 1px;
   right: 1px;
@@ -547,11 +1146,11 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   background: #ef4444;
   border-radius: 50%;
   border: 1.5px solid ${({theme:e})=>e.colors.sidebarFrom};
-`,_S=N.div`
+`,hC=N.div`
   position: relative;
   margin-left: auto;
   display: flex;
-`,vS=N.a`
+`,gC=N.a`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -570,7 +1169,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     background: rgba(255, 255, 255, 0.18);
     color: #fff;
   }
-`,yS=N.span`
+`,_C=N.span`
   position: absolute;
   top: 1px;
   right: 1px;
@@ -580,7 +1179,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   border-radius: 50%;
   border: 1.5px solid ${({theme:e})=>e.colors.sidebarFrom};
   pointer-events: none;
-`,bS=N.div`
+`,vC=N.div`
   text-align: center;
   color: #fff8f0;
 
@@ -601,7 +1200,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     letter-spacing: 2px;
     margin-top: 2px;
   }
-`,xS=N.p`
+`,yC=N.p`
   margin-top: 8px !important;
   background: rgba(255, 255, 255, 0.15);
   border-radius: 20px;
@@ -609,7 +1208,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   font-size: 0.8rem !important;
   color: #ffe0b2 !important;
   display: inline-block;
-`,SS=N.button`
+`,bC=N.button`
   margin-top: auto;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
@@ -626,14 +1225,14 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   &:hover {
     background: rgba(255, 255, 255, 0.25);
   }
-`,CS=N.span`
+`,xC=N.span`
   background: #f59e0b;
   color: #fff;
   font-size: 0.75rem;
   font-weight: 700;
   padding: 2px 8px;
   border-radius: 12px;
-`;function wS(){let{orders:e,loading:t}=Ub(),n=dt(),[r,i]=(0,S.useState)(!1),[a,o]=(0,S.useState)(localStorage.getItem(lS)!==cS),s=localStorage.getItem(dS),c=s===null||fS(uS,s);function l(){i(!0),localStorage.setItem(lS,cS),o(!1)}function u(){localStorage.setItem(dS,uS)}return(0,$.jsxs)(pS,{children:[(0,$.jsxs)(mS,{children:[(0,$.jsxs)(hS,{$relative:!0,onClick:l,children:[`패치노트`,a&&(0,$.jsx)(gS,{})]}),(0,$.jsx)(hS,{onClick:()=>n(`/inquiry`),children:`자유 게시판`}),(0,$.jsxs)(_S,{children:[(0,$.jsx)(vS,{href:`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${uS}/SSAFY_COFFEE_Setup.exe`,title:`SSAFY_COFFEE for Desktop`,onClick:u,children:(0,$.jsx)(`svg`,{width:`13`,height:`13`,viewBox:`0 0 13 13`,fill:`none`,children:(0,$.jsx)(`path`,{d:`M6.5 1v7M3.5 5.5l3 3 3-3M2 11h9`,stroke:`currentColor`,strokeWidth:`1.6`,strokeLinecap:`round`,strokeLinejoin:`round`})})}),c&&(0,$.jsx)(yS,{})]})]}),(0,$.jsxs)(bS,{children:[(0,$.jsx)(`div`,{className:`logo`,children:`☕`}),(0,$.jsx)(`h1`,{children:Xb.serviceName}),(0,$.jsx)(`p`,{children:Xb.cafeName}),(0,$.jsxs)(xS,{children:[`매일 `,Xb.closingTime.hour,`:`,String(Xb.closingTime.minute).padStart(2,`0`),` 마감`]})]}),(0,$.jsx)(ex,{}),(0,$.jsx)(Xx,{}),(0,$.jsxs)(SS,{onClick:()=>n(`/orders`),children:[`오늘의 주문 목록 보기 →`,(0,$.jsx)(CS,{children:t?`…`:`${e.reduce((e,t)=>e+(t.qty??1),0)}잔`})]}),r&&(0,$.jsx)(sS,{onClose:()=>i(!1)})]})}var TS=[{name:`샷 연하게`,price:0},{name:`샷 추가`,price:600},{name:`2샷 추가`,price:1200},{name:`디카페인 샷 추가`,price:1e3},{name:`디카페인 2샷 추가`,price:2e3},{name:`오트밀크 변경`,price:500}],ES=N.span`
+`;function SC(){let{orders:e,loading:t}=Ub(),n=dt(),[r,i]=(0,S.useState)(!1),[a,o]=(0,S.useState)(localStorage.getItem(sC)!==oC),s=localStorage.getItem(lC),c=s===null||uC(cC,s);function l(){i(!0),localStorage.setItem(sC,oC),o(!1)}function u(){localStorage.setItem(lC,cC)}return(0,$.jsxs)(dC,{children:[(0,$.jsxs)(fC,{children:[(0,$.jsxs)(pC,{$relative:!0,onClick:l,children:[`패치노트`,a&&(0,$.jsx)(mC,{})]}),(0,$.jsx)(pC,{onClick:()=>n(`/inquiry`),children:`자유 게시판`}),(0,$.jsxs)(hC,{children:[(0,$.jsx)(gC,{href:`https://github.com/KSJ0314/SSAFY_COFFY/releases/download/electron-v${cC}/SSAFY_COFFEE_Setup.exe`,title:`SSAFY_COFFEE for Desktop`,onClick:u,children:(0,$.jsx)(`svg`,{width:`13`,height:`13`,viewBox:`0 0 13 13`,fill:`none`,children:(0,$.jsx)(`path`,{d:`M6.5 1v7M3.5 5.5l3 3 3-3M2 11h9`,stroke:`currentColor`,strokeWidth:`1.6`,strokeLinecap:`round`,strokeLinejoin:`round`})})}),c&&(0,$.jsx)(_C,{})]})]}),(0,$.jsxs)(vC,{children:[(0,$.jsx)(`div`,{className:`logo`,children:`☕`}),(0,$.jsx)(`h1`,{children:Jx.serviceName}),(0,$.jsx)(`p`,{children:Jx.cafeName}),(0,$.jsxs)(yC,{children:[`매일 `,Jx.closingTime.hour,`:`,String(Jx.closingTime.minute).padStart(2,`0`),` 마감`]})]}),(0,$.jsx)(Qx,{}),(0,$.jsx)(JS,{}),(0,$.jsxs)(bC,{onClick:()=>n(`/orders`),children:[`오늘의 주문 목록 보기 →`,(0,$.jsx)(xC,{children:t?`…`:`${e.reduce((e,t)=>e+(t.qty??1),0)}잔`})]}),r&&(0,$.jsx)(aC,{onClose:()=>i(!1)})]})}var CC=[{name:`샷 연하게`,price:0},{name:`샷 추가`,price:600},{name:`2샷 추가`,price:1200},{name:`디카페인 샷 추가`,price:1e3},{name:`디카페인 2샷 추가`,price:2e3},{name:`오트밀크 변경`,price:500}],wC=N.span`
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -653,546 +1252,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
           color: ${t.colors.hotText};
           border: 1px solid ${t.colors.hotBorder};
         `}
-`;function DS({temp:e,size:t=`md`}){return(0,$.jsx)(ES,{$temp:e,$size:t,children:e})}var OS=JSON.parse(`[{"category":"커피","items":[{"name":"할메가커피","types":[{"temp":"ICE","price":2100,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/XTYxU8D5ru8xERuv8Q_nGwtQqY6pckvlnIgsFKM_qcYzWIoFmYm7N_4_3iXMGjyCUxHnjPiH_SZoCRYw1RLD5CTw9nHeUiNM4p2lLm4Hzhg=.jpg","kcal":281.9}]},{"name":"왕할메가커피","types":[{"temp":"ICE","price":3200,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/pHbAGjPdZo7wmyoVWIPa0JK-X1Er71UHCEDm9n9B3x7z8nhNIuVh2GywxFVfdBGtqHaPeLZRWwNpyRGqtzmOO4Sig1s54SoQD8ywiW8RL4w=.jpg","kcal":468.7}]},{"name":"메가리카노","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/8CsObuLkuMrDWOrREdkcpwWmYWlfI17xflcueqovqDu5twGh02ahesy0CRuqQucN69lZtZJY8f3PK7Z2uvqwSntmQabGRJTm4ArIOZgPQ2w=.jpg","kcal":16.7}]},{"name":"아메리카노","types":[{"temp":"ICE","price":2000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/YCTJRzZzLM3VeSgEAlQ7tuV1LyTaKOPLh4wLzRd-ZcC9nkv9nASXJa5yQB-IAKa4DRwGWjXtk_kvwXu_8qLUHieWowmfXWcQz1r7kUVl28o=.jpg","kcal":12.2},{"temp":"HOT","price":1700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/dSD5PDtxR3lyFWJixlb7rtCHsj3nRwRdqWCfxak4UeBo9GVO-jcAVJlEhJSQm6Tbt0ee4h2ehKit2OzgNRW8Ewu-rg-UP6YC-NrOxLdUThA=.jpg","kcal":12.2}]},{"name":"헛개리카노","types":[{"temp":"ICE","price":2400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/ImQ5tPNk0JcxDRPqJwVNFmsefUOUEpN4aG1cuwCPDsRD5NpUHjmoMFczbKPtn-2TpiBygoga-qiIJnGz78G7JHjA5EgAkHX9acfkFZ-cWsI=.jpg","kcal":34.72},{"temp":"HOT","price":2400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/yHKiitGVKZDmDw_-aJrjoMR4SgrCUos1k8iSSXk3foMHpbuBxJ9_GW3rVjXpFIpZVsYBGtxv5Ki17HvmTwYdqCSOgwUndes4aqiewPv9tmE=.jpg","kcal":36.09}]},{"name":"왕메가 헛개리카노","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/qNdW5Ud-ZBVlPxXx64zgX7_yWvY-E9vElWviGuvTeDM3jq362kh0JeQ7xURqnvIMYmLYlJf2CDk9nLrJGTHhKZ2Gk0e7JJczsORnG6ONxoU=.jpg","kcal":55.66}]},{"name":"헤이즐넛아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/cKMztbK7XLq3ioWnlAZfusbQM8ns3lNOswhrFvWF8cWavxKHiqpyecdqTWQZeQxWGwk6ouTFBxUQxbN-z1p_mmKXDGxe3SIEcfzxPzQAw-w=.jpg","kcal":113.6},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7V0TAZIKA1267ZNhJ3t-0K_Svegy-u-52wOqkHXXrV2H2hDmaa9MWdjjp_1GhPnAXj18mFDSEughXNFVUbGfWwRbLBTGDEnmeqSa0NIMlgY=.jpg","kcal":82.7}]},{"name":"바닐라아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Dyyg4M-TuivICWG0DzT1ddRM09n5YcVJ2akSZ6euV73MqNAsuaXN3ZH-bdZoiUW_o4mHBw8PzCeRTfcsyGD6iyUDGc5D0S6sGKF7LhbLOSQ=.jpg","kcal":235.2},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/2TDbjsz85evdHbyKWrCnuPXSJiM1NTO5KlciwQINPKSk_ES9zC_HCUJXI727eQS0hxRi_PwBeFU9omti6jL8nrS13YdBbd19wMWA2SM0h74=.jpg","kcal":97.8}]},{"name":"꿀아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/ZmB0jjto-EMFila3QBgFbfkvrWYtDsAfoWhgXSjDWojj6mwWAyozF37O1nH6NGCFmg2UaH0eXzz_fbSQlzNC39VbfMefxnduP7B390G2Ixs=.jpg","kcal":162.2},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/E_GI92IP8MDF0elc9TmEzBRGL_vtqWqvSkDy5JkoyyFio9bCJHsVCc_HUhU70aVpW4uhJe739fNUoG9cDTHXvILR1vXqffvibQ8PI8L6L5k=.jpg","kcal":172.4}]},{"name":"카페라떼","types":[{"temp":"ICE","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/FCC2nEv-cy9xNWmbf8NL6SANmU7AR2ktB4k9WymJ1QqPZLwU_H5GK2Tw44izYI-QSR3nsERjpF9NOd1b2QtQPfhsYsJ9oFDGtrnDEXA96_I=.jpg","kcal":145.1},{"temp":"HOT","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/e6nWNm2hOvNX9cRnTGmvoZ6IzAZXg4aT6xMgmwEMj_FH-_YH5QM9BQo3yqlxp0Q-zUYjqDEYn4hJnAJnO-YJalXA6583v8ByAdw9PdxMZg0=.jpg","kcal":175.4}]},{"name":"카푸치노","types":[{"temp":"ICE","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/8/27/wJB-x7wYHCga05RJyxxcoixIXihEQ9TF9fRCb9dtrta3zzuE5ex5wAhTYr8N9NAe.jpg","kcal":132.4},{"temp":"HOT","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7qnlkThF_2ff8601wbn4eZfZatRmlCzNpI32gxS4VHqANZ7SBcAR0hjGkdux-v-ojbg34i_nSfZqsiE71faJDqZBGYRf8guDAGvQveBLUb0=.jpg","kcal":145.5}]},{"name":"헤이즐넛라떼","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jMRcX9xf_commN4yBBz-BtxLq7VZFYmRoFryZ_tRPKfRbOdBnBjP6xZr4Lxui5oEYMd3fou6LciSlzRJ1YnHcORBCLwNr3JXjO9D2r_Gqy0=.jpg","kcal":237.4},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/rgFIKA76rYbztL5hz_ET9M8uaeuiC2N_Jq7lXs0DwCU0i2eaoZU5k0PdJfs0yx72vIvFGIvffvq1GQvocJOQsPKk0gHr_M7AFCKihRhxSTE=.jpg","kcal":240.5}]},{"name":"바닐라라떼","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/uEqU4V9G546DSKlY-BefMiyymtAt7A0MmhcMGTP3WwTYD1iw7sOp_CNnC6KK6pQsGm0LyHiFf6GL07hiNfnLpSSCuMJtZyB5iLjf0V25fw4=.jpg","kcal":239.2},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FK_ItzAlwFMUqZr9oyC_XN_DmRgsUlxTyYvRgD4_psmJvYhV1HpfKjhLMeeBowZnA-2IJiykoGFw6v23zVGZvl0nxDLHaofDqoZL8gTtBIc=.jpg","kcal":122.7}]},{"name":"카라멜마끼아또","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZP_gZJTGqfnSMl9HwVW0o6RZR3nByKXXdFMvsU2fWI8yWxSeQF8K2iDOgaXfp9jKwgbEuzDpd1CsB7ZSpk0EXcL999TEuA-TgfP01DAjoXU=.jpg","kcal":243.9},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Lbh3H-R9tIREruhkEin5YPhKG9X5ZEU4Tw8ayHWkfecFwHXe5xtuTzG31MHFLtS1YAkTFGq1Cr2YSeKwvAyeL5es7XF4SA9WZC7-_b0we50=.jpg","kcal":244.9}]},{"name":"카페모카","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/tuLjHc0hz2y94RCd31DnwRK4tjvwczOcHrM-G7VXpxe9ykC8ENqkJpgtVWCeqe_t.jpg","kcal":318.4},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3drWhW1zSAyeHZwYGsWEJlVl2ba9nkENPyi5Zzn14z_cPTdVTPOf6X9idZkO32MSMZPuUyvSpk9MHye1TcoRlAz6kczY6wKcnS_1ieyVHGY=.jpg","kcal":401.1}]},{"name":"큐브라떼","types":[{"temp":"ICE","price":4200,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/oIzdaYhQ8HggpGVFaholmFQuAh_6kPOsakrXsoSirkEc423pVbiqZWxuThW5gw4omdwHfUmu9SwL8RkB580Rpf8WrvpuJ_wT8h7EYLLVcco=.jpg","kcal":304.4}]},{"name":"라이트 바닐라 아몬드라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/7/4/MNYEW4vRV-DFkOiJgotutu_Mblgste4-rZdKoTXAl8dbrch67y8KYiKComMUFI4ARyu8qovykIrxhRezfpGyDbb49KWjUmeKdBQyyMB_uzk=.jpg","kcal":75.3}]},{"name":"연유라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/f8TY5r1HI9eWKCivIyv9vqPFdeyK7tE11TwJ3gNQeCBAUXuWkYGl8KuSvGSZ27vnb6UbRygdz0n7pbmvQ2ScpkHq0zDQ5IS53tAEUgGt-lo=.jpg","kcal":351.5},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/T0fcCOFTu8MpFhtF7lhXy2vxWWLdE6P2v6uw0iPSX99Czgp5cIJFx0LBoNoJQFkHgqWCv24WNGMhsIvGqfV1OHEFobQNbsaRBW31REsEYxc=.jpg","kcal":321.6}]}]},{"category":"디카페인","items":[{"name":"디카페인 메가리카노","types":[{"temp":"ICE","price":4500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/x7nUb0kciADVxM_achO01I65GqnNNZ4pGjqLhNpKjT4h9K-xhdR8ngUDyMrN64znetnV9GSWSlfrTa3yUnnBAblyvtmVjom19s1-se3jTAI=.jpg","kcal":17.1}]},{"name":"디카페인 아메리카노","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/1fNtPohtW9nOlB5FBEDYUDRi4VQq4tYID6XyaFPctUwQbTDlyno6XGd84zXVgooCgxPivwYyvsdLQMpwV0NiF_nABZ3dri3ou_XkS2k8M9Y=.jpg","kcal":9.5},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/skVc7BWchEyb2Ca5Dn40iuEta-_8W6qkJ7LnoJPNVULktE3wPVaHmaQWuNiW6m99n3dQ69qDz1t1S258f5OGhn_a21mDE9PNPqf4qI95JB0=.jpg","kcal":9.4}]},{"name":"디카페인 헛개리카노","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/2fcU8MkE2bijqf2d8X1sIR2hlqEHWaspib5PhMT1_Y9jx7jKiIzKgLLaBnwCoN3xJPGNWiFK7VDuQytLYBGsWk3NUAdKA_pF3zbcN3kPOIs=.jpg","kcal":33.33},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/5GxlWbLUyuE7woSQDlofHujRBmBcrrzqK9t-Un1T5pmfsUPgHA2pi5I0Y-oJWZSOJLvvm6RDXueN_kRzPdlHdVMImLA5q7dkRWNOmAElLhw=.jpg","kcal":34.23}]},{"name":"디카페인 왕메가헛개리카노","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/YXNAzS4U-xa9RmTwtU2OnWzFGnrwYXpyobQjkI3EVV0EuZiTmkkv5vuithkRT81yOmVxcMZ4PUVQCmfteuqfPKErn8poSNObSmqpWPw7Xto=.jpg","kcal":55.51}]},{"name":"디카페인 왕메가카페라떼","types":[{"temp":"ICE","price":5900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/KuUe3gLNCjF6o_UCfqT3x_-LqDCv1aLvaGNYCIO3CBPN3CZsPU5FhkH0lsDkVY9z9q30tkyuV7MX3Mg5SeQnysV0EmohpGPVnbGYFpfRKsM=.jpg","kcal":278.7}]},{"name":"디카페인 라이트바닐라아몬드라떼","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/11/6/NsSstOq2-J945QP86fn8hZn7yb-HNr4VsFU9QpONQbXHOyzySzTlS4Yh38_bKX8mD6M97yWsLaJ3ePPxcCP9JK0mCWla-GD8qRI_Yh0nxG8=.jpg","kcal":65.86}]},{"name":"디카페인 꿀아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Vrld1P_KUtkVvRIKlWeYojBJagmEv1Hv8JJzGoNjExJqWdQyY0Xl_N5BAOgAuKNgL9g34dOL6FGttcrg9SUw2y-5KPTMOqNfkJp03O1tgag=.jpg","kcal":137.4},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ckhw4zNVGZ7KVqLgj-SoGm2FLb8kjh8a8UyamYbhoazvRQdYgHHSsBNF2qfEYJTCgssRBFqyJeARO_2LYVPoc_5LW83uyOSEDijWkNTJHH4=.jpg","kcal":149.3}]},{"name":"디카페인 헤이즐넛아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/kodu_amIhA-DPPD0ARhxINv3sSkIl3ahnS7B1-XP-eavWRiDJG8QzlnusnvmgQfvUBi8O9QMZt61dmqrfHtaxuX8YlJPh8SAKHKV0CXJsoc=.jpg","kcal":108.7},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/mkVt_DBWr2NNiDWVD2-UnsrRykuVHieCG4LsSQbSxPae775K5boIDvSdHvqzbujUwc4nR-2GXVjvYr45Rxlz-5VSZd4cF8h3_Is7jrqG4Ww=.jpg","kcal":84.2}]},{"name":"디카페인 바닐라아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/l_GDxsvo7ZLpGyTMLKgsslNn0ipMaIdBTLYI6_rZ3psN6uBB4w6c8ZPHi1od2f8NbXupJtjRCpDNRQoSfgTWH1dt6kApw29_Nnq6M5tNzh0=.jpg","kcal":107.5},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KOUNG1AwU4Bp5u274fI9yucuZArTSi14yaDJv9Eag5wURNEQu5Hl-uHbGluk90URHcGpQ4Zv8XM2ZdZGIxkDwjhPCTieUUjiwJHb-vYduYc=.jpg","kcal":83}]},{"name":"디카페인 카페라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/QntryCSa9sk__4ok4k_F3T16oUnJfmzCwrxdeydE6VOqte6trGa-J_ue6u1uKAS6qUrHhMzRXWSgwmMT8lz78q4qI9DhmJK1BazdMD0CdEI=.jpg","kcal":147.7},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7mDig55TZN1lcsoJ-RtyBp8h6fwX8x10l6mLBWNsSaF3zF9MbjSGFDAyYT3OOJ2g34YWZ8X1WVrEuBPC5mmFHhlX6bA1vsMTW68ceG2nJZI=.jpg","kcal":178.5}]},{"name":"디카페인 카푸치노","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/QLcSDHi206QjoVR82j1EcIxs1wbSwWfazaKDJzZUgplz8F8gV0bQvO1Lbbg62w-iZcJIH4Fs3V25wLDPqADC2GZcrz6qEtxMxM6_nGknNdw=.jpg","kcal":127},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/LBzhAd2EfEmCZbQ4DZ-QqnjnJOzwTzTMBW6fgcRut2zkT-P7oAUVMANJ3xWiCIxroYCBps7yExJi2xEJLdyoEws1PEmoIYH-9ySEFNoRkhs=.jpg","kcal":152.9}]},{"name":"디카페인 바닐라라떼","types":[{"temp":"ICE","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/wzK-IiDULmS6NiyITNJoJ7i_25IopEooO_h5TodWSoQhph-7wLbxx3IQARP8rYpbtj68Gmd6KcyVK4C02PROQDfYh0DPvy2XDKsVtbO12uI=.jpg","kcal":239.3},{"temp":"HOT","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/H0IV-4CWmFlw_X8XBGBCR5wybYN7GK0sL3PkngYmd8XIvAIeWOwHpTIjqBHWhBupU7WxktxEUHMloUXB1jjsn2iVA3_vH2dOmLlCv1ZNNRw=.jpg","kcal":233.7}]},{"name":"디카페인 헤이즐넛라떼","types":[{"temp":"ICE","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jdQ4VQ9Xn-5iJZyX33VisJB3iCrv9x0pEI1bmqTK870RR2ohU6p5Rx5CRQyYDRouNVSsaGqtXwHBFKgkwPUenMHH8UNgl67MXipvkQhaQSA=.jpg","kcal":237},{"temp":"HOT","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/VHTcXWLo_t9G0SDMMt_T35FyoixHt0i1xUBpHHtO1jn1VdqHj4zI98jFY3rNde6Lz4hNIDI2QXMLq4ji5lc2xqjPlDGMDy8dOgPlC7z9lE4=.jpg","kcal":240}]},{"name":"디카페인 카라멜마끼아또","types":[{"temp":"ICE","price":4700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/ZDloHWlQmeNoVePMrRUWuLNtXLdsIpT_YM1daMq2vK3qDC-Z2aObAtFIrfKXz7Y2QdbfL5mgM4spJQ3P7lb2jK40jtE4QSkPmd8Vkfh3O34=.jpg","kcal":232.9},{"temp":"HOT","price":4700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/UxQLNgZsnHypXltzlOv6456wc0saPL5alF4IGVraqH25iR2XX7pepVNYQ0lBUVwVSaJZRC4MMhmIZAbzIClr8CGHWBS1T7ucYet2WtkFCgQ=.jpg","kcal":238.5}]},{"name":"디카페인 카페모카","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/JA9HhCKEnY2DwfC4tba2Cmih2go7T6aWoPJLgPSgM5Mcg6mABbHhPInKaHoIx57AIcfXiB2VSM_HZ1CbrRRC3gm_X3ZH-VTDB87ewQQF-Ds=.jpg","kcal":319.7},{"temp":"HOT","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Ml6EzntvSbRQFFE_bj6OCj0UfNLtm8E9DQEgUfbhY_VPOkujs_txNHz5T7MWe7lhmdNuppQCc5K8wnWbuuh5DK4C1fnkK9CmtX4L4mNzuyA=.jpg","kcal":430.3}]},{"name":"디카페인 연유라떼","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/FVFUpwTG4iiT6isAdlbl3_RMM_Sf7T-f3hjAsvs9sauUZQXVBYtXMkSm_LSOn-QiLlnTPZlMZkJTclG9v2o4UhyQTkYu40-RmF2bG8E4Saw=.jpg","kcal":305.41},{"temp":"HOT","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/i0PLW15wSa3tU2BAembTyPPwJoE53qxRRv7v7ZEvWU4rF2d3HeKaioXNeQ_GZm_n34WSgBygRsDrrr65vujOp5bLwzd-sgxOoCr2lgaLITM=.jpg","kcal":301.5}]}]},{"category":"콜드브루","items":[{"name":"콜드브루오리지널","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/wBZMMZKr_-1d-niKysrpJKafXiKnikZcy7K9TugujVdD48H0Zu_izdy7_AJZ3zX0i6Em4ARnPcUgrjtHiePXurHzUYDh6A3yLb35_gX2qp8=.jpg","kcal":7.2},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KM0IQkTvYPk8UgQfkDC4PkVepH46mfU5-SvQ53TcAQlRtWBcq_oLHMhifSzvGgtqrvj61yej0-MzlEoC_E_7qFB9Vr1_hLuvE09BGN0jXP0=.jpg","kcal":10.6}]},{"name":"콜드브루라떼","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/Og6mGDoYAqw8RLQyF9uj21A8urCmzSVt6Z2TksfJ3TgJfmhiWU0MjsJUsejC5G1B.jpg","kcal":167.6},{"temp":"HOT","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/c4P5gfFHdeR6AS8mOvVeXNXIBpLEXqF_eiPhg-8qOUviI9V_OcECnouHen1Smf8bDAVENf9N63FYLYkXj1a-OBhc1XQaqCaiS56SWhFymAI=.jpg","kcal":164.2}]},{"name":"콜드브루디카페인","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8k9ajfm47K7hu678chtz7PhI424ONVC_KDsueF6vZVUN.jpg","kcal":7.7},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ZPGPcFHZcWodTdirR5LTP6bOvRRrGTsSE6Rc6YEKc2Nb-7lk3i8xmLVbURrj70N54G6iAgm7hObGMMI3A2T_uuBaPHATsfp6f77FzpD93QI=.jpg","kcal":9.4}]},{"name":"콜드브루디카페인라떼","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8pTWPvW9Ovj10Bf-RPqRniUCgwPxMPhvsKlOvSae0-XF.jpg","kcal":140.8},{"temp":"HOT","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Gj_Chm58Nd7GjIolW8kE0FVRdyq2PgtyFzqbloy9NWCcZfvBQeZPnqe1ZbDzwZz2BzdoTEa_dzztS3Adauw9RIcZI7uY--N58w_CCii79mo=.jpg","kcal":153.8}]}]},{"category":"스무디&프라페","items":[{"name":"초코허니퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/hYknmTYOCwRzKtEmdJa-DSKiBsJDkaWcQXkkVc7gS-mHJOHbqQKtgKdHNab5cON7qSq5p7wluB5_kefkkHnDG2MyXM43I99Ja-cH22FqrPY=.jpg","kcal":577.5}]},{"name":"플레인퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/sgtWxTqzKESS26TloH6u7CcY17wFD-Loe3qS1Mn2zBsbUwSWoyW_mSRSEEy23W-foxo0e6_EZBXGgv4KIVTKOSlRizrCQNMUNFaajdobQZY=.jpg","kcal":468.6}]},{"name":"딸기퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DeN6uRIN4aUl2HWiiGTw0yn58G2XQh9u4Ij_-d_h525x2dxahmN3EWAO5ptIIDUWWGbwx8JOXyrLC-iKol5wceMs-6Kdt52xOrN0I6b7kHY=.jpg","kcal":536.9}]},{"name":"쿠키프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/U3ulgBShL7iWWeL9sUQuH6K12z3mAsge8cbMZKo9yZTDqwRPY9bwhauQJtab1s1rcjSWMf2FqPsSMIHS09PYMOrriyv9PISYavAYKP1oD00=.jpg","kcal":725.9}]},{"name":"딸기쿠키프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/p3UbVRXvqEAY_o01G7QMlK9l00vBM7fVbMZROa3og3KtYVMVFo6cv1YGNPVOC9ZzzQzTOfev9wRSOgZbzDf7OcYceljLAkqV782u7NSRNXM=.jpg","kcal":575.6}]},{"name":"리얼초코프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/HYAGIStr8O_o5OEr-tqaZ_Gl2PQaohiYQ3GeHTY8zFgPUThDQy6XGWimvx4KT7dNZEQ8nBZfnvPDPymWFaPGrTgImBi78ZMAP7giRzzc3NE=.jpg","kcal":651.2}]},{"name":"녹차프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/C37po66-jmQcIkfDoVq0l6haWx6aqULj0Qkg-U-vyku79zc64dP2SiEMRL_PpFIZA5FkFSSzNSHnJYT0mVsGDr26k4cesriLC-MaTmNqtPM=.jpg","kcal":584.1}]},{"name":"커피프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/fMbT2xfOQMs5JbOKa_FoErvyXXsmfiXlx2rg0wi1eZesdoqmE_z5dlMTFNu7fatYoZhF-3c-McuoLj0J43-7qgMVmufgw3y4Nr0TSQMto6k=.jpg","kcal":420.4}]},{"name":"골드망고스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/HiO3XBKPvdwpdb5KMjSaqE3QoIN0irt1rCHHZKaJK_5-dLm2wkKrbN79gwNxPhknwvu9dLBD79QMQhQp4w0XOAhw8R3A7Bk8ua_BkQ7Xl18=.jpg","kcal":209.5}]},{"name":"블루베리요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/O-Dgf-apoZOKt5Trw4HerxwcXImNLzLHub3ZkKche6LxGs3xv6IjpzcNeXXdP14xUptpnBZ19IP_UI9lDUW85r97yDDYQiZgnLkJ49vIogo=.jpg","kcal":531.84}]},{"name":"플레인요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UnFlDthRpNWFGRZJBeuqCvOn1r72i_l-APyuLfUoCNzYQ_mdtvcPkMIfr8w48cf_ePx71gpvlCEAeLDJds1MphXhsyeAsov3cTozMYzIsaw=.jpg","kcal":514.9}]},{"name":"망고요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8_0Zp8hYrzvjMLfJYJR9NkMWn0XIYLub1kzIoFq2HPkF40vClyct3m-EXZZJtqW9UJzl6gY6UEOc4sfaSq0xCe8JKGT6en5dFn1uSUA1GEg=.jpg","kcal":365.2}]},{"name":"딸기요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/VIencBIHXO0PFoISrd3E6BuAlNr8Dq4grCUxC63Pf6Cg0OyE_606mrV2U5cR4OWI1dnn8UXNKb4vabkbPp3OGe1kwwfC88_Kn5JPKQor2cs=.jpg","kcal":388.8}]}]},{"category":"에이드&주스","items":[{"name":"딸기바나나주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/IqQXs5tV39WaUp1dxfsOP7aFtnyNGZonm_woowR2GCDfQjBXnhBAZi_3iLB5pLI0FyOB71ffQnLQkFPtCu7Bj8A5GN8xJZD-JHgk_mNnzT8=.jpg","kcal":268.5}]},{"name":"딸기주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/fiAyoicvvkXHyKuOXHZSoy6RXDkSVKG8HW23wcQcZEjIrqM95YjoRnT7tRtjFbBTx0YQfaQl9IwWXyfE1S6GbCHl2oVBwdwULpIres3bh9Q=.jpg","kcal":196.7}]},{"name":"골드키위주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/78ESCqbt13HDRlBvesQntTC1IQYcLUhoT6svdqDn87lILR15qQG0ZWEBCiCAKIKf7CDBajE6ULgjiiPxq4I8uzKc9CDeg-bnaQXN12bzDmk=.jpg","kcal":202.76}]},{"name":"체리콜라","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/1/26/0n8OMt8tMcq02EI9MdRke80NnuyB_Jo_GG3FEstD6fUz6CarDmHIAI0c9wCS4X4QFFu8y7nRKKHZkQzVjSvy7vqLwQhrAKUbCuMTkB5BsaE=.jpg","kcal":323.6}]},{"name":"제로 부스트 에이드","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/VjJDxfn_lR7rEmq1pOkKP1lWuie2NtKbMAZlAdzQOc9QA2msFHuxMCGUBgDqQ1Bw68NN6mu7zD6gA1ajX9KYwG7yU-Gu4_wDxmwADrSaSjM=.jpg","kcal":11.67}]},{"name":"레몬에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZXA4tkJN3DGmd9pEouXYjWfl2TKE78CqY79KorHMio41Ud-MoEFkEGSf0Mvu52WFf8LdhcLQe7mDWreKW0bozEHT-ibG26bJWcXPFqnhmUI=.jpg","kcal":196.8}]},{"name":"블루레몬에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8wdjlF4OEZ_pyFUlX9iqcXPoeKI9185m-HsM6MK2Ty1bWpSYztP0SsMWmBSf_xdIjb-GV0KQqtvDlxG5NRn0y5nD-t3H0l3NHCYPinSc4U8=.jpg","kcal":225}]},{"name":"자몽에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/5lRtLLtoQL_HFUZJqjUdpzTSKIEOFNHHly88bsDpQWhTK8uRQYT377LwM8u6LA2hs4llgfm3jr1LG3cXuSmQ1t9L4wrXSSU9_i1CZPZLnjM=.jpg","kcal":203.8}]},{"name":"청포도에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/2andKV291hDArTBXIpwbjNiSznZWH2ogHB2uVGqLzBxfzBq6wb3K8P-dV_VgsXOXvVLKnln_s5PzBoCH6RTUp59JlaWsynIbQcm6zddkWnc=.jpg","kcal":305.4}]},{"name":"메가에이드","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/Q5tENzcXDDCQPunmkxMh0zRh1M6aTmE4fgUkIKwO2o98x3SgB2RMzC_NAruu_Go2FqbzfUgEmV8LQTW5rGOgJk5KKODLdlggg-euHjS611g=.jpg","kcal":292.4}]},{"name":"라임모히또","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CEdE6k7h1q-8DIvB37-JDO_CdJST9zSyY6TvC-4IpcppYOCCbT_ECrB-zzDeny5UsW1E6HQwyOj6S8qcTZ8RnM9XH9jHs1rPHlLWbW4V954=.jpg","kcal":278.6}]}]},{"category":"음료","items":[{"name":"오레오초코라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CLscCTM4lF9wK3TGC-_jXsHmtqrIlkXoC_FXGf3wGw48qJ7XXhFRrOSpdw42naxfqrBRcg8pEm5kI0ixqAI2BsDprk8EYNL0lsH-dqSj9HU=.jpg","kcal":449.6}]},{"name":"핫초코","types":[{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/eCnZ0fbfWdqBGmqe9ULnebNqFFYFglMg_4mzIYhBO6dvQMk0YlRDm7kn5SFb08R4AbIdUSBUvlJAE-k1jCEQt9qDmUHabFjH-ZlpvaUy2hI=.jpg","kcal":374.9}]},{"name":"아이스초코","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/AffY9Ui4NN306YYX3OBdSquPY0830jqFA-BeVjBXiemNaSH9dRTN4oVxbQ-3zWXfDQ3bHS3N_LTUnpl4_oxqmPA4wFQa9qvD8fx4rpsZ1fw=.jpg","kcal":308}]},{"name":"토피넛라떼","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UJOYDOT1iVtRIRIVY7h21MUqhpyOxo1PA4sALQZc3QIkgzM2w_cbxc2gYuf-LsKTbKRgJgb7g0yTTcsAiwncesJ1qhjWLajW7UMIcEaekjM=.jpg","kcal":364.5},{"temp":"HOT","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7_7I2nWlmKPeIqCQmBmijHfPY4NqZcesLkOUIhL_Abs8GiPJOsSMsB9JmFiFxl1jsZOOhzm1lNggFR5t4YmcXG1NARCNk-Qh7DiLTSoaF0U=.jpg","kcal":368}]},{"name":"로얄밀크티라떼","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/5nZcFQdOlYmvaX8uIPAekIDCD0KClKNoepVf7WMw8k89Q7Y1kU-vsz-YF2YclnQgRvGUwzoaCus6Zmw9QabBOQaM426wQXu9ndAgd9nJ1oU=.jpg","kcal":254.6},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/bBwH5weMkSR6z4aEgl0sLyxyYYLw9HDgqL_ZnN4MYwm7oE9dWWP3FFv9S80APSLDNm8nHxWPMUjXqv02s-GjNkPqQJGa7KXXe4nWhLUmtCg=.jpg","kcal":232}]},{"name":"녹차라떼","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/1uddJztS6QEfLq2NH_rAW0IzUNeEBLgiKKrA7JqBR3V_tmW371jQgIvUVRi8JE1qsUaw2Bj8A43kVbxv6C1vjXh0S1fmLPoTHnWruUTwO9c=.jpg","kcal":288.5},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IpLtr10JuJMHs6UVu1LP39fuTmOZLfHnysQrk2aTy6x_s7ny80dJPJS3_cwTDTdGEVMZSkHLRc0OBDpg1IAQaQVywcqwqa1XkGd4_CFjrac=.jpg","kcal":280.4}]},{"name":"곡물라떼","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZvwaiPsQ9NyHmmWoDrxj_iVxE4CnYGE6SyshuCHQZk84mFHRHb-ksl9hnQdeuD5UqOmQfmjCgZEeGCZ4k4PlpgujzoYO_DT-vZidL4eZDoQ=.jpg","kcal":389.7},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/s1JoYM41s3UL9d9duiITlpRveqNJ9ZPoKCEPqBrIl7pogOcgO_re_UGmwib4k61BQArOgxfhJzOrHfJG1zh2Quux7j-vNGZWgk4EBSH0V-0=.jpg","kcal":467.5}]},{"name":"흑당버블라떼","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/z1NoRdTofJclMTopMiVplDN_6dJxrRaK4i3Grg5Uv7m-3RqS1pP5LOhp1nJ-rA65qA81nu_nmhaA6WKw8wkSQjfkYd0F4mw3yyUl2eTOOrg=.jpg","kcal":320.3}]},{"name":"흑당버블밀크티라떼","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/xK7cnG4T8IfWhkGDuVomAPVDk6x6h1M9C8kSP3LyplfwBHaogVd_lxqB1rSdoI_y16Y0pUCI209CL3MMHcBQkrp5hrVKSK-idKMwlSdBn2k=.jpg","kcal":330.2}]},{"name":"흑당라떼(펄X)","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/JZ1v49xs3cLAzISRCEs6xask0E5eapzo8ZJCBcgBnKazBtBqLipOaYBgtJNRLd6HspNDpAVLEjlHeBkdIrHmjJ9fs3uxmJb4gYUls4uGs50=.jpg","kcal":322}]},{"name":"흑당밀크티라떼(펄X)","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DmXLWIIWB1_6yywJHwfhPRn9hlK8d4due2jKiN3fk_XxgsnwfIttVvSGO8HPz5a4m34Om_7QXvud0nHhbE1vKOLPJBU1ZaN2u6f_vdTlxR4=.jpg","kcal":300.5}]}]},{"category":"티","items":[{"name":"복숭아아이스티","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/hFZfNE45RMxnk9kn5zbdC6V2UcrsA-6W3dG2hoWBmGYsDJy2xfn_bOhFVVKMBj6m17_bVH0SzJE51sj9oCMayKKDu63hIRTCDrobrLPQ8KU=.jpg","kcal":297.1}]},{"name":"사과유자차","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/PyQzngk8ggsOC87jw3q-nLcdOuQl8Y4sOvp6qLG897jS15jXH5M3t2ONNT9v3BlxwypU_SWVovKGGR9YBLjn0BotM8P_p8-SgfRSZ7eLT84=.jpg","kcal":242.2},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IQzkyuSvf9uYWOlitBKrve9psGpHikZLFJWkXdtxlq1_5JvnKj-kXxPhqOkjtxIiSol9W6mxky1kMqLXJ0SIWWc8aL5fiawESQWws1Lsa5Y=.jpg","kcal":227.1}]},{"name":"허니자몽블랙티","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/lkXrVZtrIjXL5jbPXM504l7ZVxfXHtd_aqrN5gcl4FmSdvjespVbe3jvpJhM54ciQu171bRy86SlKuxtBGQ1Hzk3bbWR_-NXTuN9Bi15BF8=.jpg","kcal":265.8},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/9duwCk5Eis2jdoy6uwulJ6vH775tKK34N1_ormnXTrYYfjZo8TQa_gQPhRBCoy9o3ImtElZzi0XgasSmYVitxrNACEtOU1gIN0gdmQ2Dt8o=.jpg","kcal":302.2}]},{"name":"상큼 리치티","types":[{"temp":"ICE","price":3900,"image":"https://image.auction.co.kr/itemimage/4c/c9/c5/4cc9c5fd11.jpg","kcal":260.1},{"temp":"HOT","price":3900,"image":"https://cdn.011st.com/11dims/resize/1000x1000/quality/75/11src/dl/v2/2/9/0/8/8/2/IiOoa/7787290882_190253549.jpg","kcal":274.8}]},{"name":"자몽차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/zP6WP2bGSz12K70xdLt4EafXJRsmcSLChU--eRbBKPZqX1uA53UYKucF0YbC6f_o84j-m_sA_wQVObkpQxBckSNWKgmnNDmZfzKB3iVq8lM=.jpg","kcal":297.6},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/M7XaI7am_xsI6xkOvy47y5DMDv1SUeddVHeXr8fs_LTes1yQ11N8mXm1hfP96sCzyL7gTWWifYKqoEGPwq_PzRqo575Nu9lJTS9jrFfGUuQ=.jpg","kcal":294}]},{"name":"유자차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/bDmWbkUvhJI6dwog3U1vO5P6rmli8g3eLugj5hIanmZuqVTom1PKR3u02QHoG_Zj3RuQG3FHj7_6qf08ytrgy8em4kCcc1cBkp169YXFv18=.jpg","kcal":303.1},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FOMm6mm39zlzNczKUXz12LVa2t7h5gxWp-ScWSk02qzmL0CfCz6G-zCD10idDU8DMTZwcqCidGZU38FPIl6n7I5albspg17KuP4PO_sb4C4=.jpg","kcal":286.4}]},{"name":"레몬차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/gOr0iRzIzfby7xTx1iXF7RUzmjKtL7K-s8vNeYPiX3arfO_9f-2pH5ucqF0eo09x7WTm0dd9hKgFEGK0t79a_TWllUoNEmPvYFnX7gfmmWU=.jpg","kcal":327.5},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/wsz5AP253xHopKa63ZZYWoR_pgV786wW54xNtwtuWxQgBFBrKx_RW71STCAdfPS557RbK8LAiMdVrKvYWixhZQXwFxqDYZP6dCcERhylP5o=.jpg","kcal":275.5}]},{"name":"녹차","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/9hDYlB3brlT0s2cVM9sH65SlMTy82WREQNS6v2PXIczfTBBcSOC2dvRvSC4P6j2T.jpg","kcal":1},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Itrsrt4eAgEgJR6BivC9e90ESV-iZRq3RCxWECetz5IkJRrFuMxJ_Y1dqeuoOSLwPLxp3erUe8zgkEm1uPyEgMTyRRG7GfAalbPFlWKVdog=.jpg","kcal":0.7}]},{"name":"캐모마일","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/6iZcXaap6Bb5XmF1c67fow_s1bGjtA-17rTXjO7x0dxRMy_Mr3mL3KPzw7E5sUcGZttO6o0sgfhJGur8uq4pTezMN5j68QhKG6TQCPoVQlY=.jpg","kcal":1.3},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/lJpBG9a5cI1FgRPz0sH227oHCUrFFcUTKPTLOc_8E4wEevBXCF0NjKMfEYVoMyFYHXqhMwaj26rVz8oUx-m46Ic0A-IWCo0XvQ_8VHaucwk=.jpg","kcal":0.5}]},{"name":"페퍼민트","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/MOdjfaLH_HCrAOi1FxDlLP50omDldL8x1tN2uOZaqmC56rpv_tj0CjfER33Cq4xi2f5tjAIg6u_m8nKwr1BFtynwKw47c37F1iRCcM9lWdc=.jpg","kcal":2.5},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3Vj9IJvzr8jKZ0QHHyOt7XNi7D_xa3RoO6UKXgNqvgCjqMPfjvgJNZj6qwR7L8-R3J-G2lQoTXkpOfLqWSrF--m0rEpVR48ZK5_QtqmhcrI=.jpg","kcal":0.2}]},{"name":"얼그레이","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/eVwf9hdU-A0TEEfRrlZ3THCgCum9Pa1pU4bMHEvdaR8x0TNIiR9rJC-tWf0QpgjavwaKTrxTKMYQZJdc9XXgvHq6rXxDbG3mXAunO4vqlbs=.jpg","kcal":1.3},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/0DdJKuR5TgZzQTZjRM8y46cIYBpZnEmcWFSQcjWTOg3QM1MOY0nctLnpJg8VpQGnMw13wg1EM_EkO3byAszHAM_KT0ckUDXdrzz5jap2Hkc=.jpg","kcal":0.7}]}]}]`),kS=N.div`
-  flex: 1;
-  padding: 20px 40px;
-  overflow-y: auto;
-  max-width: 880px;
-
-  @media (min-width: 1440px) { max-width: 1100px; }
-  @media (min-width: 1920px) { max-width: 1400px; }
-`,AS=N.form`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`,jS=N.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-`,MS=N.div`
-  font-size: 1.4rem;
-  font-weight: 800;
-  color: ${({theme:e})=>e.colors.text};
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  flex-shrink: 0;
-`,NS=N.span`
-  background: #dc2626;
-  color: white;
-  font-size: 0.72rem;
-  padding: 3px 10px;
-  border-radius: 12px;
-  font-weight: 600;
-`,PS=N.div`
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-`,FS=N.div`
-  display: flex;
-  align-items: flex-end;
-  gap: 8px;
-`,IS=N.button`
-  flex-shrink: 0;
-  min-height: 40px;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  background: ${({theme:e})=>e.colors.surface};
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.15s, background 0.15s;
-
-  &:hover {
-    border-color: ${({theme:e})=>e.colors.accent};
-    background: ${({theme:e})=>e.colors.surfaceAlt};
-  }
-`,LS=N.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 80px;
-  flex: none;
-
-  label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: ${({theme:e})=>e.colors.label};
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  input {
-    padding: 10px 12px;
-    border: 1.5px solid ${({theme:e})=>e.colors.border};
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background: ${({theme:e})=>e.colors.surface};
-    color: ${({theme:e})=>e.colors.textInput};
-    transition: border-color 0.2s;
-    width: 100%;
-
-    &:focus {
-      outline: none;
-      border-color: ${({theme:e})=>e.colors.accent};
-    }
-
-    &:disabled {
-      background: ${({theme:e})=>e.colors.surfaceDisabled};
-      color: ${({theme:e})=>e.colors.textDisabled};
-    }
-  }
-`,RS=N.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 12px;
-  flex-wrap: wrap;
-`,zS=N.div`
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  flex: 1;
-`,BS=N.div`
-  position: relative;
-  flex-shrink: 0;
-`,VS=N.div`
-  position: relative;
-  display: flex;
-  align-items: center;
-  background: ${({theme:e})=>e.colors.surface};
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  border-radius: 20px;
-  padding: 0 14px;
-  height: 34px;
-  min-width: 160px;
-  transition: border-color 0.15s;
-
-  &:focus-within {
-    border-color: ${({theme:e})=>e.colors.accent};
-  }
-`,HS=N.div`
-  position: absolute;
-  left: 14px;
-  right: 14px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 0.85rem;
-  pointer-events: none;
-  white-space: pre;
-  overflow: hidden;
-  line-height: 1;
-`,US=N.span`
-  color: ${({theme:e})=>e.colors.textFaint};
-`,WS=N.input`
-  background: transparent;
-  border: none;
-  outline: none;
-  font-size: 0.85rem;
-  color: ${({theme:e})=>e.colors.textInput};
-  width: 100%;
-  position: relative;
-  z-index: 1;
-
-  &::placeholder {
-    color: ${({theme:e})=>e.colors.textMutedAlt};
-  }
-`,GS=N.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-size: 0.85rem;
-  padding: 0 2px;
-  line-height: 1;
-  opacity: 0.6;
-  flex-shrink: 0;
-  position: relative;
-  z-index: 1;
-
-  &:hover {
-    opacity: 1;
-  }
-`,KS=N.ul`
-  position: absolute;
-  top: calc(100% + 4px);
-  right: 0;
-  min-width: 100%;
-  background: ${({theme:e})=>e.colors.surface};
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  border-radius: 12px;
-  box-shadow: 0 4px 16px ${({theme:e})=>e.colors.shadow};
-  list-style: none;
-  padding: 4px 0;
-  margin: 0;
-  z-index: 100;
-  max-height: 240px;
-  overflow-y: auto;
-`,qS=N.li`
-  padding: 8px 16px;
-  font-size: 0.85rem;
-  color: ${({$highlighted:e,theme:t})=>e?t.colors.secondary:t.colors.textInput};
-  background: ${({$highlighted:e,theme:t})=>e?t.colors.surfaceAlt:`transparent`};
-  cursor: pointer;
-  white-space: nowrap;
-  transition: background 0.1s;
-
-  &:hover {
-    background: ${({theme:e})=>e.colors.surfaceAlt};
-    color: ${({theme:e})=>e.colors.secondary};
-  }
-`,JS=N.div`
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-`,YS=N.div`
-  font-size: 1rem;
-  font-weight: 700;
-  color: ${({theme:e})=>e.colors.label};
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-`,XS=N.span`
-  font-weight: 400;
-  font-size: 0.75rem;
-  color: ${({theme:e})=>e.colors.textMutedAlt};
-  text-transform: none;
-`,ZS=N.div`
-  display: flex;
-  gap: 32px;
-  align-items: stretch;
-  min-height: ${({$noMinHeight:e})=>e?`unset`:`200px`};
-`,QS=N.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-`,$S=N.div`
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  align-items: start;
-  align-content: start;
-
-  @media (max-width: 1000px) { grid-template-columns: repeat(2, 1fr); }
-  @media (min-width: 1440px) { grid-template-columns: repeat(4, 1fr); }
-  @media (min-width: 1920px) { grid-template-columns: repeat(5, 1fr); }
-`,eC=N.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
-  margin-top: 8px;
-`,tC=N.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-`,nC=N.button`
-  width: ${({$active:e})=>e?`20px`:`8px`};
-  height: 8px;
-  border-radius: ${({$active:e})=>e?`4px`:`50%`};
-  border: none;
-  background: ${({$active:e,theme:t})=>e?t.colors.secondary:t.colors.border};
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.2s;
-`,rC=N.div`
-  flex: 1;
-  border-radius: 12px;
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  background: ${({theme:e})=>e.colors.surface};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  max-width: 240px;
-  position: relative;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-  }
-
-  @media (min-width: 1920px) { max-width: 280px; }
-`,iC=N.span`
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-size: 0.65rem;
-  color: ${({theme:e})=>e.colors.secondary};
-  background: rgba(255, 255, 255, 0.82);
-  border-radius: 6px;
-  padding: 2px 5px;
-  line-height: 1.3;
-  pointer-events: none;
-`,aC=N.span`
-  font-size: 3rem;
-  opacity: 0.3;
-`,oC=N.div`
-  flex: 1;
-  display: flex;
-  align-items: center;
-`,sC=N.input`
-  width: 100%;
-  padding: 12px 16px;
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  border-radius: 10px;
-  font-size: 1rem;
-  background: ${({theme:e})=>e.colors.surface};
-  color: ${({theme:e})=>e.colors.textInput};
-  outline: none;
-
-  &:focus {
-    border-color: ${({theme:e})=>e.colors.accent};
-  }
-`,cC=N.button`
-  background: ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.surface};
-  border: 1.5px solid ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.border};
-  border-style: ${({$other:e})=>e?`dashed`:`solid`};
-  border-radius: 10px;
-  padding: 10px 8px;
-  cursor: ${({$inputMode:e})=>e?`default`:`pointer`};
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  transition: all 0.15s;
-  max-height: 105px;
-  width: 180px;
-  position: relative;
-  color: ${({$selected:e,theme:t})=>e?`#fff`:t.colors.text};
-
-  ${({$selected:e,theme:t})=>e?Ga`&:hover:not(:disabled) { background: ${t.colors.primary}; }`:Ga`&:hover:not(:disabled) { border-color: ${t.colors.accent}; background: ${t.colors.surfaceAlt}; }`}
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-`,lC=N.div`
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
-`,uC=N.span`
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: inherit;
-`,dC=N.span`
-  font-size: 0.75rem;
-  color: ${({$selected:e,theme:t})=>e?t.colors.gold:t.colors.textMutedAlt};
-`;N.input`
-  width: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  text-align: center;
-  font-size: 0.85rem;
-  color: #fff;
-  font-weight: 600;
-
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.6);
-  }
-`;var fC=N.div`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-`,pC=N.button`
-  background: ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.surface};
-  border: 1.5px solid ${({$selected:e,theme:t})=>e?t.colors.secondary:t.colors.border};
-  border-style: ${({$other:e})=>e?`dashed`:`solid`};
-  border-radius: 20px;
-  padding: 7px 16px;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: all 0.15s;
-  color: ${({$selected:e,theme:t})=>e?`#fff`:t.colors.text};
-
-  &:hover:not(:disabled) {
-    border-color: ${({theme:e})=>e.colors.accent};
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
-
-  ${({$temp:e,$selected:t,theme:n})=>e===`ice`&&t&&Ga`
-    background: ${n.colors.iceBg};
-    border-color: ${n.colors.iceBorder};
-    color: ${n.colors.iceText};
-  `}
-
-  ${({$temp:e,$selected:t,theme:n})=>e===`ice`&&!t&&Ga`
-    &:hover:not(:disabled) {
-      border-color: ${n.colors.iceBorder};
-      color: ${n.colors.iceText};
-    }
-  `}
-
-  ${({$temp:e,$selected:t,theme:n})=>e===`hot`&&t&&Ga`
-    background: ${n.colors.hotBg};
-    border-color: ${n.colors.hotBorder};
-    color: ${n.colors.hotText};
-  `}
-
-  ${({$temp:e,$selected:t,theme:n})=>e===`hot`&&!t&&Ga`
-    &:hover:not(:disabled) {
-      border-color: ${n.colors.hotBorder};
-      color: ${n.colors.hotText};
-    }
-  `}
-`,mC=N.span`
-  font-size: 0.75rem;
-  opacity: 0.8;
-`,hC=N.div`
-  width: 1px;
-  height: 28px;
-  background: ${({theme:e})=>e.colors.border};
-  margin: 0 2px;
-`,gC=N.input`
-  box-sizing: border-box;
-  padding: 7px 10px;
-  border: 1.5px solid ${({theme:e})=>e.colors.border};
-  border-radius: 20px;
-  font-size: 0.85rem;
-  background: ${({theme:e})=>e.colors.surface};
-  color: ${({theme:e})=>e.colors.textInput};
-  min-width: ${({$price:e})=>e?`unset`:`150px`};
-  width: ${({$price:e})=>e?`100px`:`auto`};
-
-  &:focus {
-    outline: none;
-    border-color: ${({theme:e})=>e.colors.accent};
-  }
-`,_C=N.div`
-  display: flex;
-  align-items: center;
-  gap: 12px;
-`,vC=N.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex: 1;
-
-  input {
-    flex: 1;
-    height: 44px;
-    box-sizing: border-box;
-    padding: 0 12px;
-    border: 1.5px solid ${({theme:e})=>e.colors.border};
-    border-radius: 8px;
-    font-size: 0.9rem;
-    background: ${({theme:e})=>e.colors.surface};
-    color: ${({theme:e})=>e.colors.textInput};
-
-    &:focus {
-      outline: none;
-      border-color: ${({theme:e})=>e.colors.accent};
-    }
-
-    &:disabled {
-      background: ${({theme:e})=>e.colors.surfaceDisabled};
-      color: ${({theme:e})=>e.colors.textDisabled};
-    }
-  }
-`,yC=N.div`
-  flex: 1;
-  min-width: 0;
-  height: 44px;
-  box-sizing: border-box;
-  background: ${({theme:e})=>e.colors.surfaceHighlight};
-  border: 1.5px solid #f59e0b;
-  border-radius: 10px;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: ${({theme:e})=>e.colors.secondary};
-  overflow: hidden;
-`,bC=N.div`
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: ${({theme:e})=>e.colors.text};
-`,xC=N.span`
-  color: ${({theme:e})=>e.colors.textMutedAlt};
-  font-weight: 400;
-  flex: 1;
-`,SC=N.span`
-  margin-left: auto;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: ${({theme:e})=>e.colors.primary};
-`,CC=N.div`
-  display: flex;
-  gap: 10px;
-
-  > button {
-    flex: 1;
-  }
-`,wC=N.button`
-  flex: 1;
-  padding: 14px;
-  background: ${({theme:e})=>e.colors.surface};
-  color: ${({theme:e})=>e.colors.secondary};
-  border: 2px solid ${({theme:e})=>e.colors.accent};
-  border-radius: 12px;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.1s;
-
-  &:hover {
-    background: ${({theme:e})=>e.colors.surfaceAccent};
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-    transform: none;
-  }
-`,TC=N.button`
-  padding: 14px;
-  background: linear-gradient(135deg, ${({theme:e})=>e.colors.accent}, ${({theme:e})=>e.colors.secondary});
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 1.05rem;
-  font-weight: 700;
-  cursor: pointer;
-  letter-spacing: 1px;
-  transition: opacity 0.2s, transform 0.1s;
-
-  &:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    background: ${({theme:e})=>e.colors.btnDisabled};
-    cursor: not-allowed;
-    transform: none;
-  }
-`,EC=N.span`
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 6px;
-  background: ${({theme:e})=>e.colors.surface};
-  color: ${({theme:e})=>e.colors.secondary};
-  font-size: 0.75rem;
-  font-weight: 800;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-`,DC=N(px)`
+`;function TC({temp:e,size:t=`md`}){return(0,$.jsx)(wC,{$temp:e,$size:t,children:e})}var EC=JSON.parse(`[{"category":"커피","items":[{"name":"할메가커피","types":[{"temp":"ICE","price":2100,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/XTYxU8D5ru8xERuv8Q_nGwtQqY6pckvlnIgsFKM_qcYzWIoFmYm7N_4_3iXMGjyCUxHnjPiH_SZoCRYw1RLD5CTw9nHeUiNM4p2lLm4Hzhg=.jpg","kcal":281.9}]},{"name":"왕할메가커피","types":[{"temp":"ICE","price":3200,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/9/7/pHbAGjPdZo7wmyoVWIPa0JK-X1Er71UHCEDm9n9B3x7z8nhNIuVh2GywxFVfdBGtqHaPeLZRWwNpyRGqtzmOO4Sig1s54SoQD8ywiW8RL4w=.jpg","kcal":468.7}]},{"name":"메가리카노","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/8CsObuLkuMrDWOrREdkcpwWmYWlfI17xflcueqovqDu5twGh02ahesy0CRuqQucN69lZtZJY8f3PK7Z2uvqwSntmQabGRJTm4ArIOZgPQ2w=.jpg","kcal":16.7}]},{"name":"아메리카노","types":[{"temp":"ICE","price":2000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/YCTJRzZzLM3VeSgEAlQ7tuV1LyTaKOPLh4wLzRd-ZcC9nkv9nASXJa5yQB-IAKa4DRwGWjXtk_kvwXu_8qLUHieWowmfXWcQz1r7kUVl28o=.jpg","kcal":12.2},{"temp":"HOT","price":1700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/dSD5PDtxR3lyFWJixlb7rtCHsj3nRwRdqWCfxak4UeBo9GVO-jcAVJlEhJSQm6Tbt0ee4h2ehKit2OzgNRW8Ewu-rg-UP6YC-NrOxLdUThA=.jpg","kcal":12.2}]},{"name":"헛개리카노","types":[{"temp":"ICE","price":2400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/ImQ5tPNk0JcxDRPqJwVNFmsefUOUEpN4aG1cuwCPDsRD5NpUHjmoMFczbKPtn-2TpiBygoga-qiIJnGz78G7JHjA5EgAkHX9acfkFZ-cWsI=.jpg","kcal":34.72},{"temp":"HOT","price":2400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/yHKiitGVKZDmDw_-aJrjoMR4SgrCUos1k8iSSXk3foMHpbuBxJ9_GW3rVjXpFIpZVsYBGtxv5Ki17HvmTwYdqCSOgwUndes4aqiewPv9tmE=.jpg","kcal":36.09}]},{"name":"왕메가 헛개리카노","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/qNdW5Ud-ZBVlPxXx64zgX7_yWvY-E9vElWviGuvTeDM3jq362kh0JeQ7xURqnvIMYmLYlJf2CDk9nLrJGTHhKZ2Gk0e7JJczsORnG6ONxoU=.jpg","kcal":55.66}]},{"name":"헤이즐넛아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/cKMztbK7XLq3ioWnlAZfusbQM8ns3lNOswhrFvWF8cWavxKHiqpyecdqTWQZeQxWGwk6ouTFBxUQxbN-z1p_mmKXDGxe3SIEcfzxPzQAw-w=.jpg","kcal":113.6},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7V0TAZIKA1267ZNhJ3t-0K_Svegy-u-52wOqkHXXrV2H2hDmaa9MWdjjp_1GhPnAXj18mFDSEughXNFVUbGfWwRbLBTGDEnmeqSa0NIMlgY=.jpg","kcal":82.7}]},{"name":"바닐라아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Dyyg4M-TuivICWG0DzT1ddRM09n5YcVJ2akSZ6euV73MqNAsuaXN3ZH-bdZoiUW_o4mHBw8PzCeRTfcsyGD6iyUDGc5D0S6sGKF7LhbLOSQ=.jpg","kcal":235.2},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/2TDbjsz85evdHbyKWrCnuPXSJiM1NTO5KlciwQINPKSk_ES9zC_HCUJXI727eQS0hxRi_PwBeFU9omti6jL8nrS13YdBbd19wMWA2SM0h74=.jpg","kcal":97.8}]},{"name":"꿀아메리카노","types":[{"temp":"ICE","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/ZmB0jjto-EMFila3QBgFbfkvrWYtDsAfoWhgXSjDWojj6mwWAyozF37O1nH6NGCFmg2UaH0eXzz_fbSQlzNC39VbfMefxnduP7B390G2Ixs=.jpg","kcal":162.2},{"temp":"HOT","price":2700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/E_GI92IP8MDF0elc9TmEzBRGL_vtqWqvSkDy5JkoyyFio9bCJHsVCc_HUhU70aVpW4uhJe739fNUoG9cDTHXvILR1vXqffvibQ8PI8L6L5k=.jpg","kcal":172.4}]},{"name":"카페라떼","types":[{"temp":"ICE","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/FCC2nEv-cy9xNWmbf8NL6SANmU7AR2ktB4k9WymJ1QqPZLwU_H5GK2Tw44izYI-QSR3nsERjpF9NOd1b2QtQPfhsYsJ9oFDGtrnDEXA96_I=.jpg","kcal":145.1},{"temp":"HOT","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/e6nWNm2hOvNX9cRnTGmvoZ6IzAZXg4aT6xMgmwEMj_FH-_YH5QM9BQo3yqlxp0Q-zUYjqDEYn4hJnAJnO-YJalXA6583v8ByAdw9PdxMZg0=.jpg","kcal":175.4}]},{"name":"카푸치노","types":[{"temp":"ICE","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/8/27/wJB-x7wYHCga05RJyxxcoixIXihEQ9TF9fRCb9dtrta3zzuE5ex5wAhTYr8N9NAe.jpg","kcal":132.4},{"temp":"HOT","price":2900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7qnlkThF_2ff8601wbn4eZfZatRmlCzNpI32gxS4VHqANZ7SBcAR0hjGkdux-v-ojbg34i_nSfZqsiE71faJDqZBGYRf8guDAGvQveBLUb0=.jpg","kcal":145.5}]},{"name":"헤이즐넛라떼","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jMRcX9xf_commN4yBBz-BtxLq7VZFYmRoFryZ_tRPKfRbOdBnBjP6xZr4Lxui5oEYMd3fou6LciSlzRJ1YnHcORBCLwNr3JXjO9D2r_Gqy0=.jpg","kcal":237.4},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/rgFIKA76rYbztL5hz_ET9M8uaeuiC2N_Jq7lXs0DwCU0i2eaoZU5k0PdJfs0yx72vIvFGIvffvq1GQvocJOQsPKk0gHr_M7AFCKihRhxSTE=.jpg","kcal":240.5}]},{"name":"바닐라라떼","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/uEqU4V9G546DSKlY-BefMiyymtAt7A0MmhcMGTP3WwTYD1iw7sOp_CNnC6KK6pQsGm0LyHiFf6GL07hiNfnLpSSCuMJtZyB5iLjf0V25fw4=.jpg","kcal":239.2},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FK_ItzAlwFMUqZr9oyC_XN_DmRgsUlxTyYvRgD4_psmJvYhV1HpfKjhLMeeBowZnA-2IJiykoGFw6v23zVGZvl0nxDLHaofDqoZL8gTtBIc=.jpg","kcal":122.7}]},{"name":"카라멜마끼아또","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZP_gZJTGqfnSMl9HwVW0o6RZR3nByKXXdFMvsU2fWI8yWxSeQF8K2iDOgaXfp9jKwgbEuzDpd1CsB7ZSpk0EXcL999TEuA-TgfP01DAjoXU=.jpg","kcal":243.9},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Lbh3H-R9tIREruhkEin5YPhKG9X5ZEU4Tw8ayHWkfecFwHXe5xtuTzG31MHFLtS1YAkTFGq1Cr2YSeKwvAyeL5es7XF4SA9WZC7-_b0we50=.jpg","kcal":244.9}]},{"name":"카페모카","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/tuLjHc0hz2y94RCd31DnwRK4tjvwczOcHrM-G7VXpxe9ykC8ENqkJpgtVWCeqe_t.jpg","kcal":318.4},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3drWhW1zSAyeHZwYGsWEJlVl2ba9nkENPyi5Zzn14z_cPTdVTPOf6X9idZkO32MSMZPuUyvSpk9MHye1TcoRlAz6kczY6wKcnS_1ieyVHGY=.jpg","kcal":401.1}]},{"name":"큐브라떼","types":[{"temp":"ICE","price":4200,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/oIzdaYhQ8HggpGVFaholmFQuAh_6kPOsakrXsoSirkEc423pVbiqZWxuThW5gw4omdwHfUmu9SwL8RkB580Rpf8WrvpuJ_wT8h7EYLLVcco=.jpg","kcal":304.4}]},{"name":"라이트 바닐라 아몬드라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/7/4/MNYEW4vRV-DFkOiJgotutu_Mblgste4-rZdKoTXAl8dbrch67y8KYiKComMUFI4ARyu8qovykIrxhRezfpGyDbb49KWjUmeKdBQyyMB_uzk=.jpg","kcal":75.3}]},{"name":"연유라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/f8TY5r1HI9eWKCivIyv9vqPFdeyK7tE11TwJ3gNQeCBAUXuWkYGl8KuSvGSZ27vnb6UbRygdz0n7pbmvQ2ScpkHq0zDQ5IS53tAEUgGt-lo=.jpg","kcal":351.5},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/T0fcCOFTu8MpFhtF7lhXy2vxWWLdE6P2v6uw0iPSX99Czgp5cIJFx0LBoNoJQFkHgqWCv24WNGMhsIvGqfV1OHEFobQNbsaRBW31REsEYxc=.jpg","kcal":321.6}]}]},{"category":"디카페인","items":[{"name":"디카페인 메가리카노","types":[{"temp":"ICE","price":4500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/x7nUb0kciADVxM_achO01I65GqnNNZ4pGjqLhNpKjT4h9K-xhdR8ngUDyMrN64znetnV9GSWSlfrTa3yUnnBAblyvtmVjom19s1-se3jTAI=.jpg","kcal":17.1}]},{"name":"디카페인 아메리카노","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/1fNtPohtW9nOlB5FBEDYUDRi4VQq4tYID6XyaFPctUwQbTDlyno6XGd84zXVgooCgxPivwYyvsdLQMpwV0NiF_nABZ3dri3ou_XkS2k8M9Y=.jpg","kcal":9.5},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/skVc7BWchEyb2Ca5Dn40iuEta-_8W6qkJ7LnoJPNVULktE3wPVaHmaQWuNiW6m99n3dQ69qDz1t1S258f5OGhn_a21mDE9PNPqf4qI95JB0=.jpg","kcal":9.4}]},{"name":"디카페인 헛개리카노","types":[{"temp":"ICE","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/2fcU8MkE2bijqf2d8X1sIR2hlqEHWaspib5PhMT1_Y9jx7jKiIzKgLLaBnwCoN3xJPGNWiFK7VDuQytLYBGsWk3NUAdKA_pF3zbcN3kPOIs=.jpg","kcal":33.33},{"temp":"HOT","price":3400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/5GxlWbLUyuE7woSQDlofHujRBmBcrrzqK9t-Un1T5pmfsUPgHA2pi5I0Y-oJWZSOJLvvm6RDXueN_kRzPdlHdVMImLA5q7dkRWNOmAElLhw=.jpg","kcal":34.23}]},{"name":"디카페인 왕메가헛개리카노","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/YXNAzS4U-xa9RmTwtU2OnWzFGnrwYXpyobQjkI3EVV0EuZiTmkkv5vuithkRT81yOmVxcMZ4PUVQCmfteuqfPKErn8poSNObSmqpWPw7Xto=.jpg","kcal":55.51}]},{"name":"디카페인 왕메가카페라떼","types":[{"temp":"ICE","price":5900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/KuUe3gLNCjF6o_UCfqT3x_-LqDCv1aLvaGNYCIO3CBPN3CZsPU5FhkH0lsDkVY9z9q30tkyuV7MX3Mg5SeQnysV0EmohpGPVnbGYFpfRKsM=.jpg","kcal":278.7}]},{"name":"디카페인 라이트바닐라아몬드라떼","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/11/6/NsSstOq2-J945QP86fn8hZn7yb-HNr4VsFU9QpONQbXHOyzySzTlS4Yh38_bKX8mD6M97yWsLaJ3ePPxcCP9JK0mCWla-GD8qRI_Yh0nxG8=.jpg","kcal":65.86}]},{"name":"디카페인 꿀아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/Vrld1P_KUtkVvRIKlWeYojBJagmEv1Hv8JJzGoNjExJqWdQyY0Xl_N5BAOgAuKNgL9g34dOL6FGttcrg9SUw2y-5KPTMOqNfkJp03O1tgag=.jpg","kcal":137.4},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ckhw4zNVGZ7KVqLgj-SoGm2FLb8kjh8a8UyamYbhoazvRQdYgHHSsBNF2qfEYJTCgssRBFqyJeARO_2LYVPoc_5LW83uyOSEDijWkNTJHH4=.jpg","kcal":149.3}]},{"name":"디카페인 헤이즐넛아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/kodu_amIhA-DPPD0ARhxINv3sSkIl3ahnS7B1-XP-eavWRiDJG8QzlnusnvmgQfvUBi8O9QMZt61dmqrfHtaxuX8YlJPh8SAKHKV0CXJsoc=.jpg","kcal":108.7},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/mkVt_DBWr2NNiDWVD2-UnsrRykuVHieCG4LsSQbSxPae775K5boIDvSdHvqzbujUwc4nR-2GXVjvYr45Rxlz-5VSZd4cF8h3_Is7jrqG4Ww=.jpg","kcal":84.2}]},{"name":"디카페인 바닐라아메리카노","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/l_GDxsvo7ZLpGyTMLKgsslNn0ipMaIdBTLYI6_rZ3psN6uBB4w6c8ZPHi1od2f8NbXupJtjRCpDNRQoSfgTWH1dt6kApw29_Nnq6M5tNzh0=.jpg","kcal":107.5},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KOUNG1AwU4Bp5u274fI9yucuZArTSi14yaDJv9Eag5wURNEQu5Hl-uHbGluk90URHcGpQ4Zv8XM2ZdZGIxkDwjhPCTieUUjiwJHb-vYduYc=.jpg","kcal":83}]},{"name":"디카페인 카페라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/QntryCSa9sk__4ok4k_F3T16oUnJfmzCwrxdeydE6VOqte6trGa-J_ue6u1uKAS6qUrHhMzRXWSgwmMT8lz78q4qI9DhmJK1BazdMD0CdEI=.jpg","kcal":147.7},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7mDig55TZN1lcsoJ-RtyBp8h6fwX8x10l6mLBWNsSaF3zF9MbjSGFDAyYT3OOJ2g34YWZ8X1WVrEuBPC5mmFHhlX6bA1vsMTW68ceG2nJZI=.jpg","kcal":178.5}]},{"name":"디카페인 카푸치노","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/QLcSDHi206QjoVR82j1EcIxs1wbSwWfazaKDJzZUgplz8F8gV0bQvO1Lbbg62w-iZcJIH4Fs3V25wLDPqADC2GZcrz6qEtxMxM6_nGknNdw=.jpg","kcal":127},{"temp":"HOT","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/LBzhAd2EfEmCZbQ4DZ-QqnjnJOzwTzTMBW6fgcRut2zkT-P7oAUVMANJ3xWiCIxroYCBps7yExJi2xEJLdyoEws1PEmoIYH-9ySEFNoRkhs=.jpg","kcal":152.9}]},{"name":"디카페인 바닐라라떼","types":[{"temp":"ICE","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/wzK-IiDULmS6NiyITNJoJ7i_25IopEooO_h5TodWSoQhph-7wLbxx3IQARP8rYpbtj68Gmd6KcyVK4C02PROQDfYh0DPvy2XDKsVtbO12uI=.jpg","kcal":239.3},{"temp":"HOT","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/H0IV-4CWmFlw_X8XBGBCR5wybYN7GK0sL3PkngYmd8XIvAIeWOwHpTIjqBHWhBupU7WxktxEUHMloUXB1jjsn2iVA3_vH2dOmLlCv1ZNNRw=.jpg","kcal":233.7}]},{"name":"디카페인 헤이즐넛라떼","types":[{"temp":"ICE","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/jdQ4VQ9Xn-5iJZyX33VisJB3iCrv9x0pEI1bmqTK870RR2ohU6p5Rx5CRQyYDRouNVSsaGqtXwHBFKgkwPUenMHH8UNgl67MXipvkQhaQSA=.jpg","kcal":237},{"temp":"HOT","price":4400,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/VHTcXWLo_t9G0SDMMt_T35FyoixHt0i1xUBpHHtO1jn1VdqHj4zI98jFY3rNde6Lz4hNIDI2QXMLq4ji5lc2xqjPlDGMDy8dOgPlC7z9lE4=.jpg","kcal":240}]},{"name":"디카페인 카라멜마끼아또","types":[{"temp":"ICE","price":4700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/ZDloHWlQmeNoVePMrRUWuLNtXLdsIpT_YM1daMq2vK3qDC-Z2aObAtFIrfKXz7Y2QdbfL5mgM4spJQ3P7lb2jK40jtE4QSkPmd8Vkfh3O34=.jpg","kcal":232.9},{"temp":"HOT","price":4700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/UxQLNgZsnHypXltzlOv6456wc0saPL5alF4IGVraqH25iR2XX7pepVNYQ0lBUVwVSaJZRC4MMhmIZAbzIClr8CGHWBS1T7ucYet2WtkFCgQ=.jpg","kcal":238.5}]},{"name":"디카페인 카페모카","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2023/1/19/JA9HhCKEnY2DwfC4tba2Cmih2go7T6aWoPJLgPSgM5Mcg6mABbHhPInKaHoIx57AIcfXiB2VSM_HZ1CbrRRC3gm_X3ZH-VTDB87ewQQF-Ds=.jpg","kcal":319.7},{"temp":"HOT","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Ml6EzntvSbRQFFE_bj6OCj0UfNLtm8E9DQEgUfbhY_VPOkujs_txNHz5T7MWe7lhmdNuppQCc5K8wnWbuuh5DK4C1fnkK9CmtX4L4mNzuyA=.jpg","kcal":430.3}]},{"name":"디카페인 연유라떼","types":[{"temp":"ICE","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/FVFUpwTG4iiT6isAdlbl3_RMM_Sf7T-f3hjAsvs9sauUZQXVBYtXMkSm_LSOn-QiLlnTPZlMZkJTclG9v2o4UhyQTkYu40-RmF2bG8E4Saw=.jpg","kcal":305.41},{"temp":"HOT","price":4900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/i0PLW15wSa3tU2BAembTyPPwJoE53qxRRv7v7ZEvWU4rF2d3HeKaioXNeQ_GZm_n34WSgBygRsDrrr65vujOp5bLwzd-sgxOoCr2lgaLITM=.jpg","kcal":301.5}]}]},{"category":"콜드브루","items":[{"name":"콜드브루오리지널","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/wBZMMZKr_-1d-niKysrpJKafXiKnikZcy7K9TugujVdD48H0Zu_izdy7_AJZ3zX0i6Em4ARnPcUgrjtHiePXurHzUYDh6A3yLb35_gX2qp8=.jpg","kcal":7.2},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/KM0IQkTvYPk8UgQfkDC4PkVepH46mfU5-SvQ53TcAQlRtWBcq_oLHMhifSzvGgtqrvj61yej0-MzlEoC_E_7qFB9Vr1_hLuvE09BGN0jXP0=.jpg","kcal":10.6}]},{"name":"콜드브루라떼","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/Og6mGDoYAqw8RLQyF9uj21A8urCmzSVt6Z2TksfJ3TgJfmhiWU0MjsJUsejC5G1B.jpg","kcal":167.6},{"temp":"HOT","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/c4P5gfFHdeR6AS8mOvVeXNXIBpLEXqF_eiPhg-8qOUviI9V_OcECnouHen1Smf8bDAVENf9N63FYLYkXj1a-OBhc1XQaqCaiS56SWhFymAI=.jpg","kcal":164.2}]},{"name":"콜드브루디카페인","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8k9ajfm47K7hu678chtz7PhI424ONVC_KDsueF6vZVUN.jpg","kcal":7.7},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/ZPGPcFHZcWodTdirR5LTP6bOvRRrGTsSE6Rc6YEKc2Nb-7lk3i8xmLVbURrj70N54G6iAgm7hObGMMI3A2T_uuBaPHATsfp6f77FzpD93QI=.jpg","kcal":9.4}]},{"name":"콜드브루디카페인라떼","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2021/6/10/GOxgpn2ByDSUxg9suVMs8pTWPvW9Ovj10Bf-RPqRniUCgwPxMPhvsKlOvSae0-XF.jpg","kcal":140.8},{"temp":"HOT","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Gj_Chm58Nd7GjIolW8kE0FVRdyq2PgtyFzqbloy9NWCcZfvBQeZPnqe1ZbDzwZz2BzdoTEa_dzztS3Adauw9RIcZI7uY--N58w_CCii79mo=.jpg","kcal":153.8}]}]},{"category":"스무디&프라페","items":[{"name":"초코허니퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/hYknmTYOCwRzKtEmdJa-DSKiBsJDkaWcQXkkVc7gS-mHJOHbqQKtgKdHNab5cON7qSq5p7wluB5_kefkkHnDG2MyXM43I99Ja-cH22FqrPY=.jpg","kcal":577.5}]},{"name":"플레인퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/sgtWxTqzKESS26TloH6u7CcY17wFD-Loe3qS1Mn2zBsbUwSWoyW_mSRSEEy23W-foxo0e6_EZBXGgv4KIVTKOSlRizrCQNMUNFaajdobQZY=.jpg","kcal":468.6}]},{"name":"딸기퐁크러쉬","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DeN6uRIN4aUl2HWiiGTw0yn58G2XQh9u4Ij_-d_h525x2dxahmN3EWAO5ptIIDUWWGbwx8JOXyrLC-iKol5wceMs-6Kdt52xOrN0I6b7kHY=.jpg","kcal":536.9}]},{"name":"쿠키프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/U3ulgBShL7iWWeL9sUQuH6K12z3mAsge8cbMZKo9yZTDqwRPY9bwhauQJtab1s1rcjSWMf2FqPsSMIHS09PYMOrriyv9PISYavAYKP1oD00=.jpg","kcal":725.9}]},{"name":"딸기쿠키프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/p3UbVRXvqEAY_o01G7QMlK9l00vBM7fVbMZROa3og3KtYVMVFo6cv1YGNPVOC9ZzzQzTOfev9wRSOgZbzDf7OcYceljLAkqV782u7NSRNXM=.jpg","kcal":575.6}]},{"name":"리얼초코프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/HYAGIStr8O_o5OEr-tqaZ_Gl2PQaohiYQ3GeHTY8zFgPUThDQy6XGWimvx4KT7dNZEQ8nBZfnvPDPymWFaPGrTgImBi78ZMAP7giRzzc3NE=.jpg","kcal":651.2}]},{"name":"녹차프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/C37po66-jmQcIkfDoVq0l6haWx6aqULj0Qkg-U-vyku79zc64dP2SiEMRL_PpFIZA5FkFSSzNSHnJYT0mVsGDr26k4cesriLC-MaTmNqtPM=.jpg","kcal":584.1}]},{"name":"커피프라페","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/fMbT2xfOQMs5JbOKa_FoErvyXXsmfiXlx2rg0wi1eZesdoqmE_z5dlMTFNu7fatYoZhF-3c-McuoLj0J43-7qgMVmufgw3y4Nr0TSQMto6k=.jpg","kcal":420.4}]},{"name":"골드망고스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/HiO3XBKPvdwpdb5KMjSaqE3QoIN0irt1rCHHZKaJK_5-dLm2wkKrbN79gwNxPhknwvu9dLBD79QMQhQp4w0XOAhw8R3A7Bk8ua_BkQ7Xl18=.jpg","kcal":209.5}]},{"name":"블루베리요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/O-Dgf-apoZOKt5Trw4HerxwcXImNLzLHub3ZkKche6LxGs3xv6IjpzcNeXXdP14xUptpnBZ19IP_UI9lDUW85r97yDDYQiZgnLkJ49vIogo=.jpg","kcal":531.84}]},{"name":"플레인요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UnFlDthRpNWFGRZJBeuqCvOn1r72i_l-APyuLfUoCNzYQ_mdtvcPkMIfr8w48cf_ePx71gpvlCEAeLDJds1MphXhsyeAsov3cTozMYzIsaw=.jpg","kcal":514.9}]},{"name":"망고요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8_0Zp8hYrzvjMLfJYJR9NkMWn0XIYLub1kzIoFq2HPkF40vClyct3m-EXZZJtqW9UJzl6gY6UEOc4sfaSq0xCe8JKGT6en5dFn1uSUA1GEg=.jpg","kcal":365.2}]},{"name":"딸기요거트스무디","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/VIencBIHXO0PFoISrd3E6BuAlNr8Dq4grCUxC63Pf6Cg0OyE_606mrV2U5cR4OWI1dnn8UXNKb4vabkbPp3OGe1kwwfC88_Kn5JPKQor2cs=.jpg","kcal":388.8}]}]},{"category":"에이드&주스","items":[{"name":"딸기바나나주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/IqQXs5tV39WaUp1dxfsOP7aFtnyNGZonm_woowR2GCDfQjBXnhBAZi_3iLB5pLI0FyOB71ffQnLQkFPtCu7Bj8A5GN8xJZD-JHgk_mNnzT8=.jpg","kcal":268.5}]},{"name":"딸기주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/fiAyoicvvkXHyKuOXHZSoy6RXDkSVKG8HW23wcQcZEjIrqM95YjoRnT7tRtjFbBTx0YQfaQl9IwWXyfE1S6GbCHl2oVBwdwULpIres3bh9Q=.jpg","kcal":196.7}]},{"name":"골드키위주스","types":[{"temp":"ICE","price":4000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/78ESCqbt13HDRlBvesQntTC1IQYcLUhoT6svdqDn87lILR15qQG0ZWEBCiCAKIKf7CDBajE6ULgjiiPxq4I8uzKc9CDeg-bnaQXN12bzDmk=.jpg","kcal":202.76}]},{"name":"체리콜라","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/1/26/0n8OMt8tMcq02EI9MdRke80NnuyB_Jo_GG3FEstD6fUz6CarDmHIAI0c9wCS4X4QFFu8y7nRKKHZkQzVjSvy7vqLwQhrAKUbCuMTkB5BsaE=.jpg","kcal":323.6}]},{"name":"제로 부스트 에이드","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/VjJDxfn_lR7rEmq1pOkKP1lWuie2NtKbMAZlAdzQOc9QA2msFHuxMCGUBgDqQ1Bw68NN6mu7zD6gA1ajX9KYwG7yU-Gu4_wDxmwADrSaSjM=.jpg","kcal":11.67}]},{"name":"레몬에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZXA4tkJN3DGmd9pEouXYjWfl2TKE78CqY79KorHMio41Ud-MoEFkEGSf0Mvu52WFf8LdhcLQe7mDWreKW0bozEHT-ibG26bJWcXPFqnhmUI=.jpg","kcal":196.8}]},{"name":"블루레몬에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/8wdjlF4OEZ_pyFUlX9iqcXPoeKI9185m-HsM6MK2Ty1bWpSYztP0SsMWmBSf_xdIjb-GV0KQqtvDlxG5NRn0y5nD-t3H0l3NHCYPinSc4U8=.jpg","kcal":225}]},{"name":"자몽에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/25/5lRtLLtoQL_HFUZJqjUdpzTSKIEOFNHHly88bsDpQWhTK8uRQYT377LwM8u6LA2hs4llgfm3jr1LG3cXuSmQ1t9L4wrXSSU9_i1CZPZLnjM=.jpg","kcal":203.8}]},{"name":"청포도에이드","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/5/9/2andKV291hDArTBXIpwbjNiSznZWH2ogHB2uVGqLzBxfzBq6wb3K8P-dV_VgsXOXvVLKnln_s5PzBoCH6RTUp59JlaWsynIbQcm6zddkWnc=.jpg","kcal":305.4}]},{"name":"메가에이드","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/Q5tENzcXDDCQPunmkxMh0zRh1M6aTmE4fgUkIKwO2o98x3SgB2RMzC_NAruu_Go2FqbzfUgEmV8LQTW5rGOgJk5KKODLdlggg-euHjS611g=.jpg","kcal":292.4}]},{"name":"라임모히또","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CEdE6k7h1q-8DIvB37-JDO_CdJST9zSyY6TvC-4IpcppYOCCbT_ECrB-zzDeny5UsW1E6HQwyOj6S8qcTZ8RnM9XH9jHs1rPHlLWbW4V954=.jpg","kcal":278.6}]}]},{"category":"음료","items":[{"name":"오레오초코라떼","types":[{"temp":"ICE","price":3900,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/CLscCTM4lF9wK3TGC-_jXsHmtqrIlkXoC_FXGf3wGw48qJ7XXhFRrOSpdw42naxfqrBRcg8pEm5kI0ixqAI2BsDprk8EYNL0lsH-dqSj9HU=.jpg","kcal":449.6}]},{"name":"핫초코","types":[{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/eCnZ0fbfWdqBGmqe9ULnebNqFFYFglMg_4mzIYhBO6dvQMk0YlRDm7kn5SFb08R4AbIdUSBUvlJAE-k1jCEQt9qDmUHabFjH-ZlpvaUy2hI=.jpg","kcal":374.9}]},{"name":"아이스초코","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/AffY9Ui4NN306YYX3OBdSquPY0830jqFA-BeVjBXiemNaSH9dRTN4oVxbQ-3zWXfDQ3bHS3N_LTUnpl4_oxqmPA4wFQa9qvD8fx4rpsZ1fw=.jpg","kcal":308}]},{"name":"토피넛라떼","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/UJOYDOT1iVtRIRIVY7h21MUqhpyOxo1PA4sALQZc3QIkgzM2w_cbxc2gYuf-LsKTbKRgJgb7g0yTTcsAiwncesJ1qhjWLajW7UMIcEaekjM=.jpg","kcal":364.5},{"temp":"HOT","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/7_7I2nWlmKPeIqCQmBmijHfPY4NqZcesLkOUIhL_Abs8GiPJOsSMsB9JmFiFxl1jsZOOhzm1lNggFR5t4YmcXG1NARCNk-Qh7DiLTSoaF0U=.jpg","kcal":368}]},{"name":"로얄밀크티라떼","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/5nZcFQdOlYmvaX8uIPAekIDCD0KClKNoepVf7WMw8k89Q7Y1kU-vsz-YF2YclnQgRvGUwzoaCus6Zmw9QabBOQaM426wQXu9ndAgd9nJ1oU=.jpg","kcal":254.6},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/bBwH5weMkSR6z4aEgl0sLyxyYYLw9HDgqL_ZnN4MYwm7oE9dWWP3FFv9S80APSLDNm8nHxWPMUjXqv02s-GjNkPqQJGa7KXXe4nWhLUmtCg=.jpg","kcal":232}]},{"name":"녹차라떼","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/1uddJztS6QEfLq2NH_rAW0IzUNeEBLgiKKrA7JqBR3V_tmW371jQgIvUVRi8JE1qsUaw2Bj8A43kVbxv6C1vjXh0S1fmLPoTHnWruUTwO9c=.jpg","kcal":288.5},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IpLtr10JuJMHs6UVu1LP39fuTmOZLfHnysQrk2aTy6x_s7ny80dJPJS3_cwTDTdGEVMZSkHLRc0OBDpg1IAQaQVywcqwqa1XkGd4_CFjrac=.jpg","kcal":280.4}]},{"name":"곡물라떼","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/ZvwaiPsQ9NyHmmWoDrxj_iVxE4CnYGE6SyshuCHQZk84mFHRHb-ksl9hnQdeuD5UqOmQfmjCgZEeGCZ4k4PlpgujzoYO_DT-vZidL4eZDoQ=.jpg","kcal":389.7},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/s1JoYM41s3UL9d9duiITlpRveqNJ9ZPoKCEPqBrIl7pogOcgO_re_UGmwib4k61BQArOgxfhJzOrHfJG1zh2Quux7j-vNGZWgk4EBSH0V-0=.jpg","kcal":467.5}]},{"name":"흑당버블라떼","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/z1NoRdTofJclMTopMiVplDN_6dJxrRaK4i3Grg5Uv7m-3RqS1pP5LOhp1nJ-rA65qA81nu_nmhaA6WKw8wkSQjfkYd0F4mw3yyUl2eTOOrg=.jpg","kcal":320.3}]},{"name":"흑당버블밀크티라떼","types":[{"temp":"ICE","price":3800,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/xK7cnG4T8IfWhkGDuVomAPVDk6x6h1M9C8kSP3LyplfwBHaogVd_lxqB1rSdoI_y16Y0pUCI209CL3MMHcBQkrp5hrVKSK-idKMwlSdBn2k=.jpg","kcal":330.2}]},{"name":"흑당라떼(펄X)","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/JZ1v49xs3cLAzISRCEs6xask0E5eapzo8ZJCBcgBnKazBtBqLipOaYBgtJNRLd6HspNDpAVLEjlHeBkdIrHmjJ9fs3uxmJb4gYUls4uGs50=.jpg","kcal":322}]},{"name":"흑당밀크티라떼(펄X)","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/DmXLWIIWB1_6yywJHwfhPRn9hlK8d4due2jKiN3fk_XxgsnwfIttVvSGO8HPz5a4m34Om_7QXvud0nHhbE1vKOLPJBU1ZaN2u6f_vdTlxR4=.jpg","kcal":300.5}]}]},{"category":"티","items":[{"name":"복숭아아이스티","types":[{"temp":"ICE","price":3000,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/hFZfNE45RMxnk9kn5zbdC6V2UcrsA-6W3dG2hoWBmGYsDJy2xfn_bOhFVVKMBj6m17_bVH0SzJE51sj9oCMayKKDu63hIRTCDrobrLPQ8KU=.jpg","kcal":297.1}]},{"name":"사과유자차","types":[{"temp":"ICE","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/PyQzngk8ggsOC87jw3q-nLcdOuQl8Y4sOvp6qLG897jS15jXH5M3t2ONNT9v3BlxwypU_SWVovKGGR9YBLjn0BotM8P_p8-SgfRSZ7eLT84=.jpg","kcal":242.2},{"temp":"HOT","price":3500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/IQzkyuSvf9uYWOlitBKrve9psGpHikZLFJWkXdtxlq1_5JvnKj-kXxPhqOkjtxIiSol9W6mxky1kMqLXJ0SIWWc8aL5fiawESQWws1Lsa5Y=.jpg","kcal":227.1}]},{"name":"허니자몽블랙티","types":[{"temp":"ICE","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/lkXrVZtrIjXL5jbPXM504l7ZVxfXHtd_aqrN5gcl4FmSdvjespVbe3jvpJhM54ciQu171bRy86SlKuxtBGQ1Hzk3bbWR_-NXTuN9Bi15BF8=.jpg","kcal":265.8},{"temp":"HOT","price":3700,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/9duwCk5Eis2jdoy6uwulJ6vH775tKK34N1_ormnXTrYYfjZo8TQa_gQPhRBCoy9o3ImtElZzi0XgasSmYVitxrNACEtOU1gIN0gdmQ2Dt8o=.jpg","kcal":302.2}]},{"name":"상큼 리치티","types":[{"temp":"ICE","price":3900,"image":"https://image.auction.co.kr/itemimage/4c/c9/c5/4cc9c5fd11.jpg","kcal":260.1},{"temp":"HOT","price":3900,"image":"https://cdn.011st.com/11dims/resize/1000x1000/quality/75/11src/dl/v2/2/9/0/8/8/2/IiOoa/7787290882_190253549.jpg","kcal":274.8}]},{"name":"자몽차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/zP6WP2bGSz12K70xdLt4EafXJRsmcSLChU--eRbBKPZqX1uA53UYKucF0YbC6f_o84j-m_sA_wQVObkpQxBckSNWKgmnNDmZfzKB3iVq8lM=.jpg","kcal":297.6},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/M7XaI7am_xsI6xkOvy47y5DMDv1SUeddVHeXr8fs_LTes1yQ11N8mXm1hfP96sCzyL7gTWWifYKqoEGPwq_PzRqo575Nu9lJTS9jrFfGUuQ=.jpg","kcal":294}]},{"name":"유자차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/bDmWbkUvhJI6dwog3U1vO5P6rmli8g3eLugj5hIanmZuqVTom1PKR3u02QHoG_Zj3RuQG3FHj7_6qf08ytrgy8em4kCcc1cBkp169YXFv18=.jpg","kcal":303.1},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/FOMm6mm39zlzNczKUXz12LVa2t7h5gxWp-ScWSk02qzmL0CfCz6G-zCD10idDU8DMTZwcqCidGZU38FPIl6n7I5albspg17KuP4PO_sb4C4=.jpg","kcal":286.4}]},{"name":"레몬차","types":[{"temp":"ICE","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/gOr0iRzIzfby7xTx1iXF7RUzmjKtL7K-s8vNeYPiX3arfO_9f-2pH5ucqF0eo09x7WTm0dd9hKgFEGK0t79a_TWllUoNEmPvYFnX7gfmmWU=.jpg","kcal":327.5},{"temp":"HOT","price":3300,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/wsz5AP253xHopKa63ZZYWoR_pgV786wW54xNtwtuWxQgBFBrKx_RW71STCAdfPS557RbK8LAiMdVrKvYWixhZQXwFxqDYZP6dCcERhylP5o=.jpg","kcal":275.5}]},{"name":"녹차","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/27/9hDYlB3brlT0s2cVM9sH65SlMTy82WREQNS6v2PXIczfTBBcSOC2dvRvSC4P6j2T.jpg","kcal":1},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/Itrsrt4eAgEgJR6BivC9e90ESV-iZRq3RCxWECetz5IkJRrFuMxJ_Y1dqeuoOSLwPLxp3erUe8zgkEm1uPyEgMTyRRG7GfAalbPFlWKVdog=.jpg","kcal":0.7}]},{"name":"캐모마일","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/6iZcXaap6Bb5XmF1c67fow_s1bGjtA-17rTXjO7x0dxRMy_Mr3mL3KPzw7E5sUcGZttO6o0sgfhJGur8uq4pTezMN5j68QhKG6TQCPoVQlY=.jpg","kcal":1.3},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/lJpBG9a5cI1FgRPz0sH227oHCUrFFcUTKPTLOc_8E4wEevBXCF0NjKMfEYVoMyFYHXqhMwaj26rVz8oUx-m46Ic0A-IWCo0XvQ_8VHaucwk=.jpg","kcal":0.5}]},{"name":"페퍼민트","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/MOdjfaLH_HCrAOi1FxDlLP50omDldL8x1tN2uOZaqmC56rpv_tj0CjfER33Cq4xi2f5tjAIg6u_m8nKwr1BFtynwKw47c37F1iRCcM9lWdc=.jpg","kcal":2.5},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/3Vj9IJvzr8jKZ0QHHyOt7XNi7D_xa3RoO6UKXgNqvgCjqMPfjvgJNZj6qwR7L8-R3J-G2lQoTXkpOfLqWSrF--m0rEpVR48ZK5_QtqmhcrI=.jpg","kcal":0.2}]},{"name":"얼그레이","types":[{"temp":"ICE","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/4/eVwf9hdU-A0TEEfRrlZ3THCgCum9Pa1pU4bMHEvdaR8x0TNIiR9rJC-tWf0QpgjavwaKTrxTKMYQZJdc9XXgvHq6rXxDbG3mXAunO4vqlbs=.jpg","kcal":1.3},{"temp":"HOT","price":2500,"image":"http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/6/14/0DdJKuR5TgZzQTZjRM8y46cIYBpZnEmcWFSQcjWTOg3QM1MOY0nctLnpJg8VpQGnMw13wg1EM_EkO3byAszHAM_KT0ckUDXdrzz5jap2Hkc=.jpg","kcal":0.7}]}]}]`),DC=N(dS)`
   width: 480px;
 `,OC=N.div`
   display: flex;
@@ -1386,7 +1446,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   ${KC}:hover & {
     display: block;
   }
-`;function YC({cart:e,name:t,cls:n,closed:r,onRemove:i,onChangeQty:a,onSubmit:o,onClose:s,onRoulette:c,focusItemId:l}){let u=(0,S.useRef)(!1),d=(0,S.useRef)(new Map),f=e.reduce((e,t)=>e+t.price*t.qty,0);return(0,S.useEffect)(()=>{if(!l)return;let e=d.current.get(l);e&&e.focus()},[l]),(0,$.jsx)(fx,{onMouseDown:()=>{u.current=!0},onMouseUp:()=>{u.current&&s(),u.current=!1},children:(0,$.jsx)(DC,{onMouseDown:e=>{e.stopPropagation(),u.current=!1},children:(0,$.jsxs)(mx,{children:[(0,$.jsxs)(hx,{children:[(0,$.jsx)(`h2`,{children:`장바구니`}),(0,$.jsx)(_x,{onClick:s,children:`✕`})]}),(0,$.jsxs)(OC,{children:[(0,$.jsx)(kC,{children:t}),(0,$.jsxs)(AC,{children:[n,`반`]})]}),(0,$.jsx)(jC,{children:e.map(e=>(0,$.jsxs)(MC,{children:[(0,$.jsx)(NC,{children:e.image?(0,$.jsx)(`img`,{src:e.image,alt:e.menu}):(0,$.jsx)(PC,{children:`☕`})}),(0,$.jsxs)(FC,{children:[(0,$.jsxs)(IC,{children:[(0,$.jsx)(DS,{temp:e.temp,size:`sm`}),(0,$.jsx)(`span`,{children:e.menu})]}),e.options.length>0&&(0,$.jsx)(LC,{children:e.options.join(`, `)}),(0,$.jsxs)(RC,{children:[e.qty>1&&(0,$.jsxs)(zC,{children:[e.price.toLocaleString(),`원 × `,e.qty,` = `]}),(e.price*e.qty).toLocaleString(),`원`]})]}),(0,$.jsxs)(BC,{children:[(0,$.jsx)(VC,{onClick:()=>a(e.id,e.qty-1),disabled:e.qty<=1,children:`−`}),(0,$.jsx)(HC,{children:e.qty}),(0,$.jsx)(VC,{ref:t=>{t?d.current.set(e.id,t):d.current.delete(e.id)},onClick:()=>a(e.id,e.qty+1),children:`+`})]}),(0,$.jsx)(UC,{onClick:()=>i(e.id),children:`✕`})]},e.id))}),(0,$.jsxs)(WC,{children:[(0,$.jsx)(`span`,{children:`합계`}),(0,$.jsxs)(`span`,{children:[f.toLocaleString(),`원`]})]}),(0,$.jsxs)(GC,{children:[c&&(0,$.jsx)(IS,{type:`button`,title:`주문자 뽑기`,onClick:c,children:`🎰`}),(0,$.jsxs)(KC,{children:[(0,$.jsx)(qC,{onClick:o,disabled:e.length===0||r,children:`주문하기`}),r&&(0,$.jsx)(JC,{children:`11시 40분까지 주문 가능합니다.`})]})]})]})})})}var XC=N.div`
+`;function YC({cart:e,name:t,cls:n,closed:r,onRemove:i,onChangeQty:a,onSubmit:o,onClose:s,onRoulette:c,focusItemId:l}){let u=(0,S.useRef)(!1),d=(0,S.useRef)(new Map),f=e.reduce((e,t)=>e+t.price*t.qty,0);return(0,S.useEffect)(()=>{if(!l)return;let e=d.current.get(l);e&&e.focus()},[l]),(0,$.jsx)(uS,{onMouseDown:()=>{u.current=!0},onMouseUp:()=>{u.current&&s(),u.current=!1},children:(0,$.jsx)(DC,{onMouseDown:e=>{e.stopPropagation(),u.current=!1},children:(0,$.jsxs)(fS,{children:[(0,$.jsxs)(pS,{children:[(0,$.jsx)(`h2`,{children:`장바구니`}),(0,$.jsx)(hS,{onClick:s,children:`✕`})]}),(0,$.jsxs)(OC,{children:[(0,$.jsx)(kC,{children:t}),(0,$.jsxs)(AC,{children:[n,`반`]})]}),(0,$.jsx)(jC,{children:e.map(e=>(0,$.jsxs)(MC,{children:[(0,$.jsx)(NC,{children:e.image?(0,$.jsx)(`img`,{src:e.image,alt:e.menu}):(0,$.jsx)(PC,{children:`☕`})}),(0,$.jsxs)(FC,{children:[(0,$.jsxs)(IC,{children:[(0,$.jsx)(TC,{temp:e.temp,size:`sm`}),(0,$.jsx)(`span`,{children:e.menu})]}),e.options.length>0&&(0,$.jsx)(LC,{children:e.options.join(`, `)}),(0,$.jsxs)(RC,{children:[e.qty>1&&(0,$.jsxs)(zC,{children:[e.price.toLocaleString(),`원 × `,e.qty,` = `]}),(e.price*e.qty).toLocaleString(),`원`]})]}),(0,$.jsxs)(BC,{children:[(0,$.jsx)(VC,{onClick:()=>a(e.id,e.qty-1),disabled:e.qty<=1,children:`−`}),(0,$.jsx)(HC,{children:e.qty}),(0,$.jsx)(VC,{ref:t=>{t?d.current.set(e.id,t):d.current.delete(e.id)},onClick:()=>a(e.id,e.qty+1),children:`+`})]}),(0,$.jsx)(UC,{onClick:()=>i(e.id),children:`✕`})]},e.id))}),(0,$.jsxs)(WC,{children:[(0,$.jsx)(`span`,{children:`합계`}),(0,$.jsxs)(`span`,{children:[f.toLocaleString(),`원`]})]}),(0,$.jsxs)(GC,{children:[c&&(0,$.jsx)(rx,{type:`button`,title:`주문자 뽑기`,onClick:c,children:`🎰`}),(0,$.jsxs)(KC,{children:[(0,$.jsx)(qC,{onClick:o,disabled:e.length===0||r,children:`주문하기`}),r&&(0,$.jsx)(JC,{children:`11시 40분까지 주문 가능합니다.`})]})]})]})})})}var XC=N.div`
   position: relative;
   width: 100%;
 
@@ -1415,7 +1475,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     border: 5px solid transparent;
     border-top-color: ${({theme:e})=>e.colors.secondary};
   }
-`;function QC({name:e,cls:t,password:n,onNameChange:r,onClsChange:i,onPasswordChange:a,showValidation:o=!1}){return(0,$.jsxs)(PS,{children:[(0,$.jsxs)(LS,{children:[(0,$.jsx)(`label`,{children:`이름`}),(0,$.jsxs)(XC,{children:[o&&!e&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{value:e,onChange:e=>r(e.target.value),placeholder:`김싸피`})]})]}),(0,$.jsxs)(LS,{children:[(0,$.jsx)(`label`,{children:`반`}),(0,$.jsxs)(XC,{children:[o&&!t&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{value:t,onChange:e=>i(e.target.value),placeholder:`1`})]})]}),(0,$.jsxs)(LS,{children:[(0,$.jsx)(`label`,{children:`비밀번호`}),(0,$.jsxs)(XC,{children:[o&&!n&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{type:`password`,value:n,onChange:e=>a(e.target.value),placeholder:`••••`,maxLength:4,className:`input-password`})]})]})]})}var $C=N.div`
+`;function QC({name:e,cls:t,password:n,onNameChange:r,onClsChange:i,onPasswordChange:a,showValidation:o=!1}){return(0,$.jsxs)(tx,{children:[(0,$.jsxs)(ix,{children:[(0,$.jsx)(`label`,{children:`이름`}),(0,$.jsxs)(XC,{children:[o&&!e&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{value:e,onChange:e=>r(e.target.value),placeholder:`김싸피`})]})]}),(0,$.jsxs)(ix,{children:[(0,$.jsx)(`label`,{children:`반`}),(0,$.jsxs)(XC,{children:[o&&!t&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{value:t,onChange:e=>i(e.target.value),placeholder:`1`})]})]}),(0,$.jsxs)(ix,{children:[(0,$.jsx)(`label`,{children:`비밀번호`}),(0,$.jsxs)(XC,{children:[o&&!n&&(0,$.jsx)(ZC,{children:`필수 입력`}),(0,$.jsx)(`input`,{type:`password`,value:n,onChange:e=>a(e.target.value),placeholder:`••••`,maxLength:4,className:`input-password`})]})]})]})}var $C=N.div`
   position: fixed;
   inset: 0;
   background: ${({$standalone:e})=>e?`transparent`:`rgba(0, 0, 0, 0.55)`};
@@ -1887,11 +1947,11 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   letter-spacing: 0.5px;
   flex-shrink: 0;
   padding-left: 2px;
-`;var Dw=[`#FF6B6B`,`#4D96FF`,`#6BCB77`,`#FFD93D`,`#CC5DE8`,`#FF922B`,`#20C997`,`#F06595`,`#74C0FC`,`#A9E34B`,`#FFA8A8`,`#63E6BE`],Ow=280;function kw({names:e,spinning:t,onSpinEnd:n}){let r=(0,S.useRef)(null),i=(0,S.useRef)(-Math.PI/2),a=(0,S.useRef)(null);function o(t){let n=r.current;if(!n)return;let i=n.getContext(`2d`),a=Ow/2,o=Ow/2,s=a-12;if(i.clearRect(0,0,Ow,Ow),e.length<2){i.beginPath(),i.arc(a,o,s,0,Math.PI*2),i.fillStyle=`#e5e7eb`,i.fill(),i.fillStyle=`#9ca3af`,i.font=`12px sans-serif`,i.textAlign=`center`,i.textBaseline=`middle`,i.fillText(`참여자를 2명 이상 입력하세요`,a,o);return}let c=Math.PI*2/e.length;e.forEach((n,r)=>{let l=t+r*c,u=l+c;i.beginPath(),i.moveTo(a,o),i.arc(a,o,s,l,u),i.closePath(),i.fillStyle=Dw[r%Dw.length],i.fill(),i.strokeStyle=`#fff`,i.lineWidth=2,i.stroke(),i.save(),i.translate(a,o),i.rotate(l+c/2),i.textAlign=`right`,i.textBaseline=`middle`,i.fillStyle=`#fff`,i.font=`bold ${e.length>8?11:13}px sans-serif`,i.shadowColor=`rgba(0,0,0,0.3)`,i.shadowBlur=3,i.fillText(n.length>5?n.slice(0,5)+`…`:n,s-14,0),i.restore()}),i.beginPath(),i.arc(a,o,18,0,Math.PI*2),i.fillStyle=`#fff`,i.fill(),i.strokeStyle=`#d1d5db`,i.lineWidth=2,i.stroke(),i.beginPath(),i.moveTo(a-8,2),i.lineTo(a+8,2),i.lineTo(a,28),i.closePath(),i.fillStyle=`#1f2937`,i.strokeStyle=`#fff`,i.lineWidth=1.5,i.fill(),i.stroke()}return(0,S.useLayoutEffect)(()=>{t||o(i.current)},[e.join(`,`),t]),(0,S.useEffect)(()=>{if(!t)return;let r=Math.PI*2*(6+Math.random()*6),s=4e3+Math.random()*1500,c=performance.now(),l=i.current;function u(t){let d=Math.min((t-c)/s,1),f=l+r*(1-(1-d)**4);if(i.current=f,o(f),d<1)a.current=requestAnimationFrame(u);else{let t=Math.PI*2/e.length,r=((Math.PI*3/2-f)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);n(Math.floor(r/t)%e.length)}}return a.current=requestAnimationFrame(u),()=>{a.current&&cancelAnimationFrame(a.current)}},[t]),(0,$.jsx)(`canvas`,{ref:r,width:Ow,height:Ow,style:{display:`block`}})}var Aw=1500,jw=Math.round(280*340/Aw),Mw=.1,Nw=.99,Pw=.2,Fw=.55,Iw=.1,Lw=.65,Rw=.75;function zw(e,t,n,r,i,a=Fw){let o=r-t,s=i-n,c=o*o+s*s;if(!c)return;let l=Math.max(0,Math.min(1,((e.x-t)*o+(e.y-n)*s)/c)),u=e.x-(t+l*o),d=e.y-(n+l*s),f=Math.sqrt(u*u+d*d);if(f<e.radius&&f>0){let t=u/f,n=d/f;e.x+=t*(e.radius-f),e.y+=n*(e.radius-f);let r=e.vx*t+e.vy*n;r<0&&(e.vx-=(1+a)*r*t,e.vy-=(1+a)*r*n)}}function Bw(e,t){let n=e.x-t.x,r=e.y-t.y,i=Math.sqrt(n*n+r*r),a=e.radius+t.r;if(i<a&&i>0){let t=n/i,o=r/i;e.x+=t*(a-i),e.y+=o*(a-i);let s=e.vx*t+e.vy*o;s<0&&(e.vx-=(1+Lw)*s*t,e.vy-=(1+Lw)*s*o)}}function Vw(e,t,n,r,i,a,o,s,c=Iw){let l=r-t,u=i-n,d=l*l+u*u;if(!d)return;let f=Math.max(0,Math.min(1,((e.x-t)*l+(e.y-n)*u)/d)),p=t+f*l,m=n+f*u,h=e.x-p,g=e.y-m,_=Math.sqrt(h*h+g*g);if(_<e.radius&&_>0){let t=h/_,n=g/_;e.x+=t*(e.radius-_),e.y+=n*(e.radius-_);let r=-s*(m-o),i=s*(p-a),l=(e.vx-r)*t+(e.vy-i)*n;l<0&&(e.vx-=(1+c)*l*t,e.vy-=(1+c)*l*n)}}function Hw(e,t){let n=t.x-e.x,r=t.y-e.y,i=Math.sqrt(n*n+r*r),a=e.radius+t.radius;if(i<a&&i>0){let o=n/i,s=r/i,c=(a-i)/2;e.x-=o*c,e.y-=s*c,t.x+=o*c,t.y+=s*c;let l=(t.vx-e.vx)*o+(t.vy-e.vy)*s;if(l<0){let n=(1+Rw)*l/2;e.vx+=n*o,e.vy+=n*s,t.vx-=n*o,t.vy-=n*s}}}var Uw=Aw*.96,Ww=(()=>{let e=[],t=e=>e.map(([e,t])=>[e+34,t]),n=t=>{for(let n=0;n<t.length-1;n++)e.push({x1:t[n][0],y1:t[n][1],x2:t[n+1][0],y2:t[n+1][1]})};return n(t([[152,0],[152,183],[92.5,294],[92.5,329.5],[152,401],[152,489.5],[197,648.5]])),n(t([[152,648.5],[116,569],[82,648.5]])),n(t([[197,648.5],[152,790],[152,996],[116,1021.5],[152,1038.5],[152,1115],[197,1165.5],[197,1276],[116,1360],[116,1500]])),n(t([[59,0],[59,183],[0,294],[0,372.5],[92.5,401],[92.5,489.5],[46.5,552.5],[20,648.5],[82,711.5],[20,790],[20,906],[59,924],[20,942],[20,1021.5],[0,1073.5],[0,1276],[96,1360],[96,1500]])),[].forEach(([t,n,r,i])=>e.push({x1:t,y1:n,x2:r,y2:i})),e})(),Gw=[],Kw=[[128,712,30,0,-.04],[208,649,15,0,.06],[130,1360,22,0,-.025]].map(([e,t,n,r,i])=>({cx:e,cy:t,halfLen:n,angle:r,angularVelocity:i})),qw=[[156,425,4],[143,453,4],[170,453,4],[156,478,4],[120,905,4],[140,905,4],[160,905,4],[130,939,4],[150,939,4],[100,973,4],[120,973,4],[140,973,4],[90,1007,4],[110,1007,4],[80,1041,4],[100,1041,4],[120,1041,4]].map(([e,t,n])=>({x:e,y:t,r:n}));function Jw(e){let t=[...e];for(let e=t.length-1;e>0;e--){let n=Math.floor(Math.random()*(e+1));[t[e],t[n]]=[t[n],t[e]]}return t}function Yw({participants:e,spinning:t,scale:n=1,minimapRef:r,onRaceEnd:i,onAllFinished:a}){let o=(0,S.useRef)(null),s=(0,S.useRef)([]),c=(0,S.useRef)(null),l=(0,S.useRef)(0),u=(0,S.useRef)(0),d=(0,S.useRef)(!1),f=(0,S.useRef)(!1),p=(0,S.useRef)(!1),m=(0,S.useRef)(!1),h=(0,S.useRef)(Jw(e)),g=e=>e<=4?5:e<=8?4:3,_=(e,t,n)=>{let r=280*2/5+n;return r+(280*3/5-n-r)/Math.max(t-1,1)*e+(Math.random()-.5)*n*.5},v=(0,S.useCallback)((e,t,n=1)=>{let r=o.current?.getContext(`2d`);if(!r)return;r.fillStyle=`#000`,r.fillRect(0,0,280,340),r.save(),n!==1&&(r.translate(280/2,340/2),r.scale(n,n),r.translate(-280/2,-340/2)),r.shadowColor=`#cc44ff`,r.shadowBlur=10/n,r.strokeStyle=`#cc44ff`,r.lineWidth=1.5/n,Ww.forEach(e=>{r.beginPath(),r.moveTo(e.x1,e.y1-t),r.lineTo(e.x2,e.y2-t),r.stroke()}),r.shadowBlur=0,r.shadowColor=`#00ff88`,r.shadowBlur=10/n,r.strokeStyle=`#00ff88`,r.lineWidth=3/n,Gw.forEach(e=>{r.beginPath(),r.moveTo(e.x1,e.y1-t),r.lineTo(e.x2,e.y2-t),r.stroke()}),r.shadowBlur=0,r.shadowColor=`#00e5ff`,r.shadowBlur=14/n,r.strokeStyle=`#44ddff`,r.lineWidth=6/n,Kw.forEach(e=>{let n=Math.cos(e.angle),i=Math.sin(e.angle);r.beginPath(),r.moveTo(e.cx+n*e.halfLen,e.cy+i*e.halfLen-t),r.lineTo(e.cx-n*e.halfLen,e.cy-i*e.halfLen-t),r.stroke()}),r.shadowBlur=0,r.fillStyle=`#ff4da6`,r.shadowColor=`#ff4da6`,r.shadowBlur=10,qw.forEach(e=>{r.beginPath(),r.arc(e.x,e.y-t,e.r,0,Math.PI*2),r.fill()}),r.shadowBlur=0;let i=Uw-t;r.shadowColor=`#ffd700`,r.shadowBlur=12,r.strokeStyle=`#ffd700`,r.lineWidth=2.5/n,r.setLineDash([8,6]),r.beginPath(),r.moveTo(0,i),r.lineTo(280,i),r.stroke(),r.setLineDash([]),r.shadowBlur=0,r.fillStyle=`#ffd700`,r.font=`bold ${10/n}px sans-serif`,r.textAlign=`right`,r.textBaseline=`bottom`,r.fillText(`GOAL`,274,i-3),e.forEach(e=>{if(e.alpha<=0)return;let n=e.y-t;n<-e.radius||n>340+e.radius||(r.globalAlpha=e.alpha,r.shadowColor=`hsl(${e.hue} 100% 60%)`,r.shadowBlur=14,r.beginPath(),r.arc(e.x,n,e.radius,0,Math.PI*2),r.fillStyle=`hsl(${e.hue} 100% 65%)`,r.fill(),r.shadowBlur=0,r.globalAlpha=1)}),r.restore(),r.font=`bold 9px sans-serif`,r.textAlign=`center`,r.textBaseline=`top`,e.forEach(e=>{if(e.alpha<=0)return;let i=e.y-t;if(i<-e.radius||i>340+e.radius)return;let a=(e.x-280/2)*n+280/2,o=(i-340/2)*n+340/2+e.radius*n+2;o<0||o>356||(r.globalAlpha=e.alpha,r.fillStyle=`hsl(${e.hue} 100% 80%)`,r.fillText(e.name,a,o),r.globalAlpha=1)});let a=e.filter(e=>e.rank>0).sort((e,t)=>e.rank-t.rank);if(a.length){let e=15*(a.length+.6);r.fillStyle=`rgba(0,0,0,.65)`,r.beginPath(),r.roundRect(222,6,52,e,7),r.fill(),r.font=`bold 8px sans-serif`,r.textBaseline=`middle`,a.forEach((e,t)=>{let n=6+15*(t+.8);r.fillStyle=t===0?`#ffd700`:t===1?`#c0c0c0`:t===2?`#cd7f32`:`#aaa`,r.textAlign=`left`,r.fillText(`${e.rank}위`,225,n),r.fillStyle=`hsl(${e.hue} 100% 70%)`,r.fillText(e.name,242,n)})}},[]),y=(0,S.useCallback)((e,t)=>{let n=r?.current;if(!n)return;let i=n.getContext(`2d`);if(!i)return;let a=340/Aw;i.fillStyle=`#111`,i.fillRect(0,0,jw,340),i.strokeStyle=`#cc44ff`,i.lineWidth=1,Ww.forEach(e=>{i.beginPath(),i.moveTo(e.x1*a,e.y1*a),i.lineTo(e.x2*a,e.y2*a),i.stroke()}),i.strokeStyle=`#00ff88`,i.lineWidth=1,Gw.forEach(e=>{i.beginPath(),i.moveTo(e.x1*a,e.y1*a),i.lineTo(e.x2*a,e.y2*a),i.stroke()}),i.strokeStyle=`#44ddff`,i.lineWidth=1,Kw.forEach(e=>{let t=Math.cos(e.angle),n=Math.sin(e.angle);i.beginPath(),i.moveTo((e.cx+t*e.halfLen)*a,(e.cy+n*e.halfLen)*a),i.lineTo((e.cx-t*e.halfLen)*a,(e.cy-n*e.halfLen)*a),i.stroke()}),i.fillStyle=`#ff4da6`,qw.forEach(e=>{i.beginPath(),i.arc(e.x*a,e.y*a,Math.max(1,e.r*a),0,Math.PI*2),i.fill()}),i.strokeStyle=`#ffd700`,i.lineWidth=1,i.setLineDash([3,2]),i.beginPath(),i.moveTo(0,Uw*a),i.lineTo(jw,Uw*a),i.stroke(),i.setLineDash([]),e.forEach(e=>{e.alpha<=0||(i.globalAlpha=e.alpha,i.beginPath(),i.arc(e.x*a,e.y*a,Math.max(2,e.radius*a),0,Math.PI*2),i.fillStyle=`hsl(${e.hue} 100% 65%)`,i.fill(),i.globalAlpha=1)}),i.fillStyle=`rgba(255,255,255,0.06)`,i.fillRect(0,t*a,jw,340*a),i.shadowColor=`#00e5ff`,i.shadowBlur=6,i.strokeStyle=`#00e5ff`,i.lineWidth=1.5,i.strokeRect(0,t*a,jw,340*a),i.shadowBlur=0},[r]);return(0,S.useLayoutEffect)(()=>{let e=o.current;if(!e)return;let t=()=>{let t=e.getBoundingClientRect();if(t.width===0)return!1;let n=(window.devicePixelRatio||1)*(t.width/280);return e.width=Math.round(280*n),e.height=Math.round(340*n),e.style.width=`280px`,e.style.height=`340px`,e.getContext(`2d`)?.setTransform(n,0,0,n,0,0),f.current||(v(s.current,0),y(s.current,0)),!0};if(!t()){let n=new ResizeObserver(()=>{t()&&n.disconnect()});return n.observe(e),()=>n.disconnect()}},[v,y,n]),(0,S.useEffect)(()=>{let e=o.current;if(!e)return;let t=setTimeout(()=>{let t=e.getBoundingClientRect();if(t.width===0)return;let n=(window.devicePixelRatio||1)*(t.width/280);e.width=Math.round(280*n),e.height=Math.round(340*n),e.style.width=`280px`,e.style.height=`340px`,e.getContext(`2d`)?.setTransform(n,0,0,n,0,0),f.current||(v(s.current,0),y(s.current,0))},210);return()=>clearTimeout(t)},[n,v,y]),(0,S.useEffect)(()=>()=>{c.current&&cancelAnimationFrame(c.current)},[]),(0,S.useEffect)(()=>{if(f.current)return;h.current=h.current.filter(t=>e.some(e=>e.name===t.name&&e.cls===t.cls)),e.forEach(e=>{h.current.some(t=>t.name===e.name&&t.cls===e.cls)||h.current.push(e)});let t=h.current,n=t.length,r=g(n);s.current=t.map((e,t)=>({x:_(t,n,r),y:50,vx:0,vy:0,radius:r,hue:360/n*t,name:e.name,cls:e.cls,rank:0,alpha:1})),v(s.current,0),y(s.current,0)},[e,v,y]),(0,S.useEffect)(()=>{if(!t)return;l.current=0,u.current=0,d.current=!1,f.current=!0,p.current=!1,m.current=!1;let e=h.current,n=e.length,r=g(n);s.current=e.map((e,t)=>({x:_(t,n,r),y:50,vx:(Math.random()-.5)*1.5,vy:Math.random()*.5,radius:r,hue:360/n*t,name:e.name,cls:e.cls,rank:0,alpha:1})),c.current&&cancelAnimationFrame(c.current);function o(){let e=s.current,t=e.filter(e=>e.rank===0);t.length&&t.reduce((e,t)=>e.y>t.y?e:t).y>=1276&&(p.current=!0);let n=p.current?.8:1,r=p.current?2:1;Kw.forEach(e=>{e.angle+=e.angularVelocity*n}),e.forEach(e=>{if(e.rank>0){e.alpha=Math.max(0,e.alpha-.015);return}e.vy+=Mw*n*(.8+Math.random()*.2),e.vx*=Nw,e.vy*=Nw});for(let t=0;t<4;t++){e.forEach(e=>{e.rank>0||(e.x+=e.vx/4,e.y+=e.vy/4,Ww.forEach(t=>zw(e,t.x1,t.y1,t.x2,t.y2)),Gw.forEach(t=>zw(e,t.x1,t.y1,t.x2,t.y2,Iw)),Kw.forEach(t=>{let r=Math.cos(t.angle),i=Math.sin(t.angle);Vw(e,t.cx+r*t.halfLen,t.cy+i*t.halfLen,t.cx-r*t.halfLen,t.cy-i*t.halfLen,t.cx,t.cy,t.angularVelocity*n)}),qw.forEach(t=>Bw(e,t)),e.y+e.radius>=Uw&&e.rank===0&&(e.rank=++u.current,e.y=Uw-e.radius,e.vy=0,e.vx=0,d.current||(d.current=!0,i(e.name,e.cls))))});for(let t=0;t<e.length;t++)for(let n=t+1;n<e.length;n++)e[t].rank===0&&e[n].rank===0&&Hw(e[t],e[n])}if(!m.current&&e.length>0&&e.every(e=>e.rank>0)&&(m.current=!0,a?.()),t.length){let e=t.reduce((e,t)=>e.y>t.y?e:t),n=Math.max(0,Math.min(Aw-340,e.y-340/(2*r)));l.current+=(n-l.current)*Pw}v(e,l.current,r),y(e,l.current),e.some(e=>e.rank===0)||e.some(e=>e.alpha>0)?c.current=requestAnimationFrame(o):f.current=!1}return c.current=requestAnimationFrame(o),()=>{c.current&&cancelAnimationFrame(c.current)}},[t]),(0,$.jsx)(`canvas`,{ref:o,width:280,height:340,style:{display:`block`,borderRadius:6}})}function Xw({open:e,standalone:t,onClose:n,onWinner:r}){let[i,a]=(0,S.useState)(`marble`),[o,s]=(0,S.useState)([{name:``,cls:``},{name:``,cls:``}]),[c,l]=(0,S.useState)(null),[u,d]=(0,S.useState)(!1),[f,p]=(0,S.useState)(!1),[m,h]=(0,S.useState)(!1),[g,_]=(0,S.useState)(1),[v,y]=(0,S.useState)(0),b=(0,S.useRef)(null),x=(0,S.useRef)(null),C=o.filter(e=>e.name.trim()),w=C.map(e=>e.name.trim()),ee=u||f;(0,S.useEffect)(()=>{if(!m&&!t){_(1);return}let e=()=>{let e=x.current;if(!e)return;let t=parseFloat(getComputedStyle(document.getElementById(`root`)).zoom)||1,n=Math.min(window.innerWidth/t*.9/e.offsetWidth,window.innerHeight/t*.9/e.offsetHeight);_(Math.max(1,n))};return e(),window.addEventListener(`resize`,e),()=>window.removeEventListener(`resize`,e)},[m,t,i]);function T(e,t){s(n=>n.map((n,r)=>r===e?{...n,name:t}:n))}function E(e,t){s(n=>n.map((n,r)=>r===e?{...n,cls:t}:n))}function te(e){s(t=>t.filter((t,n)=>n!==e))}function ne(){s(e=>[...e,{name:``,cls:``}])}function re(){u||w.length<2||(l(null),d(!0))}function ie(e){d(!1),l(C[e].name),r(C[e].name,C[e].cls)}function ae(){f||C.length<2||(l(null),p(!0))}function oe(e,t){l(e),r(e,t)}function se(){p(!1)}function ce(){l(null),d(!1),p(!1)}let D=i===`wheel`?u?`돌아가는 중...`:`SPIN`:f?`레이스 중...`:`START`,O=i===`wheel`?u||w.length<2:f||C.length<2;function le(e){return o.map((t,n)=>(0,$.jsxs)(pw,{children:[(0,$.jsx)(mw,{placeholder:`참여자 ${n+1}`,value:t.name,maxLength:10,disabled:e,onChange:e=>T(n,e.target.value)}),(0,$.jsx)(hw,{placeholder:`반`,value:t.cls,maxLength:2,disabled:e,onChange:e=>E(n,e.target.value)}),o.length>2&&(0,$.jsx)(gw,{type:`button`,disabled:e,onClick:()=>te(n),children:`✕`})]},n))}return(0,$.jsx)($C,{$standalone:t,onClick:t?void 0:n,style:{display:e?void 0:`none`},children:(0,$.jsxs)(ew,{ref:x,$wide:i===`marble`,$standalone:t,style:{transform:g===1?void 0:`scale(${g})`,transition:`transform 0.2s ease`},onClick:e=>e.stopPropagation(),children:[(0,$.jsxs)(nw,{children:[(0,$.jsx)(aw,{children:`🎰 주문자 뽑기`}),(0,$.jsxs)(rw,{children:[(0,$.jsx)(iw,{type:`button`,$active:i===`marble`,onClick:()=>a(`marble`),children:`마블 룰렛`}),(0,$.jsx)(iw,{type:`button`,$active:i===`wheel`,onClick:()=>a(`wheel`),children:`스핀 룰렛`})]}),(0,$.jsxs)(`div`,{style:{display:`flex`,gap:4,alignItems:`center`},children:[i===`marble`&&!window.electronAPI&&(0,$.jsx)(sw,{type:`button`,title:m?`축소`:`확대`,onClick:()=>h(e=>!e),children:m?(0,$.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,width:`14`,height:`14`,viewBox:`0 -960 960 960`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z`})}):(0,$.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,width:`14`,height:`14`,viewBox:`0 -960 960 960`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`M120-120v-240h80v104l124-124 56 56-124 124h104v80H120Zm480 0v-80h104L580-324l56-56 124 124v-104h80v240H600ZM324-580 200-704v104h-80v-240h240v80H256l124 124-56 56Zm312 0-56-56 124-124H600v-80h240v240h-80v-104L636-580Z`})})}),(0,$.jsx)(ow,{type:`button`,onClick:n,children:`✕`})]})]}),(0,$.jsxs)(cw,{children:[i===`marble`&&(0,$.jsx)(tw,{ref:b,width:jw,height:340}),(0,$.jsxs)(lw,{children:[(0,$.jsxs)(vw,{children:[i===`wheel`?(0,$.jsx)(kw,{names:w,spinning:u,onSpinEnd:ie}):(0,$.jsx)(Yw,{participants:C,spinning:f,scale:g,minimapRef:b,onRaceEnd:oe,onAllFinished:se},v),i===`marble`&&(0,$.jsx)(yw,{type:`button`,onClick:()=>{ce(),y(e=>e+1)},children:`↺`})]}),(0,$.jsx)(bw,{type:`button`,disabled:O,onClick:i===`wheel`?re:ae,children:D})]}),(0,$.jsxs)(uw,{style:{position:`relative`},children:[(0,$.jsx)(dw,{children:`참여자`}),(0,$.jsx)(fw,{children:le(ee)}),(0,$.jsx)(_w,{type:`button`,disabled:ee,onClick:ne,children:`+ 추가`}),i===`marble`&&c&&(0,$.jsx)(`div`,{style:{position:`absolute`,inset:0,background:`rgba(0,0,0,0.45)`,backdropFilter:`blur(3px)`,display:`flex`,alignItems:`center`,justifyContent:`center`,borderRadius:12,zIndex:5},children:(0,$.jsxs)(Sw,{style:{position:`relative`},onClick:e=>e.stopPropagation(),children:[(0,$.jsx)(ow,{type:`button`,style:{position:`absolute`,top:8,right:8,padding:`2px 6px`},onClick:()=>l(null),children:`✕`}),(0,$.jsx)(Cw,{children:`🎉`}),(0,$.jsx)(ww,{children:c}),(0,$.jsx)(Tw,{children:`당첨!`})]})})]})]}),i===`wheel`&&c&&(0,$.jsxs)(xw,{onClick:n,children:[(0,$.jsxs)(Sw,{onClick:e=>e.stopPropagation(),children:[(0,$.jsx)(Cw,{children:`🎉`}),(0,$.jsx)(ww,{children:c}),(0,$.jsx)(Tw,{children:`당첨!`})]}),(0,$.jsx)(Ew,{type:`button`,title:`초기화`,onClick:e=>{e.stopPropagation(),ce()},children:`🔄`})]})]})})}function Zw(){let e=window.innerWidth;return e>=1920?5:e>=1440?4:e<=1e3?2:3}function Qw({onSubmit:e,disabled:t}){let[n,r]=(0,S.useState)(()=>localStorage.getItem(`coffy_name`)??``),[i,a]=(0,S.useState)(()=>localStorage.getItem(`coffy_class`)??``),[o,s]=(0,S.useState)(null),[c,l]=(0,S.useState)(``),[u,d]=(0,S.useState)(!1),[f,p]=(0,S.useState)([]),[m,h]=(0,S.useState)(`ICE`),[g,_]=(0,S.useState)(``),[v,y]=(0,S.useState)(!1),[b,x]=(0,S.useState)(``),[C,w]=(0,S.useState)(``),[ee,T]=(0,S.useState)(()=>localStorage.getItem(`coffy_password`)??``),[E,te]=(0,S.useState)(()=>{try{return JSON.parse(localStorage.getItem(`coffy_cart`)??`[]`).map(e=>({...e,qty:e.qty??1}))}catch{return[]}}),[ne,re]=(0,S.useState)(!1),[ie,ae]=(0,S.useState)(!1),[oe,se]=(0,S.useState)(null),[ce,D]=(0,S.useState)(``),[O,le]=(0,S.useState)(``),[ue,de]=(0,S.useState)(!1),[fe,pe]=(0,S.useState)(-1);(0,S.useEffect)(()=>{localStorage.setItem(`coffy_cart`,JSON.stringify(E))},[E]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_name`,n)},[n]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_class`,i)},[i]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_password`,ee)},[ee]);let[me,he]=(0,S.useState)(!1),ge=`기타`,[_e,ve]=(0,S.useState)(OS[0].category),[ye,be]=(0,S.useState)(0),[xe,Se]=(0,S.useState)(Zw);(0,S.useEffect)(()=>{let e=()=>Se(Zw());return window.addEventListener(`resize`,e),()=>window.removeEventListener(`resize`,e)},[]);let Ce=xe*2,we=OS.find(e=>e.category===_e)?.items??[],Te=Math.ceil(we.length/Ce),Ee=we.slice(ye*Ce,(ye+1)*Ce),De=OS.flatMap(e=>e.items),Oe=De.find(e=>e.name===o),ke=O?De.filter(e=>e.name.includes(O)):[],Ae=ke[0]??null,je=Ae&&Ae.name.startsWith(ce)?Ae.name.slice(ce.length):``,Me=Oe?.types.find(e=>e.temp===m),Ne=u?0:Me?.price??0,Pe=g===``?Ne:g,Fe=Pe+f.reduce((e,t)=>e+(TS.find(e=>e.name===t)?.price??0),0)+(v&&C!==``?C:0),Ie=u?c:o;function Le(e){let t=De.find(t=>t.name===e)?.types.some(e=>e.temp===`ICE`)?`ICE`:`HOT`;d(!1),l(``),s(e),_(``),h(t)}function Re(){fe>=0&&ke[fe]?ze(ke[fe].name):Ae?ze(Ae.name):(D(``),le(``),de(!1))}function ze(e){let t=OS.find(t=>t.items.some(t=>t.name===e));if(!t)return;let n=t.items.findIndex(t=>t.name===e),r=Math.floor(n/Ce);ve(t.category),be(r),Le(e),D(e),le(e),de(!1),pe(-1)}function Be(e){ve(e),be(0),e===ge?(s(null),d(!0),_(``)):(d(!1),l(``))}function Ve(e){p(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])}function He(e){h(e)}function Ue(){s(null),l(``),d(!1),p([]),h(`ICE`),_(``),y(!1),x(``),w(``),ve(OS[0].category),be(0)}function We(){if(!Ie||!Pe){window.alert(`메뉴를 선택해주세요.`);return}let e=Ie??``,t=[...f,...v&&b?[`${b}${C?`(+${Number(C).toLocaleString()}원)`:``}`]:[]],n=E.find(n=>n.menu===e&&n.temp===m&&n.options.length===t.length&&[...n.options].sort().join(`,`)===[...t].sort().join(`,`));if(n){window.confirm(`이미 장바구니에 있는 메뉴입니다.
-장바구니에서 수량을 늘리시겠습니까?`)&&(se(n.id),window.electronAPI?window.electronAPI.openCart():re(!0));return}let r={id:crypto.randomUUID(),menu:e,temp:m,options:t,price:Fe,qty:1,image:Me?.image};te(e=>[...e,r]),Ue()}function Ge(){if(E.length!==0){if(!n||!i||!ee){re(!1),se(null),he(!0);return}localStorage.setItem(`coffy_name`,n),localStorage.setItem(`coffy_class`,i),e(E.map(e=>({name:n,class:i,menu:e.menu,temp:e.temp,options:e.options,price:e.price,qty:e.qty,password:ee}))),te([]),localStorage.removeItem(`coffy_cart`),re(!1),se(null),T(``)}}return(0,$.jsx)(kS,{children:(0,$.jsxs)(AS,{onSubmit:e=>e.preventDefault(),children:[(0,$.jsxs)(jS,{children:[(0,$.jsxs)(MS,{children:[`주문하기 `,t&&(0,$.jsx)(NS,{children:`마감`})]}),(0,$.jsxs)(FS,{children:[(0,$.jsx)(IS,{type:`button`,title:`주문자 뽑기`,onClick:()=>ae(!0),children:`🎰`}),(0,$.jsx)(QC,{name:n,cls:i,password:ee,onNameChange:e=>{r(e),he(!1)},onClsChange:e=>{a(e),he(!1)},onPasswordChange:e=>{T(e),he(!1)},showValidation:me})]})]}),(0,$.jsxs)(JS,{children:[(0,$.jsxs)(RS,{children:[(0,$.jsx)(YS,{children:`메뉴`}),(0,$.jsxs)(BS,{children:[(0,$.jsxs)(VS,{style:{paddingRight:`6px`},children:[je&&(0,$.jsxs)(HS,{"aria-hidden":`true`,children:[(0,$.jsx)(`span`,{style:{visibility:`hidden`},children:ce}),(0,$.jsx)(US,{children:je})]}),(0,$.jsx)(WS,{style:{paddingRight:`4px`},placeholder:`메뉴 검색`,value:ce,onChange:e=>{let t=e.target.value;D(t),le(t),de(!0),pe(-1)},onFocus:()=>{O&&de(!0)},onBlur:()=>setTimeout(()=>{de(!1),pe(-1),D(O)},150),onKeyDown:e=>{if(e.key===`ArrowDown`){e.preventDefault();let t=Math.min(fe+1,ke.length-1);pe(t),D(ke[t]?.name??O)}else if(e.key===`ArrowUp`){e.preventDefault();let t=Math.max(fe-1,-1);pe(t),D(t===-1?O:ke[t]?.name??O)}else e.key===`Enter`?(e.preventDefault(),Re()):e.key===`Escape`&&(D(``),le(``),de(!1),pe(-1))}}),(0,$.jsx)(GS,{type:`button`,onMouseDown:e=>{e.preventDefault(),Re()},children:`🔍`})]}),ue&&ke.length>0&&(0,$.jsx)(KS,{children:ke.map((e,t)=>(0,$.jsx)(qS,{$highlighted:t===fe,onMouseDown:()=>ze(e.name),children:e.name},e.name))})]})]}),(0,$.jsxs)(zS,{children:[OS.map(e=>(0,$.jsx)(Tx,{type:`button`,$selected:_e===e.category,onClick:()=>Be(e.category),children:e.category},e.category)),(0,$.jsx)(Tx,{type:`button`,$selected:_e===ge,onClick:()=>Be(ge),children:`기타`})]}),(0,$.jsxs)(ZS,{$noMinHeight:_e===ge,children:[_e===ge?(0,$.jsx)(oC,{children:(0,$.jsx)(sC,{placeholder:`메뉴명 직접 입력`,value:c,onChange:e=>l(e.target.value),autoFocus:!0})}):(0,$.jsxs)(QS,{children:[(0,$.jsx)($S,{children:Ee.map(e=>{let t=e.types.map(e=>e.temp),n=e.types.find(e=>e.temp===`ICE`)?.price??e.types[0]?.price??0,r=o===e.name&&!u;return(0,$.jsxs)(cC,{type:`button`,$selected:r,onClick:()=>Le(e.name),children:[(0,$.jsx)(lC,{children:t.map(e=>(0,$.jsx)(DS,{temp:e,size:`sm`},e))}),(0,$.jsx)(uC,{children:e.name}),(0,$.jsxs)(dC,{$selected:r,children:[n.toLocaleString(),`원`]})]},e.name)})}),Te>1&&(0,$.jsxs)(eC,{children:[(0,$.jsx)(Tx,{type:`button`,onClick:()=>be(e=>e-1),disabled:ye===0,style:{padding:`4px 12px`,fontSize:`1.1rem`,lineHeight:1},children:`‹`}),(0,$.jsx)(tC,{children:Array.from({length:Te},(e,t)=>(0,$.jsx)(nC,{type:`button`,$active:t===ye,onClick:()=>be(t)},t))}),(0,$.jsx)(Tx,{type:`button`,onClick:()=>be(e=>e+1),disabled:ye>=Te-1,style:{padding:`4px 12px`,fontSize:`1.1rem`,lineHeight:1},children:`›`})]})]}),_e!==ge&&(0,$.jsx)(rC,{children:Me?.image?(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(`img`,{src:Me.image,alt:Oe?.name}),Me.kcal!=null&&(0,$.jsxs)(iC,{children:[Me.kcal,` kcal`]})]}):(0,$.jsx)(aC,{children:`☕`})})]})]}),(0,$.jsxs)(JS,{children:[(0,$.jsxs)(YS,{children:[`옵션 `,(0,$.jsx)(XS,{children:`(중복 선택 가능)`})]}),(0,$.jsxs)(fC,{children:[(0,$.jsx)(pC,{type:`button`,$temp:`ice`,$selected:m===`ICE`,onClick:()=>He(`ICE`),disabled:!u&&(Oe?.types.length??0)<2,children:`ICE`}),(0,$.jsx)(pC,{type:`button`,$temp:`hot`,$selected:m===`HOT`,onClick:()=>He(`HOT`),disabled:!u&&(Oe?.types.length??0)<2,children:`HOT`}),(0,$.jsx)(hC,{}),TS.map(e=>(0,$.jsxs)(pC,{type:`button`,$selected:f.includes(e.name),onClick:()=>Ve(e.name),children:[e.name,e.price>0&&(0,$.jsxs)(mC,{children:[` +`,e.price.toLocaleString()]})]},e.name)),(0,$.jsx)(pC,{type:`button`,$other:!0,$selected:v,onClick:()=>{y(e=>!e),x(``),w(``)},children:`기타`}),v&&(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(gC,{placeholder:`옵션명`,value:b,onChange:e=>x(e.target.value)}),(0,$.jsx)(gC,{type:`number`,step:100,$price:!0,placeholder:`+금액`,value:C,onChange:e=>w(e.target.value===``?``:Number(e.target.value))})]})]})]}),(0,$.jsxs)(_C,{children:[(0,$.jsxs)(vC,{children:[(0,$.jsx)(YS,{children:`가격`}),(0,$.jsx)(`input`,{type:`number`,step:100,placeholder:u?`가격 입력`:`메뉴 선택 시 자동`,value:u?g:Ne||``,onChange:e=>_(e.target.value===``?``:Number(e.target.value)),disabled:!u})]}),(0,$.jsx)(yC,{children:Ie&&(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(bC,{children:[(0,$.jsx)(DS,{temp:m}),(0,$.jsx)(`span`,{children:Ie})]}),f.length>0&&(0,$.jsxs)(xC,{children:[`· `,f.join(`, `)]}),(0,$.jsxs)(SC,{children:[Fe.toLocaleString(),`원`]})]})})]}),(0,$.jsxs)(CC,{children:[(0,$.jsx)(wC,{type:`button`,onClick:We,children:`장바구니에 추가`}),(0,$.jsxs)(TC,{type:`button`,disabled:E.length===0,onClick:()=>{window.electronAPI?window.electronAPI.openCart():re(!0)},children:[`장바구니 확인`,E.length>0&&(0,$.jsx)(EC,{children:E.reduce((e,t)=>e+t.qty,0)})]})]}),(0,$.jsx)(Xw,{open:ie,onClose:()=>ae(!1),onWinner:(e,t)=>{r(e),t&&a(t),he(!1)}}),ne&&(0,$.jsx)(YC,{cart:E,name:n,cls:i,closed:t,onRemove:e=>te(t=>t.filter(t=>t.id!==e)),onChangeQty:(e,t)=>te(n=>n.map(n=>n.id===e?{...n,qty:t}:n)),onSubmit:Ge,onClose:()=>{re(!1),se(null)},onRoulette:()=>ae(!0),focusItemId:oe})]})})}var $w=N.div`
+`;var Dw=[`#FF6B6B`,`#4D96FF`,`#6BCB77`,`#FFD93D`,`#CC5DE8`,`#FF922B`,`#20C997`,`#F06595`,`#74C0FC`,`#A9E34B`,`#FFA8A8`,`#63E6BE`],Ow=280;function kw({names:e,spinning:t,onSpinEnd:n}){let r=(0,S.useRef)(null),i=(0,S.useRef)(-Math.PI/2),a=(0,S.useRef)(null);function o(t){let n=r.current;if(!n)return;let i=n.getContext(`2d`),a=Ow/2,o=Ow/2,s=a-12;if(i.clearRect(0,0,Ow,Ow),e.length<2){i.beginPath(),i.arc(a,o,s,0,Math.PI*2),i.fillStyle=`#e5e7eb`,i.fill(),i.fillStyle=`#9ca3af`,i.font=`12px sans-serif`,i.textAlign=`center`,i.textBaseline=`middle`,i.fillText(`참여자를 2명 이상 입력하세요`,a,o);return}let c=Math.PI*2/e.length;e.forEach((n,r)=>{let l=t+r*c,u=l+c;i.beginPath(),i.moveTo(a,o),i.arc(a,o,s,l,u),i.closePath(),i.fillStyle=Dw[r%Dw.length],i.fill(),i.strokeStyle=`#fff`,i.lineWidth=2,i.stroke(),i.save(),i.translate(a,o),i.rotate(l+c/2),i.textAlign=`right`,i.textBaseline=`middle`,i.fillStyle=`#fff`,i.font=`bold ${e.length>8?11:13}px sans-serif`,i.shadowColor=`rgba(0,0,0,0.3)`,i.shadowBlur=3,i.fillText(n.length>5?n.slice(0,5)+`…`:n,s-14,0),i.restore()}),i.beginPath(),i.arc(a,o,18,0,Math.PI*2),i.fillStyle=`#fff`,i.fill(),i.strokeStyle=`#d1d5db`,i.lineWidth=2,i.stroke(),i.beginPath(),i.moveTo(a-8,2),i.lineTo(a+8,2),i.lineTo(a,28),i.closePath(),i.fillStyle=`#1f2937`,i.strokeStyle=`#fff`,i.lineWidth=1.5,i.fill(),i.stroke()}return(0,S.useLayoutEffect)(()=>{t||o(i.current)},[e.join(`,`),t]),(0,S.useEffect)(()=>{if(!t)return;let r=Math.PI*2*(6+Math.random()*6),s=4e3+Math.random()*1500,c=performance.now(),l=i.current;function u(t){let d=Math.min((t-c)/s,1),f=l+r*(1-(1-d)**4);if(i.current=f,o(f),d<1)a.current=requestAnimationFrame(u);else{let t=Math.PI*2/e.length,r=((Math.PI*3/2-f)%(Math.PI*2)+Math.PI*2)%(Math.PI*2);n(Math.floor(r/t)%e.length)}}return a.current=requestAnimationFrame(u),()=>{a.current&&cancelAnimationFrame(a.current)}},[t]),(0,$.jsx)(`canvas`,{ref:r,width:Ow,height:Ow,style:{display:`block`}})}var Aw=1500,jw=Math.round(280*340/Aw),Mw=.1,Nw=.99,Pw=.2,Fw=.55,Iw=.1,Lw=.65,Rw=.75;function zw(e,t,n,r,i,a=Fw){let o=r-t,s=i-n,c=o*o+s*s;if(!c)return;let l=Math.max(0,Math.min(1,((e.x-t)*o+(e.y-n)*s)/c)),u=e.x-(t+l*o),d=e.y-(n+l*s),f=Math.sqrt(u*u+d*d);if(f<e.radius&&f>0){let t=u/f,n=d/f;e.x+=t*(e.radius-f),e.y+=n*(e.radius-f);let r=e.vx*t+e.vy*n;r<0&&(e.vx-=(1+a)*r*t,e.vy-=(1+a)*r*n)}}function Bw(e,t){let n=e.x-t.x,r=e.y-t.y,i=Math.sqrt(n*n+r*r),a=e.radius+t.r;if(i<a&&i>0){let t=n/i,o=r/i;e.x+=t*(a-i),e.y+=o*(a-i);let s=e.vx*t+e.vy*o;s<0&&(e.vx-=(1+Lw)*s*t,e.vy-=(1+Lw)*s*o)}}function Vw(e,t,n,r,i,a,o,s,c=Iw){let l=r-t,u=i-n,d=l*l+u*u;if(!d)return;let f=Math.max(0,Math.min(1,((e.x-t)*l+(e.y-n)*u)/d)),p=t+f*l,m=n+f*u,h=e.x-p,g=e.y-m,_=Math.sqrt(h*h+g*g);if(_<e.radius&&_>0){let t=h/_,n=g/_;e.x+=t*(e.radius-_),e.y+=n*(e.radius-_);let r=-s*(m-o),i=s*(p-a),l=(e.vx-r)*t+(e.vy-i)*n;l<0&&(e.vx-=(1+c)*l*t,e.vy-=(1+c)*l*n)}}function Hw(e,t){let n=t.x-e.x,r=t.y-e.y,i=Math.sqrt(n*n+r*r),a=e.radius+t.radius;if(i<a&&i>0){let o=n/i,s=r/i,c=(a-i)/2;e.x-=o*c,e.y-=s*c,t.x+=o*c,t.y+=s*c;let l=(t.vx-e.vx)*o+(t.vy-e.vy)*s;if(l<0){let n=(1+Rw)*l/2;e.vx+=n*o,e.vy+=n*s,t.vx-=n*o,t.vy-=n*s}}}var Uw=Aw*.96,Ww=(()=>{let e=[],t=e=>e.map(([e,t])=>[e+34,t]),n=t=>{for(let n=0;n<t.length-1;n++)e.push({x1:t[n][0],y1:t[n][1],x2:t[n+1][0],y2:t[n+1][1]})};return n(t([[152,0],[152,183],[92.5,294],[92.5,329.5],[152,401],[152,489.5],[197,648.5]])),n(t([[152,648.5],[116,569],[82,648.5]])),n(t([[197,648.5],[152,790],[152,996],[116,1021.5],[152,1038.5],[152,1115],[197,1165.5],[197,1276],[116,1360],[116,1500]])),n(t([[59,0],[59,183],[0,294],[0,372.5],[92.5,401],[92.5,489.5],[46.5,552.5],[20,648.5],[82,711.5],[20,790],[20,906],[59,924],[20,942],[20,1021.5],[0,1073.5],[0,1276],[96,1360],[96,1500]])),[].forEach(([t,n,r,i])=>e.push({x1:t,y1:n,x2:r,y2:i})),e})(),Gw=[],Kw=[[128,712,30,0,-.04],[208,649,15,0,.06],[130,1360,22,0,-.025]].map(([e,t,n,r,i])=>({cx:e,cy:t,halfLen:n,angle:r,angularVelocity:i})),qw=[[156,425,4],[143,453,4],[170,453,4],[156,478,4],[120,905,4],[140,905,4],[160,905,4],[130,939,4],[150,939,4],[100,973,4],[120,973,4],[140,973,4],[90,1007,4],[110,1007,4],[80,1041,4],[100,1041,4],[120,1041,4]].map(([e,t,n])=>({x:e,y:t,r:n}));function Jw(e){let t=[...e];for(let e=t.length-1;e>0;e--){let n=Math.floor(Math.random()*(e+1));[t[e],t[n]]=[t[n],t[e]]}return t}function Yw({participants:e,spinning:t,scale:n=1,minimapRef:r,onRaceEnd:i,onAllFinished:a}){let o=(0,S.useRef)(null),s=(0,S.useRef)([]),c=(0,S.useRef)(null),l=(0,S.useRef)(0),u=(0,S.useRef)(0),d=(0,S.useRef)(!1),f=(0,S.useRef)(!1),p=(0,S.useRef)(!1),m=(0,S.useRef)(!1),h=(0,S.useRef)(0),g=(0,S.useRef)(Jw(e)),_=e=>e<=4?5:e<=8?4:3,v=(e,t,n)=>{let r=280*2/5+n;return r+(280*3/5-n-r)/Math.max(t-1,1)*e+(Math.random()-.5)*n*.5},y=(0,S.useCallback)((e,t,n=1)=>{let r=o.current?.getContext(`2d`);if(!r)return;r.fillStyle=`#000`,r.fillRect(0,0,280,340),r.save(),n!==1&&(r.translate(280/2,340/2),r.scale(n,n),r.translate(-280/2,-340/2)),r.shadowColor=`#cc44ff`,r.shadowBlur=10/n,r.strokeStyle=`#cc44ff`,r.lineWidth=1.5/n,Ww.forEach(e=>{r.beginPath(),r.moveTo(e.x1,e.y1-t),r.lineTo(e.x2,e.y2-t),r.stroke()}),r.shadowBlur=0,r.shadowColor=`#00ff88`,r.shadowBlur=10/n,r.strokeStyle=`#00ff88`,r.lineWidth=3/n,Gw.forEach(e=>{r.beginPath(),r.moveTo(e.x1,e.y1-t),r.lineTo(e.x2,e.y2-t),r.stroke()}),r.shadowBlur=0,r.shadowColor=`#00e5ff`,r.shadowBlur=14/n,r.strokeStyle=`#44ddff`,r.lineWidth=6/n,Kw.forEach(e=>{let n=Math.cos(e.angle),i=Math.sin(e.angle);r.beginPath(),r.moveTo(e.cx+n*e.halfLen,e.cy+i*e.halfLen-t),r.lineTo(e.cx-n*e.halfLen,e.cy-i*e.halfLen-t),r.stroke()}),r.shadowBlur=0,r.fillStyle=`#ff4da6`,r.shadowColor=`#ff4da6`,r.shadowBlur=10,qw.forEach(e=>{r.beginPath(),r.arc(e.x,e.y-t,e.r,0,Math.PI*2),r.fill()}),r.shadowBlur=0;let i=Uw-t;r.shadowColor=`#ffd700`,r.shadowBlur=12,r.strokeStyle=`#ffd700`,r.lineWidth=2.5/n,r.setLineDash([8,6]),r.beginPath(),r.moveTo(0,i),r.lineTo(280,i),r.stroke(),r.setLineDash([]),r.shadowBlur=0,r.fillStyle=`#ffd700`,r.font=`bold ${10/n}px sans-serif`,r.textAlign=`right`,r.textBaseline=`bottom`,r.fillText(`GOAL`,274,i-3),e.forEach(e=>{if(e.alpha<=0)return;let n=e.y-t;n<-e.radius||n>340+e.radius||(r.globalAlpha=e.alpha,r.shadowColor=`hsl(${e.hue} 100% 60%)`,r.shadowBlur=14,r.beginPath(),r.arc(e.x,n,e.radius,0,Math.PI*2),r.fillStyle=`hsl(${e.hue} 100% 65%)`,r.fill(),r.shadowBlur=0,r.globalAlpha=1)}),r.restore(),r.font=`bold 9px sans-serif`,r.textAlign=`center`,r.textBaseline=`top`,e.forEach(e=>{if(e.alpha<=0)return;let i=e.y-t;if(i<-e.radius||i>340+e.radius)return;let a=(e.x-280/2)*n+280/2,o=(i-340/2)*n+340/2+e.radius*n+2;o<0||o>356||(r.globalAlpha=e.alpha,r.fillStyle=`hsl(${e.hue} 100% 80%)`,r.fillText(e.name,a,o),r.globalAlpha=1)});let a=e.filter(e=>e.rank>0).sort((e,t)=>e.rank-t.rank);if(a.length){let e=15*(a.length+.6);r.fillStyle=`rgba(0,0,0,.65)`,r.beginPath(),r.roundRect(222,6,52,e,7),r.fill(),r.font=`bold 8px sans-serif`,r.textBaseline=`middle`,a.forEach((e,t)=>{let n=6+15*(t+.8);r.fillStyle=t===0?`#ffd700`:t===1?`#c0c0c0`:t===2?`#cd7f32`:`#aaa`,r.textAlign=`left`,r.fillText(`${e.rank}위`,225,n),r.fillStyle=`hsl(${e.hue} 100% 70%)`,r.fillText(e.name,242,n)})}},[]),b=(0,S.useCallback)((e,t)=>{let n=r?.current;if(!n)return;let i=n.getContext(`2d`);if(!i)return;let a=340/Aw;i.fillStyle=`#111`,i.fillRect(0,0,jw,340),i.strokeStyle=`#cc44ff`,i.lineWidth=1,Ww.forEach(e=>{i.beginPath(),i.moveTo(e.x1*a,e.y1*a),i.lineTo(e.x2*a,e.y2*a),i.stroke()}),i.strokeStyle=`#00ff88`,i.lineWidth=1,Gw.forEach(e=>{i.beginPath(),i.moveTo(e.x1*a,e.y1*a),i.lineTo(e.x2*a,e.y2*a),i.stroke()}),i.strokeStyle=`#44ddff`,i.lineWidth=1,Kw.forEach(e=>{let t=Math.cos(e.angle),n=Math.sin(e.angle);i.beginPath(),i.moveTo((e.cx+t*e.halfLen)*a,(e.cy+n*e.halfLen)*a),i.lineTo((e.cx-t*e.halfLen)*a,(e.cy-n*e.halfLen)*a),i.stroke()}),i.fillStyle=`#ff4da6`,qw.forEach(e=>{i.beginPath(),i.arc(e.x*a,e.y*a,Math.max(1,e.r*a),0,Math.PI*2),i.fill()}),i.strokeStyle=`#ffd700`,i.lineWidth=1,i.setLineDash([3,2]),i.beginPath(),i.moveTo(0,Uw*a),i.lineTo(jw,Uw*a),i.stroke(),i.setLineDash([]),e.forEach(e=>{e.alpha<=0||(i.globalAlpha=e.alpha,i.beginPath(),i.arc(e.x*a,e.y*a,Math.max(2,e.radius*a),0,Math.PI*2),i.fillStyle=`hsl(${e.hue} 100% 65%)`,i.fill(),i.globalAlpha=1)}),i.fillStyle=`rgba(255,255,255,0.06)`,i.fillRect(0,t*a,jw,340*a),i.shadowColor=`#00e5ff`,i.shadowBlur=6,i.strokeStyle=`#00e5ff`,i.lineWidth=1.5,i.strokeRect(0,t*a,jw,340*a),i.shadowBlur=0},[r]);return(0,S.useLayoutEffect)(()=>{let e=o.current;if(!e)return;let t=()=>{let t=e.getBoundingClientRect();if(t.width===0)return!1;let n=(window.devicePixelRatio||1)*(t.width/280);return e.width=Math.round(280*n),e.height=Math.round(340*n),e.style.width=`280px`,e.style.height=`340px`,e.getContext(`2d`)?.setTransform(n,0,0,n,0,0),f.current||(y(s.current,0),b(s.current,0)),!0};if(!t()){let n=new ResizeObserver(()=>{t()&&n.disconnect()});return n.observe(e),()=>n.disconnect()}},[y,b,n]),(0,S.useEffect)(()=>{let e=o.current;if(!e)return;let t=setTimeout(()=>{let t=e.getBoundingClientRect();if(t.width===0)return;let n=(window.devicePixelRatio||1)*(t.width/280);e.width=Math.round(280*n),e.height=Math.round(340*n),e.style.width=`280px`,e.style.height=`340px`,e.getContext(`2d`)?.setTransform(n,0,0,n,0,0),f.current||(y(s.current,0),b(s.current,0))},210);return()=>clearTimeout(t)},[n,y,b]),(0,S.useEffect)(()=>()=>{c.current&&cancelAnimationFrame(c.current)},[]),(0,S.useEffect)(()=>{if(f.current)return;g.current=g.current.filter(t=>e.some(e=>e.name===t.name&&e.cls===t.cls)),e.forEach(e=>{g.current.some(t=>t.name===e.name&&t.cls===e.cls)||g.current.push(e)});let t=g.current,n=t.length,r=_(n);s.current=t.map((e,t)=>({x:v(t,n,r),y:50,vx:0,vy:0,radius:r,hue:360/n*t,name:e.name,cls:e.cls,rank:0,alpha:1})),y(s.current,0),b(s.current,0)},[e,y,b]),(0,S.useEffect)(()=>{if(!t)return;l.current=0,u.current=0,d.current=!1,f.current=!0,p.current=!1,m.current=!1,h.current=0;let e=g.current,n=e.length,r=_(n);s.current=e.map((e,t)=>({x:v(t,n,r),y:50,vx:(Math.random()-.5)*1.5,vy:Math.random()*.5,radius:r,hue:360/n*t,name:e.name,cls:e.cls,rank:0,alpha:1})),c.current&&cancelAnimationFrame(c.current);function o(e){h.current===0&&(h.current=e);let t=Math.min((e-h.current)/(1e3/60),3);h.current=e;let n=s.current,r=n.filter(e=>e.rank===0);r.length&&r.reduce((e,t)=>e.y>t.y?e:t).y>=1276&&(p.current=!0);let g=p.current?.8:1,_=p.current?2:1;Kw.forEach(e=>{e.angle+=e.angularVelocity*g*t}),n.forEach(e=>{if(e.rank>0){e.alpha=Math.max(0,e.alpha-.015*t);return}e.vy+=Mw*g*(.8+Math.random()*.2)*t,e.vx*=Nw**+t,e.vy*=Nw**+t});for(let e=0;e<4;e++){n.forEach(e=>{e.rank>0||(e.x+=e.vx/4*t,e.y+=e.vy/4*t,Ww.forEach(t=>zw(e,t.x1,t.y1,t.x2,t.y2)),Gw.forEach(t=>zw(e,t.x1,t.y1,t.x2,t.y2,Iw)),Kw.forEach(t=>{let n=Math.cos(t.angle),r=Math.sin(t.angle);Vw(e,t.cx+n*t.halfLen,t.cy+r*t.halfLen,t.cx-n*t.halfLen,t.cy-r*t.halfLen,t.cx,t.cy,t.angularVelocity*g)}),qw.forEach(t=>Bw(e,t)),e.y+e.radius>=Uw&&e.rank===0&&(e.rank=++u.current,e.y=Uw-e.radius,e.vy=0,e.vx=0,d.current||(d.current=!0,i(e.name,e.cls))))});for(let e=0;e<n.length;e++)for(let t=e+1;t<n.length;t++)n[e].rank===0&&n[t].rank===0&&Hw(n[e],n[t])}if(!m.current&&n.length>0&&n.every(e=>e.rank>0)&&(m.current=!0,a?.()),r.length){let e=r.reduce((e,t)=>e.y>t.y?e:t),t=Math.max(0,Math.min(Aw-340,e.y-340/(2*_)));l.current+=(t-l.current)*Pw}y(n,l.current,_),b(n,l.current),n.some(e=>e.rank===0)||n.some(e=>e.alpha>0)?c.current=requestAnimationFrame(o):f.current=!1}return c.current=requestAnimationFrame(o),()=>{c.current&&cancelAnimationFrame(c.current)}},[t]),(0,$.jsx)(`canvas`,{ref:o,width:280,height:340,style:{display:`block`,borderRadius:6}})}function Xw({open:e,standalone:t,onClose:n,onWinner:r}){let[i,a]=(0,S.useState)(`marble`),[o,s]=(0,S.useState)([{name:``,cls:``},{name:``,cls:``}]),[c,l]=(0,S.useState)(null),[u,d]=(0,S.useState)(!1),[f,p]=(0,S.useState)(!1),[m,h]=(0,S.useState)(!1),[g,_]=(0,S.useState)(1),[v,y]=(0,S.useState)(0),b=(0,S.useRef)(null),x=(0,S.useRef)(null),C=o.filter(e=>e.name.trim()),w=C.map(e=>e.name.trim()),ee=u||f;(0,S.useEffect)(()=>{if(!m&&!t){_(1);return}let e=()=>{let e=x.current;if(!e)return;let t=parseFloat(getComputedStyle(document.getElementById(`root`)).zoom)||1,n=Math.min(window.innerWidth/t*.9/e.offsetWidth,window.innerHeight/t*.9/e.offsetHeight);_(Math.max(1,n))};return e(),window.addEventListener(`resize`,e),()=>window.removeEventListener(`resize`,e)},[m,t,i]);function T(e,t){s(n=>n.map((n,r)=>r===e?{...n,name:t}:n))}function E(e,t){s(n=>n.map((n,r)=>r===e?{...n,cls:t}:n))}function te(e){s(t=>t.filter((t,n)=>n!==e))}function ne(){s(e=>[...e,{name:``,cls:``}])}function re(){u||w.length<2||(l(null),d(!0))}function ie(e){d(!1),l(C[e].name),r(C[e].name,C[e].cls)}function ae(){f||C.length<2||(l(null),p(!0))}function oe(e,t){l(e),r(e,t)}function se(){p(!1)}function ce(){l(null),d(!1),p(!1)}let D=i===`wheel`?u?`돌아가는 중...`:`SPIN`:f?`레이스 중...`:`START`,O=i===`wheel`?u||w.length<2:f||C.length<2;function le(e){return o.map((t,n)=>(0,$.jsxs)(pw,{children:[(0,$.jsx)(mw,{placeholder:`참여자 ${n+1}`,value:t.name,maxLength:10,disabled:e,onChange:e=>T(n,e.target.value)}),(0,$.jsx)(hw,{placeholder:`반`,value:t.cls,maxLength:2,disabled:e,onChange:e=>E(n,e.target.value)}),o.length>2&&(0,$.jsx)(gw,{type:`button`,disabled:e,onClick:()=>te(n),children:`✕`})]},n))}return(0,$.jsx)($C,{$standalone:t,onClick:t?void 0:n,style:{display:e?void 0:`none`},children:(0,$.jsxs)(ew,{ref:x,$wide:i===`marble`,$standalone:t,style:{transform:g===1?void 0:`scale(${g})`,transition:`transform 0.2s ease`},onClick:e=>e.stopPropagation(),children:[(0,$.jsxs)(nw,{children:[(0,$.jsx)(aw,{children:`🎰 주문자 뽑기`}),(0,$.jsxs)(rw,{children:[(0,$.jsx)(iw,{type:`button`,$active:i===`marble`,onClick:()=>a(`marble`),children:`마블 룰렛`}),(0,$.jsx)(iw,{type:`button`,$active:i===`wheel`,onClick:()=>a(`wheel`),children:`스핀 룰렛`})]}),(0,$.jsxs)(`div`,{style:{display:`flex`,gap:4,alignItems:`center`},children:[i===`marble`&&!window.electronAPI&&(0,$.jsx)(sw,{type:`button`,title:m?`축소`:`확대`,onClick:()=>h(e=>!e),children:m?(0,$.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,width:`14`,height:`14`,viewBox:`0 -960 960 960`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`m156-100-56-56 124-124H120v-80h240v240h-80v-104L156-100Zm648 0L680-224v104h-80v-240h240v80H736l124 124-56 56ZM120-600v-80h104L100-804l56-56 124 124v-104h80v240H120Zm480 0v-240h80v104l124-124 56 56-124 124h104v80H600Z`})}):(0,$.jsx)(`svg`,{xmlns:`http://www.w3.org/2000/svg`,width:`14`,height:`14`,viewBox:`0 -960 960 960`,fill:`currentColor`,children:(0,$.jsx)(`path`,{d:`M120-120v-240h80v104l124-124 56 56-124 124h104v80H120Zm480 0v-80h104L580-324l56-56 124 124v-104h80v240H600ZM324-580 200-704v104h-80v-240h240v80H256l124 124-56 56Zm312 0-56-56 124-124H600v-80h240v240h-80v-104L636-580Z`})})}),(0,$.jsx)(ow,{type:`button`,onClick:n,children:`✕`})]})]}),(0,$.jsxs)(cw,{children:[i===`marble`&&(0,$.jsx)(tw,{ref:b,width:jw,height:340}),(0,$.jsxs)(lw,{children:[(0,$.jsxs)(vw,{children:[i===`wheel`?(0,$.jsx)(kw,{names:w,spinning:u,onSpinEnd:ie}):(0,$.jsx)(Yw,{participants:C,spinning:f,scale:g,minimapRef:b,onRaceEnd:oe,onAllFinished:se},v),i===`marble`&&(0,$.jsx)(yw,{type:`button`,onClick:()=>{ce(),y(e=>e+1)},children:`↺`})]}),(0,$.jsx)(bw,{type:`button`,disabled:O,onClick:i===`wheel`?re:ae,children:D})]}),(0,$.jsxs)(uw,{style:{position:`relative`},children:[(0,$.jsx)(dw,{children:`참여자`}),(0,$.jsx)(fw,{children:le(ee)}),(0,$.jsx)(_w,{type:`button`,disabled:ee,onClick:ne,children:`+ 추가`}),i===`marble`&&c&&(0,$.jsx)(`div`,{style:{position:`absolute`,inset:0,background:`rgba(0,0,0,0.45)`,backdropFilter:`blur(3px)`,display:`flex`,alignItems:`center`,justifyContent:`center`,borderRadius:12,zIndex:5},children:(0,$.jsxs)(Sw,{style:{position:`relative`},onClick:e=>e.stopPropagation(),children:[(0,$.jsx)(ow,{type:`button`,style:{position:`absolute`,top:8,right:8,padding:`2px 6px`},onClick:()=>l(null),children:`✕`}),(0,$.jsx)(Cw,{children:`🎉`}),(0,$.jsx)(ww,{children:c}),(0,$.jsx)(Tw,{children:`당첨!`})]})})]})]}),i===`wheel`&&c&&(0,$.jsxs)(xw,{onClick:n,children:[(0,$.jsxs)(Sw,{onClick:e=>e.stopPropagation(),children:[(0,$.jsx)(Cw,{children:`🎉`}),(0,$.jsx)(ww,{children:c}),(0,$.jsx)(Tw,{children:`당첨!`})]}),(0,$.jsx)(Ew,{type:`button`,title:`초기화`,onClick:e=>{e.stopPropagation(),ce()},children:`🔄`})]})]})})}function Zw(){let e=window.innerWidth;return e>=1920?5:e>=1440?4:e<=1e3?2:3}function Qw({onSubmit:e,disabled:t}){let[n,r]=(0,S.useState)(()=>localStorage.getItem(`coffy_name`)??``),[i,a]=(0,S.useState)(()=>localStorage.getItem(`coffy_class`)??``),[o,s]=(0,S.useState)(null),[c,l]=(0,S.useState)(``),[u,d]=(0,S.useState)(!1),[f,p]=(0,S.useState)([]),[m,h]=(0,S.useState)(`ICE`),[g,_]=(0,S.useState)(``),[v,y]=(0,S.useState)(!1),[b,x]=(0,S.useState)(``),[C,w]=(0,S.useState)(``),[ee,T]=(0,S.useState)(()=>localStorage.getItem(`coffy_password`)??``),[E,te]=(0,S.useState)(()=>{try{return JSON.parse(localStorage.getItem(`coffy_cart`)??`[]`).map(e=>({...e,qty:e.qty??1}))}catch{return[]}}),[ne,re]=(0,S.useState)(!1),[ie,ae]=(0,S.useState)(!1),[oe,se]=(0,S.useState)(null),[ce,D]=(0,S.useState)(``),[O,le]=(0,S.useState)(``),[ue,de]=(0,S.useState)(!1),[fe,pe]=(0,S.useState)(-1);(0,S.useEffect)(()=>{localStorage.setItem(`coffy_cart`,JSON.stringify(E))},[E]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_name`,n)},[n]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_class`,i)},[i]),(0,S.useEffect)(()=>{localStorage.setItem(`coffy_password`,ee)},[ee]);let[me,he]=(0,S.useState)(!1),ge=`기타`,[_e,ve]=(0,S.useState)(EC[0].category),[ye,be]=(0,S.useState)(0),[xe,Se]=(0,S.useState)(Zw);(0,S.useEffect)(()=>{let e=()=>Se(Zw());return window.addEventListener(`resize`,e),()=>window.removeEventListener(`resize`,e)},[]);let Ce=xe*2,we=EC.find(e=>e.category===_e)?.items??[],Te=Math.ceil(we.length/Ce),Ee=we.slice(ye*Ce,(ye+1)*Ce),De=EC.flatMap(e=>e.items),Oe=De.find(e=>e.name===o),ke=O?De.filter(e=>e.name.includes(O)):[],Ae=ke[0]??null,je=Ae&&Ae.name.startsWith(ce)?Ae.name.slice(ce.length):``,Me=Oe?.types.find(e=>e.temp===m),Ne=u?0:Me?.price??0,Pe=g===``?Ne:g,Fe=Pe+f.reduce((e,t)=>e+(CC.find(e=>e.name===t)?.price??0),0)+(v&&C!==``?C:0),Ie=u?c:o;function Le(e){let t=De.find(t=>t.name===e)?.types.some(e=>e.temp===`ICE`)?`ICE`:`HOT`;d(!1),l(``),s(e),_(``),h(t)}function Re(){fe>=0&&ke[fe]?ze(ke[fe].name):Ae?ze(Ae.name):(D(``),le(``),de(!1))}function ze(e){let t=EC.find(t=>t.items.some(t=>t.name===e));if(!t)return;let n=t.items.findIndex(t=>t.name===e),r=Math.floor(n/Ce);ve(t.category),be(r),Le(e),D(e),le(e),de(!1),pe(-1)}function Be(e){ve(e),be(0),e===ge?(s(null),d(!0),_(``)):(d(!1),l(``))}function Ve(e){p(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])}function He(e){h(e)}function Ue(){s(null),l(``),d(!1),p([]),h(`ICE`),_(``),y(!1),x(``),w(``),ve(EC[0].category),be(0)}function We(){if(!Ie||!Pe){window.alert(`메뉴를 선택해주세요.`);return}let e=Ie??``,t=[...f,...v&&b?[`${b}${C?`(+${Number(C).toLocaleString()}원)`:``}`]:[]],n=E.find(n=>n.menu===e&&n.temp===m&&n.options.length===t.length&&[...n.options].sort().join(`,`)===[...t].sort().join(`,`));if(n){window.confirm(`이미 장바구니에 있는 메뉴입니다.
+장바구니에서 수량을 늘리시겠습니까?`)&&(se(n.id),window.electronAPI?window.electronAPI.openCart():re(!0));return}let r={id:crypto.randomUUID(),menu:e,temp:m,options:t,price:Fe,qty:1,image:Me?.image};te(e=>[...e,r]),Ue()}function Ge(){if(E.length!==0){if(!n||!i||!ee){re(!1),se(null),he(!0);return}localStorage.setItem(`coffy_name`,n),localStorage.setItem(`coffy_class`,i),e(E.map(e=>({name:n,class:i,menu:e.menu,temp:e.temp,options:e.options,price:e.price,qty:e.qty,password:ee}))),te([]),localStorage.removeItem(`coffy_cart`),re(!1),se(null),T(``)}}return(0,$.jsx)(Xb,{children:(0,$.jsxs)(Zb,{onSubmit:e=>e.preventDefault(),children:[(0,$.jsxs)(Qb,{children:[(0,$.jsxs)($b,{children:[`주문하기 `,t&&(0,$.jsx)(ex,{children:`마감`})]}),(0,$.jsxs)(nx,{children:[(0,$.jsx)(rx,{type:`button`,title:`주문자 뽑기`,onClick:()=>ae(!0),children:`🎰`}),(0,$.jsx)(QC,{name:n,cls:i,password:ee,onNameChange:e=>{r(e),he(!1)},onClsChange:e=>{a(e),he(!1)},onPasswordChange:e=>{T(e),he(!1)},showValidation:me})]})]}),(0,$.jsxs)(hx,{children:[(0,$.jsxs)(ax,{children:[(0,$.jsx)(gx,{children:`메뉴`}),(0,$.jsxs)(sx,{children:[(0,$.jsxs)(cx,{style:{paddingRight:`6px`},children:[je&&(0,$.jsxs)(lx,{"aria-hidden":`true`,children:[(0,$.jsx)(`span`,{style:{visibility:`hidden`},children:ce}),(0,$.jsx)(ux,{children:je})]}),(0,$.jsx)(dx,{style:{paddingRight:`4px`},placeholder:`메뉴 검색`,value:ce,onChange:e=>{let t=e.target.value;D(t),le(t),de(!0),pe(-1)},onFocus:()=>{O&&de(!0)},onBlur:()=>setTimeout(()=>{de(!1),pe(-1),D(O)},150),onKeyDown:e=>{if(e.key===`ArrowDown`){e.preventDefault();let t=Math.min(fe+1,ke.length-1);pe(t),D(ke[t]?.name??O)}else if(e.key===`ArrowUp`){e.preventDefault();let t=Math.max(fe-1,-1);pe(t),D(t===-1?O:ke[t]?.name??O)}else e.key===`Enter`?(e.preventDefault(),Re()):e.key===`Escape`&&(D(``),le(``),de(!1),pe(-1))}}),(0,$.jsx)(fx,{type:`button`,onMouseDown:e=>{e.preventDefault(),Re()},children:`🔍`})]}),ue&&ke.length>0&&(0,$.jsx)(px,{children:ke.map((e,t)=>(0,$.jsx)(mx,{$highlighted:t===fe,onMouseDown:()=>ze(e.name),children:e.name},e.name))})]})]}),(0,$.jsxs)(ox,{children:[EC.map(e=>(0,$.jsx)(CS,{type:`button`,$selected:_e===e.category,onClick:()=>Be(e.category),children:e.category},e.category)),(0,$.jsx)(CS,{type:`button`,$selected:_e===ge,onClick:()=>Be(ge),children:`기타`})]}),(0,$.jsxs)(vx,{$noMinHeight:_e===ge,children:[_e===ge?(0,$.jsx)(Dx,{children:(0,$.jsx)(Ox,{placeholder:`메뉴명 직접 입력`,value:c,onChange:e=>l(e.target.value),autoFocus:!0})}):(0,$.jsxs)(yx,{children:[(0,$.jsx)(bx,{children:Ee.map(e=>{let t=e.types.map(e=>e.temp),n=e.types.find(e=>e.temp===`ICE`)?.price??e.types[0]?.price??0,r=o===e.name&&!u;return(0,$.jsxs)(kx,{type:`button`,$selected:r,onClick:()=>Le(e.name),children:[(0,$.jsx)(Ax,{children:t.map(e=>(0,$.jsx)(TC,{temp:e,size:`sm`},e))}),(0,$.jsx)(jx,{children:e.name}),(0,$.jsxs)(Mx,{$selected:r,children:[n.toLocaleString(),`원`]})]},e.name)})}),Te>1&&(0,$.jsxs)(xx,{children:[(0,$.jsx)(CS,{type:`button`,onClick:()=>be(e=>e-1),disabled:ye===0,style:{padding:`4px 12px`,fontSize:`1.1rem`,lineHeight:1},children:`‹`}),(0,$.jsx)(Sx,{children:Array.from({length:Te},(e,t)=>(0,$.jsx)(Cx,{type:`button`,$active:t===ye,onClick:()=>be(t)},t))}),(0,$.jsx)(CS,{type:`button`,onClick:()=>be(e=>e+1),disabled:ye>=Te-1,style:{padding:`4px 12px`,fontSize:`1.1rem`,lineHeight:1},children:`›`})]})]}),_e!==ge&&(0,$.jsx)(wx,{children:Me?.image?(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(`img`,{src:Me.image,alt:Oe?.name}),Me.kcal!=null&&(0,$.jsxs)(Tx,{children:[Me.kcal,` kcal`]})]}):(0,$.jsx)(Ex,{children:`☕`})})]})]}),(0,$.jsxs)(hx,{children:[(0,$.jsxs)(gx,{children:[`옵션 `,(0,$.jsx)(_x,{children:`(중복 선택 가능)`})]}),(0,$.jsxs)(Nx,{children:[(0,$.jsx)(Px,{type:`button`,$temp:`ice`,$selected:m===`ICE`,onClick:()=>He(`ICE`),disabled:!u&&(Oe?.types.length??0)<2,children:`ICE`}),(0,$.jsx)(Px,{type:`button`,$temp:`hot`,$selected:m===`HOT`,onClick:()=>He(`HOT`),disabled:!u&&(Oe?.types.length??0)<2,children:`HOT`}),(0,$.jsx)(Ix,{}),CC.map(e=>(0,$.jsxs)(Px,{type:`button`,$selected:f.includes(e.name),onClick:()=>Ve(e.name),children:[e.name,e.price>0&&(0,$.jsxs)(Fx,{children:[` +`,e.price.toLocaleString()]})]},e.name)),(0,$.jsx)(Px,{type:`button`,$other:!0,$selected:v,onClick:()=>{y(e=>!e),x(``),w(``)},children:`기타`}),v&&(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(Lx,{placeholder:`옵션명`,value:b,onChange:e=>x(e.target.value)}),(0,$.jsx)(Lx,{type:`number`,step:100,$price:!0,placeholder:`+금액`,value:C,onChange:e=>w(e.target.value===``?``:Number(e.target.value))})]})]})]}),(0,$.jsxs)(Rx,{children:[(0,$.jsxs)(zx,{children:[(0,$.jsx)(gx,{children:`가격`}),(0,$.jsx)(`input`,{type:`number`,step:100,placeholder:u?`가격 입력`:`메뉴 선택 시 자동`,value:u?g:Ne||``,onChange:e=>_(e.target.value===``?``:Number(e.target.value)),disabled:!u})]}),(0,$.jsx)(Bx,{children:Ie&&(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(Vx,{children:[(0,$.jsx)(TC,{temp:m}),(0,$.jsx)(`span`,{children:Ie})]}),f.length>0&&(0,$.jsxs)(Hx,{children:[`· `,f.join(`, `)]}),(0,$.jsxs)(Ux,{children:[Fe.toLocaleString(),`원`]})]})})]}),(0,$.jsxs)(Wx,{children:[(0,$.jsx)(Gx,{type:`button`,onClick:We,children:`장바구니에 추가`}),(0,$.jsxs)(Kx,{type:`button`,disabled:E.length===0,onClick:()=>{window.electronAPI?window.electronAPI.openCart():re(!0)},children:[`장바구니 확인`,E.length>0&&(0,$.jsx)(qx,{children:E.reduce((e,t)=>e+t.qty,0)})]})]}),(0,$.jsx)(Xw,{open:ie,onClose:()=>ae(!1),onWinner:(e,t)=>{r(e),t&&a(t),he(!1)}}),ne&&(0,$.jsx)(YC,{cart:E,name:n,cls:i,closed:t,onRemove:e=>te(t=>t.filter(t=>t.id!==e)),onChangeQty:(e,t)=>te(n=>n.map(n=>n.id===e?{...n,qty:t}:n)),onSubmit:Ge,onClose:()=>{re(!1),se(null)},onRoulette:()=>ae(!0),focusItemId:oe})]})})}var $w=N.div`
   display: flex;
   height: 100%;
-`;function eT(){let{hour:e,minute:t}=Xb.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function tT(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(eT());return(0,S.useEffect)(()=>{let e=setInterval(()=>r(eT()),1e4);return()=>clearInterval(e)},[]),(0,$.jsxs)($w,{children:[(0,$.jsx)(wS,{}),(0,$.jsx)(Qw,{onSubmit:async n=>{await Promise.all(n.map(e)),t(`/orders`)},disabled:n})]})}function nT(e,t){if(e.match(/^[a-z]+:\/\//i))return e;if(e.match(/^\/\//))return window.location.protocol+e;if(e.match(/^[a-z]+:/i))return e;let n=document.implementation.createHTMLDocument(),r=n.createElement(`base`),i=n.createElement(`a`);return n.head.appendChild(r),n.body.appendChild(i),t&&(r.href=t),i.href=e,i.href}var rT=(()=>{let e=0,t=()=>`0000${(Math.random()*36**4<<0).toString(36)}`.slice(-4);return()=>(e+=1,`u${t()}${e}`)})();function iT(e){let t=[];for(let n=0,r=e.length;n<r;n++)t.push(e[n]);return t}var aT=null;function oT(e={}){return aT||(e.includeStyleProperties?(aT=e.includeStyleProperties,aT):(aT=iT(window.getComputedStyle(document.documentElement)),aT))}function sT(e,t){let n=(e.ownerDocument.defaultView||window).getComputedStyle(e).getPropertyValue(t);return n?parseFloat(n.replace(`px`,``)):0}function cT(e){let t=sT(e,`border-left-width`),n=sT(e,`border-right-width`);return e.clientWidth+t+n}function lT(e){let t=sT(e,`border-top-width`),n=sT(e,`border-bottom-width`);return e.clientHeight+t+n}function uT(e,t={}){return{width:t.width||cT(e),height:t.height||lT(e)}}function dT(){let e,t;try{t=process}catch{}let n=t&&t.env?t.env.devicePixelRatio:null;return n&&(e=parseInt(n,10),Number.isNaN(e)&&(e=1)),e||window.devicePixelRatio||1}var fT=16384;function pT(e){(e.width>fT||e.height>fT)&&(e.width>fT&&e.height>fT?e.width>e.height?(e.height*=fT/e.width,e.width=fT):(e.width*=fT/e.height,e.height=fT):e.width>fT?(e.height*=fT/e.width,e.width=fT):(e.width*=fT/e.height,e.height=fT))}function mT(e){return new Promise((t,n)=>{let r=new Image;r.onload=()=>{r.decode().then(()=>{requestAnimationFrame(()=>t(r))})},r.onerror=n,r.crossOrigin=`anonymous`,r.decoding=`async`,r.src=e})}async function hT(e){return Promise.resolve().then(()=>new XMLSerializer().serializeToString(e)).then(encodeURIComponent).then(e=>`data:image/svg+xml;charset=utf-8,${e}`)}async function gT(e,t,n){let r=`http://www.w3.org/2000/svg`,i=document.createElementNS(r,`svg`),a=document.createElementNS(r,`foreignObject`);return i.setAttribute(`width`,`${t}`),i.setAttribute(`height`,`${n}`),i.setAttribute(`viewBox`,`0 0 ${t} ${n}`),a.setAttribute(`width`,`100%`),a.setAttribute(`height`,`100%`),a.setAttribute(`x`,`0`),a.setAttribute(`y`,`0`),a.setAttribute(`externalResourcesRequired`,`true`),i.appendChild(a),a.appendChild(e),hT(i)}var _T=(e,t)=>{if(e instanceof t)return!0;let n=Object.getPrototypeOf(e);return n===null?!1:n.constructor.name===t.name||_T(n,t)};function vT(e){let t=e.getPropertyValue(`content`);return`${e.cssText} content: '${t.replace(/'|"/g,``)}';`}function yT(e,t){return oT(t).map(t=>`${t}: ${e.getPropertyValue(t)}${e.getPropertyPriority(t)?` !important`:``};`).join(` `)}function bT(e,t,n,r){let i=`.${e}:${t}`,a=n.cssText?vT(n):yT(n,r);return document.createTextNode(`${i}{${a}}`)}function xT(e,t,n,r){let i=window.getComputedStyle(e,n),a=i.getPropertyValue(`content`);if(a===``||a===`none`)return;let o=rT();try{t.className=`${t.className} ${o}`}catch{return}let s=document.createElement(`style`);s.appendChild(bT(o,n,i,r)),t.appendChild(s)}function ST(e,t,n){xT(e,t,`:before`,n),xT(e,t,`:after`,n)}var CT=`application/font-woff`,wT=`image/jpeg`,TT={woff:CT,woff2:CT,ttf:`application/font-truetype`,eot:`application/vnd.ms-fontobject`,png:`image/png`,jpg:wT,jpeg:wT,gif:`image/gif`,tiff:`image/tiff`,svg:`image/svg+xml`,webp:`image/webp`};function ET(e){let t=/\.([^./]*?)$/g.exec(e);return t?t[1]:``}function DT(e){return TT[ET(e).toLowerCase()]||``}function OT(e){return e.split(/,/)[1]}function kT(e){return e.search(/^(data:)/)!==-1}function AT(e,t){return`data:${t};base64,${e}`}async function jT(e,t,n){let r=await fetch(e,t);if(r.status===404)throw Error(`Resource "${r.url}" not found`);let i=await r.blob();return new Promise((e,t)=>{let a=new FileReader;a.onerror=t,a.onloadend=()=>{try{e(n({res:r,result:a.result}))}catch(e){t(e)}},a.readAsDataURL(i)})}var MT={};function NT(e,t,n){let r=e.replace(/\?.*/,``);return n&&(r=e),/ttf|otf|eot|woff2?/i.test(r)&&(r=r.replace(/.*\//,``)),t?`[${t}]${r}`:r}async function PT(e,t,n){let r=NT(e,t,n.includeQueryParams);if(MT[r]!=null)return MT[r];n.cacheBust&&(e+=(/\?/.test(e)?`&`:`?`)+new Date().getTime());let i;try{i=AT(await jT(e,n.fetchRequestInit,({res:e,result:n})=>(t||=e.headers.get(`Content-Type`)||``,OT(n))),t)}catch(t){i=n.imagePlaceholder||``;let r=`Failed to fetch resource: ${e}`;t&&(r=typeof t==`string`?t:t.message),r&&console.warn(r)}return MT[r]=i,i}async function FT(e){let t=e.toDataURL();return t===`data:,`?e.cloneNode(!1):mT(t)}async function IT(e,t){if(e.currentSrc){let t=document.createElement(`canvas`),n=t.getContext(`2d`);return t.width=e.clientWidth,t.height=e.clientHeight,n?.drawImage(e,0,0,t.width,t.height),mT(t.toDataURL())}let n=e.poster;return mT(await PT(n,DT(n),t))}async function LT(e,t){try{if(e?.contentDocument?.body)return await qT(e.contentDocument.body,t,!0)}catch{}return e.cloneNode(!1)}async function RT(e,t){return _T(e,HTMLCanvasElement)?FT(e):_T(e,HTMLVideoElement)?IT(e,t):_T(e,HTMLIFrameElement)?LT(e,t):e.cloneNode(BT(e))}var zT=e=>e.tagName!=null&&e.tagName.toUpperCase()===`SLOT`,BT=e=>e.tagName!=null&&e.tagName.toUpperCase()===`SVG`;async function VT(e,t,n){if(BT(t))return t;let r=[];return r=zT(e)&&e.assignedNodes?iT(e.assignedNodes()):_T(e,HTMLIFrameElement)&&e.contentDocument?.body?iT(e.contentDocument.body.childNodes):iT((e.shadowRoot??e).childNodes),r.length===0||_T(e,HTMLVideoElement)||await r.reduce((e,r)=>e.then(()=>qT(r,n)).then(e=>{e&&t.appendChild(e)}),Promise.resolve()),t}function HT(e,t,n){let r=t.style;if(!r)return;let i=window.getComputedStyle(e);i.cssText?(r.cssText=i.cssText,r.transformOrigin=i.transformOrigin):oT(n).forEach(n=>{let a=i.getPropertyValue(n);n===`font-size`&&a.endsWith(`px`)&&(a=`${Math.floor(parseFloat(a.substring(0,a.length-2)))-.1}px`),_T(e,HTMLIFrameElement)&&n===`display`&&a===`inline`&&(a=`block`),n===`d`&&t.getAttribute(`d`)&&(a=`path(${t.getAttribute(`d`)})`),r.setProperty(n,a,i.getPropertyPriority(n))})}function UT(e,t){_T(e,HTMLTextAreaElement)&&(t.innerHTML=e.value),_T(e,HTMLInputElement)&&t.setAttribute(`value`,e.value)}function WT(e,t){if(_T(e,HTMLSelectElement)){let n=t,r=Array.from(n.children).find(t=>e.value===t.getAttribute(`value`));r&&r.setAttribute(`selected`,``)}}function GT(e,t,n){return _T(t,Element)&&(HT(e,t,n),ST(e,t,n),UT(e,t),WT(e,t)),t}async function KT(e,t){let n=e.querySelectorAll?e.querySelectorAll(`use`):[];if(n.length===0)return e;let r={};for(let i=0;i<n.length;i++){let a=n[i].getAttribute(`xlink:href`);if(a){let n=e.querySelector(a),i=document.querySelector(a);!n&&i&&!r[a]&&(r[a]=await qT(i,t,!0))}}let i=Object.values(r);if(i.length){let t=`http://www.w3.org/1999/xhtml`,n=document.createElementNS(t,`svg`);n.setAttribute(`xmlns`,t),n.style.position=`absolute`,n.style.width=`0`,n.style.height=`0`,n.style.overflow=`hidden`,n.style.display=`none`;let r=document.createElementNS(t,`defs`);n.appendChild(r);for(let e=0;e<i.length;e++)r.appendChild(i[e]);e.appendChild(n)}return e}async function qT(e,t,n){return!n&&t.filter&&!t.filter(e)?null:Promise.resolve(e).then(e=>RT(e,t)).then(n=>VT(e,n,t)).then(n=>GT(e,n,t)).then(e=>KT(e,t))}var JT=/url\((['"]?)([^'"]+?)\1\)/g,YT=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,XT=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ZT(e){let t=e.replace(/([.*+?^${}()|\[\]\/\\])/g,`\\$1`);return RegExp(`(url\\(['"]?)(${t})(['"]?\\))`,`g`)}function QT(e){let t=[];return e.replace(JT,(e,n,r)=>(t.push(r),e)),t.filter(e=>!kT(e))}async function $T(e,t,n,r,i){try{let a=n?nT(t,n):t,o=DT(t),s;return s=i?AT(await i(a),o):await PT(a,o,r),e.replace(ZT(t),`$1${s}$3`)}catch{}return e}function eE(e,{preferredFontFormat:t}){return t?e.replace(XT,e=>{for(;;){let[n,,r]=YT.exec(e)||[];if(!r)return``;if(r===t)return`src: ${n};`}}):e}function tE(e){return e.search(JT)!==-1}async function nE(e,t,n){if(!tE(e))return e;let r=eE(e,n);return QT(r).reduce((e,r)=>e.then(e=>$T(e,r,t,n)),Promise.resolve(r))}async function rE(e,t,n){let r=t.style?.getPropertyValue(e);if(r){let i=await nE(r,null,n);return t.style.setProperty(e,i,t.style.getPropertyPriority(e)),!0}return!1}async function iE(e,t){await rE(`background`,e,t)||await rE(`background-image`,e,t),await rE(`mask`,e,t)||await rE(`-webkit-mask`,e,t)||await rE(`mask-image`,e,t)||await rE(`-webkit-mask-image`,e,t)}async function aE(e,t){let n=_T(e,HTMLImageElement);if(!(n&&!kT(e.src))&&!(_T(e,SVGImageElement)&&!kT(e.href.baseVal)))return;let r=n?e.src:e.href.baseVal,i=await PT(r,DT(r),t);await new Promise((r,a)=>{e.onload=r,e.onerror=t.onImageErrorHandler?(...e)=>{try{r(t.onImageErrorHandler(...e))}catch(e){a(e)}}:a;let o=e;o.decode&&=r,o.loading===`lazy`&&(o.loading=`eager`),n?(e.srcset=``,e.src=i):e.href.baseVal=i})}async function oE(e,t){let n=iT(e.childNodes).map(e=>sE(e,t));await Promise.all(n).then(()=>e)}async function sE(e,t){_T(e,Element)&&(await iE(e,t),await aE(e,t),await oE(e,t))}function cE(e,t){let{style:n}=e;t.backgroundColor&&(n.backgroundColor=t.backgroundColor),t.width&&(n.width=`${t.width}px`),t.height&&(n.height=`${t.height}px`);let r=t.style;return r!=null&&Object.keys(r).forEach(e=>{n[e]=r[e]}),e}var lE={};async function uE(e){let t=lE[e];return t??(t={url:e,cssText:await(await fetch(e)).text()},lE[e]=t,t)}async function dE(e,t){let n=e.cssText,r=/url\(["']?([^"')]+)["']?\)/g,i=(n.match(/url\([^)]+\)/g)||[]).map(async i=>{let a=i.replace(r,`$1`);return a.startsWith(`https://`)||(a=new URL(a,e.url).href),jT(a,t.fetchRequestInit,({result:e})=>(n=n.replace(i,`url(${e})`),[i,e]))});return Promise.all(i).then(()=>n)}function fE(e){if(e==null)return[];let t=[],n=e.replace(/(\/\*[\s\S]*?\*\/)/gi,``),r=RegExp(`((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})`,`gi`);for(;;){let e=r.exec(n);if(e===null)break;t.push(e[0])}n=n.replace(r,``);let i=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi,a=RegExp(`((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})`,`gi`);for(;;){let e=i.exec(n);if(e===null){if(e=a.exec(n),e===null)break;i.lastIndex=a.lastIndex}else a.lastIndex=i.lastIndex;t.push(e[0])}return t}async function pE(e,t){let n=[],r=[];return e.forEach(n=>{if(`cssRules`in n)try{iT(n.cssRules||[]).forEach((e,i)=>{if(e.type===CSSRule.IMPORT_RULE){let a=i+1,o=e.href,s=uE(o).then(e=>dE(e,t)).then(e=>fE(e).forEach(e=>{try{n.insertRule(e,e.startsWith(`@import`)?a+=1:n.cssRules.length)}catch(t){console.error(`Error inserting rule from remote css`,{rule:e,error:t})}})).catch(e=>{console.error(`Error loading remote css`,e.toString())});r.push(s)}})}catch(i){let a=e.find(e=>e.href==null)||document.styleSheets[0];n.href!=null&&r.push(uE(n.href).then(e=>dE(e,t)).then(e=>fE(e).forEach(e=>{a.insertRule(e,a.cssRules.length)})).catch(e=>{console.error(`Error loading remote stylesheet`,e)})),console.error(`Error inlining remote css file`,i)}}),Promise.all(r).then(()=>(e.forEach(e=>{if(`cssRules`in e)try{iT(e.cssRules||[]).forEach(e=>{n.push(e)})}catch(t){console.error(`Error while reading CSS rules from ${e.href}`,t)}}),n))}function mE(e){return e.filter(e=>e.type===CSSRule.FONT_FACE_RULE).filter(e=>tE(e.style.getPropertyValue(`src`)))}async function hE(e,t){if(e.ownerDocument==null)throw Error(`Provided element is not within a Document`);return mE(await pE(iT(e.ownerDocument.styleSheets),t))}function gE(e){return e.trim().replace(/["']/g,``)}function _E(e){let t=new Set;function n(e){(e.style.fontFamily||getComputedStyle(e).fontFamily).split(`,`).forEach(e=>{t.add(gE(e))}),Array.from(e.children).forEach(e=>{e instanceof HTMLElement&&n(e)})}return n(e),t}async function vE(e,t){let n=await hE(e,t),r=_E(e);return(await Promise.all(n.filter(e=>r.has(gE(e.style.fontFamily))).map(e=>{let n=e.parentStyleSheet?e.parentStyleSheet.href:null;return nE(e.cssText,n,t)}))).join(`
+`;function eT(){let{hour:e,minute:t}=Jx.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function tT(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(eT());return(0,S.useEffect)(()=>{let e=setInterval(()=>r(eT()),1e4);return()=>clearInterval(e)},[]),(0,$.jsxs)($w,{children:[(0,$.jsx)(SC,{}),(0,$.jsx)(Qw,{onSubmit:async n=>{await Promise.all(n.map(e)),t(`/orders`)},disabled:n})]})}function nT(e,t){if(e.match(/^[a-z]+:\/\//i))return e;if(e.match(/^\/\//))return window.location.protocol+e;if(e.match(/^[a-z]+:/i))return e;let n=document.implementation.createHTMLDocument(),r=n.createElement(`base`),i=n.createElement(`a`);return n.head.appendChild(r),n.body.appendChild(i),t&&(r.href=t),i.href=e,i.href}var rT=(()=>{let e=0,t=()=>`0000${(Math.random()*36**4<<0).toString(36)}`.slice(-4);return()=>(e+=1,`u${t()}${e}`)})();function iT(e){let t=[];for(let n=0,r=e.length;n<r;n++)t.push(e[n]);return t}var aT=null;function oT(e={}){return aT||(e.includeStyleProperties?(aT=e.includeStyleProperties,aT):(aT=iT(window.getComputedStyle(document.documentElement)),aT))}function sT(e,t){let n=(e.ownerDocument.defaultView||window).getComputedStyle(e).getPropertyValue(t);return n?parseFloat(n.replace(`px`,``)):0}function cT(e){let t=sT(e,`border-left-width`),n=sT(e,`border-right-width`);return e.clientWidth+t+n}function lT(e){let t=sT(e,`border-top-width`),n=sT(e,`border-bottom-width`);return e.clientHeight+t+n}function uT(e,t={}){return{width:t.width||cT(e),height:t.height||lT(e)}}function dT(){let e,t;try{t=process}catch{}let n=t&&t.env?t.env.devicePixelRatio:null;return n&&(e=parseInt(n,10),Number.isNaN(e)&&(e=1)),e||window.devicePixelRatio||1}var fT=16384;function pT(e){(e.width>fT||e.height>fT)&&(e.width>fT&&e.height>fT?e.width>e.height?(e.height*=fT/e.width,e.width=fT):(e.width*=fT/e.height,e.height=fT):e.width>fT?(e.height*=fT/e.width,e.width=fT):(e.width*=fT/e.height,e.height=fT))}function mT(e){return new Promise((t,n)=>{let r=new Image;r.onload=()=>{r.decode().then(()=>{requestAnimationFrame(()=>t(r))})},r.onerror=n,r.crossOrigin=`anonymous`,r.decoding=`async`,r.src=e})}async function hT(e){return Promise.resolve().then(()=>new XMLSerializer().serializeToString(e)).then(encodeURIComponent).then(e=>`data:image/svg+xml;charset=utf-8,${e}`)}async function gT(e,t,n){let r=`http://www.w3.org/2000/svg`,i=document.createElementNS(r,`svg`),a=document.createElementNS(r,`foreignObject`);return i.setAttribute(`width`,`${t}`),i.setAttribute(`height`,`${n}`),i.setAttribute(`viewBox`,`0 0 ${t} ${n}`),a.setAttribute(`width`,`100%`),a.setAttribute(`height`,`100%`),a.setAttribute(`x`,`0`),a.setAttribute(`y`,`0`),a.setAttribute(`externalResourcesRequired`,`true`),i.appendChild(a),a.appendChild(e),hT(i)}var _T=(e,t)=>{if(e instanceof t)return!0;let n=Object.getPrototypeOf(e);return n===null?!1:n.constructor.name===t.name||_T(n,t)};function vT(e){let t=e.getPropertyValue(`content`);return`${e.cssText} content: '${t.replace(/'|"/g,``)}';`}function yT(e,t){return oT(t).map(t=>`${t}: ${e.getPropertyValue(t)}${e.getPropertyPriority(t)?` !important`:``};`).join(` `)}function bT(e,t,n,r){let i=`.${e}:${t}`,a=n.cssText?vT(n):yT(n,r);return document.createTextNode(`${i}{${a}}`)}function xT(e,t,n,r){let i=window.getComputedStyle(e,n),a=i.getPropertyValue(`content`);if(a===``||a===`none`)return;let o=rT();try{t.className=`${t.className} ${o}`}catch{return}let s=document.createElement(`style`);s.appendChild(bT(o,n,i,r)),t.appendChild(s)}function ST(e,t,n){xT(e,t,`:before`,n),xT(e,t,`:after`,n)}var CT=`application/font-woff`,wT=`image/jpeg`,TT={woff:CT,woff2:CT,ttf:`application/font-truetype`,eot:`application/vnd.ms-fontobject`,png:`image/png`,jpg:wT,jpeg:wT,gif:`image/gif`,tiff:`image/tiff`,svg:`image/svg+xml`,webp:`image/webp`};function ET(e){let t=/\.([^./]*?)$/g.exec(e);return t?t[1]:``}function DT(e){return TT[ET(e).toLowerCase()]||``}function OT(e){return e.split(/,/)[1]}function kT(e){return e.search(/^(data:)/)!==-1}function AT(e,t){return`data:${t};base64,${e}`}async function jT(e,t,n){let r=await fetch(e,t);if(r.status===404)throw Error(`Resource "${r.url}" not found`);let i=await r.blob();return new Promise((e,t)=>{let a=new FileReader;a.onerror=t,a.onloadend=()=>{try{e(n({res:r,result:a.result}))}catch(e){t(e)}},a.readAsDataURL(i)})}var MT={};function NT(e,t,n){let r=e.replace(/\?.*/,``);return n&&(r=e),/ttf|otf|eot|woff2?/i.test(r)&&(r=r.replace(/.*\//,``)),t?`[${t}]${r}`:r}async function PT(e,t,n){let r=NT(e,t,n.includeQueryParams);if(MT[r]!=null)return MT[r];n.cacheBust&&(e+=(/\?/.test(e)?`&`:`?`)+new Date().getTime());let i;try{i=AT(await jT(e,n.fetchRequestInit,({res:e,result:n})=>(t||=e.headers.get(`Content-Type`)||``,OT(n))),t)}catch(t){i=n.imagePlaceholder||``;let r=`Failed to fetch resource: ${e}`;t&&(r=typeof t==`string`?t:t.message),r&&console.warn(r)}return MT[r]=i,i}async function FT(e){let t=e.toDataURL();return t===`data:,`?e.cloneNode(!1):mT(t)}async function IT(e,t){if(e.currentSrc){let t=document.createElement(`canvas`),n=t.getContext(`2d`);return t.width=e.clientWidth,t.height=e.clientHeight,n?.drawImage(e,0,0,t.width,t.height),mT(t.toDataURL())}let n=e.poster;return mT(await PT(n,DT(n),t))}async function LT(e,t){try{if(e?.contentDocument?.body)return await qT(e.contentDocument.body,t,!0)}catch{}return e.cloneNode(!1)}async function RT(e,t){return _T(e,HTMLCanvasElement)?FT(e):_T(e,HTMLVideoElement)?IT(e,t):_T(e,HTMLIFrameElement)?LT(e,t):e.cloneNode(BT(e))}var zT=e=>e.tagName!=null&&e.tagName.toUpperCase()===`SLOT`,BT=e=>e.tagName!=null&&e.tagName.toUpperCase()===`SVG`;async function VT(e,t,n){if(BT(t))return t;let r=[];return r=zT(e)&&e.assignedNodes?iT(e.assignedNodes()):_T(e,HTMLIFrameElement)&&e.contentDocument?.body?iT(e.contentDocument.body.childNodes):iT((e.shadowRoot??e).childNodes),r.length===0||_T(e,HTMLVideoElement)||await r.reduce((e,r)=>e.then(()=>qT(r,n)).then(e=>{e&&t.appendChild(e)}),Promise.resolve()),t}function HT(e,t,n){let r=t.style;if(!r)return;let i=window.getComputedStyle(e);i.cssText?(r.cssText=i.cssText,r.transformOrigin=i.transformOrigin):oT(n).forEach(n=>{let a=i.getPropertyValue(n);n===`font-size`&&a.endsWith(`px`)&&(a=`${Math.floor(parseFloat(a.substring(0,a.length-2)))-.1}px`),_T(e,HTMLIFrameElement)&&n===`display`&&a===`inline`&&(a=`block`),n===`d`&&t.getAttribute(`d`)&&(a=`path(${t.getAttribute(`d`)})`),r.setProperty(n,a,i.getPropertyPriority(n))})}function UT(e,t){_T(e,HTMLTextAreaElement)&&(t.innerHTML=e.value),_T(e,HTMLInputElement)&&t.setAttribute(`value`,e.value)}function WT(e,t){if(_T(e,HTMLSelectElement)){let n=t,r=Array.from(n.children).find(t=>e.value===t.getAttribute(`value`));r&&r.setAttribute(`selected`,``)}}function GT(e,t,n){return _T(t,Element)&&(HT(e,t,n),ST(e,t,n),UT(e,t),WT(e,t)),t}async function KT(e,t){let n=e.querySelectorAll?e.querySelectorAll(`use`):[];if(n.length===0)return e;let r={};for(let i=0;i<n.length;i++){let a=n[i].getAttribute(`xlink:href`);if(a){let n=e.querySelector(a),i=document.querySelector(a);!n&&i&&!r[a]&&(r[a]=await qT(i,t,!0))}}let i=Object.values(r);if(i.length){let t=`http://www.w3.org/1999/xhtml`,n=document.createElementNS(t,`svg`);n.setAttribute(`xmlns`,t),n.style.position=`absolute`,n.style.width=`0`,n.style.height=`0`,n.style.overflow=`hidden`,n.style.display=`none`;let r=document.createElementNS(t,`defs`);n.appendChild(r);for(let e=0;e<i.length;e++)r.appendChild(i[e]);e.appendChild(n)}return e}async function qT(e,t,n){return!n&&t.filter&&!t.filter(e)?null:Promise.resolve(e).then(e=>RT(e,t)).then(n=>VT(e,n,t)).then(n=>GT(e,n,t)).then(e=>KT(e,t))}var JT=/url\((['"]?)([^'"]+?)\1\)/g,YT=/url\([^)]+\)\s*format\((["']?)([^"']+)\1\)/g,XT=/src:\s*(?:url\([^)]+\)\s*format\([^)]+\)[,;]\s*)+/g;function ZT(e){let t=e.replace(/([.*+?^${}()|\[\]\/\\])/g,`\\$1`);return RegExp(`(url\\(['"]?)(${t})(['"]?\\))`,`g`)}function QT(e){let t=[];return e.replace(JT,(e,n,r)=>(t.push(r),e)),t.filter(e=>!kT(e))}async function $T(e,t,n,r,i){try{let a=n?nT(t,n):t,o=DT(t),s;return s=i?AT(await i(a),o):await PT(a,o,r),e.replace(ZT(t),`$1${s}$3`)}catch{}return e}function eE(e,{preferredFontFormat:t}){return t?e.replace(XT,e=>{for(;;){let[n,,r]=YT.exec(e)||[];if(!r)return``;if(r===t)return`src: ${n};`}}):e}function tE(e){return e.search(JT)!==-1}async function nE(e,t,n){if(!tE(e))return e;let r=eE(e,n);return QT(r).reduce((e,r)=>e.then(e=>$T(e,r,t,n)),Promise.resolve(r))}async function rE(e,t,n){let r=t.style?.getPropertyValue(e);if(r){let i=await nE(r,null,n);return t.style.setProperty(e,i,t.style.getPropertyPriority(e)),!0}return!1}async function iE(e,t){await rE(`background`,e,t)||await rE(`background-image`,e,t),await rE(`mask`,e,t)||await rE(`-webkit-mask`,e,t)||await rE(`mask-image`,e,t)||await rE(`-webkit-mask-image`,e,t)}async function aE(e,t){let n=_T(e,HTMLImageElement);if(!(n&&!kT(e.src))&&!(_T(e,SVGImageElement)&&!kT(e.href.baseVal)))return;let r=n?e.src:e.href.baseVal,i=await PT(r,DT(r),t);await new Promise((r,a)=>{e.onload=r,e.onerror=t.onImageErrorHandler?(...e)=>{try{r(t.onImageErrorHandler(...e))}catch(e){a(e)}}:a;let o=e;o.decode&&=r,o.loading===`lazy`&&(o.loading=`eager`),n?(e.srcset=``,e.src=i):e.href.baseVal=i})}async function oE(e,t){let n=iT(e.childNodes).map(e=>sE(e,t));await Promise.all(n).then(()=>e)}async function sE(e,t){_T(e,Element)&&(await iE(e,t),await aE(e,t),await oE(e,t))}function cE(e,t){let{style:n}=e;t.backgroundColor&&(n.backgroundColor=t.backgroundColor),t.width&&(n.width=`${t.width}px`),t.height&&(n.height=`${t.height}px`);let r=t.style;return r!=null&&Object.keys(r).forEach(e=>{n[e]=r[e]}),e}var lE={};async function uE(e){let t=lE[e];return t??(t={url:e,cssText:await(await fetch(e)).text()},lE[e]=t,t)}async function dE(e,t){let n=e.cssText,r=/url\(["']?([^"')]+)["']?\)/g,i=(n.match(/url\([^)]+\)/g)||[]).map(async i=>{let a=i.replace(r,`$1`);return a.startsWith(`https://`)||(a=new URL(a,e.url).href),jT(a,t.fetchRequestInit,({result:e})=>(n=n.replace(i,`url(${e})`),[i,e]))});return Promise.all(i).then(()=>n)}function fE(e){if(e==null)return[];let t=[],n=e.replace(/(\/\*[\s\S]*?\*\/)/gi,``),r=RegExp(`((@.*?keyframes [\\s\\S]*?){([\\s\\S]*?}\\s*?)})`,`gi`);for(;;){let e=r.exec(n);if(e===null)break;t.push(e[0])}n=n.replace(r,``);let i=/@import[\s\S]*?url\([^)]*\)[\s\S]*?;/gi,a=RegExp(`((\\s*?(?:\\/\\*[\\s\\S]*?\\*\\/)?\\s*?@media[\\s\\S]*?){([\\s\\S]*?)}\\s*?})|(([\\s\\S]*?){([\\s\\S]*?)})`,`gi`);for(;;){let e=i.exec(n);if(e===null){if(e=a.exec(n),e===null)break;i.lastIndex=a.lastIndex}else a.lastIndex=i.lastIndex;t.push(e[0])}return t}async function pE(e,t){let n=[],r=[];return e.forEach(n=>{if(`cssRules`in n)try{iT(n.cssRules||[]).forEach((e,i)=>{if(e.type===CSSRule.IMPORT_RULE){let a=i+1,o=e.href,s=uE(o).then(e=>dE(e,t)).then(e=>fE(e).forEach(e=>{try{n.insertRule(e,e.startsWith(`@import`)?a+=1:n.cssRules.length)}catch(t){console.error(`Error inserting rule from remote css`,{rule:e,error:t})}})).catch(e=>{console.error(`Error loading remote css`,e.toString())});r.push(s)}})}catch(i){let a=e.find(e=>e.href==null)||document.styleSheets[0];n.href!=null&&r.push(uE(n.href).then(e=>dE(e,t)).then(e=>fE(e).forEach(e=>{a.insertRule(e,a.cssRules.length)})).catch(e=>{console.error(`Error loading remote stylesheet`,e)})),console.error(`Error inlining remote css file`,i)}}),Promise.all(r).then(()=>(e.forEach(e=>{if(`cssRules`in e)try{iT(e.cssRules||[]).forEach(e=>{n.push(e)})}catch(t){console.error(`Error while reading CSS rules from ${e.href}`,t)}}),n))}function mE(e){return e.filter(e=>e.type===CSSRule.FONT_FACE_RULE).filter(e=>tE(e.style.getPropertyValue(`src`)))}async function hE(e,t){if(e.ownerDocument==null)throw Error(`Provided element is not within a Document`);return mE(await pE(iT(e.ownerDocument.styleSheets),t))}function gE(e){return e.trim().replace(/["']/g,``)}function _E(e){let t=new Set;function n(e){(e.style.fontFamily||getComputedStyle(e).fontFamily).split(`,`).forEach(e=>{t.add(gE(e))}),Array.from(e.children).forEach(e=>{e instanceof HTMLElement&&n(e)})}return n(e),t}async function vE(e,t){let n=await hE(e,t),r=_E(e);return(await Promise.all(n.filter(e=>r.has(gE(e.style.fontFamily))).map(e=>{let n=e.parentStyleSheet?e.parentStyleSheet.href:null;return nE(e.cssText,n,t)}))).join(`
 `)}async function yE(e,t){let n=t.fontEmbedCSS==null?t.skipFonts?null:await vE(e,t):t.fontEmbedCSS;if(n){let t=document.createElement(`style`),r=document.createTextNode(n);t.appendChild(r),e.firstChild?e.insertBefore(t,e.firstChild):e.appendChild(t)}}async function bE(e,t={}){let{width:n,height:r}=uT(e,t),i=await qT(e,t,!0);return await yE(i,t),await sE(i,t),cE(i,t),await gT(i,n,r)}async function xE(e,t={}){let{width:n,height:r}=uT(e,t),i=await mT(await bE(e,t)),a=document.createElement(`canvas`),o=a.getContext(`2d`),s=t.pixelRatio||dT(),c=t.canvasWidth||n,l=t.canvasHeight||r;return a.width=c*s,a.height=l*s,t.skipAutoScale||pT(a),a.style.width=`${c}`,a.style.height=`${l}`,t.backgroundColor&&(o.fillStyle=t.backgroundColor,o.fillRect(0,0,a.width,a.height)),o.drawImage(i,0,0,a.width,a.height),a}async function SE(e,t={}){return(await xE(e,t)).toDataURL()}var CE=N.div`
   min-height: 100%;
   background-color: ${({theme:e})=>e.colors.pageBg};
@@ -2088,7 +2148,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   font-size: 0.85rem;
   color: #555;
   margin-top: 4px;
-`;function YE(){let{hour:e,minute:t}=Xb.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function XE(){let{orders:e,loading:t,removeOrder:n}=Ub(),r=(0,S.useRef)(null),i=e.reduce((e,t)=>e+t.price*(t.qty??1),0),a=new Date().toLocaleDateString(`ko-KR`),o=YE(),[s,c]=(0,S.useState)(new Set),l=(0,S.useMemo)(()=>{let t=new Map;for(let n of e){let e=`${n.name}\x00${n.class}`;t.has(e)||t.set(e,[]),t.get(e).push(n)}for(let e of t.values())e.sort((e,t)=>e.menu.localeCompare(t.menu,`ko`));return Array.from(t.entries()).sort(([,e],[,t])=>{let n=(e[0]?.class??``).localeCompare(t[0]?.class??``,`ko`);return n===0?(e[0]?.name??``).localeCompare(t[0]?.name??``,`ko`):n})},[e]),u=(0,S.useMemo)(()=>{let t=new Map;for(let n of e){let e=n.qty??1,r=`${n.temp}||${n.menu}||${[...n.options].sort().join(`|`)}`;t.has(r)?t.get(r).qty+=e:t.set(r,{temp:n.temp,menu:n.menu,options:n.options,qty:e,unitPrice:n.price})}return Array.from(t.values()).sort((e,t)=>{let n=e.menu.localeCompare(t.menu,`ko`);return n===0?e.temp===t.temp?e.options.join(`,`).localeCompare(t.options.join(`,`),`ko`):e.temp.localeCompare(t.temp):n})},[e]),d=u.reduce((e,t)=>e+t.qty,0);function f(e){c(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n})}async function p(e){if(!e.id)return;if(o){let{hour:e,minute:t}=Xb.closingTime;window.alert(`${e}:${String(t).padStart(2,`0`)} 이후에는 주문을 취소할 수 없습니다.`);return}let t=window.prompt(`${e.name}님의 주문을 삭제하려면 비밀번호를 입력하세요.`);if(t!==null){if(t!==e.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}await n(e.id)}}async function m(){if(!r.current)return;await document.fonts.ready;let e=r.current;e.style.left=`0`,e.style.zIndex=`-1`;let t=await SE(e,{backgroundColor:`#ffffff`,pixelRatio:2});e.style.left=``,e.style.zIndex=``;let n=document.createElement(`a`);n.download=`주문목록_${new Date().toISOString().slice(0,10)}.png`,n.href=t,n.click()}function h(){navigator.clipboard.writeText(Xb.account)}return(0,$.jsx)(AE,{title:`오늘의 주문 목록`,backPath:`/`,actions:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(jE,{children:[a,` / 총 `,d,`잔`]}),e.length>0&&(0,$.jsx)(ME,{onClick:m,children:`이미지로 저장`}),Xb.account&&(0,$.jsxs)(NE,{children:[(0,$.jsx)(PE,{children:`입금 계좌 : `}),(0,$.jsx)(FE,{onClick:h,title:`클릭하여 복사`,children:Xb.account})]})]}),children:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(bx,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{children:`#`}),(0,$.jsx)(`th`,{children:`이름`}),(0,$.jsx)(`th`,{children:`반`}),(0,$.jsx)(`th`,{children:`메뉴`}),(0,$.jsx)(`th`,{children:`옵션`}),(0,$.jsx)(`th`,{children:`수량`}),(0,$.jsx)(`th`,{children:`가격`}),(0,$.jsx)(`th`,{})]})}),(0,$.jsxs)(`tbody`,{children:[t&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:8,style:{textAlign:`center`,padding:`32px`},className:`loading-text`,children:`불러오는 중...`})}),!t&&e.length===0&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:8,style:{textAlign:`center`,padding:`32px`},children:`아직 주문이 없습니다.`})}),!t&&l.map(([e,t])=>{let n=s.has(e),r=t.reduce((e,t)=>e+t.price*(t.qty??1),0),i=t.length>1;return[(0,$.jsxs)(IE,{$clickable:i,onClick:i?()=>f(e):void 0,children:[(0,$.jsx)(RE,{children:i&&(0,$.jsx)(LE,{children:n?`▼`:`▶`})}),(0,$.jsx)(zE,{children:t[0].name}),(0,$.jsx)(`td`,{children:t[0].class}),i?(0,$.jsxs)(`td`,{colSpan:3,children:[t.reduce((e,t)=>e+(t.qty??1),0),`잔`]}):(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(`td`,{children:(0,$.jsxs)(HE,{children:[(0,$.jsx)(DS,{temp:t[0].temp,size:`sm`}),t[0].menu]})}),(0,$.jsx)(`td`,{children:t[0].options.length>0?t[0].options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:t[0].qty??1})]}),(0,$.jsx)(`td`,{children:i?r.toLocaleString()+`원`:(t[0].price*(t[0].qty??1)).toLocaleString()+`원`}),(0,$.jsx)(`td`,{children:!i&&(0,$.jsx)(xx,{onClick:e=>{e.stopPropagation(),p(t[0])},children:`✕`})})]},`group-${e}`),...n&&i?t.map((e,t)=>(0,$.jsxs)(BE,{children:[(0,$.jsx)(VE,{children:t+1}),(0,$.jsx)(`td`,{}),(0,$.jsx)(`td`,{}),(0,$.jsx)(`td`,{children:(0,$.jsxs)(HE,{children:[(0,$.jsx)(DS,{temp:e.temp,size:`sm`}),e.menu]})}),(0,$.jsx)(`td`,{children:e.options.length>0?e.options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:e.qty??1}),(0,$.jsxs)(`td`,{children:[(e.price*(e.qty??1)).toLocaleString(),`원`]}),(0,$.jsx)(`td`,{children:(0,$.jsx)(xx,{onClick:()=>p(e),children:`✕`})})]},e.id??t)):[]]})]}),(0,$.jsx)(`tfoot`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{colSpan:6,children:`합계`}),(0,$.jsxs)(`td`,{children:[i.toLocaleString(),`원`]}),(0,$.jsx)(`td`,{})]})})]}),(0,$.jsx)(La,{theme:Wb,children:(0,$.jsxs)(GE,{ref:r,children:[(0,$.jsxs)(KE,{children:[(0,$.jsxs)(qE,{children:[Xb.serviceName,` / 주문 목록`]}),(0,$.jsxs)(JE,{children:[a,` / 총 `,d,`잔 / 합계 `,i.toLocaleString(),`원`]})]}),(0,$.jsxs)(WE,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{children:`#`}),(0,$.jsx)(`th`,{children:`메뉴`}),(0,$.jsx)(`th`,{children:`옵션`}),(0,$.jsx)(`th`,{children:`수량`}),(0,$.jsx)(`th`,{children:`가격`})]})}),(0,$.jsx)(`tbody`,{children:u.map((e,t)=>(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{children:t+1}),(0,$.jsxs)(`td`,{children:[(0,$.jsx)(`span`,{style:{display:`inline-block`,fontSize:`0.65rem`,fontWeight:700,padding:`1px 5px`,borderRadius:`4px`,marginRight:`5px`,verticalAlign:`middle`,letterSpacing:0,background:e.temp===`ICE`?`#dbeafe`:`#fee2e2`,color:e.temp===`ICE`?`#1d4ed8`:`#b91c1c`,border:`1px solid ${e.temp===`ICE`?`#93c5fd`:`#fca5a5`}`},children:e.temp}),e.menu]}),(0,$.jsx)(`td`,{children:e.options.length>0?e.options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:e.qty}),(0,$.jsxs)(`td`,{children:[(e.unitPrice*e.qty).toLocaleString(),`원`]})]},t))}),(0,$.jsx)(`tfoot`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{colSpan:4,children:`합계`}),(0,$.jsxs)(`td`,{children:[i.toLocaleString(),`원`]})]})})]})]})})]})})}var ZE=N(px)`
+`;function YE(){let{hour:e,minute:t}=Jx.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function XE(){let{orders:e,loading:t,removeOrder:n}=Ub(),r=(0,S.useRef)(null),i=e.reduce((e,t)=>e+t.price*(t.qty??1),0),a=new Date().toLocaleDateString(`ko-KR`),o=YE(),[s,c]=(0,S.useState)(new Set),l=(0,S.useMemo)(()=>{let t=new Map;for(let n of e){let e=`${n.name}\x00${n.class}`;t.has(e)||t.set(e,[]),t.get(e).push(n)}for(let e of t.values())e.sort((e,t)=>e.menu.localeCompare(t.menu,`ko`));return Array.from(t.entries()).sort(([,e],[,t])=>{let n=(e[0]?.class??``).localeCompare(t[0]?.class??``,`ko`);return n===0?(e[0]?.name??``).localeCompare(t[0]?.name??``,`ko`):n})},[e]),u=(0,S.useMemo)(()=>{let t=new Map;for(let n of e){let e=n.qty??1,r=`${n.temp}||${n.menu}||${[...n.options].sort().join(`|`)}`;t.has(r)?t.get(r).qty+=e:t.set(r,{temp:n.temp,menu:n.menu,options:n.options,qty:e,unitPrice:n.price})}return Array.from(t.values()).sort((e,t)=>{let n=e.menu.localeCompare(t.menu,`ko`);return n===0?e.temp===t.temp?e.options.join(`,`).localeCompare(t.options.join(`,`),`ko`):e.temp.localeCompare(t.temp):n})},[e]),d=u.reduce((e,t)=>e+t.qty,0);function f(e){c(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n})}async function p(e){if(!e.id)return;if(o){let{hour:e,minute:t}=Jx.closingTime;window.alert(`${e}:${String(t).padStart(2,`0`)} 이후에는 주문을 취소할 수 없습니다.`);return}let t=window.prompt(`${e.name}님의 주문을 삭제하려면 비밀번호를 입력하세요.`);if(t!==null){if(t!==e.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}await n(e.id)}}async function m(){if(!r.current)return;await document.fonts.ready;let e=r.current;e.style.left=`0`,e.style.zIndex=`-1`;let t=await SE(e,{backgroundColor:`#ffffff`,pixelRatio:2});e.style.left=``,e.style.zIndex=``;let n=document.createElement(`a`);n.download=`주문목록_${new Date().toISOString().slice(0,10)}.png`,n.href=t,n.click()}function h(){navigator.clipboard.writeText(Jx.account)}return(0,$.jsx)(AE,{title:`오늘의 주문 목록`,backPath:`/`,actions:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(jE,{children:[a,` / 총 `,d,`잔`]}),e.length>0&&(0,$.jsx)(ME,{onClick:m,children:`이미지로 저장`}),Jx.account&&(0,$.jsxs)(NE,{children:[(0,$.jsx)(PE,{children:`입금 계좌 : `}),(0,$.jsx)(FE,{onClick:h,title:`클릭하여 복사`,children:Jx.account})]})]}),children:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(vS,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{children:`#`}),(0,$.jsx)(`th`,{children:`이름`}),(0,$.jsx)(`th`,{children:`반`}),(0,$.jsx)(`th`,{children:`메뉴`}),(0,$.jsx)(`th`,{children:`옵션`}),(0,$.jsx)(`th`,{children:`수량`}),(0,$.jsx)(`th`,{children:`가격`}),(0,$.jsx)(`th`,{})]})}),(0,$.jsxs)(`tbody`,{children:[t&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:8,style:{textAlign:`center`,padding:`32px`},className:`loading-text`,children:`불러오는 중...`})}),!t&&e.length===0&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:8,style:{textAlign:`center`,padding:`32px`},children:`아직 주문이 없습니다.`})}),!t&&l.map(([e,t])=>{let n=s.has(e),r=t.reduce((e,t)=>e+t.price*(t.qty??1),0),i=t.length>1;return[(0,$.jsxs)(IE,{$clickable:i,onClick:i?()=>f(e):void 0,children:[(0,$.jsx)(RE,{children:i&&(0,$.jsx)(LE,{children:n?`▼`:`▶`})}),(0,$.jsx)(zE,{children:t[0].name}),(0,$.jsx)(`td`,{children:t[0].class}),i?(0,$.jsxs)(`td`,{colSpan:3,children:[t.reduce((e,t)=>e+(t.qty??1),0),`잔`]}):(0,$.jsxs)($.Fragment,{children:[(0,$.jsx)(`td`,{children:(0,$.jsxs)(HE,{children:[(0,$.jsx)(TC,{temp:t[0].temp,size:`sm`}),t[0].menu]})}),(0,$.jsx)(`td`,{children:t[0].options.length>0?t[0].options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:t[0].qty??1})]}),(0,$.jsx)(`td`,{children:i?r.toLocaleString()+`원`:(t[0].price*(t[0].qty??1)).toLocaleString()+`원`}),(0,$.jsx)(`td`,{children:!i&&(0,$.jsx)(yS,{onClick:e=>{e.stopPropagation(),p(t[0])},children:`✕`})})]},`group-${e}`),...n&&i?t.map((e,t)=>(0,$.jsxs)(BE,{children:[(0,$.jsx)(VE,{children:t+1}),(0,$.jsx)(`td`,{}),(0,$.jsx)(`td`,{}),(0,$.jsx)(`td`,{children:(0,$.jsxs)(HE,{children:[(0,$.jsx)(TC,{temp:e.temp,size:`sm`}),e.menu]})}),(0,$.jsx)(`td`,{children:e.options.length>0?e.options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:e.qty??1}),(0,$.jsxs)(`td`,{children:[(e.price*(e.qty??1)).toLocaleString(),`원`]}),(0,$.jsx)(`td`,{children:(0,$.jsx)(yS,{onClick:()=>p(e),children:`✕`})})]},e.id??t)):[]]})]}),(0,$.jsx)(`tfoot`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{colSpan:6,children:`합계`}),(0,$.jsxs)(`td`,{children:[i.toLocaleString(),`원`]}),(0,$.jsx)(`td`,{})]})})]}),(0,$.jsx)(La,{theme:Wb,children:(0,$.jsxs)(GE,{ref:r,children:[(0,$.jsxs)(KE,{children:[(0,$.jsxs)(qE,{children:[Jx.serviceName,` / 주문 목록`]}),(0,$.jsxs)(JE,{children:[a,` / 총 `,d,`잔 / 합계 `,i.toLocaleString(),`원`]})]}),(0,$.jsxs)(WE,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{children:`#`}),(0,$.jsx)(`th`,{children:`메뉴`}),(0,$.jsx)(`th`,{children:`옵션`}),(0,$.jsx)(`th`,{children:`수량`}),(0,$.jsx)(`th`,{children:`가격`})]})}),(0,$.jsx)(`tbody`,{children:u.map((e,t)=>(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{children:t+1}),(0,$.jsxs)(`td`,{children:[(0,$.jsx)(`span`,{style:{display:`inline-block`,fontSize:`0.65rem`,fontWeight:700,padding:`1px 5px`,borderRadius:`4px`,marginRight:`5px`,verticalAlign:`middle`,letterSpacing:0,background:e.temp===`ICE`?`#dbeafe`:`#fee2e2`,color:e.temp===`ICE`?`#1d4ed8`:`#b91c1c`,border:`1px solid ${e.temp===`ICE`?`#93c5fd`:`#fca5a5`}`},children:e.temp}),e.menu]}),(0,$.jsx)(`td`,{children:e.options.length>0?e.options.join(`, `):`-`}),(0,$.jsx)(`td`,{children:e.qty}),(0,$.jsxs)(`td`,{children:[(e.unitPrice*e.qty).toLocaleString(),`원`]})]},t))}),(0,$.jsx)(`tfoot`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`td`,{colSpan:4,children:`합계`}),(0,$.jsxs)(`td`,{children:[i.toLocaleString(),`원`]})]})})]})]})})]})})}var ZE=N(dS)`
   width: 560px;
 `,QE=N.form`
   display: flex;
@@ -2145,7 +2205,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   justify-content: flex-end;
   gap: 8px;
   margin-top: 4px;
-`;function aD({mode:e,initial:t,onSubmit:n,onClose:r}){let[i,a]=(0,S.useState)(t?.title??``),[o,s]=(0,S.useState)(t?.content??``),[c,l]=(0,S.useState)(``),[u,d]=(0,S.useState)(localStorage.getItem(`coffy_name`)??``),[f,p]=(0,S.useState)(localStorage.getItem(`coffy_class`)??``),m=(0,S.useRef)(!1);function h(e){e.preventDefault(),!(!i.trim()||!o.trim()||!c)&&n({title:i.trim(),content:o.trim(),password:c,name:u.trim(),class:f.trim()})}return(0,$.jsx)(fx,{onMouseDown:()=>{m.current=!0},onMouseUp:()=>{m.current&&r(),m.current=!1},children:(0,$.jsx)(ZE,{onMouseDown:e=>{e.stopPropagation(),m.current=!1},children:(0,$.jsxs)(mx,{children:[(0,$.jsxs)(hx,{children:[(0,$.jsx)(`h2`,{children:e===`create`?`게시글 작성`:`게시글 수정`}),(0,$.jsx)(_x,{onClick:r,children:`✕`})]}),(0,$.jsxs)(QE,{onSubmit:h,children:[e===`create`&&(0,$.jsxs)($E,{$inline:!0,children:[(0,$.jsxs)(eD,{children:[(0,$.jsx)(tD,{children:`이름`}),(0,$.jsx)(nD,{value:u,onChange:e=>d(e.target.value),placeholder:`이름`})]}),(0,$.jsxs)(eD,{children:[(0,$.jsx)(tD,{children:`반`}),(0,$.jsx)(nD,{value:f,onChange:e=>p(e.target.value),placeholder:`반`})]})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`제목`}),(0,$.jsx)(nD,{value:i,onChange:e=>a(e.target.value),placeholder:`제목을 입력하세요`,autoFocus:!0})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`내용`}),(0,$.jsx)(rD,{value:o,onChange:e=>s(e.target.value),placeholder:`내용을 입력하세요`,rows:5})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`비밀번호`}),(0,$.jsx)(nD,{type:`password`,value:c,onChange:e=>l(e.target.value),placeholder:`••••`,maxLength:4,className:`password`})]}),(0,$.jsxs)(iD,{children:[(0,$.jsx)(Sx,{type:`button`,onClick:r,children:`취소`}),(0,$.jsx)(Cx,{type:`submit`,disabled:!i.trim()||!o.trim()||!c,children:e===`create`?`작성`:`수정`})]})]})]})})})}var oD=N.button`
+`;function aD({mode:e,initial:t,onSubmit:n,onClose:r}){let[i,a]=(0,S.useState)(t?.title??``),[o,s]=(0,S.useState)(t?.content??``),[c,l]=(0,S.useState)(``),[u,d]=(0,S.useState)(localStorage.getItem(`coffy_name`)??``),[f,p]=(0,S.useState)(localStorage.getItem(`coffy_class`)??``),m=(0,S.useRef)(!1);function h(e){e.preventDefault(),!(!i.trim()||!o.trim()||!c)&&n({title:i.trim(),content:o.trim(),password:c,name:u.trim(),class:f.trim()})}return(0,$.jsx)(uS,{onMouseDown:()=>{m.current=!0},onMouseUp:()=>{m.current&&r(),m.current=!1},children:(0,$.jsx)(ZE,{onMouseDown:e=>{e.stopPropagation(),m.current=!1},children:(0,$.jsxs)(fS,{children:[(0,$.jsxs)(pS,{children:[(0,$.jsx)(`h2`,{children:e===`create`?`게시글 작성`:`게시글 수정`}),(0,$.jsx)(hS,{onClick:r,children:`✕`})]}),(0,$.jsxs)(QE,{onSubmit:h,children:[e===`create`&&(0,$.jsxs)($E,{$inline:!0,children:[(0,$.jsxs)(eD,{children:[(0,$.jsx)(tD,{children:`이름`}),(0,$.jsx)(nD,{value:u,onChange:e=>d(e.target.value),placeholder:`이름`})]}),(0,$.jsxs)(eD,{children:[(0,$.jsx)(tD,{children:`반`}),(0,$.jsx)(nD,{value:f,onChange:e=>p(e.target.value),placeholder:`반`})]})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`제목`}),(0,$.jsx)(nD,{value:i,onChange:e=>a(e.target.value),placeholder:`제목을 입력하세요`,autoFocus:!0})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`내용`}),(0,$.jsx)(rD,{value:o,onChange:e=>s(e.target.value),placeholder:`내용을 입력하세요`,rows:5})]}),(0,$.jsxs)($E,{children:[(0,$.jsx)(tD,{children:`비밀번호`}),(0,$.jsx)(nD,{type:`password`,value:c,onChange:e=>l(e.target.value),placeholder:`••••`,maxLength:4,className:`password`})]}),(0,$.jsxs)(iD,{children:[(0,$.jsx)(bS,{type:`button`,onClick:r,children:`취소`}),(0,$.jsx)(xS,{type:`submit`,disabled:!i.trim()||!o.trim()||!c,children:e===`create`?`작성`:`수정`})]})]})]})})})}var oD=N.button`
   padding: 8px 16px;
   background: ${({theme:e})=>e.colors.btnPrimary};
   color: #fff;
@@ -2348,7 +2408,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   font-size: 0.85rem;
   color: ${({theme:e})=>e.colors.secondary};
   font-weight: 600;
-`;function MD(e){return hv(J_(t_(Pb,`inquiries`),$_(`createdAt`,`desc`)),t=>e(t.docs.map(e=>({id:e.id,...e.data()}))),t=>e([]))}async function ND(e){await mv(t_(Pb,`inquiries`),{...e,createdAt:z_()})}async function PD(e,t){await fv(n_(Pb,`inquiries`,e),t)}async function FD(e){return(await uv(t_(Pb,`inquiries`,e,`comments`))).docs.map(e=>({id:e.id,...e.data()}))}async function ID(e){let t=await uv(t_(Pb,`inquiries`,e,`comments`));await Promise.all(t.docs.map(e=>pv(e.ref))),await pv(n_(Pb,`inquiries`,e))}function LD(e,t){return hv(J_(t_(Pb,`inquiries`,e,`comments`),$_(`createdAt`,`asc`)),e=>{t(e.docs.map(e=>({id:e.id,...e.data()})))})}async function RD(e,t){await mv(t_(Pb,`inquiries`,e,`comments`),{...t,createdAt:z_()})}async function zD(e,t){await pv(n_(Pb,`inquiries`,e,`comments`,t))}var BD=10;function VD(e){return e?.toDate?e.toDate().toLocaleDateString(`ko-KR`,{month:`2-digit`,day:`2-digit`}):``}function HD(){let[e,t]=(0,S.useState)([]),[n,r]=(0,S.useState)(!0),[i,a]=(0,S.useState)(0),[o,s]=(0,S.useState)(null),[c,l]=(0,S.useState)({}),u=(0,S.useRef)(new Map),[d,f]=(0,S.useState)({}),[p,m]=(0,S.useState)(!1),[h,g]=(0,S.useState)(null);(0,S.useEffect)(()=>MD(e=>{t(e),r(!1)}),[]),(0,S.useEffect)(()=>{let e=u.current;return()=>{e.forEach(e=>e())}},[]);let _=Math.max(1,Math.ceil(e.length/BD));(0,S.useEffect)(()=>{i>0&&i>=_&&a(_-1)},[i,_]);let v=e.slice(i*BD,(i+1)*BD);(0,S.useEffect)(()=>{o&&!v.find(e=>e.id===o)&&(u.current.get(o)?.(),u.current.delete(o),l(e=>{let{[o]:t,...n}=e;return n}),s(null))},[i]);function y(e){s(t=>{if(t===e)return u.current.get(e)?.(),u.current.delete(e),l(t=>{let{[e]:n,...r}=t;return r}),null;t!==null&&(u.current.get(t)?.(),u.current.delete(t),l(e=>{let{[t]:n,...r}=e;return r}));let n=LD(e,t=>{l(n=>({...n,[e]:t}))});return u.current.set(e,n),e})}function b(e){return d[e]??{content:``,password:``}}function x(e,t,n){f(r=>({...r,[e]:{...r[e]??{content:``,password:``},[t]:n}}))}function C(){g(null),m(!0)}function w(e){g(e),m(!0)}async function ee(e){if(h){if(e.password!==h.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}await PD(h.id,{title:e.title,content:e.content})}else await ND({title:e.title,content:e.content,password:e.password,name:e.name||null,class:e.class||null,localStorageName:localStorage.getItem(`coffy_name`)||null});m(!1)}async function T(e){if(e.id){if((c[e.id]??await FD(e.id)).some(e=>e.isAdmin)){window.alert(`관리자 답변이 달린 게시글은 삭제할 수 없습니다.`);return}{let t=window.prompt(`게시글을 삭제하려면 비밀번호를 입력하세요.`);if(t===null)return;if(t!==e.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}}o===e.id&&(u.current.get(e.id)?.(),u.current.delete(e.id),s(null)),await ID(e.id)}}async function E(e){let t=b(e);t.content.trim()&&t.password&&(await RD(e,{content:t.content.trim(),password:t.password}),f(t=>({...t,[e]:{content:``,password:``}})))}async function te(e,t){if(t.id&&!t.isAdmin){{let e=window.prompt(`댓글을 삭제하려면 비밀번호를 입력하세요.`);if(e===null)return;if(e!==t.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}}await zD(e,t.id)}}return(0,$.jsxs)(AE,{title:`자유 게시판`,subTitle:`자유롭게 게시글을 작성하세요!!`,backPath:`/`,actions:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(sD,{children:[`총 `,e.length,`건`]}),(0,$.jsx)(oD,{onClick:C,children:`+ 글 작성`})]}),tableMinHeight:540,children:[n?(0,$.jsx)(cD,{className:`loading-text`,children:`불러오는 중...`}):(0,$.jsxs)(bx,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{style:{width:`60px`},children:`#`}),(0,$.jsx)(`th`,{children:`제목`}),(0,$.jsx)(`th`,{style:{width:`150px`},children:`작성자`}),(0,$.jsx)(`th`,{style:{width:`60px`},children:`날짜`}),(0,$.jsx)(`th`,{style:{width:`56px`}})]})}),(0,$.jsxs)(`tbody`,{children:[e.length===0&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:5,style:{textAlign:`center`,padding:`32px`,color:`inherit`},children:`아직 게시글이 없습니다.`})}),v.map((e,t)=>{let n=e.id,r=o===n,a=i*BD+t+1,s=c[n]??[],l=b(n);return[(0,$.jsxs)(lD,{onClick:()=>y(n),children:[(0,$.jsxs)(dD,{children:[(0,$.jsx)(uD,{children:r?`▼`:`▶`}),` `,a]}),(0,$.jsx)(`td`,{children:e.title}),(0,$.jsx)(`td`,{children:e.name??`익명`}),(0,$.jsx)(`td`,{children:VD(e.createdAt)}),(0,$.jsx)(fD,{children:(0,$.jsxs)(pD,{children:[(0,$.jsx)(mD,{title:`수정`,onClick:t=>{t.stopPropagation(),w(e)},children:`✎`}),(0,$.jsx)(xx,{title:`삭제`,onClick:t=>{t.stopPropagation(),T(e)},children:`✕`})]})})]},`row-${n}`),r&&(0,$.jsx)(hD,{children:(0,$.jsx)(`td`,{colSpan:5,children:(0,$.jsxs)(gD,{children:[(0,$.jsx)(_D,{children:e.content}),(0,$.jsxs)(vD,{children:[(0,$.jsxs)(yD,{children:[`댓글 `,s.length>0?`(${s.length})`:``]}),s.length===0&&(0,$.jsx)(bD,{children:`아직 댓글이 없습니다.`}),s.map(e=>(0,$.jsxs)(xD,{$admin:e.isAdmin,children:[e.isAdmin&&(0,$.jsx)(SD,{children:`관리자`}),(0,$.jsx)(CD,{children:e.content}),(0,$.jsx)(wD,{children:VD(e.createdAt)}),(!e.isAdmin||!1)&&(0,$.jsx)(TD,{onClick:()=>te(n,e),children:`✕`})]},e.id)),(0,$.jsxs)(ED,{children:[(0,$.jsx)(DD,{placeholder:`댓글 내용`,value:l.content,onChange:e=>x(n,`content`,e.target.value),onKeyDown:e=>{e.key===`Enter`&&E(n)}}),(0,$.jsx)(OD,{type:`password`,placeholder:`비밀번호`,maxLength:4,value:l.password,onChange:e=>x(n,`password`,e.target.value)}),(0,$.jsx)(kD,{onClick:()=>E(n),disabled:!l.content.trim()||!l.password,children:`작성`})]})]})]})})},`content-${n}`)]})]}),(0,$.jsx)(`tfoot`,{children:(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:5,children:(0,$.jsxs)(AD,{children:[(0,$.jsx)(Ex,{onClick:()=>a(e=>e-1),disabled:i===0,children:`‹`}),(0,$.jsxs)(jD,{children:[i+1,` / `,_]}),(0,$.jsx)(Ex,{onClick:()=>a(e=>e+1),disabled:i>=_-1,children:`›`})]})})})})]}),p&&(0,$.jsx)(aD,{mode:h?`edit`:`create`,initial:h?{title:h.title,content:h.content}:void 0,onSubmit:ee,onClose:()=>m(!1)})]})}function UD(){let{hour:e,minute:t}=Xb.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function WD(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(UD());return(0,S.useEffect)(()=>{let e=setInterval(()=>r(UD()),1e4);return()=>clearInterval(e)},[]),(0,$.jsx)(Qw,{onSubmit:async n=>{await Promise.all(n.map(e)),t(`/orders`)},disabled:n})}function GD(){let{hour:e,minute:t}=Xb.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function KD(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(()=>{try{return JSON.parse(localStorage.getItem(`coffy_cart`)??`[]`).map(e=>({...e,qty:e.qty??1}))}catch{return[]}}),i=localStorage.getItem(`coffy_name`)??``,a=localStorage.getItem(`coffy_class`)??``,o=localStorage.getItem(`coffy_password`)??``,s=GD();function c(e){let t=n.filter(t=>t.id!==e);r(t),localStorage.setItem(`coffy_cart`,JSON.stringify(t))}function l(e,t){let i=n.map(n=>n.id===e?{...n,qty:t}:n);r(i),localStorage.setItem(`coffy_cart`,JSON.stringify(i))}async function u(){if(!i||!a||!o){window.electronAPI?.openSettings();return}if(n.length===0)return;let r=n.map(e=>({name:i,class:a,menu:e.menu,temp:e.temp,options:e.options,price:e.price,qty:e.qty,password:o}));await Promise.all(r.map(e)),localStorage.removeItem(`coffy_cart`),window.electronAPI?(window.electronAPI.openOrders(),window.close()):t(`/orders`)}function d(){window.close()}return(0,$.jsx)(YC,{cart:n,name:i,cls:a,closed:s,onRemove:c,onChangeQty:l,onSubmit:u,onClose:d})}var qD=N.div`
+`;function MD(e){return hv(J_(t_(Pb,`inquiries`),$_(`createdAt`,`desc`)),t=>e(t.docs.map(e=>({id:e.id,...e.data()}))),t=>e([]))}async function ND(e){await mv(t_(Pb,`inquiries`),{...e,createdAt:z_()})}async function PD(e,t){await fv(n_(Pb,`inquiries`,e),t)}async function FD(e){return(await uv(t_(Pb,`inquiries`,e,`comments`))).docs.map(e=>({id:e.id,...e.data()}))}async function ID(e){let t=await uv(t_(Pb,`inquiries`,e,`comments`));await Promise.all(t.docs.map(e=>pv(e.ref))),await pv(n_(Pb,`inquiries`,e))}function LD(e,t){return hv(J_(t_(Pb,`inquiries`,e,`comments`),$_(`createdAt`,`asc`)),e=>{t(e.docs.map(e=>({id:e.id,...e.data()})))})}async function RD(e,t){await mv(t_(Pb,`inquiries`,e,`comments`),{...t,createdAt:z_()})}async function zD(e,t){await pv(n_(Pb,`inquiries`,e,`comments`,t))}var BD=10;function VD(e){return e?.toDate?e.toDate().toLocaleDateString(`ko-KR`,{month:`2-digit`,day:`2-digit`}):``}function HD(){let[e,t]=(0,S.useState)([]),[n,r]=(0,S.useState)(!0),[i,a]=(0,S.useState)(0),[o,s]=(0,S.useState)(null),[c,l]=(0,S.useState)({}),u=(0,S.useRef)(new Map),[d,f]=(0,S.useState)({}),[p,m]=(0,S.useState)(!1),[h,g]=(0,S.useState)(null);(0,S.useEffect)(()=>MD(e=>{t(e),r(!1)}),[]),(0,S.useEffect)(()=>{let e=u.current;return()=>{e.forEach(e=>e())}},[]);let _=Math.max(1,Math.ceil(e.length/BD));(0,S.useEffect)(()=>{i>0&&i>=_&&a(_-1)},[i,_]);let v=e.slice(i*BD,(i+1)*BD);(0,S.useEffect)(()=>{o&&!v.find(e=>e.id===o)&&(u.current.get(o)?.(),u.current.delete(o),l(e=>{let{[o]:t,...n}=e;return n}),s(null))},[i]);function y(e){s(t=>{if(t===e)return u.current.get(e)?.(),u.current.delete(e),l(t=>{let{[e]:n,...r}=t;return r}),null;t!==null&&(u.current.get(t)?.(),u.current.delete(t),l(e=>{let{[t]:n,...r}=e;return r}));let n=LD(e,t=>{l(n=>({...n,[e]:t}))});return u.current.set(e,n),e})}function b(e){return d[e]??{content:``,password:``}}function x(e,t,n){f(r=>({...r,[e]:{...r[e]??{content:``,password:``},[t]:n}}))}function C(){g(null),m(!0)}function w(e){g(e),m(!0)}async function ee(e){if(h){if(e.password!==h.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}await PD(h.id,{title:e.title,content:e.content})}else await ND({title:e.title,content:e.content,password:e.password,name:e.name||null,class:e.class||null,localStorageName:localStorage.getItem(`coffy_name`)||null});m(!1)}async function T(e){if(e.id){if((c[e.id]??await FD(e.id)).some(e=>e.isAdmin)){window.alert(`관리자 답변이 달린 게시글은 삭제할 수 없습니다.`);return}{let t=window.prompt(`게시글을 삭제하려면 비밀번호를 입력하세요.`);if(t===null)return;if(t!==e.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}}o===e.id&&(u.current.get(e.id)?.(),u.current.delete(e.id),s(null)),await ID(e.id)}}async function E(e){let t=b(e);t.content.trim()&&t.password&&(await RD(e,{content:t.content.trim(),password:t.password}),f(t=>({...t,[e]:{content:``,password:``}})))}async function te(e,t){if(t.id&&!t.isAdmin){{let e=window.prompt(`댓글을 삭제하려면 비밀번호를 입력하세요.`);if(e===null)return;if(e!==t.password){window.alert(`비밀번호가 일치하지 않습니다.`);return}}await zD(e,t.id)}}return(0,$.jsxs)(AE,{title:`자유 게시판`,subTitle:`자유롭게 게시글을 작성하세요!!`,backPath:`/`,actions:(0,$.jsxs)($.Fragment,{children:[(0,$.jsxs)(sD,{children:[`총 `,e.length,`건`]}),(0,$.jsx)(oD,{onClick:C,children:`+ 글 작성`})]}),tableMinHeight:540,children:[n?(0,$.jsx)(cD,{className:`loading-text`,children:`불러오는 중...`}):(0,$.jsxs)(vS,{children:[(0,$.jsx)(`thead`,{children:(0,$.jsxs)(`tr`,{children:[(0,$.jsx)(`th`,{style:{width:`60px`},children:`#`}),(0,$.jsx)(`th`,{children:`제목`}),(0,$.jsx)(`th`,{style:{width:`150px`},children:`작성자`}),(0,$.jsx)(`th`,{style:{width:`60px`},children:`날짜`}),(0,$.jsx)(`th`,{style:{width:`56px`}})]})}),(0,$.jsxs)(`tbody`,{children:[e.length===0&&(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:5,style:{textAlign:`center`,padding:`32px`,color:`inherit`},children:`아직 게시글이 없습니다.`})}),v.map((e,t)=>{let n=e.id,r=o===n,a=i*BD+t+1,s=c[n]??[],l=b(n);return[(0,$.jsxs)(lD,{onClick:()=>y(n),children:[(0,$.jsxs)(dD,{children:[(0,$.jsx)(uD,{children:r?`▼`:`▶`}),` `,a]}),(0,$.jsx)(`td`,{children:e.title}),(0,$.jsx)(`td`,{children:e.name??`익명`}),(0,$.jsx)(`td`,{children:VD(e.createdAt)}),(0,$.jsx)(fD,{children:(0,$.jsxs)(pD,{children:[(0,$.jsx)(mD,{title:`수정`,onClick:t=>{t.stopPropagation(),w(e)},children:`✎`}),(0,$.jsx)(yS,{title:`삭제`,onClick:t=>{t.stopPropagation(),T(e)},children:`✕`})]})})]},`row-${n}`),r&&(0,$.jsx)(hD,{children:(0,$.jsx)(`td`,{colSpan:5,children:(0,$.jsxs)(gD,{children:[(0,$.jsx)(_D,{children:e.content}),(0,$.jsxs)(vD,{children:[(0,$.jsxs)(yD,{children:[`댓글 `,s.length>0?`(${s.length})`:``]}),s.length===0&&(0,$.jsx)(bD,{children:`아직 댓글이 없습니다.`}),s.map(e=>(0,$.jsxs)(xD,{$admin:e.isAdmin,children:[e.isAdmin&&(0,$.jsx)(SD,{children:`관리자`}),(0,$.jsx)(CD,{children:e.content}),(0,$.jsx)(wD,{children:VD(e.createdAt)}),(!e.isAdmin||!1)&&(0,$.jsx)(TD,{onClick:()=>te(n,e),children:`✕`})]},e.id)),(0,$.jsxs)(ED,{children:[(0,$.jsx)(DD,{placeholder:`댓글 내용`,value:l.content,onChange:e=>x(n,`content`,e.target.value),onKeyDown:e=>{e.key===`Enter`&&E(n)}}),(0,$.jsx)(OD,{type:`password`,placeholder:`비밀번호`,maxLength:4,value:l.password,onChange:e=>x(n,`password`,e.target.value)}),(0,$.jsx)(kD,{onClick:()=>E(n),disabled:!l.content.trim()||!l.password,children:`작성`})]})]})]})})},`content-${n}`)]})]}),(0,$.jsx)(`tfoot`,{children:(0,$.jsx)(`tr`,{children:(0,$.jsx)(`td`,{colSpan:5,children:(0,$.jsxs)(AD,{children:[(0,$.jsx)(wS,{onClick:()=>a(e=>e-1),disabled:i===0,children:`‹`}),(0,$.jsxs)(jD,{children:[i+1,` / `,_]}),(0,$.jsx)(wS,{onClick:()=>a(e=>e+1),disabled:i>=_-1,children:`›`})]})})})})]}),p&&(0,$.jsx)(aD,{mode:h?`edit`:`create`,initial:h?{title:h.title,content:h.content}:void 0,onSubmit:ee,onClose:()=>m(!1)})]})}function UD(){let{hour:e,minute:t}=Jx.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function WD(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(UD());return(0,S.useEffect)(()=>{let e=setInterval(()=>r(UD()),1e4);return()=>clearInterval(e)},[]),(0,$.jsx)(Qw,{onSubmit:async n=>{await Promise.all(n.map(e)),t(`/orders`)},disabled:n})}function GD(){let{hour:e,minute:t}=Jx.closingTime,n=new Date;return n.getHours()>e||n.getHours()===e&&n.getMinutes()>=t}function KD(){let{addOrder:e}=Ub(),t=dt(),[n,r]=(0,S.useState)(()=>{try{return JSON.parse(localStorage.getItem(`coffy_cart`)??`[]`).map(e=>({...e,qty:e.qty??1}))}catch{return[]}}),i=localStorage.getItem(`coffy_name`)??``,a=localStorage.getItem(`coffy_class`)??``,o=localStorage.getItem(`coffy_password`)??``,s=GD();function c(e){let t=n.filter(t=>t.id!==e);r(t),localStorage.setItem(`coffy_cart`,JSON.stringify(t))}function l(e,t){let i=n.map(n=>n.id===e?{...n,qty:t}:n);r(i),localStorage.setItem(`coffy_cart`,JSON.stringify(i))}async function u(){if(!i||!a||!o){window.electronAPI?.openSettings();return}if(n.length===0)return;let r=n.map(e=>({name:i,class:a,menu:e.menu,temp:e.temp,options:e.options,price:e.price,qty:e.qty,password:o}));await Promise.all(r.map(e)),localStorage.removeItem(`coffy_cart`),window.electronAPI?(window.electronAPI.openOrders(),window.close()):t(`/orders`)}function d(){window.close()}return(0,$.jsx)(YC,{cart:n,name:i,cls:a,closed:s,onRemove:c,onChangeQty:l,onSubmit:u,onClose:d})}var qD=N.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -2356,7 +2416,7 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   padding: 2rem;
   background: linear-gradient(160deg, ${({theme:e})=>e.colors.sidebarFrom}, ${({theme:e})=>e.colors.sidebarTo});
   color: #ffe8cc;
-`;function JD(){let[e,t]=(0,S.useState)(null),[n,r]=(0,S.useState)(!0);return(0,S.useEffect)(()=>{cx().then(e=>{t(e),r(!1),e||window.electronAPI?.resizeWindow(300,160)})},[]),n?(0,$.jsx)(qD,{children:(0,$.jsx)(`p`,{children:`불러오는 중...`})}):e?(0,$.jsx)(Ix,{result:e,onClose:()=>window.close()}):(0,$.jsx)(qD,{children:(0,$.jsxs)(`div`,{style:{textAlign:`center`},children:[(0,$.jsx)(`div`,{style:{fontSize:`2rem`,marginBottom:`0.5rem`},children:`🔒`}),(0,$.jsxs)(`p`,{children:[Xb.closingTime.hour,`:`,String(Xb.closingTime.minute).padStart(2,`0`),`에 자동 추첨됩니다`]})]})})}var YD=N.div`
+`;function JD(){let[e,t]=(0,S.useState)(null),[n,r]=(0,S.useState)(!0);return(0,S.useEffect)(()=>{oS().then(e=>{t(e),r(!1),e||window.electronAPI?.resizeWindow(300,160)})},[]),n?(0,$.jsx)(qD,{children:(0,$.jsx)(`p`,{children:`불러오는 중...`})}):e?(0,$.jsx)(PS,{result:e,onClose:()=>window.close()}):(0,$.jsx)(qD,{children:(0,$.jsxs)(`div`,{style:{textAlign:`center`},children:[(0,$.jsx)(`div`,{style:{fontSize:`2rem`,marginBottom:`0.5rem`},children:`🔒`}),(0,$.jsxs)(`p`,{children:[Jx.closingTime.hour,`:`,String(Jx.closingTime.minute).padStart(2,`0`),`에 자동 추첨됩니다`]})]})})}var YD=N.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -2364,11 +2424,11 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   min-height: 100vh;
   padding: 0.75rem 2rem;
   background: ${({theme:e})=>e.colors.bg};
-`,XD=N(TC)`
+`,XD=N(Kx)`
   flex-shrink: 0;
   white-space: nowrap;
   align-self: flex-end;
-`;function ZD(){let[e,t]=(0,S.useState)(()=>localStorage.getItem(`coffy_name`)??``),[n,r]=(0,S.useState)(()=>localStorage.getItem(`coffy_class`)??``),[i,a]=(0,S.useState)(()=>localStorage.getItem(`coffy_password`)??``),[o,s]=(0,S.useState)(!1);async function c(){localStorage.setItem(`coffy_name`,e),localStorage.setItem(`coffy_class`,n),localStorage.setItem(`coffy_password`,i),window.electronAPI&&await window.electronAPI.saveSettings({name:e,class:n,password:i}),s(!0),setTimeout(()=>s(!1),2e3)}return(0,$.jsx)(YD,{children:(0,$.jsx)(kS,{children:(0,$.jsx)(AS,{onSubmit:e=>e.preventDefault(),children:(0,$.jsxs)(jS,{children:[(0,$.jsx)(QC,{name:e,cls:n,password:i,onNameChange:t,onClsChange:r,onPasswordChange:a}),(0,$.jsx)(XD,{type:`button`,onClick:c,children:o?`저장됨 ✓`:`저장`})]})})})})}var QD=N.div`
+`;function ZD(){let[e,t]=(0,S.useState)(()=>localStorage.getItem(`coffy_name`)??``),[n,r]=(0,S.useState)(()=>localStorage.getItem(`coffy_class`)??``),[i,a]=(0,S.useState)(()=>localStorage.getItem(`coffy_password`)??``),[o,s]=(0,S.useState)(!1);async function c(){localStorage.setItem(`coffy_name`,e),localStorage.setItem(`coffy_class`,n),localStorage.setItem(`coffy_password`,i),window.electronAPI&&await window.electronAPI.saveSettings({name:e,class:n,password:i}),s(!0),setTimeout(()=>s(!1),2e3)}return(0,$.jsx)(YD,{children:(0,$.jsx)(Xb,{children:(0,$.jsx)(Zb,{onSubmit:e=>e.preventDefault(),children:(0,$.jsxs)(Qb,{children:[(0,$.jsx)(QC,{name:e,cls:n,password:i,onNameChange:t,onClsChange:r,onPasswordChange:a}),(0,$.jsx)(XD,{type:`button`,onClick:c,children:o?`저장됨 ✓`:`저장`})]})})})})}var QD=N.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
@@ -2379,7 +2439,30 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
   > * {
     width: 100%;
   }
-`;function $D(){return(0,$.jsx)(QD,{children:(0,$.jsx)(ex,{})})}function eO(){return(0,$.jsx)(Xx,{autoOpenModal:!1})}function tO(){return(0,$.jsx)(sS,{onClose:()=>{}})}function nO(){return(0,$.jsx)(Xw,{open:!0,standalone:!0,onClose:()=>window.close(),onWinner:(e,t)=>{localStorage.setItem(`coffy_name`,e),t&&localStorage.setItem(`coffy_class`,t)}})}var rO=N.button`
+`;function $D(){return(0,$.jsx)(QD,{children:(0,$.jsx)(Qx,{})})}function eO(){return(0,$.jsx)(JS,{autoOpenModal:!1})}function tO(){return(0,$.jsx)(aC,{onClose:()=>{}})}function nO(){return(0,$.jsx)(Xw,{open:!0,standalone:!0,onClose:()=>window.close(),onWinner:(e,t)=>{localStorage.setItem(`coffy_name`,e),t&&localStorage.setItem(`coffy_class`,t)}})}N.button`
+  position: fixed;
+  bottom: 24px;
+  right: 80px;
+  z-index: 200;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 2px solid ${({theme:e})=>e.colors.border};
+  background: ${({theme:e})=>e.colors.surface};
+  color: ${({theme:e})=>e.colors.secondary};
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px ${({theme:e})=>e.colors.shadow};
+  transition: transform 0.15s, box-shadow 0.15s;
+
+  &:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px ${({theme:e})=>e.colors.shadow};
+  }
+`;var rO=N.button`
   position: fixed;
   bottom: 24px;
   right: 24px;
@@ -2402,4 +2485,4 @@ Total Duration: ${c-l}ms`),K.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     transform: scale(1.1);
     box-shadow: 0 6px 16px ${({theme:e})=>e.colors.shadow};
   }
-`;function iO(){let{mode:e,toggle:t}=Yb();return(0,$.jsx)(rO,{onClick:t,title:e===`light`?`다크 모드로 전환`:`라이트 모드로 전환`,children:e===`light`?`🌙`:`☀️`})}function aO(){return(0,$.jsx)(Jb,{children:(0,$.jsx)(Hb,{children:(0,$.jsxs)(Tn,{children:[(0,$.jsxs)(Rt,{children:[(0,$.jsx)(It,{path:`/`,element:(0,$.jsx)(tT,{})}),(0,$.jsx)(It,{path:`/orders`,element:(0,$.jsx)(XE,{})}),(0,$.jsx)(It,{path:`/inquiry`,element:(0,$.jsx)(HD,{})}),(0,$.jsx)(It,{path:`/order`,element:(0,$.jsx)(WD,{})}),(0,$.jsx)(It,{path:`/cart`,element:(0,$.jsx)(KD,{})}),(0,$.jsx)(It,{path:`/pickup`,element:(0,$.jsx)(JD,{})}),(0,$.jsx)(It,{path:`/settings`,element:(0,$.jsx)(ZD,{})}),(0,$.jsx)(It,{path:`/notices`,element:(0,$.jsx)($D,{})}),(0,$.jsx)(It,{path:`/background`,element:(0,$.jsx)(eO,{})}),(0,$.jsx)(It,{path:`/patchnotes`,element:(0,$.jsx)(tO,{})}),(0,$.jsx)(It,{path:`/roulette`,element:(0,$.jsx)(nO,{})})]}),!window.electronAPI&&(0,$.jsx)(iO,{})]})})})}(0,Xr.createRoot)(document.getElementById(`root`)).render((0,$.jsx)(S.StrictMode,{children:(0,$.jsx)(aO,{})}));
+`;function iO(){let{mode:e,toggle:t}=Yb();return(0,$.jsx)(rO,{onClick:t,title:e===`light`?`다크 모드로 전환`:`라이트 모드로 전환`,children:e===`light`?`🌙`:`☀️`})}function aO(){return(0,$.jsx)(Jb,{children:(0,$.jsx)(Hb,{children:(0,$.jsxs)(Tn,{children:[(0,$.jsxs)(Rt,{children:[(0,$.jsx)(It,{path:`/`,element:(0,$.jsx)(tT,{})}),(0,$.jsx)(It,{path:`/orders`,element:(0,$.jsx)(XE,{})}),(0,$.jsx)(It,{path:`/inquiry`,element:(0,$.jsx)(HD,{})}),(0,$.jsx)(It,{path:`/order`,element:(0,$.jsx)(WD,{})}),(0,$.jsx)(It,{path:`/cart`,element:(0,$.jsx)(KD,{})}),(0,$.jsx)(It,{path:`/pickup`,element:(0,$.jsx)(JD,{})}),(0,$.jsx)(It,{path:`/settings`,element:(0,$.jsx)(ZD,{})}),(0,$.jsx)(It,{path:`/notices`,element:(0,$.jsx)($D,{})}),(0,$.jsx)(It,{path:`/background`,element:(0,$.jsx)(eO,{})}),(0,$.jsx)(It,{path:`/patchnotes`,element:(0,$.jsx)(tO,{})}),(0,$.jsx)(It,{path:`/roulette`,element:(0,$.jsx)(nO,{})})]}),!window.electronAPI&&(0,$.jsx)(iO,{}),!1]})})})}(0,Xr.createRoot)(document.getElementById(`root`)).render((0,$.jsx)(S.StrictMode,{children:(0,$.jsx)(aO,{})}));
