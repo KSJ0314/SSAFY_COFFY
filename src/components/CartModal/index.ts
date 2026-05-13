@@ -1,2 +1,2 @@
 export { default } from './CartModal'
-export type { Props as CartModalProps } from './types'
+export type { CartItem, Props as CartModalProps } from './types'

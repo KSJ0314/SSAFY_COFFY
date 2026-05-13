@@ -1,5 +1,29 @@
 import styled, { css, keyframes } from 'styled-components'
 
+// ── 페이지 레이아웃 ──
+export const RightPanel = styled.div`
+  flex: 1;
+  padding: 20px 40px;
+  overflow-y: auto;
+  max-width: 880px;
+
+  @media (min-width: 1440px) { max-width: 1100px; }
+  @media (min-width: 1920px) { max-width: 1400px; }
+`
+
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+`
+
+export const FormTitleRow = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+`
+
 // ── 모달 ──
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -138,6 +162,29 @@ export const StyledTable = styled.table`
 `
 
 // ── 공통 버튼 ──
+export const PrimaryBtn = styled.button`
+  padding: 9px 20px;
+  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.secondary});
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+
+  &:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    background: ${({ theme }) => theme.colors.btnDisabled};
+    cursor: not-allowed;
+    transform: none;
+  }
+`
+
 export const DeleteOrderBtn = styled.button`
   background: none;
   border: none;
@@ -155,41 +202,6 @@ export const DeleteOrderBtn = styled.button`
   }
 `
 
-export const InquiryCancelBtn = styled.button`
-  padding: 9px 20px;
-  background: none;
-  border: 1.5px solid ${({ theme }) => theme.colors.border};
-  border-radius: 8px;
-  color: ${({ theme }) => theme.colors.textMuted};
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.15s;
-
-  &:hover {
-    background: ${({ theme }) => theme.colors.pageBg};
-  }
-`
-
-export const InquirySubmitBtn = styled.button`
-  padding: 9px 20px;
-  background: ${({ theme }) => theme.colors.secondary};
-  color: #fff;
-  border: none;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: opacity 0.15s;
-
-  &:hover:not(:disabled) {
-    opacity: 0.85;
-  }
-
-  &:disabled {
-    background: ${({ theme }) => theme.colors.btnDisabled};
-    cursor: not-allowed;
-  }
-`
 
 // ── 공통 유틸 ──
 const pulse = keyframes`
@@ -255,5 +267,25 @@ export const KioskPaginationBtn = styled.button`
   &:disabled {
     opacity: 0.3;
     cursor: default;
+  }
+`
+
+export const RouletteBtn = styled.button`
+  flex-shrink: 0;
+  min-height: 40px;
+  aspect-ratio: 1 / 1;
+  border-radius: 8px;
+  border: 1.5px solid ${({ theme }) => theme.colors.border};
+  background: ${({ theme }) => theme.colors.surface};
+  cursor: pointer;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background 0.15s;
+
+  &:hover {
+    border-color: ${({ theme }) => theme.colors.accent};
+    background: ${({ theme }) => theme.colors.surfaceAlt};
   }
 `

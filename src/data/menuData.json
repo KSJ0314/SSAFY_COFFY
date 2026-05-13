@@ -275,6 +275,264 @@
     ]
   },
   {
+    "category": "신메뉴",
+    "items": [
+      {
+        "name": "꿀수박주스",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/sN44BdAFOMflh_rydiNgtDzE7n3jAWXxLzTthAuw2s-gm1b7chYpdLwsNtd-EAk8QhRQaep1MFNc6dPOYurcanHi0UxQplhnzLf2eQV0HYQ=.jpg",
+            "kcal": 169.82
+          }
+        ]
+      },
+      {
+        "name": "수박소르베 밀키 스무디",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/maLj-QF3GeKQYj-XYUpVMuC2z9ukJ100EYLaZF8M_H9KGJncjodLbuupVibHD2yTKloWpOiKYnkPf_vTRO2EW_Z8hTX5N_cBGZk3s7xC1dk=.jpg",
+            "kcal": 334.48
+          }
+        ]
+      },
+      {
+        "name": "수박 리치코코 슬러시",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/aEBJh6NyVm4PPHQQ_Tmhjk9szqeHqkVbM7yOCx3N72dKi-4A_FmMNm50VGUJeE2Hqi4LSaUBSuFGuuDwed2kOGYA7G02Bwsrc3xwWL4rV_0=.jpg",
+            "kcal": 287.67
+          }
+        ]
+      },
+      {
+        "name": "파인망고코코 스무디",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/66bR39TI_ixmUmMy5XbQlyQt50S_kNvYwGYtMbVqUEgdVXydmUlYcZmc0is1DVnEyt9NafhwmzXMpnDSEUM1oDAmU7XJlYAnQV2mARwBQmU=.jpg",
+            "kcal": 557.23
+          }
+        ]
+      },
+      {
+        "name": "자몽 톡톡 스무디",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/gWODglcV4VimDwEkF1t5W7yPYU5l_sStyPGZwyot1ywvzpHzbpDygjNJDEocB2JDEHpkoxJ4bqnVgxKcAO2mvAdOQXIbQP56omQQpEcN2BU=.jpg",
+            "kcal": 342.26
+          }
+        ]
+      },
+      {
+        "name": "제로 레몬말차 아이스티",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 2400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/MfuEq1oiBIm6HCDs6k8VUbyIvkITkQxd2GzFFI3bKCy7_6Ap0BozLDE_WpthBkQxzYCDmGMABwSPMOcl0Ptp2u81_t1-r7z8s9C8XjdJTPY=.jpg",
+            "kcal": 20.2
+          }
+        ]
+      },
+      {
+        "name": "팥빙 젤라또 파르페",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 5000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/9zl7fSKluy44oaaNxQQ3dA2sPB-vQJss3DL29vOBEkYHb0BYPbnIqgYNFoqkkg6MRMIBPPamWtVhD0qsXKmi6RQYc8AmOhZd3VtKMDWv1t8=.jpg",
+            "kcal": 683.6
+          }
+        ]
+      },
+      {
+        "name": "말차 젤라또 팥빙 파르페",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 5000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/30/EMWfs2ty4TMDQGILt-SBxEPzsZD3XAzSSk7K0ootbnOn6hYptQO5ZLJqWZUkuv5DgHOUP5RAaAbM2yERVrJPkgqNE--kUaKLd-ZKDSbpKIg=.jpg",
+            "kcal": 713.7
+          }
+        ]
+      },
+      {
+        "name": "M망고 G구아바 C캐럿 주스",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/3/12/LaRfGYcexQAfJxeL7NpGxBR6XERopk7VyhpXXv7vrY5i2TWGHKdttOOwomzoejc8dt_kzP-9y7n1JYKYcfyI_ULyFot_oEwAUzznR-GIw84=.jpg",
+            "kcal": 257.01
+          }
+        ]
+      },
+      {
+        "name": "저당 꿀배 XO야쿠르트",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3700,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/4/2/UfqULIz5CSzdcQ8Uku-09j84bEEmMDmJjk5L3Lrzv27G3CgYrM1arDk_9571lomFlnNss4JMojeiOqrKnbErPHR8Xb6K920JvHmbbh_4tDs=.jpg",
+            "kcal": 25.4
+          }
+        ]
+      },
+      {
+        "name": "딸기라떼",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3700,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/1/15/TmY5mZVZON7WVEsk9N0lqrwBWWDbTE1-BZjPCBrRvJfWdjC1mOdhAZYiGM_vSTl3jvKsyD5Nb2X5h6ZB6XGzz2PeR_8KmsLSRFNqRlW1_OI=.jpg",
+            "kcal": 205.2
+          }
+        ]
+      },
+      {
+        "name": "그린키위 콕콕 딸키스무디",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2026/1/15/UF2UXNjjUqKvaDIpriy7QEwnbHEagkfbpoUcaTrBM2y00j72gsdihJv1sa4r268zC6ixATelNLX3Y06HoCAwA-JgRZ3vh8__fqnDsS4036Y=.jpg",
+            "kcal": 323.53
+          }
+        ]
+      },
+      {
+        "name": "유자생강차",
+        "types": [
+          {
+            "temp": "HOT",
+            "price": 3300,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/11/6/jRJu0o8e4VMNfHsZADd8JzgVAn9i0pX77XkVf1-QFS1LcqSdgehp9RNWsUdXP0tqgvNu0lktsdP_ZiWL15rm26uKFBVP9SoIg55jnwyISi4=.jpg",
+            "kcal": 389.41
+          }
+        ]
+      },
+      {
+        "name": "요거젤라또 씨리얼 초코베리믹스",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3900,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/9/15/VrCUJP71JRxQ1Rg_GLcV3qhmfflpB5oV0gArqVZy6dqf7BsmCMDU53zleiewPQSfcYigwZbXPG6F47Rc4s0KOCrby2dSJPT7rwX0n8KUxRA=.jpg",
+            "kcal": null
+          }
+        ]
+      },
+      {
+        "name": "요거젤라또 초코베리믹스",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3900,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/9/4/K5FzvWyP6MJu9KG7YbE6TAKzSwzdzBg63Rzq-ljTa6OO0VTrG5dRsePLwwWniQ6gqL3GUdaDdTaz1foV4fcR3XvsQ0OXr9FTK1JZDler790=.jpg",
+            "kcal": null
+          }
+        ]
+      },
+      {
+        "name": "초코젤라또 말차라떼",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/8/7/qiEVUbFIVUoXXSGeBUxhxtoPMqPc5kx5Hv3cD-t5-fV9ZgMKMPcsC5QLdi0AVhLvA5K18cMBE4fczld8S-W6Vofz7jN0xNikisSH7O-Ej2w=.jpg",
+            "kcal": 558.77
+          }
+        ]
+      },
+      {
+        "name": "메가베리 아사이볼",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3900,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/1/16/PJy30htqfncqffaMWCEZc2rnwYkv61zqxPIvQ5rJiv0XR_Uej052_rK_lAUzZ8gFxhNUZX5Vq29ZBB5NOjfT7Nt_EXM4793SwAuk7O2ivgo=.jpg",
+            "kcal": 313.1
+          }
+        ]
+      },
+      {
+        "name": "왕메가초코",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/UR3DLCEnclOWLj7P7q8sR9VmnUmQBXO813tWgu1RLXGRbbb4GNIHA-Xm3pCa387AAQ4UvIJki2wT6OnbbQLwRPeXW_ZCFkuhNuHTza9G4Sk=.jpg",
+            "kcal": 95.8
+          }
+        ]
+      },
+      {
+        "name": "왕메가아이스티",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3900,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/wQVKLb6nRuZUZIcnehXmr3h79UKjEgmZlH7eNnfH3kZYxT4FDo-rZLNu7FLgPyjyHVWMe71aPExm6EPM5qIrktDHEts8nTsH0BQrSgPXeio=.jpg",
+            "kcal": 474.8
+          }
+        ]
+      },
+      {
+        "name": "제로 복숭아 아이스티",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 3000,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/3/28/3L4imwx63FapHcrM0HJ-wZ3uWYUqagAs57VMEEiRCezkxRbXHKnpYMppT2-yOFosTxaP-nGFtjrdOjei2pfoJlVH6PjdS-usiv_cPW-ysVQ=.jpg",
+            "kcal": 26.1
+          }
+        ]
+      },
+      {
+        "name": "왕메가카페라떼",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/xpq-RqCbDy6y_fjSYwhZLoBD_QTQ6u871Seg-RmvS4bUVHDIv4Nkly8nyi8st5Sdyv9JezG4CkhyjVdqpDRf1UmXOHBjWZaFB_odWZw1_8A=.jpg",
+            "kcal": 269.4
+          }
+        ]
+      },
+      {
+        "name": "왕메가사과유자차",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 4400,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2025/3/20/3yn-iP85JT8B7hDnFzlrE6ZdWmepCOeMJiYhcFy6qOBUV6Jh2tTKBo8weSh5uFSjRKxldLMgqlFY9uZuBbSa8Eq7b2sH28JGa96AXyPSF4I=.jpg",
+            "kcal": 313.27
+          }
+        ]
+      },
+      {
+        "name": "(ICE)할메가미숫커피",
+        "types": [
+          {
+            "temp": "ICE",
+            "price": 2900,
+            "image": "http://imagefarm.baemin.com/smartmenuimage/upload/image/2024/9/5/ZkZErzoj_-k8_NELBNeZ_fq27vndsl-Z6KUE6jvNB6O96LaGdm3Byab522LJbFblsnnw1qI5wZfK_k-hb9a4_bGyjnjGAO_ZevVUbETOFss=.jpg",
+            "kcal": 413.02
+          }
+        ]
+      }
+    ]
+  },
+  {
     "category": "디카페인",
     "items": [
       {

@@ -1,4 +1,14 @@
-import type { CartItem } from '../OrderForm'
+import type { MenuTemp } from '../../constants/coffeeMenu'
+
+export type CartItem = {
+  id: string
+  menu: string
+  temp: MenuTemp
+  options: string[]
+  price: number
+  qty: number
+  image?: string
+}
 
 export type Props = {
   cart: CartItem[]

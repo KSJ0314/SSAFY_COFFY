@@ -1,27 +1,6 @@
 import styled, { css } from 'styled-components'
+import { PrimaryBtn } from '../../styles/shared'
 
-export const RightPanel = styled.div`
-  flex: 1;
-  padding: 20px 40px;
-  overflow-y: auto;
-  max-width: 880px;
-
-  @media (min-width: 1440px) { max-width: 1100px; }
-  @media (min-width: 1920px) { max-width: 1400px; }
-`
-
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-`
-
-export const FormTitleRow = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-`
 
 export const FormSectionTitle = styled.div`
   font-size: 1.4rem;
@@ -42,74 +21,12 @@ export const ClosedBadge = styled.span`
   font-weight: 600;
 `
 
-export const FormRowInline = styled.div`
-  display: flex;
-  gap: 16px;
-  align-items: flex-end;
-`
-
 export const UserInfoWithActions = styled.div`
   display: flex;
   align-items: flex-end;
   gap: 8px;
 `
 
-export const RouletteBtn = styled.button`
-  flex-shrink: 0;
-  min-height: 40px;
-  aspect-ratio: 1 / 1;
-  border-radius: 8px;
-  border: 1.5px solid ${({ theme }) => theme.colors.border};
-  background: ${({ theme }) => theme.colors.surface};
-  cursor: pointer;
-  font-size: 1.2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: border-color 0.15s, background 0.15s;
-
-  &:hover {
-    border-color: ${({ theme }) => theme.colors.accent};
-    background: ${({ theme }) => theme.colors.surfaceAlt};
-  }
-`
-
-export const FormRow = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  width: 80px;
-  flex: none;
-
-  label {
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: ${({ theme }) => theme.colors.label};
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-  }
-
-  input {
-    padding: 10px 12px;
-    border: 1.5px solid ${({ theme }) => theme.colors.border};
-    border-radius: 8px;
-    font-size: 0.95rem;
-    background: ${({ theme }) => theme.colors.surface};
-    color: ${({ theme }) => theme.colors.textInput};
-    transition: border-color 0.2s;
-    width: 100%;
-
-    &:focus {
-      outline: none;
-      border-color: ${({ theme }) => theme.colors.accent};
-    }
-
-    &:disabled {
-      background: ${({ theme }) => theme.colors.surfaceDisabled};
-      color: ${({ theme }) => theme.colors.textDisabled};
-    }
-  }
-`
 
 // ── 카테고리 탭 / 메뉴 검색 ──
 export const CategoryTabsRow = styled.div`
@@ -615,28 +532,11 @@ export const AddToCartBtn = styled.button`
   }
 `
 
-export const SubmitBtn = styled.button`
+export const SubmitBtn = styled(PrimaryBtn)`
   padding: 14px;
-  background: linear-gradient(135deg, ${({ theme }) => theme.colors.accent}, ${({ theme }) => theme.colors.secondary});
-  color: white;
-  border: none;
   border-radius: 12px;
   font-size: 1.05rem;
-  font-weight: 700;
-  cursor: pointer;
   letter-spacing: 1px;
-  transition: opacity 0.2s, transform 0.1s;
-
-  &:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: translateY(-1px);
-  }
-
-  &:disabled {
-    background: ${({ theme }) => theme.colors.btnDisabled};
-    cursor: not-allowed;
-    transform: none;
-  }
 `
 
 export const CartCountBadge = styled.span`

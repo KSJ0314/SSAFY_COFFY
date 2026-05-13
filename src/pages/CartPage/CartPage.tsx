@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import CartModal from '../../components/CartModal'
 import { useOrders } from '../../context/OrderContext'
-import type { CartItem } from '../../components/OrderForm'
+import type { CartItem } from '../../components/CartModal'
 import type { Order } from '../../context/OrderContext'
 import siteConfig from '../../data/siteConfig.json'
 

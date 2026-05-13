@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
 import { OPTION_ITEMS } from '../../constants/coffeeMenu'
-import type { MenuTemp } from '../../constants/coffeeMenu'
+import type { MenuTemp, MenuCategory } from '../../constants/coffeeMenu'
 import TempBadge from '../TempBadge'
-import { CategoryTab } from '../../styles/shared'
+import { CategoryTab, KioskPaginationBtn, RightPanel, Form, FormTitleRow } from '../../styles/shared'
 import type { Order } from '../../context/OrderContext'
-import menuData from '../../data/menuData.json'
+import menuDataRaw from '../../data/menuData.json'
+const menuData = menuDataRaw as MenuCategory[]
 import CartModal from '../CartModal'
 import UserInfoFields from '../UserInfoFields'
 import RouletteModal from '../RouletteModal'
 import {
-  RightPanel, Form, FormTitleRow, FormSectionTitle, ClosedBadge,
+  FormSectionTitle, ClosedBadge,
   CategoryTabsRow, CategoryTabs, MenuSearchWrap, MenuSearchInputWrap,
   MenuSearchGhost, MenuSearchGhostCompletion, MenuSearchInput, MenuSearchBtn,
   MenuSearchDropdown, MenuSearchDropdownItem,
@@ -22,9 +23,11 @@ import {
   KioskOptions, OptionBtn, OptionPrice, OptionDivider, CustomOptionInput,
   PriceSummaryRow, PriceInputWrap, OrderSummary, SummaryMenu, SummaryOptions, SummaryPrice,
   SubmitRow, AddToCartBtn, SubmitBtn, CartCountBadge,
-  UserInfoWithActions, RouletteBtn,
+  UserInfoWithActions,
 } from './OrderForm.styled'
-import type { CartItem, Props } from './types'
+import { RouletteBtn } from '../../styles/shared'
+import type { CartItem } from '../CartModal'
+import type { Props } from './types'
 
 function getColCount(): number {
   const w = window.innerWidth
@@ -381,12 +384,11 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                 </KioskGrid>
                 {totalPages > 1 && (
                   <KioskPagination>
-                    <CategoryTab
+                    <KioskPaginationBtn
                       type="button"
                       onClick={() => setMenuPage(p => p - 1)}
                       disabled={menuPage === 0}
-                      style={{ padding: '4px 12px', fontSize: '1.1rem', lineHeight: 1 }}
-                    >‹</CategoryTab>
+                    >‹</KioskPaginationBtn>
                     <KioskPaginationDots>
                       {Array.from({ length: totalPages }, (_, i) => (
                         <KioskPaginationDot
@@ -397,12 +399,11 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                         />
                       ))}
                     </KioskPaginationDots>
-                    <CategoryTab
+                    <KioskPaginationBtn
                       type="button"
                       onClick={() => setMenuPage(p => p + 1)}
                       disabled={menuPage >= totalPages - 1}
-                      style={{ padding: '4px 12px', fontSize: '1.1rem', lineHeight: 1 }}
-                    >›</CategoryTab>
+                    >›</KioskPaginationBtn>
                   </KioskPagination>
                 )}
               </KioskGridColumn>

@@ -1,6 +1,6 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { OrderProvider } from './context/OrderContext'
-import { ThemeProvider } from './styles/ThemeContext'
+import { ThemeProvider } from './context/ThemeContext'
 import FloatingButtons from './components/FloatingButtons'
 import MainPage from './pages/MainPage'
 import OrderListPage from './pages/OrderListPage'

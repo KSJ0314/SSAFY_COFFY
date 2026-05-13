@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import UserInfoFields from '../../components/UserInfoFields'
-import { RightPanel, Form, FormTitleRow, SubmitBtn } from '../../components/OrderForm/OrderForm.styled'
+import { RightPanel, Form, FormTitleRow, PrimaryBtn } from '../../styles/shared'
 
 const SettingsLayout = styled.div`
   display: flex;
@@ -13,7 +13,7 @@ const SettingsLayout = styled.div`
   background: ${({ theme }) => theme.colors.bg};
 `
 
-const SaveBtn = styled(SubmitBtn)`
+const SaveBtn = styled(PrimaryBtn)`
   flex-shrink: 0;
   white-space: nowrap;
   align-self: flex-end;

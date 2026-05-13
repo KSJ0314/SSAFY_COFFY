@@ -1,9 +1,9 @@
 import { useState, useRef } from 'react'
 import styled from 'styled-components'
 import {
-  ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose,
-  InquiryCancelBtn, InquirySubmitBtn,
+  ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose, PrimaryBtn,
 } from '../../styles/shared'
+import { InquiryCancelBtn } from './InquiryModal.styled'
 import type { Props } from './types'
 
 const InquiryModal_ = styled(Modal)`
@@ -148,12 +148,12 @@ export default function InquiryModal({ mode, initial, onSubmit, onClose }: Props
             </FormRow>
             <FormActions>
               <InquiryCancelBtn type="button" onClick={onClose}>취소</InquiryCancelBtn>
-              <InquirySubmitBtn
+              <PrimaryBtn
                 type="submit"
                 disabled={!title.trim() || !content.trim() || !password}
               >
                 {mode === 'create' ? '작성' : '수정'}
-              </InquirySubmitBtn>
+              </PrimaryBtn>
             </FormActions>
           </Form>
         </ModalBody>

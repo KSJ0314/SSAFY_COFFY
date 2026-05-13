@@ -1,7 +1,7 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components'
-import { lightTheme, darkTheme, type Theme } from './theme'
-import { GlobalStyle } from './GlobalStyle'
+import { lightTheme, darkTheme, type Theme } from '../styles/theme'
+import { GlobalStyle } from '../styles/GlobalStyle'
 
 type ThemeMode = 'light' | 'dark'
 

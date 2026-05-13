@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import styled from 'styled-components'
-import { SubmitBtn } from '../OrderForm/OrderForm.styled'
+import { PrimaryBtn } from '../../styles/shared'
 
 const Overlay = styled.div`
   position: fixed;
@@ -58,7 +58,7 @@ const BtnRow = styled.div`
   gap: 8px;
 `
 
-const TestBtn = styled(SubmitBtn)`
+const TestBtn = styled(PrimaryBtn)`
   padding: 10px 18px;
   font-size: 0.9rem;
   background: ${({ theme }) => theme.colors.surface};
@@ -71,7 +71,7 @@ const TestBtn = styled(SubmitBtn)`
   }
 `
 
-const SendBtn = styled(SubmitBtn)`
+const SendBtn = styled(PrimaryBtn)`
   padding: 10px 18px;
   font-size: 0.9rem;
 `

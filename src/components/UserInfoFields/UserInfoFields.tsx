@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { FormRowInline, FormRow } from '../OrderForm/OrderForm.styled'
+import { FormRowInline, FormRow } from './UserInfoFields.styled'
 import type { Props } from './types'
 
 const TooltipWrap = styled.div`

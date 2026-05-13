@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { useTheme } from '../../styles/ThemeContext'
+import { useTheme } from '../../context/ThemeContext'
 import MMWebhookModal from '../MMWebhookModal'
 import LunchMenuModal from '../LunchMenuModal'
 

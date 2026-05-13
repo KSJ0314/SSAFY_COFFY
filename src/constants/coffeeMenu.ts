@@ -6,6 +6,23 @@ export type MenuItem = {
   price: number
 }
 
+export type MenuItemType = {
+  temp: string
+  price: number
+  image: string
+  kcal: number | null
+}
+
+export type MenuDataItem = {
+  name: string
+  types: MenuItemType[]
+}
+
+export type MenuCategory = {
+  category: string
+  items: MenuDataItem[]
+}
+
 export type OptionItem = {
   name: string
   price: number

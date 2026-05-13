@@ -4,7 +4,7 @@ import TempBadge from '../TempBadge'
 import {
   ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose,
 } from '../../styles/shared'
-import { RouletteBtn } from '../OrderForm/OrderForm.styled'
+import { RouletteBtn } from '../../styles/shared'
 import type { Props } from './types'
 
 const CartModal_ = styled(Modal)`
