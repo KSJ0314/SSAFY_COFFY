@@ -67,4 +67,7 @@ Firebase 연결, 메뉴 수정, 배포 방법 등 상세한 안내는 **[Wiki](h
 
 ## License
 
-[MIT](./LICENSE)
+[PolyForm Noncommercial 1.0.0](./LICENSE)
+
+비상업적 목적에 한해 자유롭게 사용, 수정, 배포할 수 있습니다.
+광고 수익, 유료 서비스, 상업적 제품 등 금전적 이익을 목적으로 한 모든 이용은 금지됩니다.
