@@ -116,6 +116,7 @@ function createWindow(key, route, opts = {}) {
       zoomFactor: zoom,
     },
   })
+  if (opts.aspectRatio) win.setAspectRatio(opts.aspectRatio)
   win.on('page-title-updated', e => e.preventDefault())
   win.webContents.on('did-finish-load', () => {
     win.webContents.setZoomFactor(zoom)
@@ -139,7 +140,7 @@ const WIN_CONFIGS = {
   inquiry:  { route: '/inquiry',  width: 900, height: 800 },
   notices:  { route: '/notices',  width: 600, height: 240 },
   roulette: { route: '/roulette', width: 800, height: 600, resizable: true },
-  lunch:    { route: '/lunch',    width: 400, height: 800 },
+  lunch:    { route: '/lunch',    width: 400, height: 800, resizable: true, aspectRatio: 400 / 800 },
   pickup:   { route: '/pickup',   width: 580, height: 760 },
   settings:   { route: '/settings',   width: 480, height: 180, resizable: false },
   patchnotes: { route: '/patchnotes', width: 480, height: 800 },

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { ModalBackdrop } from '../../styles/shared'
 
 const PLANEAT_URL =
-  'https://m.planeatchoice.net/newDailyMenu?lang=ko&busiCd=RH3_K_001&compCd=K_KR_002&storCd=CAF20,CAF43&mealCd=2'
+  'https://m.planeatchoice.net/newDailyMenu?lang=ko'
 
 const Modal = styled.div<{ $standalone?: boolean }>`
   background: ${({ theme }) => theme.colors.surfaceModal};
@@ -64,7 +64,23 @@ interface Props {
 
 function ModalContent({ onClose, standalone }: { onClose: () => void, standalone?: boolean }) {
   const [src, setSrc] = useState('')
+  const [frameKey, setFrameKey] = useState(0)
+
   useEffect(() => { setSrc(PLANEAT_URL) }, [])
+
+  useEffect(() => {
+    if (!standalone) return
+    let timer: ReturnType<typeof setTimeout>
+    const onResize = () => {
+      clearTimeout(timer)
+      timer = setTimeout(() => setFrameKey(k => k + 1), 300)
+    }
+    window.addEventListener('resize', onResize)
+    return () => {
+      window.removeEventListener('resize', onResize)
+      clearTimeout(timer)
+    }
+  }, [standalone])
 
   return (
     <Modal $standalone={standalone}>
@@ -78,7 +94,7 @@ function ModalContent({ onClose, standalone }: { onClose: () => void, standalone
         <CloseBtn onClick={onClose}>✕</CloseBtn>
       </Header>
       <FrameWrap>
-        <Frame src={src} title="오늘의 점심 메뉴" />
+        <Frame key={frameKey} src={src} title="오늘의 점심 메뉴" />
       </FrameWrap>
     </Modal>
   )

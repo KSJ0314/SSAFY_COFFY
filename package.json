@@ -2,7 +2,7 @@
   "name": "ssafy_coffee",
   "private": true,
   "version": "1.10.0",
-  "electronVersion": "1.5.0",
+  "electronVersion": "1.5.1",
   "homepage": "https://KSJ0314.github.io/SSAFY_COFFY",
   "type": "module",
   "main": "electron/main.cjs",
@@ -34,7 +34,8 @@
     },
     "nsis": {
       "oneClick": true,
-      "perMachine": false,
+      "perMachine": true,
+      "include": "build/installer.nsh",
       "createDesktopShortcut": "always",
       "createStartMenuShortcut": true,
       "artifactName": "SSAFY_COFFEE_Setup.exe"
