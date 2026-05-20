@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import CoffeeIcon from '../CoffeeIcon'
 import { OPTION_ITEMS } from '../../constants/coffeeMenu'
 import type { MenuTemp, MenuCategory } from '../../constants/coffeeMenu'
 import TempBadge from '../TempBadge'
@@ -417,7 +418,7 @@ export default function OrderForm({ onSubmit, disabled }: Props) {
                         <KioskImageKcal>{selectedType.kcal} kcal</KioskImageKcal>
                       )}
                     </>
-                  : <KioskMenuImagePlaceholder>☕</KioskMenuImagePlaceholder>
+                  : <KioskMenuImagePlaceholder><CoffeeIcon /></KioskMenuImagePlaceholder>
                 }
               </KioskMenuImage>
             )}

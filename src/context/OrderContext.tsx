@@ -58,6 +58,7 @@ export function OrderProvider({ children }: { children: ReactNode }) {
     const existing = orders.find(o =>
       o.name === order.name &&
       o.class === order.class &&
+      o.password === order.password &&
       o.menu === order.menu &&
       o.temp === order.temp &&
       [...(o.options ?? [])].sort().join('|') === sortedNewOptions

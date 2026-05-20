@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import CoffeeIcon from '../CoffeeIcon'
 import { useOrders } from '../../context/OrderContext'
 import NoticeBoard from '../NoticeBoard'
 import PickupWidget from '../PickupWidget'
@@ -142,8 +143,23 @@ const Deadline = styled.p`
   display: inline-block;
 `
 
+const Credit = styled.a`
+  position: absolute;
+  bottom: 12px;
+  left: 24px;
+  font-size: 0.7rem;
+  color: rgba(255, 248, 240, 0.35);
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover {
+    color: rgba(255, 248, 240, 0.7);
+  }
+`
+
 const ViewOrdersBtn = styled.button`
   margin-top: auto;
+  margin-bottom: 8px;
   background: rgba(255, 255, 255, 0.15);
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 10px;
@@ -214,7 +230,7 @@ export default function Sidebar() {
       </TopBtnGroup>
 
       <LogoArea>
-        <div className="logo">☕</div>
+        <CoffeeIcon className="logo" />
         <h1>{siteConfig.serviceName}</h1>
         <p>{siteConfig.cafeName}</p>
         <Deadline>
@@ -229,6 +245,10 @@ export default function Sidebar() {
         오늘의 주문 목록 보기 →
         <OrderCount>{loading ? '…' : `${orders.reduce((sum, o) => sum + (o.qty ?? 1), 0)}잔`}</OrderCount>
       </ViewOrdersBtn>
+
+      <Credit href="https://github.com/KSJ0314" target="_blank" rel="noopener noreferrer">
+        © 14기 광주 실습코치 김소중
+      </Credit>
 
       {showPatchNotes && <PatchNotesModal onClose={() => setShowPatchNotes(false)} />}
     </Panel>

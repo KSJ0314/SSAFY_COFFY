@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react'
 import styled from 'styled-components'
 import TempBadge from '../TempBadge'
+import CoffeeIcon from '../CoffeeIcon'
 import {
   ModalBackdrop, Modal, ModalBody, ModalHeader, ModalClose,
 } from '../../styles/shared'
@@ -61,7 +62,7 @@ const ItemImage = styled.div`
   align-items: center;
   justify-content: center;
 
-  img {
+  > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -277,7 +278,7 @@ export default function CartModal({ cart, name, cls, closed, onRemove, onChangeQ
                 <ItemImage>
                   {item.image
                     ? <img src={item.image} alt={item.menu} />
-                    : <ImagePlaceholder>☕</ImagePlaceholder>
+                    : <ImagePlaceholder><CoffeeIcon /></ImagePlaceholder>
                   }
                 </ItemImage>
                 <ItemInfo>

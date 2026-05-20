@@ -1,7 +1,9 @@
+import { useState } from 'react'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import { OrderProvider } from './context/OrderContext'
 import { ThemeProvider } from './context/ThemeContext'
 import FloatingButtons from './components/FloatingButtons'
+import LandingModal, { shouldShowLanding } from './components/LandingModal'
 import MainPage from './pages/MainPage'
 import OrderListPage from './pages/OrderListPage'
 import InquiryPage from './pages/InquiryPage'
@@ -17,6 +19,8 @@ import LunchPage from './pages/LunchPage'
 
 
 export default function App() {
+  const [showLanding, setShowLanding] = useState(() => shouldShowLanding())
+
   return (
     <ThemeProvider>
       <OrderProvider>
@@ -37,6 +41,7 @@ export default function App() {
           </Routes>
           <FloatingButtons />
         </HashRouter>
+        {showLanding && <LandingModal onClose={() => setShowLanding(false)} />}
       </OrderProvider>
     </ThemeProvider>
   )

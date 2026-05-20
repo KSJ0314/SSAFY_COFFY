@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
+import CoffeeIcon from '../CoffeeIcon'
 import type { Props } from './types'
 
 const Bg = styled.div`
@@ -44,6 +45,8 @@ const TitleArea = styled.div`
 
   .logo {
     font-size: 2rem;
+    display: flex;
+    align-items: center;
   }
 
   h1 {
@@ -65,7 +68,7 @@ const Actions = styled.div`
   gap: 16px;
 `
 
-export default function PageLayout({ title, subTitle, icon = '☕', backPath, actions, children, tableMinHeight }: Props) {
+export default function PageLayout({ title, subTitle, icon = <CoffeeIcon />, backPath, actions, children, tableMinHeight }: Props) {
   const navigate = useNavigate()
   return (
     <Bg>
