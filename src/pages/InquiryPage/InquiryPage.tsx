@@ -192,7 +192,7 @@ export default function InquiryPage() {
   )
 
   return (
-    <PageLayout title="자유 게시판" subTitle="자유롭게 게시글을 작성하세요!!" backPath="/" actions={actions} tableMinHeight={540}>
+    <PageLayout title="자유 게시판" subTitle="자유롭게 게시글을 작성하세요!!" backPath="/" actions={actions} tableMinHeight={480}>
       {loading ? (
         <EmptyBox className="loading-text">불러오는 중...</EmptyBox>
       ) : (

@@ -1,12 +1,19 @@
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom'
 import CoffeeIcon from '../CoffeeIcon'
+import { scrollbarStyle } from '../../styles/shared'
 import type { Props } from './types'
 
 const Bg = styled.div`
-  min-height: 100%;
+  height: 100%;
+  overflow-y: auto;
   background-color: ${({ theme }) => theme.colors.pageBg};
   background-image: radial-gradient(ellipse at top, ${({ theme }) => theme.colors.pageBg} 0%, ${({ theme }) => theme.colors.borderMid} 100%);
+  ${scrollbarStyle}
+  scrollbar-gutter: stable;
+
+  &::-webkit-scrollbar-track { background: transparent; }
+  scrollbar-color: ${({ theme }) => theme.colors.border} transparent;
 `
 
 const Page = styled.div`

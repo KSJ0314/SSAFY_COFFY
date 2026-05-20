@@ -143,8 +143,8 @@ export default function OrderListPage() {
           <thead>
             <tr>
               <th>#</th>
-              <th>이름</th>
-              <th>반</th>
+              <th style={{ width: '80px' }}>이름</th>
+              <th style={{ width: '48px' }}>반</th>
               <th>메뉴</th>
               <th>옵션</th>
               <th>수량</th>

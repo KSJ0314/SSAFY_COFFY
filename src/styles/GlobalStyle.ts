@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
+import { scrollbarStyle } from './shared'
 
 export const GlobalStyle = createGlobalStyle`
   :root {
@@ -15,6 +16,7 @@ export const GlobalStyle = createGlobalStyle`
     zoom: var(--ui-scale);
     height: calc(100vh / var(--ui-scale));
     overflow-y: auto;
+    ${scrollbarStyle}
   }
 
   * {

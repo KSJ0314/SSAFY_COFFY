@@ -1,10 +1,19 @@
 import styled, { css, keyframes } from 'styled-components'
 
+export const scrollbarStyle = css`
+  scrollbar-width: thin;
+  scrollbar-color: ${({ theme }) => theme.colors.border} ${({ theme }) => theme.colors.bg};
+
+  &::-webkit-scrollbar { width: 6px; }
+  &::-webkit-scrollbar-track { background: ${({ theme }) => theme.colors.bg}; }
+  &::-webkit-scrollbar-thumb { background: ${({ theme }) => theme.colors.border}; border-radius: 4px; }
+  &::-webkit-scrollbar-thumb:hover { background: ${({ theme }) => theme.colors.accent}; }
+`
+
 // ── 페이지 레이아웃 ──
 export const RightPanel = styled.div`
   flex: 1;
   padding: 20px 40px;
-  overflow-y: auto;
   max-width: 880px;
 
   @media (min-width: 1440px) { max-width: 1100px; }
@@ -56,13 +65,7 @@ export const ModalBody = styled.div`
   display: flex;
   flex-direction: column;
   gap: 16px;
-  scrollbar-width: thin;
-  scrollbar-color: ${({ theme }) => theme.colors.border} transparent;
-
-  &::-webkit-scrollbar { width: 6px; }
-  &::-webkit-scrollbar-track { background: transparent; }
-  &::-webkit-scrollbar-thumb { background: ${({ theme }) => theme.colors.border}; border-radius: 4px; }
-  &::-webkit-scrollbar-thumb:hover { background: ${({ theme }) => theme.colors.accent}; }
+  ${scrollbarStyle}
 `
 
 export const ModalHeader = styled.div`

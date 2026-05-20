@@ -187,7 +187,7 @@ export const KioskGrid = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 8px;
-  align-items: start;
+  align-items: stretch;
   align-content: start;
 
   @media (max-width: 1000px) { grid-template-columns: repeat(2, 1fr); }
@@ -290,10 +290,10 @@ export const KioskBtn = styled.button<{ $selected?: boolean; $other?: boolean; $
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 4px;
   transition: all 0.15s;
-  max-height: 105px;
-  width: 180px;
+  width: 100%;
   position: relative;
   color: ${({ $selected, theme }) => ($selected ? '#fff' : theme.colors.text)};
 
@@ -319,6 +319,7 @@ export const KioskBtnName = styled.span`
   font-size: 0.85rem;
   font-weight: 600;
   color: inherit;
+  word-break: keep-all;
 `
 
 export const KioskBtnPrice = styled.span<{ $selected?: boolean }>`
