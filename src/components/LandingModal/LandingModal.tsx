@@ -48,13 +48,6 @@ const ServiceName = styled.h1`
   text-align: center;
 `
 
-const Tagline = styled.p`
-  font-size: 0.85rem;
-  color: ${({ theme }) => theme.colors.textOnPrimary};
-  opacity: 0.85;
-  text-align: center;
-  line-height: 1.5;
-`
 
 const Body = styled.div`
   padding: 24px 28px 20px;
@@ -140,7 +133,6 @@ export default function LandingModal({ onClose }: Props) {
         <Hero>
           <LandingIcon size={56} />
           <ServiceName>SSAFY COFFEE</ServiceName>
-          {/* <Tagline>광주 캠퍼스만을 위한 커피 주문 서비스!</Tagline> */}
         </Hero>
         <Body>
           <IntroText>
