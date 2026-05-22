@@ -1145,6 +1145,11 @@ Total Duration: ${c-l}ms`),W.resolve({didRun:!0,sequenceNumbersCollected:r,targe
     width: 100%;
     box-sizing: border-box;
   }
+
+  input::placeholder {
+    color: ${({theme:e})=>e.colors.textFaint};
+    opacity: 0.3;
+  }
 `,FC=$.div`
   position: absolute;
   bottom: calc(100% + 8px);
