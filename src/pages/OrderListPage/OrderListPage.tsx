@@ -1,7 +1,8 @@
-import { useRef, useState, useMemo } from 'react'
+import { useRef, useState, useMemo, useEffect, useCallback } from 'react'
 import { toPng } from 'html-to-image'
 import { ThemeProvider } from 'styled-components'
-import { useOrders } from '../../context/OrderContext'
+import { useOrders, type Order } from '../../context/OrderContext'
+import { getOrdersByDate, getTodayKST } from '../../services/orderService'
 import TempBadge from '../../components/TempBadge'
 import PageLayout from '../../components/PageLayout'
 import { StyledTable, DeleteOrderBtn } from '../../styles/shared'
@@ -11,8 +12,13 @@ import {
   GroupHeaderRow, GroupToggle, GroupCountCell, GroupNameCell,
   GroupChildRow, GroupChildIndex, MenuCell,
   CaptureOffscreen, CaptureTable, CaptureHeader, CaptureTitle, CaptureDate,
+  CalendarWrap, CalendarIconBtn, CalendarDropdown,
+  CalendarHeader, CalendarMonthLabel, CalendarNavBtn,
+  CalendarGrid, CalendarDayLabel, CalendarDay, BackTodayBtn,
 } from './OrderListPage.styled'
 import siteConfig from '../../data/siteConfig.json'
+
+const DAY_LABELS = ['일', '월', '화', '수', '목', '금', '토']
 
 function isClosed(): boolean {
   const { hour, minute } = siteConfig.closingTime
@@ -20,14 +26,49 @@ function isClosed(): boolean {
   return now.getHours() > hour || (now.getHours() === hour && now.getMinutes() >= minute)
 }
 
+function formatDisplayDate(dateStr: string): string {
+  const [y, m, d] = dateStr.split('-')
+  return `${y}.${m}.${d}`
+}
+
 export default function OrderListPage() {
-  const { orders, loading, removeOrder } = useOrders()
+  const { orders: todayOrders, loading: todayLoading, removeOrder } = useOrders()
   const captureRef = useRef<HTMLDivElement>(null)
-  const total = orders.reduce((sum, o) => sum + o.price * (o.qty ?? 1), 0)
-  const today = new Date().toLocaleDateString('ko-KR')
+  const calCloseTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const todayKST = getTodayKST()
+  const todayDisplay = new Date().toLocaleDateString('ko-KR')
   const closed = import.meta.env.DEV ? false : isClosed()
 
+  // 날짜 선택 상태
+  const [selectedDate, setSelectedDate] = useState<string | null>(null)
+  const [histOrders, setHistOrders] = useState<Order[]>([])
+  const [histLoading, setHistLoading] = useState(false)
+
+  // 달력 열림 상태
+  const [calOpen, setCalOpen] = useState(false)
+  const [calMonth, setCalMonth] = useState(() => {
+    const now = new Date()
+    return new Date(now.getFullYear(), now.getMonth(), 1)
+  })
+
+  // 그룹 펼치기 상태
   const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set())
+
+  const isToday = selectedDate === null || selectedDate === todayKST
+  const orders = isToday ? todayOrders : histOrders
+  const loading = isToday ? todayLoading : histLoading
+
+  useEffect(() => {
+    if (!selectedDate || selectedDate === todayKST) return
+    setHistLoading(true)
+    setHistOrders([])
+    getOrdersByDate(selectedDate).then(data => {
+      setHistOrders(data)
+      setHistLoading(false)
+    })
+  }, [selectedDate, todayKST])
+
+  const total = orders.reduce((sum, o) => sum + o.price * (o.qty ?? 1), 0)
 
   const groupedOrders = useMemo(() => {
     const map = new Map<string, (typeof orders)>()
@@ -108,8 +149,9 @@ export default function OrderListPage() {
     el.style.left = ''
     el.style.zIndex = ''
 
+    const label = selectedDate ?? new Date().toISOString().slice(0, 10)
     const link = document.createElement('a')
-    link.download = `주문목록_${new Date().toISOString().slice(0, 10)}.png`
+    link.download = `주문목록_${label}.png`
     link.href = dataUrl
     link.click()
   }
@@ -118,9 +160,104 @@ export default function OrderListPage() {
     navigator.clipboard.writeText(siteConfig.account)
   }
 
+  // 달력 데이터 계산
+  function buildCalendarDays(base: Date): (string | null)[] {
+    const year = base.getFullYear()
+    const month = base.getMonth()
+    const firstDay = new Date(year, month, 1).getDay()
+    const daysInMonth = new Date(year, month + 1, 0).getDate()
+    const cells: (string | null)[] = Array(firstDay).fill(null)
+    for (let d = 1; d <= daysInMonth; d++) {
+      const mm = String(month + 1).padStart(2, '0')
+      const dd = String(d).padStart(2, '0')
+      cells.push(`${year}-${mm}-${dd}`)
+    }
+    return cells
+  }
+
+  const calendarDays = buildCalendarDays(calMonth)
+
+  function handleCalendarSelect(date: string) {
+    if (date > todayKST) return
+    setSelectedDate(date === todayKST ? null : date)
+    setExpandedGroups(new Set())
+    setCalOpen(false)
+  }
+
+  function prevMonth() {
+    setCalMonth(m => new Date(m.getFullYear(), m.getMonth() - 1, 1))
+  }
+
+  function nextMonth() {
+    const next = new Date(calMonth.getFullYear(), calMonth.getMonth() + 1, 1)
+    const nowMonth = new Date()
+    if (next.getFullYear() > nowMonth.getFullYear() || (next.getFullYear() === nowMonth.getFullYear() && next.getMonth() > nowMonth.getMonth())) return
+    setCalMonth(next)
+  }
+
+  const isCurrentMonth = calMonth.getMonth() === new Date().getMonth() && calMonth.getFullYear() === new Date().getFullYear()
+
+  const handleCalMouseEnter = useCallback(() => {
+    if (calCloseTimer.current) clearTimeout(calCloseTimer.current)
+    setCalOpen(true)
+  }, [])
+
+  const handleCalMouseLeave = useCallback(() => {
+    calCloseTimer.current = setTimeout(() => setCalOpen(false), 200)
+  }, [])
+
+  const dateLabel = isToday
+    ? todayDisplay
+    : formatDisplayDate(selectedDate!)
+
+  const pageTitle = isToday ? '오늘의 주문 목록' : `${formatDisplayDate(selectedDate!)} 주문 목록`
+
+  const calendarDropdown = (
+    <CalendarWrap onMouseEnter={handleCalMouseEnter} onMouseLeave={handleCalMouseLeave}>
+      {!isToday && (
+        <BackTodayBtn onClick={() => { setSelectedDate(null); setExpandedGroups(new Set()) }}>
+          오늘로
+        </BackTodayBtn>
+      )}
+      <CalendarIconBtn title="날짜별 주문 조회">📅</CalendarIconBtn>
+      <CalendarDropdown $open={calOpen}>
+        <CalendarHeader>
+          <CalendarNavBtn onClick={prevMonth}>‹</CalendarNavBtn>
+          <CalendarMonthLabel>
+            {calMonth.getFullYear()}년 {calMonth.getMonth() + 1}월
+          </CalendarMonthLabel>
+          <CalendarNavBtn onClick={nextMonth} disabled={isCurrentMonth} style={{ opacity: isCurrentMonth ? 0.3 : 1 }}>›</CalendarNavBtn>
+        </CalendarHeader>
+        <CalendarGrid>
+          {DAY_LABELS.map(d => (
+            <CalendarDayLabel key={d}>{d}</CalendarDayLabel>
+          ))}
+          {calendarDays.map((date, i) => {
+            if (!date) return <CalendarDay key={`empty-${i}`} $empty disabled />
+            const isTodayCell = date === todayKST
+            const isSelected = date === (selectedDate ?? todayKST)
+            const isFuture = date > todayKST
+            return (
+              <CalendarDay
+                key={date}
+                $today={isTodayCell && !isSelected}
+                $selected={isSelected}
+                disabled={isFuture}
+                style={{ opacity: isFuture ? 0.3 : 1, cursor: isFuture ? 'default' : 'pointer' }}
+                onClick={() => handleCalendarSelect(date)}
+              >
+                {parseInt(date.slice(8))}
+              </CalendarDay>
+            )
+          })}
+        </CalendarGrid>
+      </CalendarDropdown>
+    </CalendarWrap>
+  )
+
   const actions = (
     <>
-      <MetaText>{today} / 총 {totalQty}잔</MetaText>
+      <MetaText>{dateLabel} / 총 {totalQty}잔</MetaText>
       {orders.length > 0 && (
         <SaveImageBtn onClick={handleSaveImage}>이미지로 저장</SaveImageBtn>
       )}
@@ -132,21 +269,22 @@ export default function OrderListPage() {
           </AccountValue>
         </AccountWrap>
       )}
+      <div style={{ marginLeft: 'auto' }}>{calendarDropdown}</div>
     </>
   )
 
   return (
-    <PageLayout title="오늘의 주문 목록" backPath="/" actions={actions}>
+    <PageLayout title={pageTitle} backPath="/" actions={actions}>
       <>
         {/* 화면용 그룹 테이블 */}
         <StyledTable>
           <thead>
             <tr>
-              <th>#</th>
+              <th style={{ width: '50px' }}>#</th>
               <th style={{ width: '80px' }}>이름</th>
               <th style={{ width: '48px' }}>반</th>
               <th>메뉴</th>
-              <th>옵션</th>
+              <th style={{ width: '200px' }}>옵션</th>
               <th>수량</th>
               <th>가격</th>
               <th></th>
@@ -160,7 +298,7 @@ export default function OrderListPage() {
             )}
             {!loading && orders.length === 0 && (
               <tr>
-                <td colSpan={8} style={{ textAlign: 'center', padding: '32px' }}>아직 주문이 없습니다.</td>
+                <td colSpan={8} style={{ textAlign: 'center', padding: '32px' }}>주문이 없습니다.</td>
               </tr>
             )}
             {!loading && groupedOrders.map(([name, groupOrders]) => {
@@ -190,7 +328,7 @@ export default function OrderListPage() {
                     </>
                   )}
                   <td>{isMulti ? groupTotal.toLocaleString() + '원' : (groupOrders[0].price * (groupOrders[0].qty ?? 1)).toLocaleString() + '원'}</td>
-                  <td>{!isMulti && <DeleteOrderBtn onClick={e => { e.stopPropagation(); handleDelete(groupOrders[0]) }}>✕</DeleteOrderBtn>}</td>
+                  <td>{isToday && !isMulti && <DeleteOrderBtn onClick={e => { e.stopPropagation(); handleDelete(groupOrders[0]) }}>✕</DeleteOrderBtn>}</td>
                 </GroupHeaderRow>,
                 ...(expanded && isMulti ? groupOrders.map((o, j) => (
                   <GroupChildRow key={o.id ?? j}>
@@ -203,7 +341,7 @@ export default function OrderListPage() {
                     <td>{o.options.length > 0 ? o.options.join(', ') : '-'}</td>
                     <td>{o.qty ?? 1}</td>
                     <td>{(o.price * (o.qty ?? 1)).toLocaleString()}원</td>
-                    <td><DeleteOrderBtn onClick={() => handleDelete(o)}>✕</DeleteOrderBtn></td>
+                    <td>{isToday && <DeleteOrderBtn onClick={() => handleDelete(o)}>✕</DeleteOrderBtn>}</td>
                   </GroupChildRow>
                 )) : [])
               ]
@@ -223,7 +361,7 @@ export default function OrderListPage() {
         <CaptureOffscreen ref={captureRef}>
           <CaptureHeader>
             <CaptureTitle>{siteConfig.serviceName} / 주문 목록</CaptureTitle>
-            <CaptureDate>{today} / 총 {totalQty}잔 / 합계 {total.toLocaleString()}원</CaptureDate>
+            <CaptureDate>{dateLabel} / 총 {totalQty}잔 / 합계 {total.toLocaleString()}원</CaptureDate>
           </CaptureHeader>
           <CaptureTable>
             <thead>

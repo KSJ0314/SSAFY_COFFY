@@ -1,4 +1,5 @@
 export const lightTheme = {
+  isDark: false,
   colors: {
     // 페이지 배경
     bg: '#fdf6ec',
@@ -53,6 +54,7 @@ export const lightTheme = {
 } as const
 
 export const darkTheme = {
+  isDark: true,
   colors: {
     // 페이지 배경
     bg: '#1a0f08',
@@ -108,5 +110,6 @@ export const darkTheme = {
 
 type ColorKeys = keyof typeof lightTheme['colors']
 export type Theme = {
+  isDark: boolean
   colors: Record<ColorKeys, string>
 }

@@ -1,4 +1,4 @@
-import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, serverTimestamp, updateDoc } from 'firebase/firestore'
+import { collection, addDoc, deleteDoc, doc, query, where, orderBy, onSnapshot, getDocs, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { db } from '../firebase'
 import type { Order } from '../context/OrderContext'
 
@@ -37,4 +37,14 @@ export async function updateOrderQty(id: string, qty: number): Promise<void> {
 
 export async function deleteOrder(id: string): Promise<void> {
   await deleteDoc(doc(db, 'orders', id))
+}
+
+export async function getOrdersByDate(date: string): Promise<Order[]> {
+  const q = query(
+    collection(db, 'orders'),
+    where('date', '==', date),
+    orderBy('createdAt', 'asc')
+  )
+  const snapshot = await getDocs(q)
+  return snapshot.docs.map(d => ({ id: d.id, ...d.data() } as Order))
 }
